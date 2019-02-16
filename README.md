@@ -6,10 +6,10 @@ It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgo
 
 ## What makes it different from Tibia / The Forgotten Server 1.3?
 
-### There are no vocations:  
+- ### There are no vocations:  
 Everyone starts as a normal human being with points to be distributed among the skills.
 
-### There is no skill training:  
+- ### There is no skill training:  
 It uses a system to advance skills by distributing points that you receive each level you advance.
 
 ### All clubs, swords and axes damage are based on strenght.
