@@ -1,22 +1,22 @@
 The Forgotten Tibia
 ===============
 
-The Forgotten Tibia Server is a free and open-source MMORPG server emulator written in C++.<br />
+The Forgotten Tibia is a free and open-source MMORPG game written in C++ and LUA.  
 It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/commit/3b63f65) and [OTClient](https://github.com/edubart/otclient/commit/07b4b78) projects.
 
-### What makes it different from The Forgotten Server 1.3?
+### What makes it different from Tibia / The Forgotten Server 1.3?
 
-* There are no vocations:<br />
+* There are no vocations:  
 Everyone starts as a normal human being with points to be distributed among the skills.
 
-* There is no skill training:<br />
-It uses a system to advance skills by distributing points.
+* There is no skill training:  
+It uses a system to advance skills by distributing points that you receive each level you advance.
 
 * All clubs, swords and axes damage are based on strenght.
 
 * Distance weapons damage are based on strenght and/or dexterity.
 
-* Two-handed melee weapons gives critical hit chance, critical hit damage and can do bleeding effect.
+* Two-handed melee weapons can do critical hit and bleeding effect.
 
 * The more levels you get, less points you receive.
 
