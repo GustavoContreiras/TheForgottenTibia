@@ -17,9 +17,9 @@ Each level you advance ou receive points to be distributed among the skills. The
 - ### You can use two one-handed weapons at the same time  
 Attack speed will increase and each weapon damage will decrease.
 
-- ### Distance weapons damage are based on Strenght and/or Dexterity.
+- ### Distance weapons damage are based on Strenght and/or Dexterity
 
-- ### Two-handed melee weapons can do critical hit and bleeding effect.
+- ### Two-handed melee weapons can do critical hit and bleeding effect
 
 - ### You don't need to open monsters to pickup loots while hunting  
 Just need to select the item you want to loot and add to / remove from your loot list.
