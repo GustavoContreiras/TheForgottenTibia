@@ -49,7 +49,7 @@ Gives more health.
 - ### Strenght
 Gives more physical damage.
 - ### Defence
-Gives more resistance to attacks.
+Gives more resistance to physical attacks and more health.
 - ### Dexterity
 Gives more attack speed, walk speed and damage with distance weapons.
 - ### Intelligence
