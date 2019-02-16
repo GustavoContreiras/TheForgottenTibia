@@ -23,8 +23,8 @@ Attack speed will increase and each weapon damage will decrease.
 
 - ### The more levels you get, less points you receive.
 
-- ### You don't need to open monster to pickup loots while hunting  
-Just need to select the item you want to loot.
+- ### You don't need to open monsters to pickup loots while hunting  
+Just need to select the item you want to loot and add to / remove from your loot list.
 
 - ### You don't need to refill ammunition when hunting with arrows or bolts  
 Just need to use a quiver/container on the arrow slot.
