@@ -39,21 +39,21 @@ It was added one more square meter to the screen.
 
 ## Skills
 - ### Magic
-Gives more spell power, more rune power and more mana
+Gives more spell power, more rune power and more mana.
 - ### Vitality
-Gives more health
+Gives more health.
 - ### Strenght
-Gives more physical damage
+Gives more physical damage.
 - ### Defence
-Gives more resistance to attacks
+Gives more resistance to attacks.
 - ### Dexterity
-Gives more attack speed, walk speed and damage with distance weapons
+Gives more attack speed, walk speed and damage with distance weapons.
 - ### Intelligence
-Gives more mana and access to offensive spells and runes
+Gives more mana and access to offensive spells and runes.
 - ### Faith
-Gives more mana and access to support spells and runes
+Gives more mana and access to support spells and runes.
 - ### Endurance
-Gives more capacity and health
+Gives more capacity and health.
 
 ## Getting Started
 
