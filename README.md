@@ -57,7 +57,7 @@ Gives more capacity and health.
 
 ## Getting Started
 
-- See our [Wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).
+See our [Wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).
 
 ## Issues
 
