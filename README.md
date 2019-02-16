@@ -10,9 +10,9 @@ It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgo
 Everyone starts as a normal human being with points to be distributed among the skills.
 
 - ### There is no skill training  
-It uses a system to advance skills by distributing points that you receive each level you advance.
+Each level you advance ou receive points to be distributed among the skills. The more levels you get, less points you receive.
 
-- ### All clubs, swords and axes damage are based on strenght.
+- ### All clubs, swords and axes damage are based on strenght
 
 - ### You can use two one-handed weapons at the same time  
 Attack speed will increase and each weapon damage will decrease.
@@ -21,15 +21,14 @@ Attack speed will increase and each weapon damage will decrease.
 
 - ### Two-handed melee weapons can do critical hit and bleeding effect.
 
-- ### The more levels you get, less points you receive.
-
 - ### You don't need to open monsters to pickup loots while hunting  
 Just need to select the item you want to loot and add to / remove from your loot list.
 
 - ### You don't need to refill ammunition when hunting with arrows or bolts  
 Just need to use a quiver/container on the arrow slot.
 
-- ### Wands and Rods maximum damage are increased with intelligence and faith.
+- ### Wands and Rods maximum damage can be increased
+When you advance your intelligence skill you increase your wand's maximum damage. Same thing works for faith and rods.
 
 - ### Spells are based on Faith and Intelligence  
 There is no level or vocation requirement for spells. The more you raise faith and intelligence, more spells you get.
