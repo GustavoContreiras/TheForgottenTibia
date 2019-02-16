@@ -61,6 +61,18 @@ Gives more capacity and health.
 
 ## Getting Started
 
+- ### Running the server and testing with client
+https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Running-the-server-to-test
+
+- ### Compiling the server
+https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
+
+- ### Compiling the client
+https://github.com/edubart/otclient/wiki/Compiling-on-Windows
+
+- ### Anything else
+If you want to customize the server or the client, see our wiki.
+There you can find tutorials to change spells, skills, damages, titles, names, texts and etc.
 See our [Wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).
 
 ## Issues
