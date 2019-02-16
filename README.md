@@ -71,9 +71,8 @@ https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 https://github.com/edubart/otclient/wiki/Compiling-on-Windows
 
 - ### Anything else
-If you want to customize the server or the client, see our wiki.
+If you want to customize the server or the client, see our [wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).
 There you can find tutorials to change spells, skills, damages, titles, names, texts and etc.
-See our [Wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).
 
 ## Issues
 
