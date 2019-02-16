@@ -10,7 +10,7 @@ It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgo
 Everyone starts as a normal human being with points to be distributed among the skills.
 
 - ### There is no skill training  
-Each level you advance ou receive points to be distributed among the skills. The more levels you get, less points you receive.
+Each level you advance you receive points to be distributed among the skills. The more levels you get, less points you receive.
 
 - ### All clubs, swords and axes damage are based on Strenght
 
