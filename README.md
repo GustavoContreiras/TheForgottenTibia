@@ -38,6 +38,9 @@ There is no level or vocation requirement for spells. The more you raise faith a
 - ### The screen has one more tile  
 It was added one more square meter to the screen.
 
+- ### You can set a title to your character
+If you have the requirements you can be a mage, a supporter, a knight or a ranger.
+
 ## Skills
 - ### Magic
 Gives more spell power, more rune power and more mana.
