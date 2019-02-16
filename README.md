@@ -14,7 +14,7 @@ It uses a system to advance skills by distributing points that you receive each 
 
 * All clubs, swords and axes damage are based on strenght.
 
-* You can use two one-handed weapons at the same time:
+* You can use two one-handed weapons at the same time:  
 Attack speed will increase and each weapon damage will decrease.
 
 * Distance weapons damage are based on strenght and/or dexterity.
@@ -23,18 +23,18 @@ Attack speed will increase and each weapon damage will decrease.
 
 * The more levels you get, less points you receive.
 
-* You don't need to open monster to pickup loots while hunting:
+* You don't need to open monster to pickup loots while hunting:  
 Just need to select the item you want to loot.
 
-* You don't need to refill ammunition when hunting with arrows or bolts:
+* You don't need to refill ammunition when hunting with arrows or bolts:  
 Just need to use a quiver/container on the arrow slot.
 
 * Wands and Rods maximum damage are increased with intelligence and faith.
 
-* Spells are based on Faith and Intelligence:
+* Spells are based on Faith and Intelligence:  
 There is no level or vocation requirement for spells. The more you raise faith and intelligence, more spells you get.
 
-* The screen has one more tile:
+* The screen has one more tile:  
 It was added one more square meter to the screen.
 
 ### Skills
