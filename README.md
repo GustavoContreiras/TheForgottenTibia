@@ -2,8 +2,7 @@ The Forgotten Tibia Server
 ===============
 
 The Forgotten Tibia Server is a free and open-source MMORPG server emulator written in C++.<br />
-It is a fork of the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/commit/3b63f65) project.<br />
-To connect to the server, you can use [The Forgotten Tibia Client](https://github.com/GustavoContreiras/TheForgottenTibiaServer/releases/download/v0.8/TheForgottenTibiaClient.zip) ([vc_redist.x86.exe](https://download.microsoft.com/download/0/6/4/064F84EA-D1DB-4EAA-9A5C-CC2F0FF6A638/vc_redist.x86.exe) required).
+It is a fork of the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/commit/3b63f65) and [OTClient]() projects.
 
 ### What makes it different from The Forgotten Server 1.3?
 
