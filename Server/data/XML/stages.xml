@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stages>
+	<config enabled="1" />
+	<stage minlevel="1" maxlevel="8" multiplier="15" />
+	<stage minlevel="8" maxlevel="60" multiplier="10" />
+	<stage minlevel="61" maxlevel="100" multiplier="7" />
+	<stage minlevel="101" multiplier="5" />
+</stages>

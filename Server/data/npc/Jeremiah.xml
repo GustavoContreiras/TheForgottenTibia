@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Jeremiah" script="Jeremiah.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="151" head="79" body="118" legs="116" feet="115" addons="3"/>
+	<parameters>
+		<parameter key="message_greet" value="Greetings, daring adventurer. Do you want a {trip}? I can take you back to {city}!"/>
+        <parameter key="message_farewell" value="Good bye."/>
+		<parameter key="message_walkaway" value="Oh well." />
+	</parameters>
+</npc>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Jeff" script="default.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="128" head="58" body="68" legs="109" feet="131" addons="0"/>
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_buyable" value="
+										bread,2595,4;
+										cheese,2597,6;
+										ham,2671,8;
+										meat,2666,5;
+										brown mushroom, 2789, 10;
+										salmon,2668,4;
+										fish, 2667, 5;
+										dragon ham, 2672, 25" />
+	</parameters>
+</npc>

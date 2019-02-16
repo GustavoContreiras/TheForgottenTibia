@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<raid>
+	<announce delay="1000" type="warning" message="Orcs are preparing an attack on Rhyves City! They are leaving their fortress!" />
+	<areaspawn delay="25000" fromx="33094" fromy="31304" fromz="7" tox="33128" toy="31324" toz="7">
+		<monster name="Orc" minamount="4" maxamount="10" />
+		<monster name="Orc Shaman" minamount="4" maxamount="10" />
+		<monster name="Orc Warrior" minamount="4" maxamount="10" />
+		<monster name="Orc Shaman" minamount="4" maxamount="10" />
+		<monster name="Orc Berserker" minamount="4" maxamount="10" />
+		<monster name="Orc Leader" minamount="4" maxamount="10" />
+		<monster name="Orc Warlord" minamount="4" maxamount="10" />
+	</areaspawn>
+
+	<announce delay="120000" type="warning" message="Orcs attack continues! They are near the east gate!" />
+	<areaspawn delay="121000" fromx="33062" fromy="31300" fromz="7" tox="33093" toy="31329" toz="7">
+		<monster name="Orc" minamount="4" maxamount="10" />
+		<monster name="Orc Shaman" minamount="4" maxamount="10" />
+		<monster name="Orc Warrior" minamount="4" maxamount="10" />
+		<monster name="Orc Shaman" minamount="4" maxamount="10" />
+		<monster name="Orc Berserker" minamount="4" maxamount="10" />
+		<monster name="Orc Leader" minamount="4" maxamount="10" />
+		<monster name="Orc Warlord" minamount="4" maxamount="10" />
+	</areaspawn>
+
+	<announce delay="120000" type="warning" message="It looks like their leader is here!" />
+	<singlespawn delay="30000" name="Orc Leader" x="33076" y="31305" z="7" />
+	<singlespawn delay="30000" name="Orc Leader" x="33078" y="31305" z="7" />
+	<singlespawn delay="30000" name="Orc Leader" x="33075" y="31309" z="7" />
+	<!--<singlespawn delay="30000" name="Bibby Bloodbath" x="33076" y="31308" z="7" />-->
+	<singlespawn delay="30000" name="Orc Warlord" x="33072" y="31307" z="7" />
+	<singlespawn delay="30000" name="Orc Warlord" x="33077" y="31307" z="7" />
+</raid>

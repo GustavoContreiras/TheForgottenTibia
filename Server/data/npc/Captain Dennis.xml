@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Captain Dennis" script="Captain Dennis.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="134" head="95" body="10" legs="40" feet="25" addons="2"/>
+	<parameters>
+		<parameter key="message_greet" value="Greetings, daring adventurer. Do you want to go to {Rhyves} or {Svargrond}?"/>
+        <parameter key="message_farewell" value="Good bye."/>
+		<parameter key="message_walkaway" value="Oh well." />
+	</parameters>
+</npc>

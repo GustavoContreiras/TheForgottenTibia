@@ -1,0 +1,143 @@
+-- Combat settings
+-- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
+worldType = "pvp"
+hotkeyAimbotEnabled = true
+protectionLevel = 8
+killsToRedSkull = 3
+killsToBlackSkull = 6
+pzLocked = 60000
+removeChargesFromRunes = true
+timeToDecreaseFrags = 24 * 60 * 60 * 1000
+whiteSkullTime = 15 * 60 * 1000
+stairJumpExhaustion = 1000
+experienceByKillingPlayers = false
+expFromPlayersLevelRange = 75
+
+-- Connection Config
+-- NOTE: maxPlayers set to 0 means no limit
+ip = "127.0.0.1"
+bindOnlyGlobalAddress = false
+loginProtocolPort = 7171
+gameProtocolPort = 7172
+statusProtocolPort = 7171
+maxPlayers = 300
+motd = "Welcome to The Forgotten Tibia!"
+onePlayerOnlinePerAccount = true
+allowClones = false
+serverName = "The Forgotten Tibia"
+statusTimeout = 5000
+replaceKickOnLogin = true
+maxPacketsPerSecond = 50
+
+-- Deaths
+-- NOTE: Leave deathLosePercent as -1 if you want to use the default
+-- death penalty formula. For the old formula, set it to 10. For
+-- no skill/experience loss, set it to 0.
+deathLosePercent = 10
+
+-- Houses
+-- NOTE: set housePriceEachSQM to -1 to disable the ingame buy house functionality
+housePriceEachSQM = 1000
+houseRentPeriod = "never"
+
+-- Item Usage
+timeBetweenActions = 200
+timeBetweenExActions = 1000
+
+-- Map
+-- NOTE: set mapName WITHOUT .otbm at the end
+mapName = "forgottenworld1098oldglobal"
+mapAuthor = "Unknown"
+
+-- Market
+marketOfferDuration = 30 * 24 * 60 * 60
+premiumToCreateMarketOffer = true
+checkExpiredMarketOffersEachMinutes = 60
+maxMarketOffersAtATimePerPlayer = 100
+
+-- MySQL (passwordType only needed for GesiorAAC)
+mysqlHost = "127.0.0.1"
+mysqlUser = "root"
+mysqlPass = ""
+mysqlDatabase = "forgottentibiaserver"
+mysqlPort = 3306
+mysqlSock = ""
+passwordType = "sha1"
+
+-- Misc.
+-- NOTE: classicAttackSpeed set to true makes players constantly attack at regular
+-- intervals regardless of other actions such as item (potion) use. This setting
+-- may cause high CPU usage with many players and potentially affect performance!
+allowChangeOutfit = true
+freePremium = false
+kickIdlePlayerAfterMinutes = 15
+maxMessageBuffer = 4
+emoteSpells = true
+classicEquipmentSlots = true
+classicAttackSpeed = false
+
+-- Skill Gain 
+-- NOTE: values has to be changed in data/lib/core/skillpoints.lua too
+magicManaGain = 15
+vitalityHealthGain = 15
+intelligenceManaGain = 10
+faithManaGain = 10
+resistanceCapGain = 5 * 100
+enduranceCapGain = 15 * 100
+enduranceHealthGain = 5
+
+-- DUAL WIELDING (70 = 70% of single weapon damage)
+allowDualWielding = true
+dualWieldingDamageRate = 70
+
+-- SHIELDS (default: 100 resistance, 0 dexterity)
+-- Shield formula:	defenseSkill = (RESISTANCE * shieldResistanceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
+shieldResistanceFactor = 100
+shieldDexterityFactor = 0
+
+-- DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
+-- Spear formula: 	attackSkill = 	(STRENGHT * spearStrenghtFactor / 100) 	+ (DEXTERITY * spearDexterityFactor / 100); 
+-- Bow formula: 	attackSkill = 	(STRENGHT * bowStrenghtFactor   / 100) 	+ (DEXTERITY * bowDexterityFactor   / 100); 
+spearDexterityFactor = 50
+spearStrenghtFactor = 75
+bowDexterityFactor = 75
+bowStrenghtFactor = 50
+
+-- WANDS and RODS (default: 0 int, 0 faith, 0 magic)
+-- Rod formula: 	maxDamage = maxDamage 	+ (maxDamage * 		  (FAITH - 8) / 100) 	* (rodFaithFactor / 100) 	+ (MAGIC * magicWandRodFactor / 100);
+-- Wand formula: 	maxDamage = maxDamage 	+ (maxDamage * (INTTELIGENCE - 8) / 100) 	* (wandIntFactor  / 100) 	+ (MAGIC * magicWandRodFactor / 100);
+rodFaithFactor = 200
+wandIntelligenceFactor = 100
+magicWandRodFactor = 0
+
+
+-- Rates
+-- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
+rateExp = 1
+rateSkill = 1
+rateLoot = 3
+rateMagic = 1
+rateSpawn = 2
+
+-- Monsters
+deSpawnRange = 2
+deSpawnRadius = 50
+
+-- Stamina
+staminaSystem = true
+
+-- Scripts
+warnUnsafeScripts = true
+convertUnsafeScripts = true
+
+-- Startup
+-- NOTE: defaultPriority only works on Windows and sets process
+-- priority, valid values are: "normal", "above-normal", "high"
+defaultPriority = "high"
+startupDatabaseOptimization = false
+
+-- Status server information
+ownerName = ""
+ownerEmail = ""
+url = "https://otland.net/"
+location = "Brazil"

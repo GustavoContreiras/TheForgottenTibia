@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Chemar" script="Chemar.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="146" head="61" body="21" legs="116" feet="58" addons="2"/>
+	<parameters>
+		<parameter key="message_greet" value="Greetings, daring adventurer. What about a {fly} to the {Venorian Swamp}?"/>
+        <parameter key="message_farewell" value="Good bye."/>
+		<parameter key="message_walkaway" value="Oh well." />
+	</parameters>
+</npc>

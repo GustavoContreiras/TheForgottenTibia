@@ -1,0 +1,148 @@
+EnterGameWindow < MainWindow
+  !text: tr('Enter Game')
+  size: 236 274
+
+EnterGameButton < Button
+  width: 64
+
+ServerListButton < UIButton
+  size: 17 17
+  image-source: /images/topbuttons/minimap
+  image-color: #ffffffff
+
+  $hover !disabled:
+    image-color: #ffffff99
+
+  $pressed:
+    image-color: #ffffff44
+
+  $disabled:
+    image-color: #ffffff55
+
+EnterGameWindow
+  id: enterGame
+  @onEnter: EnterGame.doLogin()
+
+  MenuLabel
+    !text: tr('Account name')
+    anchors.left: parent.left
+    anchors.top: parent.top
+    text-auto-resize: true
+
+  PasswordTextEdit
+    id: accountNameTextEdit
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  MenuLabel
+    !text: tr('Password')
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 8
+    text-auto-resize: true
+
+  PasswordTextEdit
+    id: accountPasswordTextEdit
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  MenuLabel
+    id: serverLabel
+    !text: tr('Server')
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 8
+    text-auto-resize: true
+
+  ServerListButton
+    id: serverListButton
+    !tooltip: tr('Server list')
+    anchors.right: parent.right
+    anchors.top: serverLabel.bottom
+    margin-top: 3
+    @onClick: ServerList.show()
+
+  TextEdit
+    id: serverHostTextEdit
+    !tooltip: tr('Make sure that your client uses\nthe correct game protocol version')
+    anchors.left: parent.left
+    anchors.right: serverListButton.left
+    anchors.top: serverLabel.bottom
+    margin-top: 2
+    margin-right: 4
+
+  MenuLabel
+    id: protocolLabel
+    !text: tr('Protocol')
+    anchors.left: parent.left
+    anchors.top: serverHostTextEdit.bottom
+    text-auto-resize: true
+    margin-right: 10
+    margin-top: 8
+
+  ComboBox
+    id: protocolComboBox
+    anchors.left: parent.left
+    anchors.right: parent.horizontalCenter
+    anchors.top: protocolLabel.bottom
+    margin-top: 2
+    margin-right: 3
+    width: 90
+    @onSetup: |
+      for _, proto in pairs(g_game.getSupportedProtocols()) do
+        self:addOption(proto)
+      end
+
+  MenuLabel
+    id: portLabel
+    !text: tr('Port')
+    anchors.left: serverPortTextEdit.left
+    anchors.top: serverHostTextEdit.bottom
+    margin-top: 8
+    text-auto-resize: true
+
+  TextEdit
+    id: serverPortTextEdit
+    text: 7171
+    anchors.right: parent.right
+    anchors.left: parent.horizontalCenter
+    anchors.top: protocolComboBox.top
+    margin-left: 3
+
+  CheckBox
+    id: rememberPasswordBox
+    !text: tr('Remember password')
+    !tooltip: tr('Remember account and password when starts client')
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 10
+    @onCheckChange: self:getParent():getChildById('autoLoginBox'):setEnabled(self:isChecked())
+
+  CheckBox
+    id: autoLoginBox
+    enabled: false
+    !text: tr('Auto login')
+    !tooltip: tr('Open charlist automatically when starting client')
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  EnterGameButton
+    !text: tr('Ok')
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: EnterGame.doLogin()
+
+  Label
+    id: serverInfoLabel
+    font: verdana-11px-rounded
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    color: green
+    text-auto-resize: true

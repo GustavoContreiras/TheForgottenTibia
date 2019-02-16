@@ -1,0 +1,177 @@
+window-size: 600 480
+window-pos: 660 300
+window-maximized: true
+uuid: LmkaV9PD3T7fChBZBsdwS1UsatI=
+locale: en
+enableAudio: true
+showPing: true
+hotkeyDelay: 50
+turnDelay: 50
+dontStretchShrink: false
+displayText: true
+backgroundFrameRate: 201
+displayMana: true
+displayHealth: true
+showLeftPanel: false
+foregroundFrameRate: 61
+displayNames: true
+classicControl: true
+enableMusicSound: true
+ambientLight: 25
+showLevelsInConsole: true
+enableLights: true
+showFps: true
+showEventMessagesInConsole: true
+showInfoMessagesInConsole: true
+dashWalk: false
+painterEngine: 0
+showStatusMessagesInConsole: true
+vsync: true
+autoChaseOverride: true
+showTimestampsInConsole: true
+smartWalk: false
+fullscreen: false
+showPrivateMessagesOnScreen: true
+musicSoundVolume: 100
+showPrivateMessagesInConsole: true
+report-uuid: 32355b9c-8c8c-4f05-8d8a-d15cd723597b
+host: 127.0.0.1
+port: 7171
+client-version: 1098
+staylogged: false
+motd: 3
+last-used-character: God Guto
+last-used-world: Fibula
+BattleList:
+  sortType: age
+UseIgnoreList: false
+UseWhiteList: false
+IgnorePrivateMessages: false
+IgnoreYelling: false
+VipList:
+  VipInfo:
+autologin: true
+account: moIaGJs=
+password: moIaGJs=
+MiniWindows:
+  cooldownWindow:
+    closed: true
+    parentId: gameRightPanel
+    index: 2
+  combatControlsWindow:
+    height: 72
+    parentId: gameRootPanel
+    position: 1529 164
+    index: 2
+  vipWindow:
+    parentId: gameRootPanel
+    position: 1529 238
+    index: 2
+  inventoryWindow:
+    index: 1
+    parentId: gameRightPanel
+  healthInfoWindow:
+    index: 1
+    position: 1530 39
+    parentId: gameRootPanel
+  battleWindow:
+    index: 2
+    position: 1529 340
+    height: 336.5
+    parentId: gameRootPanel
+  minimapWindow:
+    parentId: gameRootPanel
+    position: 2 39
+    height: 365.5
+    index: 3
+  skillWindow:
+    position: 3 405
+    height: 450
+    parentId: gameRootPanel
+lastChannelsOpen:
+LastCombatControls:
+  God Guto:
+    fightMode: 2
+    pvpMode: 0
+    chaseMode: 0
+    safeFight: true
+  New Char:
+    fightMode: 1
+    pvpMode: 0
+    chaseMode: 0
+    safeFight: true
+Minimap:
+  zoom: 0
+  flags:
+game_interface:
+  splitterMarginBottom: 157
+game_console:
+  messageHistory:
+    4: /i dragon ham
+    40: orcs
+    10: mounts
+    5: hi
+    41: utevo gran lux
+    22: trade
+    32: trade
+    11: donkey
+    12: yes
+    7: !add 2672
+    51: hi
+    52: trade
+    44: /goto guide
+    14: utani hur
+    8: hi
+    45: /a 50
+    9: mount
+    6: /goto The Oracle
+    16: trade
+    35: hi
+    25: hi
+    46: /reload movements
+    54: trade
+    36: tes
+    27: hi
+    37: yes
+    15: hi
+    17: hi
+    38: hi
+    50: exura gran
+    30: utevo gran lux
+    28: task
+    23: hi
+    48: exura
+    39: tasks
+    29: trolls
+    31: hi
+    49: utevo gran lux
+    42: exura
+    19: hi
+    1: exori infir vis
+    24: trade
+    33: hi
+    34: trade
+    18: /m dragon
+    21: hi
+    26: trade
+    13: exura
+    3: /i taurus mace
+    53: hi
+    2: utevo lux
+    43: utevo gran lux
+    47: /reload npcs
+    20: trade
+IgnorePlayers:
+WhitelistedPlayers:
+ServerList:
+  127.0.0.1:
+    password: moIaGJs=
+    protocol: 1098
+    account: moIaGJs=
+    port: 7171
+terminal-history:
+  - print(script_path())
+  - g_things.loadOtb('data/things/1099/items.otb')
+  - g_things.loadOtb('data/things/1098/items.otb')
+terminal-window:
+  poped: false

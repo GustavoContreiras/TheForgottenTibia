@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<globalevents>
+	<globalevent type="startup" name="ServerStartup" script="startup.lua" />
+	<globalevent type="record" name="PlayerRecord" script="record.lua" />
+	<globalevent name="DailyServerSave" time="08:40:00" script="dailyserversave.lua" />
+	<globalevent name="CTF" interval="10000" script="ctf.lua" />
+	<globalevent name="RaidSystem" interval="10000" script="raids.lua"/>
+
+	<!--
+	<globalevent name="timer_example" time="12:00:00" script="my_script.lua" />
+	-->
+</globalevents>

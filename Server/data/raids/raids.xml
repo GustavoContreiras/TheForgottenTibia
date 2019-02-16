@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<raids>
+	<!--<raid name="Orcs" file="Orcs.xml" interval2="720" margin="0" enabled="0" />--><!--
+	<raid name="Undeads" file="Undeads.xml" interval2="360" margin="0" />
+	<raid name="Dragons" file="Dragons.xml" interval2="360" margin="0" />
+	<raid name="Humans" file="Humans.xml" interval2="360" margin="0" />
+	<raid name="Apes" file="Apes.xml" interval2="360" margin="0" />
+	<raid name="Cyclops" file="Cylops.xml" interval2="360" margin="0" />
+	<raid name="Giant Spiders" file="Giant Spiders.xml" interval2="360" margin="0" />
+	<raid name="Poi" file="Poi.xml" interval2="360" margin="0" />-->
+</raids>

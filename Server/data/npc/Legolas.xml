@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Legolas" script="Legolas.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="684" head="77" body="107" legs="39" feet="25" addons="3" />
+	<parameters>
+		<parameter key="message_greet" value="Greetings, |PLAYERNAME|. Ask me for a {trade} to see the offers. I also have some hand-made {quivers} if you lost yours." />
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_sellable" value="
+										crossbow,2455,150;
+										bow,2456,80;" />
+		<parameter key="shop_buyable" value="
+										crossbow, 2455, 180;
+										bow, 2456, 100;
+										elvish bow, 7438, 2000;
+
+										spear, 2389, 10;
+										hunting spear, 3965, 15;
+										royal spear, 7378, 20;
+										enchanted spear, 7367, 100;
+
+										bolt, 2543, 3;
+										piercing bolt, 7363, 5;
+										vortex bolt, 15649, 6;
+										power bolt, 2547, 7;
+										drill bolt, 18436, 12;
+										prismatic bolt, 18435, 20;
+										infernal bolt, 6529, 300;
+
+										viper star, 7366, 75;
+										throwing star, 2399, 42;
+										assassin star, 7368, 100;
+
+										throwing knife, 2410, 20;
+										small stone, 1294, 5; 
+
+										arrow, 2544, 2;
+										poison arrow, 2545, 5;
+										onyx arrow, 7365, 7;
+										tarsal arrow, 15648, 6;
+										sniper arrow, 7364, 5;
+										shiver arrow, 7839, 5;
+										flash arrow, 7838, 5;
+										earth arrow, 7850, 5;
+										flaming arrow, 7840, 5;
+										crystalline arrow, 18304, 20;
+										envenomed arrow, 18437, 12" />
+	</parameters>
+</npc>

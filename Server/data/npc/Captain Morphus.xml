@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Captain Morphus" script="Captain Morphus.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="134" head="95" body="10" legs="56" feet="77" addons="0"/>
+	<parameters>
+		<parameter key="message_greet" value="Greetings, daring adventurer. Do you want to go to {Rhyves} or {Yalahar}?"/>
+        <parameter key="message_farewell" value="Good bye."/>
+		<parameter key="message_walkaway" value="Oh well." />
+	</parameters>
+</npc>

@@ -1,0 +1,230 @@
+SpellListLabel < Label
+  font: verdana-11px-monochrome
+  background-color: alpha
+  text-offset: 42 3
+  focusable: true
+  height: 36
+  image-clip: 0 0 32 32
+  image-size: 32 32
+  image-offset: 2 2
+  image-source: /images/game/spells/defaultspells
+
+  $focus:
+    background-color: #ffffff22
+    color: #ffffff
+
+SpellInfoLabel < Label
+  width: 70
+  font: verdana-11px-monochrome
+  text-align: right
+  margin-left: 10
+  margin-top: 5
+
+SpellInfoValueLabel < Label
+  text-align: left
+  width: 190
+  margin-left: 10
+  margin-top: 5
+
+FilterButton < Button
+  width: 64
+  anchors.left: prev.right
+  anchors.top: spellList.bottom
+  @onClick: toggleFilter(self)
+  margin: 5 0 0 6
+  color: #630000
+  $on:
+    color: green
+
+MainWindow
+  id: spelllistWindow
+  !text: tr('Spell List')
+  size: 550 310
+  @onEscape: toggle()
+
+  TextList
+    id: spellList
+    vertical-scrollbar: spellsScrollBar
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: next.top
+    margin-bottom: 10
+    padding: 1
+    width: 210
+    focusable: false
+
+  Button
+    id: buttonCancel
+    !text: tr('Close')
+    width: 64
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: toggle()
+
+  VerticalScrollBar
+    id: spellsScrollBar
+    anchors.top: spellList.top
+    anchors.bottom: spellList.bottom
+    anchors.right: spellList.right
+    step: 50
+    pixels-scroll: true
+
+  SpellInfoLabel
+    id: labelName
+    anchors.left: spellList.right
+    anchors.top: spellList.top
+    !text: tr('Name') .. ':'
+
+  Label
+    anchors.left: parent.left
+    anchors.top: spellList.bottom
+    !text: tr('Filters') .. ':'
+    margin-top: 8
+
+  FilterButton
+    id: buttonFilterIntelligence
+    width: 80
+    !text: tr('Intelligence')
+    !tooltip: tr('Hide spells for higher intelligence')
+
+  FilterButton
+    id: buttonFilterFaith
+    width: 64
+    !text: tr('Faith')
+    !tooltip: tr('Hide spells for higher faith')
+
+  SpellInfoLabel
+    id: labelFormula
+    anchors.left: spellList.right
+    anchors.top: labelName.bottom
+    !text: tr('Formula') .. ':'
+
+  SpellInfoLabel
+    id: labelGroup
+    anchors.left: spellList.right
+    anchors.top: labelFormula.bottom
+    !text: tr('Group') .. ':'
+
+  SpellInfoLabel
+    id: labelType
+    anchors.left: spellList.right
+    anchors.top: labelGroup.bottom
+    !text: tr('Type') .. ':'
+
+  SpellInfoLabel
+    id: labelCooldown
+    anchors.left: spellList.right
+    anchors.top: labelType.bottom
+    !text: tr('Cooldown') .. ':'
+
+  SpellInfoLabel
+    id: labelFaith
+    anchors.left: spellList.right
+    anchors.top: labelCooldown.bottom
+    !text: tr('Faith') .. ':'
+
+  SpellInfoLabel
+    id: labelIntelligence
+    anchors.left: spellList.right
+    anchors.top: labelFaith.bottom
+    !text: tr('Intelligence') .. ':'
+
+  SpellInfoLabel
+    id: labelMana
+    anchors.left: spellList.right
+    anchors.top: labelIntelligence.bottom
+    !text: tr('Mana') .. ' / ' .. tr('Soul') .. ':'
+
+  SpellInfoLabel
+    id: labelDescription
+    anchors.left: spellList.right
+    anchors.top: labelMana.bottom
+    !text: tr('Description') .. ':'
+
+  SpellInfoValueLabel
+    id: labelNameValue
+    anchors.left: labelName.right
+    anchors.top: spellList.top
+
+  SpellInfoValueLabel
+    id: labelFormulaValue
+    anchors.left: labelFormula.right
+    anchors.top: labelNameValue.bottom
+
+  SpellInfoValueLabel
+    id: labelGroupValue
+    anchors.left: labelGroup.right
+    anchors.top: labelFormulaValue.bottom
+
+  SpellInfoValueLabel
+    id: labelTypeValue
+    anchors.left: labelType.right
+    anchors.top: labelGroupValue.bottom
+
+  SpellInfoValueLabel
+    id: labelCooldownValue
+    anchors.left: labelCooldown.right
+    anchors.top: labelTypeValue.bottom
+
+  SpellInfoValueLabel
+    id: labelFaithValue
+    anchors.left: labelFaith.right
+    anchors.top: labelCooldownValue.bottom
+
+  SpellInfoValueLabel
+    id: labelIntelligenceValue
+    anchors.left: labelIntelligence.right
+    anchors.top: labelFaithValue.bottom
+
+  SpellInfoValueLabel
+    id: labelManaValue
+    anchors.left: labelMana.right
+    anchors.top: labelIntelligenceValue.bottom
+
+  SpellInfoValueLabel
+    id: labelDescriptionValue
+    anchors.left: labelDescription.right
+    anchors.top: labelManaValue.bottom
+
+  Label
+    id: labelGroupFilter
+    anchors.top: labelManaValue.bottom
+    anchors.left: spellsScrollBar.right
+    width: 70
+    font: verdana-11px-monochrome
+    !text: tr('Group')
+    margin-top: 30
+    margin-left: 20
+
+  CheckBox
+    id: groupBoxAny
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 3
+    margin-left: 3
+    !text: tr('Any')
+    width: 75
+
+  CheckBox
+    id: groupBoxAttack
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 3
+    !text: tr('Attack')
+    width: 75
+
+  CheckBox
+    id: groupBoxHealing
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 3
+    !text: tr('Healing')
+    width: 75
+
+  CheckBox
+    id: groupBoxSupport
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 3
+    !text: tr('Support')
+    width: 75
