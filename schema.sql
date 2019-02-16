@@ -58,8 +58,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`, `key`, `email_new`, `email_new_time`, `rlname`, `location`, `page_access`, `email_code`, `next_email`, `premium_points`, `create_date`, `create_ip`, `last_post`, `flag`) VALUES
-(1, '0', 'da4b9237bacccdf19c0760cab7aec4a8359010b0', NULL, 5, 90, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, ''),
-(2, '1', 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c', NULL, 1, 0, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, 'unknown');
+(1, '0', 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c', NULL, 5, 90, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, ''),
+(2, '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, 1, 0, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, 'unknown');
 
 -- --------------------------------------------------------
 
