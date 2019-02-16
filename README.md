@@ -1,4 +1,4 @@
-The Forgotten Tibia Server
+The Forgotten Tibia
 ===============
 
 The Forgotten Tibia Server is a free and open-source MMORPG server emulator written in C++.<br />
