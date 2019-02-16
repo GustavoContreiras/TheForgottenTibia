@@ -14,52 +14,42 @@ It uses a system to advance skills by distributing points that you receive each 
 
 * All clubs, swords and axes damage are based on strenght.
 
+* You can use two one-handed weapons at the same time:
+Attack speed will increase and each weapon damage will decrease.
+
 * Distance weapons damage are based on strenght and/or dexterity.
 
 * Two-handed melee weapons can do critical hit and bleeding effect.
 
 * The more levels you get, less points you receive.
 
-### Skills
-![](images/CharacterMastery.gif)
+* You don't need to open monster to pickup loots while hunting:
+Just need to select the item you want to loot.
 
-### Custom Systems
+* You don't need to refill ammunition when hunting with arrows or bolts:
+Just need to use a quiver/container on the arrow slot.
 
-* Dual Wield:<br />
-![](images/DualWield.gif)
+* Wands and Rods maximum damage are increased with intelligence and faith.
 
-The player can use 2 weapons (for example: club and sword, axe and spear, sword and throwing knife). The attack speed will be fixed in 200% but the damage will drop to 75%. Each combat turn the player will use one hand to defend and the other to attack.
+* Spells are based on Faith and Intelligence:
+There is no level or vocation requirement for spells. The more you raise faith and intelligence, more spells you get.
 
-* Two Handed Melee Weapons:<br />
-All two-handed melee weapons give +25% of critical hit chance and +100% of critical hit amount. Also, they have a chance of giving a bleeding effect to the target.
-
-* Auto Loot Gold:<br />
-![](images/AutoLoot.gif)
-
-The money dropped from monsters goes directly to the player.
-
-* Quiver:<br />
-![](images/Quiver.gif)
-
-Distance weapons are loading ammo from container item in the arrow slot and there is a new container item called "quiver".
-
-* Wands and Rods varying with skills:<br />
-Intelligence and faith raises the wands/rods maximum damage.
-
-* Spells based on Faith and Intelligence:<br />
-There is no level and vocation requirement for spells. The more you raise faith and intelligence, more spells you get.
-
-* Screen with one more tile:<br />
+* The screen has one more tile:
 It was added one more square meter to the screen.
+
+### Skills
+- Magic
+- Vitality
+- Strenght
+- Defence
+- Dexterity
+- Intelligence
+- Faith
+- Endurance
 
 ### Getting Started
 
-* Follow the official [Compiling Tutorial](https://github.com/otland/forgottenserver/wiki/Compiling) for The Forgotten Server 1.3 to generate the executable to run the server ([compiling on Visual Studio 2017](https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-%28vcpkg%29)).
-* [Scripting Reference](https://github.com/otland/forgottenserver/wiki/Script-Interface) (The Forgotten Server 1.3)
-
-### Support
-
-If you need help, please visit the [OTLand official thread](https://otland.net/threads/otclient-the-forgotten-tibia-server-0-8.262301/). Our issue tracker is not a support forum, and using it as one will result in your issue being closed.
+* See our [Wiki]().
 
 ### Issues
 
