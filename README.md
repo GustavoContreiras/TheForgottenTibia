@@ -17,7 +17,7 @@ Each level you advance ou receive points to be distributed among the skills. The
 - ### You can use two one-handed weapons at the same time  
 Attack speed will increase and each weapon damage will decrease.
 
-- ### Distance weapons damage are based on strenght and/or dexterity.
+- ### Distance weapons damage are based on Strenght and/or Dexterity.
 
 - ### Two-handed melee weapons can do critical hit and bleeding effect.
 
