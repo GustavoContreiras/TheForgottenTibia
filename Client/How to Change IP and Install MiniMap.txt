@@ -28,10 +28,3 @@ Portugues:
 1) va para pasta 'data/mods/client_entergame/'
 2) abra o arquivo 'server.otmod' com bloco de notas
 3) mude o IP
-
-
-CHANGE LOG:
-
-15.02.2019
-Added Psychonauts' AutoLoot button functions
-Removed my AutoLoot Gold & Addons button functions
