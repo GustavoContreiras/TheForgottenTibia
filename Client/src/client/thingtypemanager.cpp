@@ -107,6 +107,8 @@ bool ThingTypeManager::loadDat(std::string file)
 
         FileStreamPtr fin = g_resources.openFile(file);
 
+		fin->cache();
+
         m_datSignature = fin->getU32();
         m_contentRevision = static_cast<uint16_t>(m_datSignature);
 
