@@ -1,5 +1,4 @@
 WALK_STEPS_RETRY = 10
-WALK_STEPS_RETRY = 10
 
 gameRootPanel = nil
 gameMapPanel = nil
