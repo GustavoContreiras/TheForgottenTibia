@@ -1,7 +1,12 @@
 Client/data/things/1098/Tibia.spr
 Client/data/things/1098/Tibia.dat
+Client/otclient/
+Client/otclient.log
+Client/crashreport.log
 Client/vc14/.vs/
-Server/vc14/.vs/
+Client/vc14/Win32/
+Client/vc14/x64/
+Client/vc14/Release/
 Server/etc/
 Server/config.lua
 Server/data/world/forgottenworld1098oldglobal.otbm
@@ -9,4 +14,8 @@ Server/data/world/forgottenworld1098oldglobal-spawn.xml
 Server/data/world/forgottenworld1098oldglobal-house.xml
 Server/TheForgottenTibiaServerRestarter.bat
 Server/TheForgottenTibiaServer-x64-Restarter.exe
-Client/otclient/
+Server/vc14/.vs/
+Server/vc14/Win32/
+Server/vc14/x64/
+Server/vc14/Release/
+
