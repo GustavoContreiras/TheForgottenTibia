@@ -1,4 +1,5 @@
 WALK_STEPS_RETRY = 10
+WALK_STEPS_RETRY = 10
 
 gameRootPanel = nil
 gameMapPanel = nil
@@ -518,9 +519,7 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
   end
 
   if lookThing and not lookThing:isCreature() and not lookThing:isNotMoveable() and lookThing:isPickupable() then
-    menu:addSeparator()
-    menu:addOption(tr('Add to Loot List'), function() g_game.talk('!add ' .. useThing:getServerId()) end)
-	menu:addOption(tr('Remove from Loot List'), function() g_game.talk('!remove ' .. useThing:getServerId()) end)
+    menu:addOption(tr('Loot'), function() g_game.talk('!loot ' .. useThing:getServerId()) end)
     menu:addSeparator()
     menu:addOption(tr('Trade with ...'), function() startTradeWith(lookThing) end)
 	
@@ -540,7 +539,7 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
     if creatureThing:isLocalPlayer() then
       menu:addOption(tr('Character Mastery'), function() g_game.talk('!skills mastery') end)
       menu:addOption(tr('Set Outfit and Mount'), function() g_game.requestOutfit() end)
-	  menu:addOption(tr('Loot List'), function() g_game.talk('!autoloot') end)
+	  menu:addOption(tr('Loot List'), function() g_game.talk('!lootlist') end)
 
       if g_game.getFeature(GamePlayerMounts) then
         if not localPlayer:isMounted() then

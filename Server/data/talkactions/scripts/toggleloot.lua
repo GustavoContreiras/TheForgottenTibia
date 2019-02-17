@@ -8,12 +8,14 @@ function onSay(player, words, param)
             return false
         end
     end
+	
     if player:getAutoLootItem(itemType:getId()) then
-        player:sendCancelMessage("You are already looting this item.")
-        return false
-    end
-
-    player:addAutoLootItem(itemType:getId())
-    player:sendTextMessage(MESSAGE_INFO_DESCR, "You are now looting " .. itemType:getName())
-    return false
+        player:removeAutoLootItem(itemType:getId())
+        player:sendTextMessage(MESSAGE_INFO_DESCR, "You are not looting '" .. itemType:getName() .. "' anymore.")
+    else 
+		player:addAutoLootItem(itemType:getId())
+		player:sendTextMessage(MESSAGE_INFO_DESCR, "You are now looting '" .. itemType:getName() .. "'.")
+	end
+	
+	return false
 end

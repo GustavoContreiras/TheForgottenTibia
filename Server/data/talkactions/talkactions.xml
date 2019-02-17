@@ -48,15 +48,11 @@
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
 	<talkaction words="!skills" separator=" "  script="skillpoints.lua"/>
-	<talkaction words="!autoloot" separator=" "  script="autoloot.lua"/>
 	<talkaction words="!joinCTF" script="ctf.lua" />
 	<talkaction words="!leaveCTF" script="ctf.lua" />
-	
+	<talkaction words="!lootlist" script="lootlist.lua" />
+	<talkaction words="!loot" separator=" " script="toggleloot.lua" />
 	<!-- <talkaction words="!title" separator=" "  script="title.lua"/> MANAGED BY GUIDE NPC --> 
-	
-	<talkaction words="!autoloot" script="autolootpsycho.lua" /> <!-- WORKING! -->
-	<talkaction words="!add" separator=" " script="addautolootpsycho.lua" /> <!-- WORKING! -->
-	<talkaction words="!remove" separator=" " script="remautolootpsycho.lua" /> <!-- WORKING! -->
 
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />

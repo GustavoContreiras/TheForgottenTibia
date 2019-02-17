@@ -1,0 +1,85 @@
+window-size: 600 480
+window-pos: 383 144
+window-maximized: true
+uuid: 1N6UpiIrvzSJ2LzGOV4+rVmrJ3Y=
+locale: en
+enableAudio: true
+showPing: true
+hotkeyDelay: 50
+turnDelay: 50
+dontStretchShrink: false
+displayText: true
+backgroundFrameRate: 201
+displayMana: true
+displayHealth: true
+showLeftPanel: false
+foregroundFrameRate: 61
+displayNames: true
+classicControl: true
+enableMusicSound: true
+ambientLight: 25
+showLevelsInConsole: true
+enableLights: true
+showFps: false
+showEventMessagesInConsole: true
+showInfoMessagesInConsole: true
+dashWalk: false
+painterEngine: 0
+showStatusMessagesInConsole: true
+vsync: false
+autoChaseOverride: true
+showTimestampsInConsole: true
+smartWalk: false
+fullscreen: false
+showPrivateMessagesOnScreen: true
+musicSoundVolume: 100
+showPrivateMessagesInConsole: true
+report-uuid: 61f29f3b-7ec7-4666-b87b-d714e2fe726c
+host: 127.0.0.1
+port: 7171
+client-version: 1098
+staylogged: false
+motd: 3
+last-used-character: God Guto
+last-used-world: Fibula
+UseIgnoreList: false
+UseWhiteList: false
+IgnorePrivateMessages: false
+IgnoreYelling: false
+MiniWindows:
+  combatControlsWindow:
+    height: 72
+    closed: true
+  vipWindow:
+    closed: true
+  minimapWindow:
+    closed: true
+  battleWindow:
+    closed: true
+  cooldownWindow:
+    closed: true
+lastChannelsOpen:
+LastCombatControls:
+  God Guto:
+    fightMode: 2
+    pvpMode: 0
+    chaseMode: 0
+    safeFight: true
+Minimap:
+  zoom: 0
+  flags:
+game_interface:
+  splitterMarginBottom: 100
+game_console:
+  messageHistory:
+    1: /goto legolas
+IgnorePlayers:
+WhitelistedPlayers:
+ServerList:
+  127.0.0.1:
+    password:
+    protocol: 1098
+    account:
+    port: 7171
+terminal-window:
+  poped: false
