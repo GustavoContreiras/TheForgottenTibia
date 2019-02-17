@@ -51,7 +51,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "G:\\OneDrive\\Projetos\\OpenTibia\\TheForgottenTibiaServer 0.8\\vc14\\icon-forgottentibia-red.ico"
+IDI_ICON1               ICON                    "G:\\OneDrive\\Projetos\\OpenTibia\\TheForgottenTibia\\Server\\vc14\\icon-forgottentibia-red.ico"
 
 #endif    // Portuguese (Brazil) resources
 /////////////////////////////////////////////////////////////////////////////
