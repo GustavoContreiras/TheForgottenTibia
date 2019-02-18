@@ -30,10 +30,10 @@ Just need to use a quiver/container on the arrow slot.
 - ### Wands and Rods maximum damage can be increased
 When you advance your intelligence skill you increase your wand's maximum damage. Same thing works for faith and rods.
 
-- ### Access to spells are based on Faith and Intelligence  
+- ### Access to spells and runes are based on Faith and Intelligence  
 There is no level or vocation requirement for spells. The more you raise faith and intelligence, more spells you get.
 
-- ### Access to runes and runes damage are based on Magic
+- ### Runes damage are based on Magic
 
 - ### The screen has one more tile  
 It was added one more square meter to the screen.
