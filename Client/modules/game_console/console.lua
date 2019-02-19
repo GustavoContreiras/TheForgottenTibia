@@ -180,7 +180,7 @@ function enableChat()
   consoleTextEdit:setVisible(true)
   consoleTextEdit:setText("")
 
-  g_keyboard.unbindKeyUp("Space")
+  --g_keyboard.unbindKeyUp("Space")
   g_keyboard.unbindKeyUp("Enter")
   g_keyboard.unbindKeyUp("Escape")
 
@@ -209,7 +209,7 @@ function disableChat()
     end
     enableChat()
   end
-  g_keyboard.bindKeyUp("Space", quickFunc)
+  --g_keyboard.bindKeyUp("Space", quickFunc)
   g_keyboard.bindKeyUp("Enter", quickFunc)
   g_keyboard.bindKeyUp("Escape", quickFunc)
 
