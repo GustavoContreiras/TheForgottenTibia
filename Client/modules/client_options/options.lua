@@ -15,7 +15,7 @@ local defaultOptions = {
   showPrivateMessagesInConsole = true,
   showPrivateMessagesOnScreen = true,
   showLeftPanel = false,
-  moveWindowsToPanel = false;
+  moveWindowsToPanel = false,
   foregroundFrameRate = 61,
   backgroundFrameRate = 201,
   painterEngine = 0,
@@ -206,7 +206,6 @@ function setOption(key, value, force)
     modules.game_interface.getLeftPanel():setOn(value)
   elseif key == 'moveWindowsToPanel' then
     g_settings.set('moveWindowsToPanel', true)
-	--print(g_settings.getBoolean('moveWindowsToPanel'))
   elseif key == 'backgroundFrameRate' then
     local text, v = value, value
     if value <= 0 or value >= 201 then text = 'max' v = 0 end
