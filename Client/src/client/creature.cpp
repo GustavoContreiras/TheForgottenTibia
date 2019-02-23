@@ -501,35 +501,40 @@ void Creature::updateWalkAnimation(int totalPixelsWalked)
     if(m_outfit.getCategory() != ThingCategoryCreature)
         return;
 
-    int footAnimPhases = getAnimationPhases();
-    int footDelay = (getStepDuration(true) / footAnimPhases) * 2;
+    int footAnimPhases = getAnimationPhases() - 1;
+    float footDelay = getStepDuration(true) / footAnimPhases;
 
     // since mount is a different outfit we need to get the mount animation phases
     if(m_outfit.getMount() != 0) {
         ThingType *type = g_things.rawGetThingType(m_outfit.getMount(), m_outfit.getCategory());
-        footAnimPhases = type->getAnimationPhases();
-		footDelay = (getStepDuration(true) / footAnimPhases) * 2;
+        footAnimPhases = type->getAnimationPhases() - 1;
+		footDelay = getStepDuration(true) / footAnimPhases;
     }
-    if(footAnimPhases == 0)
-        m_walkAnimationPhase = 0;
+
+	if (totalPixelsWalked >= 32 && !m_walkFinishAnimEvent) {
+		m_footStep = 0;
+
+		auto self = static_self_cast<Creature>();
+		m_walkFinishAnimEvent = g_dispatcher.scheduleEvent([self] {
+			if (!self->m_walking || self->m_walkTimer.ticksElapsed() >= self->getStepDuration(true)) {
+				self->m_walkAnimationPhase = 0;
+			}
+			self->m_walkFinishAnimEvent = nullptr;
+		}, std::min<int>(footDelay, 200));
+	}
+
+	if (footAnimPhases == 0) {
+		m_walkAnimationPhase = 0;
+	}
     else if(m_footStepDrawn && m_footTimer.ticksElapsed() >= footDelay && totalPixelsWalked < 32) {
         m_footStep++;
-		m_walkAnimationPhase = m_footStep % footAnimPhases;
+		m_walkAnimationPhase = (m_footStep % footAnimPhases);
         m_footStepDrawn = false;
         m_footTimer.restart();
-    } else if(m_walkAnimationPhase == 0 && totalPixelsWalked < 32) {
-		m_walkAnimationPhase = m_footStep % footAnimPhases;
     }
-
-    if(totalPixelsWalked >= 32 && !m_walkFinishAnimEvent) {
-        auto self = static_self_cast<Creature>();
-        m_walkFinishAnimEvent = g_dispatcher.scheduleEvent([self] {
-            if(!self->m_walking || self->m_walkTimer.ticksElapsed() >= self->getStepDuration(true))
-                self->m_walkAnimationPhase = 0;
-            self->m_walkFinishAnimEvent = nullptr;
-        }, std::min<int>(footDelay, 200));
+	else if(m_walkAnimationPhase == 0 && totalPixelsWalked < 32) {
+		m_walkAnimationPhase = (m_footStep % footAnimPhases);
     }
-
 }
 
 void Creature::updateWalkOffset(int totalPixelsWalked)
