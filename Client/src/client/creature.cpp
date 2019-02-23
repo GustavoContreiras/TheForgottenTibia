@@ -502,12 +502,13 @@ void Creature::updateWalkAnimation(int totalPixelsWalked)
         return;
 
     int footAnimPhases = getAnimationPhases();
-    int footDelay = getStepDuration(true) / footAnimPhases;
-    // Since mount is a different outfit we need to get the mount animation phases
+    int footDelay = (getStepDuration(true) / footAnimPhases) * 2;
+
+    // since mount is a different outfit we need to get the mount animation phases
     if(m_outfit.getMount() != 0) {
         ThingType *type = g_things.rawGetThingType(m_outfit.getMount(), m_outfit.getCategory());
         footAnimPhases = type->getAnimationPhases();
-		footDelay = getStepDuration(true) / footAnimPhases;
+		footDelay = (getStepDuration(true) / footAnimPhases) * 2;
     }
     if(footAnimPhases == 0)
         m_walkAnimationPhase = 0;
@@ -520,7 +521,7 @@ void Creature::updateWalkAnimation(int totalPixelsWalked)
 		m_walkAnimationPhase = m_footStep % footAnimPhases;
     }
 
-    if(totalPixelsWalked == 32 && !m_walkFinishAnimEvent) {
+    if(totalPixelsWalked >= 32 && !m_walkFinishAnimEvent) {
         auto self = static_self_cast<Creature>();
         m_walkFinishAnimEvent = g_dispatcher.scheduleEvent([self] {
             if(!self->m_walking || self->m_walkTimer.ticksElapsed() >= self->getStepDuration(true))
