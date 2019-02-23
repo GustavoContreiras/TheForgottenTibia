@@ -302,7 +302,7 @@ void MonsterType::createLoot(Container* corpse)
 				lootMsg = autolooted.erase(0, 2) + " that was auto looted";
 			}
 			else if (autolooted != "") {
-				lootMsg = corpse->getContentDescription() + " and " + autolooted.erase(0, 2) + " was auto looted.";
+				lootMsg = corpse->getContentDescription() + " and " + autolooted.erase(0, 2) + " that was auto looted.";
 			}
 
 			ss << "Loot of " << nameDescription << ": " << lootMsg;
