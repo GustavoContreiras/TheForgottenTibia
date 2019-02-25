@@ -409,7 +409,6 @@ function onMagicLevelChange(localPlayer, magiclevel, percent)
   onBaseMagicLevelChange(localPlayer, localPlayer:getBaseMagicLevel())
 end
 
-
 function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
   setSkillBase('magiclevel', localPlayer:getMagicLevel(), baseMagicLevel)
 end
