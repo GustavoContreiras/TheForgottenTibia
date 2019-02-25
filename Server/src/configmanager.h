@@ -42,6 +42,7 @@ class ConfigManager
 			CLASSIC_EQUIPMENT_SLOTS,
 			CLASSIC_ATTACK_SPEED,
 			ALLOW_DUAL_WIELDING,
+			REFILL_HEALTHMANA_LEVELUP,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};

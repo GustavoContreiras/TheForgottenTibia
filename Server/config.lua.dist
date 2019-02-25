@@ -75,6 +75,7 @@ maxMessageBuffer = 4
 emoteSpells = true
 classicEquipmentSlots = true
 classicAttackSpeed = false
+refillHealthAndManaOnLevelUp = false
 
 -- Skill Gain 
 -- NOTE: values has to be changed in data/lib/core/skillpoints.lua too

@@ -1785,14 +1785,17 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 	}
 
 	if (prevLevel != level) {
-		//health = healthMax;
-		//mana = manaMax;
 
+		if (g_config.getBoolean(ConfigManager::REFILL_HEALTHMANA_LEVELUP)) {
+			health = healthMax;
+			mana = manaMax;
+		}
+		
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
 
 		g_game.changeSpeed(this, 0);
-		//g_game.addCreatureHealth(this);
+		g_game.addCreatureHealth(this);
 
 		if (party) {
 			party->updateSharedExperience();

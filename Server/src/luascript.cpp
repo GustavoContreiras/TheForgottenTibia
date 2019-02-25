@@ -1845,6 +1845,8 @@ void LuaScriptInterface::registerFunctions()
 
 	//THE FORGOTTEN TIBIA! \/
 
+	registerEnumIn("configKeys", ConfigManager::REFILL_HEALTHMANA_LEVELUP)
+
 	registerEnumIn("configKeys", ConfigManager::MAGIC_MANAGAIN)
 	registerEnumIn("configKeys", ConfigManager::VITALITY_HEALTHGAIN)
 	registerEnumIn("configKeys", ConfigManager::STRENGHT_HEALTHGAIN)

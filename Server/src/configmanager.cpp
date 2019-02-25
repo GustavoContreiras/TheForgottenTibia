@@ -145,6 +145,8 @@ bool ConfigManager::load()
 	string[MOTD] = getGlobalString(L, "motd", "");
 	string[WORLD_TYPE] = getGlobalString(L, "worldType", "pvp");
 
+	boolean[REFILL_HEALTHMANA_LEVELUP] = getGlobalBoolean(L, "refillHealthAndManaOnLevelUp", false);
+
 	integer[MAGIC_MANAGAIN] = getGlobalNumber(L, "magicManaGain", 15);
 	integer[VITALITY_HEALTHGAIN] = getGlobalNumber(L, "vitalityHealthGain", 15);
 	integer[STRENGHT_HEALTHGAIN] = getGlobalNumber(L, "strenghtHealthGain", 0);
