@@ -1,7 +1,7 @@
 MainWindow
   id: masteryWindow
   !text: tr('Character Mastery')
-  size: 600 550
+  size: 500 600
   @onEscape: modules.game_mastery.terminate()
 
   Label
@@ -14,7 +14,6 @@ MainWindow
 
   Label
     id: availablePointsValueLabel
-    !text: tr('10')
     anchors.top: availablePointsLabel.top
     anchors.bottom: availablePointsLabel.bottom
     anchors.left: availablePointsLabel.right
@@ -22,16 +21,24 @@ MainWindow
 
   Label
     id: magicLabel
-    !text: tr('Magic')
+    !text: tr('Magic:')
     anchors.top: availablePointsLabel.bottom
     anchors.left: parent.left
     margin-top: 15
     margin-left: 5
 
-  Button
-    id: magicMinusButton
+  Label
+    id: magicValueLabel
+    !text: tr('99')
     anchors.top: magicLabel.top
     anchors.left: magicLabel.right
+    anchors.bottom: magicLabel.bottom
+    margin-left: 5
+
+  Button
+    id: magicMinusButton
+    anchors.top: magicValueLabel.top
+    anchors.left: magicValueLabel.right
     width: 15
     height: 15
     margin-left: 5
@@ -50,36 +57,98 @@ MainWindow
 
   FlatPanel
     id: magicPanel
-    height: 25
+    height: 47
     width: 250
     anchors.top: magicLabel.bottom
     anchors.left: parent.left
-    margin-top: 5
+    margin-top: 2
     margin-left: 5
     image-color: #ffffff88
 
     Label
       id: magicDescriptionLabel
       width: 240
-      height: 50
-      !text: tr('Gives more spell power, rune power and mana')
+      height: 45
+      !text: tr('+ magical damage (spells and runes)\n+ 15 mana\n+ access to runes')
       anchors.top: parent.top
       anchors.left: parent.left
-      margin-top: 5
-      margin-left: 5
+      margin-top: 2
+      margin-left: 4
 
   Label
-    id: strenghtLabel
-    !text: tr('Strenght')
+    id: vitalityLabel
+    !text: tr('Vitality:')
     anchors.top: magicPanel.bottom
     anchors.left: parent.left
     margin-top: 15
     margin-left: 5
 
+  Label
+    id: vitalityValueLabel
+    !text: tr('99')
+    anchors.top: vitalityLabel.top
+    anchors.left: vitalityLabel.right
+    anchors.bottom: vitalityLabel.bottom
+    margin-left: 5
+
   Button
-    id: strenghtMinusButton
+    id: vitalityMinusButton
+    anchors.top: vitalityValueLabel.top
+    anchors.left: vitalityValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: magicPlusButton
+    anchors.top: vitalityMinusButton.top
+    anchors.left: vitalityMinusButton.right
+    anchors.bottom: vitalityMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: vitalityPanel
+    height: 17
+    width: 250
+    anchors.top: vitalityLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: vitalityDescriptionLabel
+      !text: tr('+ 15 health')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 2
+      margin-left: 4
+
+  Label
+    id: strenghtLabel
+    !text: tr('Strenght:')
+    anchors.top: vitalityPanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: strenghtValueLabel
+    !text: tr('99')
     anchors.top: strenghtLabel.top
     anchors.left: strenghtLabel.right
+    anchors.bottom: strenghtLabel.bottom
+    margin-left: 5
+
+  Button
+    id: strenghtMinusButton
+    anchors.top: strenghtValueLabel.top
+    anchors.left: strenghtValueLabel.right
     width: 15
     height: 15
     margin-left: 5
@@ -98,7 +167,7 @@ MainWindow
 
   FlatPanel
     id: strenghtPanel
-    height: 25
+    height: 40
     width: 250
     anchors.top: strenghtLabel.bottom
     anchors.left: parent.left
@@ -108,6 +177,282 @@ MainWindow
 
     Label
       id: strenghtDescriptionLabel
+      width: 250
+      height: 45
+      !text: tr('+ melee damage (swords, axes and clubs)\n+ 5 capacity')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: defenceLabel
+    !text: tr('Defence:')
+    anchors.top: strenghtPanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: defenceValueLabel
+    !text: tr('99')
+    anchors.top: defenceLabel.top
+    anchors.left: defenceLabel.right
+    anchors.bottom: defenceLabel.bottom
+    margin-left: 5
+
+  Button
+    id: defenceMinusButton
+    anchors.top: defenceValueLabel.top
+    anchors.left: defenceValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: defencePlusButton
+    anchors.top: defenceMinusButton.top
+    anchors.left: defenceMinusButton.right
+    anchors.bottom: defenceMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: defencePanel
+    height: 40
+    width: 250
+    anchors.top: defenceLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: defenceDescriptionLabel
+      width: 250
+      height: 45
+      !text: tr('+ shield defence\n+ 5 health')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: dexterityLabel
+    !text: tr('Dexterity:')
+    anchors.top: defencePanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: dexterityValueLabel
+    !text: tr('99')
+    anchors.top: dexterityLabel.top
+    anchors.left: dexterityLabel.right
+    anchors.bottom: dexterityLabel.bottom
+    margin-left: 5
+
+  Button
+    id: dexterityMinusButton
+    anchors.top: dexterityValueLabel.top
+    anchors.left: dexterityValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: dexterityPlusButton
+    anchors.top: dexterityMinusButton.top
+    anchors.left: dexterityMinusButton.right
+    anchors.bottom: dexterityMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: dexterityPanel
+    height: 55
+    width: 250
+    anchors.top: dexterityLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: dexterityDescriptionLabel
+      width: 250
+      height: 45
+      !text: tr('+ distance damage\n+ 0.25 walk speed\n + 0.25 attack speed')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: intelligenceLabel
+    !text: tr('Intelligence:')
+    anchors.top: dexterityPanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: intelligenceValueLabel
+    !text: tr('99')
+    anchors.top: intelligenceLabel.top
+    anchors.left: intelligenceLabel.right
+    anchors.bottom: intelligenceLabel.bottom
+    margin-left: 5
+
+  Button
+    id: intelligenceMinusButton
+    anchors.top: intelligenceValueLabel.top
+    anchors.left: intelligenceValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: intelligencePlusButton
+    anchors.top: intelligenceMinusButton.top
+    anchors.left: intelligenceMinusButton.right
+    anchors.bottom: intelligenceMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: intelligencePanel
+    height: 25
+    width: 250
+    anchors.top: intelligenceLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: intelligenceDescriptionLabel
+      !text: tr('Gives more physical damage')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: faithLabel
+    !text: tr('Faith:')
+    anchors.top: intelligencePanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: faithValueLabel
+    !text: tr('99')
+    anchors.top: faithLabel.top
+    anchors.left: faithLabel.right
+    anchors.bottom: faithLabel.bottom
+    margin-left: 5
+
+  Button
+    id: faithMinusButton
+    anchors.top: faithValueLabel.top
+    anchors.left: faithValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: faithPlusButton
+    anchors.top: faithMinusButton.top
+    anchors.left: faithMinusButton.right
+    anchors.bottom: faithMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: faithPanel
+    height: 25
+    width: 250
+    anchors.top: faithLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: faithDescriptionLabel
+      !text: tr('Gives more physical damage')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: enduranceLabel
+    !text: tr('Endurance:')
+    anchors.top: faithPanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Label
+    id: enduranceValueLabel
+    !text: tr('99')
+    anchors.top: enduranceLabel.top
+    anchors.left: enduranceLabel.right
+    anchors.bottom: enduranceLabel.bottom
+    margin-left: 5
+
+  Button
+    id: enduranceMinusButton
+    anchors.top: enduranceValueLabel.top
+    anchors.left: enduranceValueLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: endurancePlusButton
+    anchors.top: enduranceMinusButton.top
+    anchors.left: enduranceMinusButton.right
+    anchors.bottom: enduranceMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: endurancePanel
+    height: 25
+    width: 250
+    anchors.top: enduranceLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: enduranceDescriptionLabel
       !text: tr('Gives more physical damage')
       anchors.top: parent.top
       anchors.left: parent.left

@@ -100,8 +100,7 @@ function setSkillBase(id, value, baseValue)
   end
 end
 
---CHANGED!!!!!!!!!!!!
-function setSkillValue(localPlayer, id, value)
+function setSkillValue(localPlayer, id, value) --CHANGED!
   local skill = skillsWindow:recursiveGetChildById(id)
   
   local widget = skill:getChildById('value')
