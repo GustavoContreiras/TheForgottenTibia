@@ -1,0 +1,140 @@
+MainWindow
+  id: masteryWindow
+  !text: tr('Character Mastery')
+  size: 600 550
+  @onEscape: modules.game_mastery.terminate()
+
+  Label
+    id: availablePointsLabel
+    !text: tr('Available points:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+
+  Label
+    id: availablePointsValueLabel
+    !text: tr('10')
+    anchors.top: availablePointsLabel.top
+    anchors.bottom: availablePointsLabel.bottom
+    anchors.left: availablePointsLabel.right
+    margin-left: 5
+
+  Label
+    id: magicLabel
+    !text: tr('Magic')
+    anchors.top: availablePointsLabel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Button
+    id: magicMinusButton
+    anchors.top: magicLabel.top
+    anchors.left: magicLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: magicPlusButton
+    anchors.top: magicMinusButton.top
+    anchors.left: magicMinusButton.right
+    anchors.bottom: magicMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: magicPanel
+    height: 25
+    width: 250
+    anchors.top: magicLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: magicDescriptionLabel
+      width: 240
+      height: 50
+      !text: tr('Gives more spell power, rune power and mana')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Label
+    id: strenghtLabel
+    !text: tr('Strenght')
+    anchors.top: magicPanel.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 5
+
+  Button
+    id: strenghtMinusButton
+    anchors.top: strenghtLabel.top
+    anchors.left: strenghtLabel.right
+    width: 15
+    height: 15
+    margin-left: 5
+    !text: tr('-')
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: strenghtPlusButton
+    anchors.top: strenghtMinusButton.top
+    anchors.left: strenghtMinusButton.right
+    anchors.bottom: strenghtMinusButton.bottom
+    width: 15
+    height: 15
+    !text: tr('+')
+    @onClick: modules.game_mastery.terminate()
+
+  FlatPanel
+    id: strenghtPanel
+    height: 25
+    width: 250
+    anchors.top: strenghtLabel.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 5
+    image-color: #ffffff88
+
+    Label
+      id: strenghtDescriptionLabel
+      !text: tr('Gives more physical damage')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+
+  Button
+    id: helpButton
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    !text: tr('Help')
+    width: 90
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: closeButton
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    !text: tr('Close')
+    width: 90
+    @onClick: modules.game_mastery.terminate()
+
+  Button
+    id: applyButton
+    anchors.bottom: parent.bottom
+    anchors.right: closeButton.left
+    !text: tr('Apply')
+    width: 90
+    margin-right: 5
+    @onClick: modules.game_mastery.terminate() 

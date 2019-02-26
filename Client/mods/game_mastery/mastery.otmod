@@ -1,0 +1,9 @@
+Module
+  name: game_mastery
+  description: Manage mastery window
+  author: togu
+  website: https://github.com/GustavoContreiras/TheForgottenTibia
+  sandboxed: true
+  scripts: [ mastery ]
+  @onLoad: init()
+  @onUnload: terminate()
