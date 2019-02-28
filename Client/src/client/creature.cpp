@@ -915,15 +915,15 @@ int Creature::getStepDuration(bool ignoreDiagonal, Otc::Direction dir)
     if(g_game.getClientVersion() >= 900)
 		interval = std::ceil(interval / (g_game.getServerBeat() * 1.f)) * g_game.getServerBeat();
 
-    float factor = 3;
-    if(g_game.getClientVersion() <= 810)
-        factor = 2;
+    //float factor = 3;
+    //if(g_game.getClientVersion() <= 810)
+    //    factor = 2;
 
     interval = std::max<int>(interval, g_game.getServerBeat());
 
-    if(!ignoreDiagonal && (m_lastStepDirection == Otc::NorthWest || m_lastStepDirection == Otc::NorthEast ||
-       m_lastStepDirection == Otc::SouthWest || m_lastStepDirection == Otc::SouthEast))
-        interval *= factor;
+    //if(!ignoreDiagonal && (m_lastStepDirection == Otc::NorthWest || m_lastStepDirection == Otc::NorthEast ||
+    //   m_lastStepDirection == Otc::SouthWest || m_lastStepDirection == Otc::SouthEast))
+    //    interval *= factor;
 
     return interval;
 }
