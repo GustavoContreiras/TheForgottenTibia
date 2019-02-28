@@ -417,7 +417,7 @@ void Creature::updateJump()
 
         int nextT, i = 1;
         do {
-            nextT = stdext::round((-b + std::sqrt(std::max<int>(b*b + 4*a*(roundHeight+diff*i), 0.0)) * diff) / (2*a));
+            nextT = stdext::round((-b + std::sqrt(std::max<double>(b*b + 4*a*(roundHeight+diff*i), 0.0)) * diff) / (2*a));
             ++i;
 
             if(nextT < halfJumpDuration)
@@ -501,8 +501,8 @@ void Creature::updateWalkAnimation(int totalPixelsWalked)
     if(m_outfit.getCategory() != ThingCategoryCreature)
         return;
 
-    int footAnimPhases = getAnimationPhases() - 1;
-    float footDelay = getStepDuration(true) / footAnimPhases;
+    int footAnimPhases = getAnimationPhases() - 1; //returns 8
+    float footDelay = getStepDuration(true) / footAnimPhases; //varies with the g round
 
     // since mount is a different outfit we need to get the mount animation phases
     if(m_outfit.getMount() != 0) {
