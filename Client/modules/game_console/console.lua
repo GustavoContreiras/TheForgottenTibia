@@ -978,7 +978,7 @@ function navigateMessageHistory(step)
 end
 
 function applyMessagePrefixies(name, level, message)
-  if name then
+  if name and #name > 0 then
     if modules.client_options.getOption('showLevelsInConsole') and level > 0 then
       message = name .. ' [' .. level .. ']: ' .. message
     else
