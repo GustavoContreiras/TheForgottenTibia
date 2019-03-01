@@ -361,6 +361,7 @@ void Creature::walk(const Position& oldPos, const Position& newPos)
     m_walking = true;
     m_walkTimer.restart();
     m_walkedPixels = 0;
+	m_footStep = 0;
 
     if(m_walkFinishAnimEvent) {
         m_walkFinishAnimEvent->cancel();
