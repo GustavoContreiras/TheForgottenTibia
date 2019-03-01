@@ -1381,18 +1381,10 @@ class Player final : public Creature, public Cylinder
 			}
 		}
 
-
 		bool isPromoted() const;
 
 		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY AND DUAL WIELD ATTACK SPEED
-		uint32_t getAttackSpeed() const {
-			if (isDualWielding()) {
-				return 1000;
-			}
-			else {
-				return 2000 - ((skills[SKILL_DEXTERITY].level - 8) * 5);
-			}
-		}
+		uint16_t getAttackSpeed() const;
 
 		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 		double getLostPercent() const;

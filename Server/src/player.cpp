@@ -418,15 +418,15 @@ bool Player::isDualWielding() const
 	return false;
 }
 
-//uint32_t Player::getAttackSpeed(Player* player) const
-/*{
-	if (player->isDualWielding()) {
+uint16_t Player::getAttackSpeed() const
+{
+	if (isDualWielding()) {
 		return 1000;
 	}
 	else {
-		return 2000 + 8 * 10 - player->skills[SKILL_DEXTERITY].level * 5;
+		return 2000 + 8 * 10 - skills[SKILL_DEXTERITY].level * 5;
 	}
-}*/
+}
 
 //NEW! TITLE
 bool Player::setTitleDescription(PlayerTitle_t titleId)

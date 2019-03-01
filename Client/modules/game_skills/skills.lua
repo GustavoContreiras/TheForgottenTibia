@@ -15,6 +15,7 @@ function init()
     onRegenerationChange = onRegenerationChange,
     onSpeedChange = onSpeedChange,
     onBaseSpeedChange = onBaseSpeedChange,
+    onAttackSpeedChange = onAttackSpeedChange,
     onMagicLevelChange = onMagicLevelChange,
     onBaseMagicLevelChange = onBaseMagicLevelChange,
     onSkillChange = onSkillChange,
@@ -47,6 +48,7 @@ function terminate()
     onRegenerationChange = onRegenerationChange,
     onSpeedChange = onSpeedChange,
     onBaseSpeedChange = onBaseSpeedChange,
+    onAttackSpeedChange = onAttackSpeedChange,
     onMagicLevelChange = onMagicLevelChange,
     onBaseMagicLevelChange = onBaseMagicLevelChange,
     onSkillChange = onSkillChange,
@@ -399,6 +401,15 @@ end
 
 function onBaseSpeedChange(localPlayer, baseSpeed)
   setSkillBase('speed', localPlayer:getSpeed(), baseSpeed)
+end
+
+function onAttackSpeedChange(localPlayer, attackSpeed)
+  attackSpeed = localPlayer:getAttackSpeed()
+  if attackSpeed == 1000 then
+    setSkillValue(localPlayer, 'attackspeed', "200%")
+  else
+    setSkillValue(localPlayer, 'attackspeed', ((localPlayer:getSkillBaseLevel(4) - 8)/4 + 100) .. "%")
+  end
 end
 
 function onMagicLevelChange(localPlayer, magiclevel, percent)

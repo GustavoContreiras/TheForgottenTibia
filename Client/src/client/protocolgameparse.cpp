@@ -1396,14 +1396,8 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
     if(g_game.getFeature(Otc::GamePlayerRegenerationTime))
         regeneration = msg->getU16();
 
-    double training = 0;
-    if(g_game.getFeature(Otc::GameOfflineTrainingTime)) {
-        training = msg->getU16();
-        if(g_game.getClientVersion() >= 1097) {
-            int remainingStoreXpBoostSeconds = msg->getU16();
-            bool canBuyMoreStoreXpBoosts = msg->getU8();
-        }
-    }
+    double attackSpeed = 0;
+	attackSpeed = msg->getU16();
 
     m_localPlayer->setHealth(health, maxHealth);
     m_localPlayer->setFreeCapacity(freeCapacity);
@@ -1417,7 +1411,7 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
     m_localPlayer->setSoul(soul);
     m_localPlayer->setBaseSpeed(baseSpeed);
     m_localPlayer->setRegenerationTime(regeneration);
-    m_localPlayer->setOfflineTrainingTime(training);
+    m_localPlayer->setAttackSpeed(attackSpeed);
 }
 
 void ProtocolGame::parsePlayerSkills(const InputMessagePtr& msg)
@@ -1472,7 +1466,6 @@ void ProtocolGame::parsePlayerCancelAttack(const InputMessagePtr& msg)
 
     g_game.processAttackCancel(seq);
 }
-
 
 void ProtocolGame::parsePlayerModes(const InputMessagePtr& msg)
 {
@@ -2099,6 +2092,7 @@ int ProtocolGame::setTileDescription(const InputMessagePtr& msg, Position positi
 
     return 0;
 }
+
 Outfit ProtocolGame::getOutfit(const InputMessagePtr& msg)
 {
     Outfit outfit;

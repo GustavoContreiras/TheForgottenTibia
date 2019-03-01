@@ -753,6 +753,16 @@ void Creature::setBaseSpeed(double baseSpeed)
     }
 }
 
+void Creature::setAttackSpeed(double attackSpeed)
+{
+	if (m_attackSpeed != attackSpeed) {
+		double oldAttackSpeed = m_attackSpeed;
+		m_attackSpeed = attackSpeed;
+
+		callLuaField("onAttackSpeedChange", attackSpeed, oldAttackSpeed);
+	}
+}
+
 void Creature::setSkull(uint8 skull)
 {
     m_skull = skull;
