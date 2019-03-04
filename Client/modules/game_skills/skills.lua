@@ -202,12 +202,6 @@ function checkAlert(id, value, maxValue, threshold, greaterThan)
 end
 
 function update()
-  if not g_game.getFeature(GameOfflineTrainingTime) then
-    offlineTraining:hide()
-  else
-    offlineTraining:show()
-  end
-]]
   local regenerationTime = skillsWindow:recursiveGetChildById('regenerationTime')
   if not g_game.getFeature(GamePlayerRegenerationTime) then
     regenerationTime:hide()
@@ -363,21 +357,6 @@ function onStaminaChange(localPlayer, stamina)
   setSkillPercent('stamina', percent, tr('You have %s percent', percent))
 end
 
-function onOfflineTrainingChange(localPlayer, offlineTrainingTime)
- --[[ if not g_game.getFeature(GameOfflineTrainingTime) then
-    return
-  end
-  local hours = math.floor(offlineTrainingTime / 60)
-  local minutes = offlineTrainingTime % 60
-  if minutes < 10 then
-    minutes = '0' .. minutes
-  end
-  local percent = 100 * offlineTrainingTime / (12 * 60) -- max is 12 hours
-
-  setSkillValue(localPlayer, 'offlineTraining', hours .. ":" .. minutes)
-  setSkillPercent('offlineTraining', percent, tr('You have %s percent', percent))]]
-end
-
 function onRegenerationChange(localPlayer, regenerationTime)
   if not g_game.getFeature(GamePlayerRegenerationTime) or regenerationTime < 0 then
     return
@@ -402,17 +381,19 @@ function onBaseSpeedChange(localPlayer, baseSpeed)
 end
 
 function onAttackSpeedChange(localPlayer, attackSpeed)
-  local attackSpeed = localPlayer:getAttackSpeed()
   local skill = skillsWindow:recursiveGetChildById('attackspeed')
   local widget = skill:getChildById('value')
- 
+  local value = ((2000 - attackSpeed) / 10) + 100
+  local valueDecimalTxt = '' .. value % 1
+  if valueDecimalTxt == '0.3' or valueDecimalTxt == '0.8' then
+    value = value - 0.05
+  end
+  setSkillValue(localPlayer, 'attackspeed', (value .. '%'))
+  
   if attackSpeed == 1000 then
-    setSkillValue(localPlayer, 'attackspeed', "200%")
-    
     widget:setColor('#008b00') -- green
 	skill:setTooltip('Dual wielding')
   else
-    setSkillValue(localPlayer, 'attackspeed', ((localPlayer:getSkillBaseLevel(4) - 8)/4 + 100) .. "%")
 	widget:setColor('#bbbbbb') -- default
     skill:removeTooltip()
   end
@@ -432,11 +413,11 @@ end
 function onSkillChange(localPlayer, id, level, percent)
   setSkillValue(localPlayer, 'skillId' .. id, level)
   setSkillPercent('skillId' .. id, percent, tr('You have %s percent to go', 100 - percent))
-  setSkillValue(localPlayer, 'attackspeed', ((localPlayer:getSkillBaseLevel(4) - 8)/4 + 100) .. "%")
+  onAttackSpeedChange(localPlayer, localPlayer:getAttackSpeed())
   onBaseSkillChange(localPlayer, id, localPlayer:getSkillBaseLevel(id))
 end
 
 function onBaseSkillChange(localPlayer, id, baseLevel)
   setSkillBase('skillId'.. id, localPlayer:getSkillLevel(id), baseLevel)
-  setSkillValue(localPlayer, 'attackspeed', ((localPlayer:getSkillBaseLevel(4) - 8)/4 + 100) .. "%")
+  onAttackSpeedChange(localPlayer, localPlayer:getAttackSpeed())
 end

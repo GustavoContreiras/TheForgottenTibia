@@ -424,7 +424,7 @@ uint16_t Player::getAttackSpeed() const
 		return 1000;
 	}
 	else {
-		return 2000 + 8 * 10 - skills[SKILL_DEXTERITY].level * 5;
+		return 2020 - skills[SKILL_DEXTERITY].level * 2.5;
 	}
 }
 
