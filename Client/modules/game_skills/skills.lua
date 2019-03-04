@@ -202,7 +202,6 @@ function checkAlert(id, value, maxValue, threshold, greaterThan)
 end
 
 function update()
---[[ local offlineTraining = skillsWindow:recursiveGetChildById('offlineTraining')
   if not g_game.getFeature(GameOfflineTrainingTime) then
     offlineTraining:hide()
   else
@@ -232,7 +231,6 @@ function refresh()
   onFreeCapacityChange(player, player:getFreeCapacity())
   onStaminaChange(player, player:getStamina())
   onMagicLevelChange(player, player:getMagicLevel(), player:getMagicLevelPercent())
---  onOfflineTrainingChange(player, player:getOfflineTrainingTime())
   onRegenerationChange(player, player:getRegenerationTime())
   onSpeedChange(player, player:getSpeed())
 
@@ -404,11 +402,19 @@ function onBaseSpeedChange(localPlayer, baseSpeed)
 end
 
 function onAttackSpeedChange(localPlayer, attackSpeed)
-  attackSpeed = localPlayer:getAttackSpeed()
+  local attackSpeed = localPlayer:getAttackSpeed()
+  local skill = skillsWindow:recursiveGetChildById('attackspeed')
+  local widget = skill:getChildById('value')
+ 
   if attackSpeed == 1000 then
     setSkillValue(localPlayer, 'attackspeed', "200%")
+    
+    widget:setColor('#008b00') -- green
+	skill:setTooltip('Dual wielding')
   else
     setSkillValue(localPlayer, 'attackspeed', ((localPlayer:getSkillBaseLevel(4) - 8)/4 + 100) .. "%")
+	widget:setColor('#bbbbbb') -- default
+    skill:removeTooltip()
   end
 end
 
