@@ -77,7 +77,6 @@ enum tradestate_t : uint8_t {
 enum attackHand_t : uint8_t {
 	HAND_LEFT,
 	HAND_RIGHT,
-	
 };
 
 struct VIPEntry {
@@ -391,7 +390,10 @@ class Player final : public Creature, public Cylinder
 			return level;
 		}
 		uint32_t getPoints() const {
-			return points;
+			return skillPoints;
+		}
+		void setPoints(uint32_t value) {
+			skillPoints = value;
 		}
 		uint8_t getLevelPercent() const {
 			return levelPercent;
