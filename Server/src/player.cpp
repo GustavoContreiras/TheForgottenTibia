@@ -437,7 +437,7 @@ bool Player::setTitleDescription(PlayerTitle_t titleId)
 
 int32_t Player::getDefense() const
 {
-	int32_t defenseSkill = (getSkillLevel(SKILL_RESISTANCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
+	int32_t defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
 	int32_t defenseValue = 7;
 	const Item* weapon;
 	const Item* shield;
@@ -450,7 +450,7 @@ int32_t Player::getDefense() const
 
 	if (shield) {
 		defenseValue = weapon != nullptr ? shield->getDefense() + weapon->getExtraDefense() : shield->getDefense();
-		defenseSkill = (getSkillLevel(SKILL_RESISTANCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
+		defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
 	}
 
 	if (defenseSkill == 0) {

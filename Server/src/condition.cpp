@@ -598,12 +598,12 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 		}
 
 		case CONDITION_PARAM_SKILL_RESISTANCE: {
-			skills[SKILL_RESISTANCE] = value;
+			skills[SKILL_DEFENCE] = value;
 			return true;
 		}
 
 		case CONDITION_PARAM_SKILL_RESISTANCEPERCENT: {
-			skillsPercent[SKILL_RESISTANCE] = value;
+			skillsPercent[SKILL_DEFENCE] = value;
 			return true;
 		}
 
