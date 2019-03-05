@@ -1237,7 +1237,6 @@ void Game::setOpenPvpSituations(int openPvpSituations)
     g_lua.callGlobalField("g_game", "onOpenPvpSituationsChange", openPvpSituations);
 }
 
-
 void Game::inspectNpcTrade(const ItemPtr& item)
 {
     if(!canPerformGameAction() || !item)
