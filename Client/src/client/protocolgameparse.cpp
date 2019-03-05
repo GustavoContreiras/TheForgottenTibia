@@ -1399,6 +1399,9 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
     double attackSpeed = 0;
 	attackSpeed = msg->getU16();
 
+	double skillPoints = 0;
+	skillPoints = msg->getU32();
+
     m_localPlayer->setHealth(health, maxHealth);
     m_localPlayer->setFreeCapacity(freeCapacity);
     m_localPlayer->setTotalCapacity(totalCapacity);
@@ -1412,6 +1415,7 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
     m_localPlayer->setBaseSpeed(baseSpeed);
     m_localPlayer->setRegenerationTime(regeneration);
     m_localPlayer->setAttackSpeed(attackSpeed);
+	m_localPlayer->setPoints(skillPoints);
 }
 
 void ProtocolGame::parsePlayerSkills(const InputMessagePtr& msg)

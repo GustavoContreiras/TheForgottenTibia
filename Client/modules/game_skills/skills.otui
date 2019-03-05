@@ -7,21 +7,53 @@ SkillButton < UIButton
 
 SmallSkillButton < SkillButton
   height: 14
-
+  
 SkillNameLabel < GameLabel
   font: verdana-11px-monochrome
   anchors.left: parent.left
   anchors.top: parent.top
   anchors.bottom: parent.bottom
+  
+SkillNameLabelAlignedRight < GameLabel
+  margin-right: 80
+  text-align: topright
+  anchors.right: parent.right
 
 SkillValueLabel < GameLabel
   id: value
+  width: 80
   font: verdana-11px-monochrome
   text-align: topright
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  anchors.right: parent.right
+  
+SkillValueLabelAlignedLeft < SkillValueLabel
+  margin-left: 5
+  text-align: topleft
+  anchors.left: prev.right
+  
+SkillMinusButton < Button
+  id: minusButton
+  font: verdana-11px-monochrome
+  width: 15
+  height: 15
+  margin-right: 1
+  anchors.right: prev.left
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  !text: tr('-') 
+
+SkillPlusButton < Button
+  id: plusButton
+  font: verdana-11px-monochrome
+  width: 15
+  height: 15
+  margin-left: 2
   anchors.right: parent.right
   anchors.top: parent.top
   anchors.bottom: parent.bottom
-  anchors.left: prev.left
+  !text: tr('+')
 
 SkillPercentPanel < ProgressBar
   id: percent
@@ -36,10 +68,19 @@ SkillPercentPanel < ProgressBar
 MiniWindow
   id: skillWindow
   !text: tr('Skills')
-  height: 150
   icon: /images/topbuttons/skills
   @onClose: modules.game_skills.onMiniWindowClose()
   &save: true
+  
+  Label
+    text: ?
+    text-align: center
+    phantom: false
+    !tooltip: tr('Click \'apply\' to save changes')
+    anchors.top: minimizeButton.top
+    anchors.right: minimizeButton.left
+    margin-right: 3
+    size: 14 14
 
   MiniWindowContents
     padding-left: 5
@@ -65,44 +106,51 @@ MiniWindow
     SkillButton
       id: health
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Health')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: mana
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Mana')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: soul
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Soul')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: capacity
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Capacity')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+
+    SkillButton
+      id: points
+      height: 15
+      SkillNameLabelAlignedRight
+        !text: tr('Points')
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: speed
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Walk Speed')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: attackspeed
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Attack Speed')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
 
     SkillButton
       id: regenerationTime
@@ -121,58 +169,75 @@ MiniWindow
     SkillButton
       id: magiclevel
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Magic')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId0
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Vitality')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId1
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Strenght')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+        @onClick: g_game.sendIncreaseSkill(1)
+      SkillMinusButton
 
     SkillButton
       id: skillId5
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Defence')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId4
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Dexterity')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId3
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Intelligence')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId2
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Faith')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton
 
     SkillButton
       id: skillId6
       height: 15
-      SkillNameLabel
+      SkillNameLabelAlignedRight
         !text: tr('Endurance')
-      SkillValueLabel
+      SkillValueLabelAlignedLeft
+      SkillPlusButton
+      SkillMinusButton	
 
     SmallSkillButton
       id: skillId7
@@ -184,28 +249,4 @@ MiniWindow
       id: skillId8
       SkillNameLabel
         !text: tr('Critical Hit Damage')
-      SkillValueLabel
-
-    SmallSkillButton
-      id: skillId9
-      SkillNameLabel
-        !text: tr('Life Leech Chance')
-      SkillValueLabel
-
-    SmallSkillButton
-      id: skillId10
-      SkillNameLabel
-        !text: tr('Life Leech Amount')
-      SkillValueLabel
-
-    SmallSkillButton
-      id: skillId11
-      SkillNameLabel
-        !text: tr('Mana Leech Chance')
-      SkillValueLabel
-
-    SmallSkillButton
-      id: skillId12
-      SkillNameLabel
-        !text: tr('Mana Leech Amount')
       SkillValueLabel

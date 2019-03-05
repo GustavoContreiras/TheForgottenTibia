@@ -454,6 +454,8 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<Creature>("getSpeed", &Creature::getSpeed);
     g_lua.bindClassMemberFunction<Creature>("getBaseSpeed", &Creature::getBaseSpeed);
 	g_lua.bindClassMemberFunction<Creature>("getAttackSpeed", &Creature::getAttackSpeed);
+	g_lua.bindClassMemberFunction<Creature>("getPoints", &Creature::getPoints);
+	g_lua.bindClassMemberFunction<Creature>("setPoints", &Creature::setPoints);
     g_lua.bindClassMemberFunction<Creature>("getSkull", &Creature::getSkull);
     g_lua.bindClassMemberFunction<Creature>("getShield", &Creature::getShield);
     g_lua.bindClassMemberFunction<Creature>("getEmblem", &Creature::getEmblem);

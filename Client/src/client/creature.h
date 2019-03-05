@@ -60,6 +60,7 @@ public:
     void setSpeed(uint16 speed);
     void setBaseSpeed(double baseSpeed);
 	void setAttackSpeed(double attackSpeed);
+	void setPoints(double points);
     void setSkull(uint8 skull);
     void setShield(uint8 shield);
     void setEmblem(uint8 emblem);
@@ -88,6 +89,7 @@ public:
     uint16 getSpeed() { return m_speed; }
     double getBaseSpeed() { return m_baseSpeed; }
 	double getAttackSpeed() { return m_attackSpeed; }
+	double getPoints() { return m_skillPoints; }
     uint8 getSkull() { return m_skull; }
     uint8 getShield() { return m_shield; }
     uint8 getEmblem() { return m_emblem; }
@@ -156,6 +158,7 @@ protected:
     int m_speed;
     double m_baseSpeed;
 	double m_attackSpeed;
+	double m_skillPoints;
     uint8 m_skull;
     uint8 m_shield;
     uint8 m_emblem;

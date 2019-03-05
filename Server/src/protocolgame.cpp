@@ -2936,8 +2936,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 
 	msg.add<uint16_t>(player->getAttackSpeed());
 
-	//msg.add<uint16_t>(0); // xp boost time (seconds)
-	//msg.addByte(0); // enables exp boost in the store
+	msg.add<uint32_t>(player->getPoints());
 }
 
 void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)

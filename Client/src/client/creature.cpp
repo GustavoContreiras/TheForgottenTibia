@@ -763,6 +763,16 @@ void Creature::setAttackSpeed(double attackSpeed)
 	}
 }
 
+void Creature::setPoints(double points)
+{
+	if (m_skillPoints != points) {
+		double oldSkillPoints = m_skillPoints;
+		m_skillPoints = points;
+
+		callLuaField("onPointsChange", points, oldSkillPoints);
+	}
+}
+
 void Creature::setSkull(uint8 skull)
 {
     m_skull = skull;

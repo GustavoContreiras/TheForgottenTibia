@@ -10,8 +10,8 @@ function init()
     onSoulChange = onSoulChange,
     onFreeCapacityChange = onFreeCapacityChange,
     onTotalCapacityChange = onTotalCapacityChange,
+	onPointsChange = onPointsChange,
     onStaminaChange = onStaminaChange,
-   -- onOfflineTrainingChange = onOfflineTrainingChange,
     onRegenerationChange = onRegenerationChange,
     onSpeedChange = onSpeedChange,
     onBaseSpeedChange = onBaseSpeedChange,
@@ -43,8 +43,8 @@ function terminate()
     onSoulChange = onSoulChange,
     onFreeCapacityChange = onFreeCapacityChange,
     onTotalCapacityChange = onTotalCapacityChange,
+    onPointsChange = onPointsChange,
     onStaminaChange = onStaminaChange,
- --   onOfflineTrainingChange = onOfflineTrainingChange,
     onRegenerationChange = onRegenerationChange,
     onSpeedChange = onSpeedChange,
     onBaseSpeedChange = onBaseSpeedChange,
@@ -103,34 +103,43 @@ function setSkillBase(id, value, baseValue)
 end
 
 function setSkillValue(localPlayer, id, value) --CHANGED!
-  local skill = skillsWindow:recursiveGetChildById(id)
-  
-  local widget = skill:getChildById('value')
-  widget:setText(value)
 
+  local skill = nil
+  local widget = nil
+  
+  if id then
+	skill = skillsWindow:recursiveGetChildById(id)
+	if skill then
+      widget = skill:getChildById('value')
+	  if widget and value then
+        widget:setText(value)
+      end
+    end
+  end
+  
   local skillMagic = skillsWindow:recursiveGetChildById('magiclevel')
-  skillMagic:setTooltip('Gives more spell and rune power and +15 mana')
+  skillMagic:setTooltip('+ spell damage\n+ rune damage\n+ 15 mana       ')
 
   local skillVitality = skillsWindow:recursiveGetChildById('skillId0')
-  skillVitality:setTooltip('Gives +15 health')
+  skillVitality:setTooltip('+ 15 health')
 
   local skillStrenght = skillsWindow:recursiveGetChildById('skillId1')
-  skillStrenght:setTooltip('Gives more melee and distance damage and +5 capacity')
+  skillStrenght:setTooltip('+ melee damage   \n+ distance damage\n+ 5 capacity         ')
 
   local skillFaith = skillsWindow:recursiveGetChildById('skillId2')
-  skillFaith:setTooltip('Gives +2% of maximum damage for rod, access to support and healing spells and +10 mana')
+  skillFaith:setTooltip('+ 2% of maximum damage for rod\n + support spells                              \n+ healing spells                              \n+ 10 mana                                     ')
 
   local skillIntelligence = skillsWindow:recursiveGetChildById('skillId3')
-  skillIntelligence:setTooltip('Gives +1% of maximum damage for wand, access to attack spells and +10 mana')
+  skillIntelligence:setTooltip('+ 1% of maximum damage for wand\n + attack spells                                  \n+ 10 mana                                       ')
 
   local skillDexterity = skillsWindow:recursiveGetChildById('skillId4')
-  skillDexterity:setTooltip('Gives more distance damage, +0.25 walk speed and +0.25 attack speed')
+  skillDexterity:setTooltip('+ distance damage     \n+ 0.25 walk speed      \n+ 0.25% attack speed')
 
   local skillResistance = skillsWindow:recursiveGetChildById('skillId5')
-  skillResistance:setTooltip('Gives more shield defence and +5 health')
+  skillResistance:setTooltip('+ resistance to physical damage\n+ 5 health                                ')
 
   local skillEndurance = skillsWindow:recursiveGetChildById('skillId6')
-  skillEndurance:setTooltip('Gives +15 capacity and +5 Health')
+  skillEndurance:setTooltip('+ 15 capacity\n+ 5 health     ')
 end
 
 function setSkillColor(id, value)
@@ -146,9 +155,19 @@ function setSkillTooltip(id, value)
 end
 
 function setSkillPercent(id, percent, tooltip)
-  local skill = skillsWindow:recursiveGetChildById(id)
-  local widget = skill:getChildById('percent')
-  if widget then
+
+  local skill = nil
+  local widget = nil
+  
+  if id then
+    skill = skillsWindow:recursiveGetChildById(id)
+  end
+  
+  if skill then
+    widget = skill:getChildById('percent')
+  end
+  
+  if widget and percent then
     widget:setPercent(math.floor(percent))
 
     if tooltip then
@@ -223,13 +242,14 @@ function refresh()
   onManaChange(player, player:getMana(), player:getMaxMana())
   onSoulChange(player, player:getSoul())
   onFreeCapacityChange(player, player:getFreeCapacity())
+  onPointsChange(player, player:getPoints())
   onStaminaChange(player, player:getStamina())
   onMagicLevelChange(player, player:getMagicLevel(), player:getMagicLevelPercent())
   onRegenerationChange(player, player:getRegenerationTime())
   onSpeedChange(player, player:getSpeed())
 
   local hasAdditionalSkills = g_game.getFeature(GameAdditionalSkills)
-  for i = Skill.Fist, Skill.ManaLeechAmount do
+  for i = Skill.Fist, Skill.ManaLeechAmount-4 do
     onSkillChange(player, i, player:getSkillLevel(i), player:getSkillLevelPercent(i))
     onBaseSkillChange(player, i, player:getSkillBaseLevel(i))
 
@@ -241,12 +261,11 @@ function refresh()
   update()
 
   local contentsPanel = skillsWindow:getChildById('contentsPanel')
-  skillsWindow:setContentMinimumHeight(44)
+  skillsWindow:setContentMinimumHeight(47)
   if hasAdditionalSkills then
-    --skillsWindow:setContentMaximumHeight(480)
-    skillsWindow:setContentMaximumHeight(425)
+    skillsWindow:setContentMaximumHeight(380)
   else
-    skillsWindow:setContentMaximumHeight(390)
+    skillsWindow:setContentMaximumHeight(380)
   end
 end
 
@@ -287,11 +306,22 @@ function onMiniWindowClose()
 end
 
 function onSkillButtonClick(button)
-  local percentBar = button:getChildById('percent')
+
+  --[[local percentBar = button:getChildById('percent')
   if percentBar then
     percentBar:setVisible(not percentBar:isVisible())
     if percentBar:isVisible() then
       button:setHeight(21)
+    else
+      button:setHeight(21 - 6)
+    end
+  end]]
+  
+  local description = button:getChildById('description')
+  if description then
+    description:setVisible(not description:isVisible())
+    if description:isVisible() then
+      button:setHeight(70)
     else
       button:setHeight(21 - 6)
     end
@@ -343,6 +373,31 @@ end
 
 function onTotalCapacityChange(localPlayer, totalCapacity)
   checkAlert('capacity', localPlayer:getFreeCapacity(), totalCapacity, 20)
+end
+
+function onPointsChange(localPlayer, value)
+  setSkillValue(localPlayer, 'points', value)
+  
+  if value == 0 then
+  
+    local skill = skillsWindow:recursiveGetChildById('magiclevel')
+	local widgetMinus = skill:getChildById('minusButton')
+	local widgetPlus = skill:getChildById('plusButton')
+	if widgetMinus and widgetPlus then
+		widgetMinus:setVisible(false)
+		widgetPlus:setVisible(false)
+	end
+	
+    for i = Skill.Fist, Skill.ManaLeechAmount-4 do
+		local skill = skillsWindow:recursiveGetChildById('skillId'..i)
+		local widgetMinus = skill:getChildById('minusButton')
+		local widgetPlus = skill:getChildById('plusButton')
+		if widgetMinus and widgetPlus then
+			widgetMinus:setVisible(false)
+			widgetPlus:setVisible(false)
+		end
+    end
+  end
 end
 
 function onStaminaChange(localPlayer, stamina)
