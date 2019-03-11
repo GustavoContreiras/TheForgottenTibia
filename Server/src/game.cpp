@@ -2453,6 +2453,48 @@ void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_
 	player->sendContainer(containerId, container, container->hasParent(), index);
 }
 
+void Game::playerSetNewSkills(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
+							  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
+{
+	Player* player = getPlayerByID(playerId);
+	if (!player) {
+		return;
+	}
+
+	if (magic < player->magLevel)
+		magic = player->magLevel;
+	if (vitality < player->skills[SKILL_VITALITY].level)
+		vitality = player->skills[SKILL_VITALITY].level;
+	if (strenght < player->skills[SKILL_STRENGHT].level)
+		strenght = player->skills[SKILL_STRENGHT].level;
+	if (defence < player->skills[SKILL_DEFENCE].level)
+		defence = player->skills[SKILL_DEFENCE].level;
+	if (dexterity < player->skills[SKILL_DEXTERITY].level)
+		dexterity = player->skills[SKILL_DEXTERITY].level;
+	if (intelligence < player->skills[SKILL_INTELLIGENCE].level)
+		intelligence = player->skills[SKILL_INTELLIGENCE].level;
+	if (faith < player->skills[SKILL_FAITH].level)
+		faith = player->skills[SKILL_FAITH].level;
+	if (endurance < player->skills[SKILL_ENDURANCE].level)
+		endurance = player->skills[SKILL_ENDURANCE].level;
+
+	uint8_t pointsNeeded = (magic - player->magLevel) * 3 +
+							vitality - player->skills[SKILL_VITALITY].level + 
+							strenght - player->skills[SKILL_STRENGHT].level + 
+							defence - player->skills[SKILL_DEFENCE].level + 
+							dexterity - player->skills[SKILL_DEXTERITY].level + 
+							intelligence - player->skills[SKILL_INTELLIGENCE].level + 
+							faith - player->skills[SKILL_FAITH].level + 
+							endurance - player->skills[SKILL_ENDURANCE].level;
+
+	if (player->skillPoints >= pointsNeeded) {
+		player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
+	}
+	else {
+		std::cout << "[Error - Game::playerSetNewSkills] Player " << player->getName() << " " << "(" << player->getSkillPoints() << " points) tried to apply skills without having enough points (" << pointsNeeded << " needed)." << std::endl;
+	}	
+}
+
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
 {
 	Player* player = getPlayerByID(playerId);

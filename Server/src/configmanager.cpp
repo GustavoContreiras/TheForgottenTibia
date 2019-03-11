@@ -153,8 +153,8 @@ bool ConfigManager::load()
 	integer[STRENGHT_CAPGAIN] = getGlobalNumber(L, "strenghtCapGain", 5);
 	integer[INTELLIGENCE_MANAGAIN] = getGlobalNumber(L, "intelligenceManaGain", 10);
 	integer[FAITH_MANAGAIN] = getGlobalNumber(L, "faithManaGain", 10);
-	integer[RESISTANCE_CAPGAIN] = getGlobalNumber(L, "resistanceCapGain", 0);
-	integer[RESISTANCE_HEALTHGAIN] = getGlobalNumber(L, "resistanceHealthGain", 5);
+	integer[DEFENCE_CAPGAIN] = getGlobalNumber(L, "defenceCapGain", 0);
+	integer[DEFENCE_HEALTHGAIN] = getGlobalNumber(L, "defenceHealthGain", 5);
 	integer[ENDURANCE_CAPGAIN] = getGlobalNumber(L, "enduranceCapGain", 15);
 	integer[ENDURANCE_HEALTHGAIN] = getGlobalNumber(L, "enduranceHealthGain", 5);
 

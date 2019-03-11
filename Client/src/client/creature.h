@@ -57,10 +57,8 @@ public:
     void setOutfit(const Outfit& outfit);
     void setOutfitColor(const Color& color, int duration);
     void setLight(const Light& light) { m_light = light; }
-    void setSpeed(uint16 speed);
+    void setSpeed(double speed);
     void setBaseSpeed(double baseSpeed);
-	void setAttackSpeed(double attackSpeed);
-	void setPoints(double points);
     void setSkull(uint8 skull);
     void setShield(uint8 shield);
     void setEmblem(uint8 emblem);
@@ -86,10 +84,8 @@ public:
     Otc::Direction getDirection() { return m_direction; }
     Outfit getOutfit() { return m_outfit; }
     Light getLight() { return m_light; }
-    uint16 getSpeed() { return m_speed; }
+    double getSpeed() { return m_speed; }
     double getBaseSpeed() { return m_baseSpeed; }
-	double getAttackSpeed() { return m_attackSpeed; }
-	double getPoints() { return m_skillPoints; }
     uint8 getSkull() { return m_skull; }
     uint8 getShield() { return m_shield; }
     uint8 getEmblem() { return m_emblem; }
@@ -155,10 +151,8 @@ protected:
     Otc::Direction m_direction;
     Outfit m_outfit;
     Light m_light;
-    int m_speed;
+    double m_speed;
     double m_baseSpeed;
-	double m_attackSpeed;
-	double m_skillPoints;
     uint8 m_skull;
     uint8 m_shield;
     uint8 m_emblem;

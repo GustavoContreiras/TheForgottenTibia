@@ -731,9 +731,9 @@ void Creature::updateOutfitColor(Color color, Color finalColor, Color delta, int
     }
 }
 
-void Creature::setSpeed(uint16 speed)
+void Creature::setSpeed(double speed)
 {
-    uint16 oldSpeed = m_speed;
+    double oldSpeed = m_speed;
     m_speed = speed;
 
     // speed can change while walking (utani hur, paralyze, etc..)
@@ -751,26 +751,6 @@ void Creature::setBaseSpeed(double baseSpeed)
 
         callLuaField("onBaseSpeedChange", baseSpeed, oldBaseSpeed);
     }
-}
-
-void Creature::setAttackSpeed(double attackSpeed)
-{
-	if (m_attackSpeed != attackSpeed) {
-		double oldAttackSpeed = m_attackSpeed;
-		m_attackSpeed = attackSpeed;
-
-		callLuaField("onAttackSpeedChange", attackSpeed, oldAttackSpeed);
-	}
-}
-
-void Creature::setPoints(double points)
-{
-	if (m_skillPoints != points) {
-		double oldSkillPoints = m_skillPoints;
-		m_skillPoints = points;
-
-		callLuaField("onPointsChange", points, oldSkillPoints);
-	}
 }
 
 void Creature::setSkull(uint8 skull)
@@ -894,7 +874,7 @@ Point Creature::getDrawOffset()
 
 int Creature::getStepDuration(bool ignoreDiagonal, Otc::Direction dir)
 {
-    int speed = m_speed;
+    double speed = m_speed;
     if(speed < 1)
         return 0;
 

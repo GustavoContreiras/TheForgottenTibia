@@ -306,11 +306,11 @@ WeaponType_t Player::getWeaponType() const
 	return item->getWeaponType();
 }
 
-//NEW! SKILL POINTS SYSTEM
+//CHANGED! SKILL POINTS SYSTEM
 int32_t Player::getWeaponSkill(const Item* item) const
 {
 	if (!item) { //STRENGHT
-		return getSkillLevel(SKILL_STRENGHT); //* g_config.getNumber(ConfigManager::MELEE_STRENGHTFACTOR) / 100 + getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::MELEE_DEXTERITYFACTOR) / 100;
+		return getSkillLevel(SKILL_STRENGHT);
 	}
 
 	int32_t attackSkill;
@@ -318,17 +318,17 @@ int32_t Player::getWeaponSkill(const Item* item) const
 	WeaponType_t weaponType = item->getWeaponType();
 	switch (weaponType) {
 		case WEAPON_SWORD: { //STRENGHT
-			attackSkill = getSkillLevel(SKILL_STRENGHT); //* g_config.getNumber(ConfigManager::MELEE_STRENGHTFACTOR) / 100 + getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::MELEE_DEXTERITYFACTOR) / 100;
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
 		case WEAPON_CLUB: { //STRENGHT
-			attackSkill = getSkillLevel(SKILL_STRENGHT); //* g_config.getNumber(ConfigManager::MELEE_STRENGHTFACTOR) / 100 + getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::MELEE_DEXTERITYFACTOR) / 100;
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
 		case WEAPON_AXE: { //STRENGHT
-			attackSkill = getSkillLevel(SKILL_STRENGHT); //* g_config.getNumber(ConfigManager::MELEE_STRENGHTFACTOR) / 100 + getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::MELEE_DEXTERITYFACTOR) / 100;
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
@@ -418,7 +418,7 @@ bool Player::isDualWielding() const
 	return false;
 }
 
-uint16_t Player::getAttackSpeed() const
+uint32_t Player::getAttackSpeed() const
 {
 	if (isDualWielding()) {
 		return 1000;
@@ -537,104 +537,128 @@ void Player::updateInventoryWeight()
 }
 
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
-void Player::addSkillAdvance(skills_t skill, uint64_t count)
+void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
+					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
-	uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
-	uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-	if (currReqTries >= nextReqTries) {
-		//player has reached max skill
-		return;
+	bool sendUpdate = false;
+
+	if (magic > magLevel) {
+
+		uint16_t oldMagic = magLevel;
+		skillPoints -= (magic - oldMagic) * 3;
+		magLevel = magic;
+		mana += g_config.getNumber(ConfigManager::MAGIC_MANAGAIN) * (magic - oldMagic);
+		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, oldMagic, magic);
+		sendUpdate = true;
 	}
 
-	g_events->eventPlayerOnGainSkillTries(this, skill, count);
-	if (count == 0) {
-		return;
+	if (vitality > skills[SKILL_VITALITY].level) {
+
+		uint16_t oldVitality = skills[SKILL_VITALITY].level;
+		skillPoints -= vitality - oldVitality;
+		skills[SKILL_VITALITY].level = vitality;
+		health += g_config.getNumber(ConfigManager::VITALITY_HEALTHGAIN) * (vitality - oldVitality);
+		g_creatureEvents->playerAdvance(this, SKILL_VITALITY, oldVitality, vitality);
+		sendUpdate = true;
 	}
 
-	bool sendUpdateSkills = false;
-	while ((skills[skill].tries + count) >= nextReqTries) {
-		count -= nextReqTries - skills[skill].tries;
-		skills[skill].level++;
-		skills[skill].tries = 0;
-		skills[skill].percent = 0;
+	if (strenght > skills[SKILL_STRENGHT].level) {
 
-		//std::ostringstream ss;
-		//ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
-		//sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		uint16_t oldStrenght = skills[SKILL_STRENGHT].level;
+		skillPoints -= strenght - oldStrenght;
+		skills[SKILL_STRENGHT].level = strenght;
+		g_creatureEvents->playerAdvance(this, SKILL_STRENGHT, oldStrenght, strenght);
+		sendUpdate = true;
+	}
+	
+	if (defence > skills[SKILL_DEFENCE].level) {
 
-		if (skill == SKILL_VITALITY) {
-			healthMax += g_config.getNumber(ConfigManager::VITALITY_HEALTHGAIN);
-			health += g_config.getNumber(ConfigManager::VITALITY_HEALTHGAIN);
-			g_game.addCreatureHealth(this);
-		}
+		uint16_t oldDefence = skills[SKILL_DEFENCE].level;
+		skillPoints -= defence - oldDefence;
+		skills[SKILL_DEFENCE].level = defence;
+		health += g_config.getNumber(ConfigManager::DEFENCE_HEALTHGAIN) * (defence - oldDefence);
+		g_creatureEvents->playerAdvance(this, SKILL_DEFENCE, oldDefence, defence);
+		sendUpdate = true;
+	}
 
-		if (skill == SKILL_STRENGHT) {
-			healthMax += g_config.getNumber(ConfigManager::STRENGHT_HEALTHGAIN);
-			health += g_config.getNumber(ConfigManager::STRENGHT_HEALTHGAIN);
-			capacity += g_config.getNumber(ConfigManager::STRENGHT_CAPGAIN);
-			g_game.addCreatureHealth(this);
-		}
+	if (dexterity > skills[SKILL_DEXTERITY].level) {
 
-		if (skill == SKILL_RESISTANCE) {
-			capacity += g_config.getNumber(ConfigManager::RESISTANCE_CAPGAIN);
-			healthMax += g_config.getNumber(ConfigManager::RESISTANCE_HEALTHGAIN);
-			health += g_config.getNumber(ConfigManager::RESISTANCE_HEALTHGAIN);
-			g_game.addCreatureHealth(this);
-		}
+		uint16_t oldDexterity = skills[SKILL_DEXTERITY].level;
+		skillPoints -= dexterity - oldDexterity;
+		skills[SKILL_DEXTERITY].level = dexterity;
+		g_creatureEvents->playerAdvance(this, SKILL_DEXTERITY, oldDexterity, dexterity);
+		sendUpdate = true;
+	}
+	
+	if (intelligence > skills[SKILL_INTELLIGENCE].level) {
 
-		if (skill == SKILL_DEXTERITY) {
-			updateBaseSpeed();
-			setBaseSpeed(getBaseSpeed());
-			g_game.changeSpeed(this, 0);
-		}
+		uint16_t oldIntelligence = skills[SKILL_INTELLIGENCE].level;
+		skillPoints -= intelligence - oldIntelligence;
+		skills[SKILL_INTELLIGENCE].level = intelligence;
+		mana += g_config.getNumber(ConfigManager::INTELLIGENCE_MANAGAIN) * (intelligence - oldIntelligence);
+		g_creatureEvents->playerAdvance(this, SKILL_INTELLIGENCE, oldIntelligence, intelligence);
+		sendUpdate = true;
+	}
+	
+	if (faith > skills[SKILL_FAITH].level) {
 
-		if (skill == SKILL_INTELLIGENCE) {
-			manaMax += g_config.getNumber(ConfigManager::INTELLIGENCE_MANAGAIN);
-			mana += g_config.getNumber(ConfigManager::INTELLIGENCE_MANAGAIN);
-		}
+		uint16_t oldFaith = skills[SKILL_FAITH].level;	
+		skillPoints -= faith - oldFaith;
+		skills[SKILL_FAITH].level = faith;
+		mana += g_config.getNumber(ConfigManager::FAITH_MANAGAIN) * (faith - oldFaith);
+		g_creatureEvents->playerAdvance(this, SKILL_FAITH, oldFaith, faith);
+		sendUpdate = true;
+	}
+	
+	if (endurance > skills[SKILL_ENDURANCE].level) {
 
-		if (skill == SKILL_FAITH) {
-			manaMax += g_config.getNumber(ConfigManager::FAITH_MANAGAIN);
-			mana += g_config.getNumber(ConfigManager::INTELLIGENCE_MANAGAIN);
-		}
+		uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
+		skillPoints -= endurance - oldEndurance;
+		skills[SKILL_ENDURANCE].level = endurance;		
+		health += g_config.getNumber(ConfigManager::ENDURANCE_HEALTHGAIN) * (endurance - oldEndurance);
+		g_creatureEvents->playerAdvance(this, SKILL_ENDURANCE, oldEndurance, endurance);
+		sendUpdate = true;
+	}
 
-		if (skill == SKILL_ENDURANCE) {
-			healthMax += g_config.getNumber(ConfigManager::ENDURANCE_HEALTHGAIN);
-			health += g_config.getNumber(ConfigManager::ENDURANCE_HEALTHGAIN);
-			capacity += g_config.getNumber(ConfigManager::ENDURANCE_CAPGAIN);
-			g_game.addCreatureHealth(this);
-		}
+	refreshStats();
 
-		sendStats();
-		sendSkills();
-		g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
-
-		sendUpdateSkills = true;
-		currReqTries = nextReqTries;
-		nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-		if (currReqTries >= nextReqTries) {
-			count = 0;
+	bool saved = false;
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
+			saved = true;
 			break;
 		}
 	}
 
-	skills[skill].tries += count;
-
-	uint32_t newPercent;
-	if (nextReqTries > currReqTries) {
-		newPercent = Player::getPercentLevel(skills[skill].tries, nextReqTries);
-	} else {
-		newPercent = 0;
-	}
-
-	if (skills[skill].percent != newPercent) {
-		skills[skill].percent = newPercent;
-		sendUpdateSkills = true;
-	}
-
-	if (sendUpdateSkills) {
+	if (sendUpdate) {
+		sendStats();
 		sendSkills();
 	}
+}
+
+void Player::refreshStats() {
+
+	healthMax = 120 +
+		(level - 1) * vocation->getHPGain() +
+		(skills[SKILL_VITALITY].level - 8) * g_config.getNumber(ConfigManager::VITALITY_HEALTHGAIN) +
+		(skills[SKILL_DEFENCE].level - 8) * g_config.getNumber(ConfigManager::DEFENCE_HEALTHGAIN) +
+		(skills[SKILL_ENDURANCE].level - 8) * g_config.getNumber(ConfigManager::ENDURANCE_HEALTHGAIN);
+	g_game.addCreatureHealth(this);
+
+	manaMax = 10 +
+		(level - 1) * vocation->getManaGain() +
+		magLevel * g_config.getNumber(ConfigManager::MAGIC_MANAGAIN) +
+		(skills[SKILL_INTELLIGENCE].level - 8) * g_config.getNumber(ConfigManager::INTELLIGENCE_MANAGAIN) +
+		(skills[SKILL_FAITH].level - 8) * g_config.getNumber(ConfigManager::FAITH_MANAGAIN);
+
+	capacity = 36500 +
+		(level - 1) * vocation->getCapGain() +
+		(skills[SKILL_STRENGHT].level - 8) * g_config.getNumber(ConfigManager::STRENGHT_CAPGAIN) +
+		(skills[SKILL_ENDURANCE].level - 8) * g_config.getNumber(ConfigManager::ENDURANCE_CAPGAIN);
+
+	updateBaseSpeed();
+	setBaseSpeed(getBaseSpeed());
+	g_game.changeSpeed(this, 0);
 }
 
 void Player::setVarStats(stats_t stat, int32_t modifier)
@@ -960,7 +984,6 @@ void Player::sendStats()
 {
 	if (client) {
 		client->sendStats();
-		lastStatsTrainingTime = getOfflineTrainingTime() / 60 / 1000;
 	}
 }
 
@@ -1594,11 +1617,6 @@ void Player::onThink(uint32_t interval)
 	if (g_game.getWorldType() != WORLD_TYPE_PVP_ENFORCED) {
 		checkSkullTicks(interval);
 	}
-
-	addOfflineTrainingTime(interval);
-	if (lastStatsTrainingTime != getOfflineTrainingTime() / 60 / 1000) {
-		sendStats();
-	}
 }
 
 uint32_t Player::isMuted() const
@@ -1666,65 +1684,6 @@ void Player::drainMana(Creature* attacker, int32_t manaLoss)
 	}
 
 	sendStats();
-}
-
-void Player::addManaSpent(uint64_t amount)
-{
-	if (hasFlag(PlayerFlag_NotGainMana)) {
-		return;
-	}
-
-	uint64_t currReqMana = vocation->getReqMana(magLevel);
-	uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-	if (currReqMana >= nextReqMana) {
-		//player has reached max magic level
-		return;
-	}
-
-	g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, amount);
-	if (amount == 0) {
-		return;
-	}
-
-	bool sendUpdateStats = false;
-	while ((manaSpent + amount) >= nextReqMana) {
-		amount -= nextReqMana - manaSpent;
-
-		magLevel++;
-		manaMax += g_config.getNumber(ConfigManager::MAGIC_MANAGAIN);
-		mana += g_config.getNumber(ConfigManager::MAGIC_MANAGAIN);
-		manaSpent = 0;
-
-		std::ostringstream ss;
-		ss << "You advanced to magic level " << magLevel << '.';
-		//sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-
-		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-		sendUpdateStats = true;
-		currReqMana = nextReqMana;
-		nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (currReqMana >= nextReqMana) {
-			return;
-		}
-	}
-
-	manaSpent += amount;
-
-	uint8_t oldPercent = magLevelPercent;
-	if (nextReqMana > currReqMana) {
-		magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-	} else {
-		magLevelPercent = 0;
-	}
-
-	if (oldPercent != magLevelPercent) {
-		sendUpdateStats = true;
-	}
-
-	if (sendUpdateStats) {
-		sendStats();
-	}
 }
 
 void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = false*/)
@@ -1909,10 +1868,6 @@ void Player::onBlockHit()
 {
 	if (shieldBlockCount > 0) {
 		--shieldBlockCount;
-
-		if (hasShield()) {
-			//addSkillAdvance(SKILL_SHIELD, 1);
-		}
 	}
 }
 
@@ -2065,63 +2020,7 @@ void Player::death(Creature* lastHitCreature)
 			}
 		}
 
-		//Magic level loss
-		uint64_t sumMana = 0;
-		uint64_t lostMana = 0;
-
-		//sum up all the mana
-		for (uint32_t i = 1; i <= magLevel; ++i) {
-			sumMana += vocation->getReqMana(i);
-		}
-
-		sumMana += manaSpent;
-
 		double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
-
-		lostMana = static_cast<uint64_t>(sumMana * deathLossPercent);
-
-		while (lostMana > manaSpent && magLevel > 0) {
-			lostMana -= manaSpent;
-			manaSpent = vocation->getReqMana(magLevel);
-			//magLevel--;
-		}
-
-		//manaSpent -= lostMana;
-
-		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (nextReqMana > vocation->getReqMana(magLevel)) {
-			magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-		} else {
-			magLevelPercent = 0;
-		}
-
-		//Skill loss
-		for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) { //for each skill
-			uint64_t sumSkillTries = 0;
-			for (uint16_t c = 11; c <= skills[i].level; ++c) { //sum up all required tries for all skill levels
-				sumSkillTries += vocation->getReqSkillTries(i, c);
-			}
-
-			sumSkillTries += skills[i].tries;
-
-			uint32_t lostSkillTries = static_cast<uint32_t>(sumSkillTries * deathLossPercent);
-			while (lostSkillTries > skills[i].tries) {
-				lostSkillTries -= skills[i].tries;
-
-				if (skills[i].level <= 10) {
-					//skills[i].level = 10;
-					skills[i].tries = 0;
-					lostSkillTries = 0;
-					break;
-				}
-
-				skills[i].tries = vocation->getReqSkillTries(i, skills[i].level);
-				//skills[i].level--;
-			}
-
-			skills[i].tries = std::max<int32_t>(0, skills[i].tries - lostSkillTries);
-			skills[i].percent = Player::getPercentLevel(skills[i].tries, vocation->getReqSkillTries(i, skills[i].level));
-		}
 
 		//Level loss
 		uint64_t expLoss = static_cast<uint64_t>(experience * deathLossPercent);
@@ -4394,138 +4293,6 @@ void Player::dismount()
 	}
 
 	defaultOutfit.lookMount = 0;
-}
-
-bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
-{
-	if (tries == 0 || skill == SKILL_LEVEL) {
-		return false;
-	}
-
-	bool sendUpdate = false;
-	uint32_t oldSkillValue, newSkillValue;
-	long double oldPercentToNextLevel, newPercentToNextLevel;
-
-	if (skill == SKILL_MAGLEVEL) {
-		uint64_t currReqMana = vocation->getReqMana(magLevel);
-		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-
-		if (currReqMana >= nextReqMana) {
-			return false;
-		}
-
-		oldSkillValue = magLevel;
-		oldPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
-
-		g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, tries);
-		uint32_t currMagLevel = magLevel;
-
-		while ((manaSpent + tries) >= nextReqMana) {
-			tries -= nextReqMana - manaSpent;
-
-			magLevel++;
-			manaSpent = 0;
-
-			g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-			sendUpdate = true;
-			currReqMana = nextReqMana;
-			nextReqMana = vocation->getReqMana(magLevel + 1);
-
-			if (currReqMana >= nextReqMana) {
-				tries = 0;
-				break;
-			}
-		}
-
-		manaSpent += tries;
-
-		if (magLevel != currMagLevel) {
-			std::ostringstream ss;
-			ss << "You advanced to magic level " << magLevel << '.';
-			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		}
-
-		uint8_t newPercent;
-		if (nextReqMana > currReqMana) {
-			newPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-			newPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
-		} else {
-			newPercent = 0;
-			newPercentToNextLevel = 0;
-		}
-
-		if (newPercent != magLevelPercent) {
-			magLevelPercent = newPercent;
-			sendUpdate = true;
-		}
-
-		newSkillValue = magLevel;
-	} else {
-		uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
-		uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-		if (currReqTries >= nextReqTries) {
-			return false;
-		}
-
-		oldSkillValue = skills[skill].level;
-		oldPercentToNextLevel = static_cast<long double>(skills[skill].tries * 100) / nextReqTries;
-
-		g_events->eventPlayerOnGainSkillTries(this, skill, tries);
-		uint32_t currSkillLevel = skills[skill].level;
-
-		while ((skills[skill].tries + tries) >= nextReqTries) {
-			tries -= nextReqTries - skills[skill].tries;
-
-			//skills[skill].level++;
-			skills[skill].tries = 0;
-			skills[skill].percent = 0;
-
-			g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
-
-			sendUpdate = true;
-			currReqTries = nextReqTries;
-			nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-
-			if (currReqTries >= nextReqTries) {
-				tries = 0;
-				break;
-			}
-		}
-
-		skills[skill].tries += tries;
-
-		if (currSkillLevel != skills[skill].level) {
-			std::ostringstream ss;
-			ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
-			//sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		}
-
-		uint8_t newPercent;
-		if (nextReqTries > currReqTries) {
-			newPercent = Player::getPercentLevel(skills[skill].tries, nextReqTries);
-			newPercentToNextLevel = static_cast<long double>(skills[skill].tries * 100) / nextReqTries;
-		} else {
-			newPercent = 0;
-			newPercentToNextLevel = 0;
-		}
-
-		if (skills[skill].percent != newPercent) {
-			skills[skill].percent = newPercent;
-			sendUpdate = true;
-		}
-
-		newSkillValue = skills[skill].level;
-	}
-
-	if (sendUpdate) {
-		sendSkills();
-	}
-
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(2) << "Your " << ucwords(getSkillName(skill)) << " skill changed from level " << oldSkillValue << " (with " << oldPercentToNextLevel << "% progress towards level " << (oldSkillValue + 1) << ") to level " << newSkillValue << " (with " << newPercentToNextLevel << "% progress towards level " << (newSkillValue + 1) << ')';
-	//sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-	return sendUpdate;
 }
 
 bool Player::hasModalWindowOpen(uint32_t modalWindowId) const

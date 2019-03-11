@@ -782,25 +782,25 @@ std::string getSkillName(uint8_t skillid)
 {
 	switch (skillid) {
 		case SKILL_VITALITY:
-			return "fist fighting";
+			return "vitality";
 
 		case SKILL_STRENGHT:
-			return "club fighting";
+			return "strenght";
 
 		case SKILL_FAITH:
-			return "sword fighting";
+			return "faith";
 
 		case SKILL_INTELLIGENCE:
-			return "axe fighting";
+			return "intelligence";
 
 		case SKILL_DEXTERITY:
-			return "distance fighting";
+			return "dexterity";
 
-		case SKILL_RESISTANCE:
-			return "shielding";
+		case SKILL_DEFENCE:
+			return "defence";
 
 		case SKILL_ENDURANCE:
-			return "fishing";
+			return "endurance";
 
 		case SKILL_MAGLEVEL:
 			return "magic level";

@@ -2,7 +2,6 @@
 <creaturescripts>
 	<event type="login" name="PlayerLogin" script="login.lua" />
 	<event type="logout" name="PlayerLogout" script="logout.lua" />
-	<event type="login" name="OfflineTraining" script="offlinetraining.lua" />
 	<event type="login" name="RegenerateStamina" script="regeneratestamina.lua" />
 	<event type="death" name="PlayerDeath" script="playerdeath.lua" />
 	<event type="death" name="DropLoot" script="droploot.lua" />
@@ -14,9 +13,9 @@
     <event type="login" name="skillPoints_register" script="skillpoints.lua"/>
 
     <!-- War Server -->
-    <event type="login" name="WarServer-Login" script="warserver.lua"/>
+    <!--<event type="login" name="WarServer-Login" script="warserver.lua"/>
 	<event type="logout" name="WarServer-Logout" script="warserver.lua"/>
-	<event type="preparedeath" name="WarServer-Death" script="warserver.lua"/>
+	<event type="preparedeath" name="WarServer-Death" script="warserver.lua"/> -->
 
     <!-- PVP Arena -->
 	<event type="login" name="Arena-Login" script="arena.lua"/>

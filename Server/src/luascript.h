@@ -848,32 +848,18 @@ class LuaScriptInterface
 		static int luaPlayerRemoveExperience(lua_State* L);
 		static int luaPlayerGetLevel(lua_State* L);
 
-		static int luaPlayerGetMagicLevel(lua_State* L);
 		static int luaPlayerGetBaseMagicLevel(lua_State* L);
+		static int luaPlayerGetMagicLevel(lua_State* L);
 		static int luaPlayerGetMana(lua_State* L);
 		static int luaPlayerAddMana(lua_State* L);
 		static int luaPlayerGetMaxMana(lua_State* L);
 		static int luaPlayerSetMaxMana(lua_State* L);
-		static int luaPlayerGetManaSpent(lua_State* L);
-		static int luaPlayerAddManaSpent(lua_State* L);
 
 		static int luaPlayerGetBaseMaxHealth(lua_State* L);
 		static int luaPlayerGetBaseMaxMana(lua_State* L);
 
 		static int luaPlayerGetSkillLevel(lua_State* L);
 		static int luaPlayerGetEffectiveSkillLevel(lua_State* L);
-		static int luaPlayerGetSkillPercent(lua_State* L);
-		static int luaPlayerGetSkillTries(lua_State* L);
-		static int luaPlayerAddSkillTries(lua_State* L);
-
-		static int luaPlayerAddOfflineTrainingTime(lua_State* L);
-		static int luaPlayerGetOfflineTrainingTime(lua_State* L);
-		static int luaPlayerRemoveOfflineTrainingTime(lua_State* L);
-
-		static int luaPlayerAddOfflineTrainingTries(lua_State* L);
-
-		static int luaPlayerGetOfflineTrainingSkill(lua_State* L);
-		static int luaPlayerSetOfflineTrainingSkill(lua_State* L);
 
 		static int luaPlayerGetItemCount(lua_State* L);
 		static int luaPlayerGetItemById(lua_State* L);
@@ -983,9 +969,8 @@ class LuaScriptInterface
 		static int luaPlayerHasChaseMode(lua_State* L);
 		static int luaPlayerHasSecureMode(lua_State* L);
 		static int luaPlayerGetFightMode(lua_State* L);
-		static int luaPlayertoggleAutoLootGold(lua_State* L); //NEW! AUTO LOOT GOLD
-		static int luaPlayertoggleAutoLootAddon(lua_State* L); //NEW! AUTO LOOT ADDON
-		static int luaPlayersetTitleDescription(lua_State* L); //NEW! TITLE
+		static int luaPlayerSetTitleDescription(lua_State* L); //NEW! TITLE
+		static int luaPlayerSetSkills(lua_State* L); //NEW! SKILLS POINTS SYSTEM
 
 		static int luaPlayerAddAutoLootItem(lua_State* L); //NEW! AUTO LOOT PSYCHONAUT
 		static int luaPlayerRemoveAutoLootItem(lua_State* L); //NEW! AUTO LOOT PSYCHONAUT
@@ -1065,9 +1050,6 @@ class LuaScriptInterface
 		static int luaVocationGetClientId(lua_State* L);
 		static int luaVocationGetName(lua_State* L);
 		static int luaVocationGetDescription(lua_State* L);
-
-		static int luaVocationGetRequiredSkillTries(lua_State* L);
-		static int luaVocationGetRequiredManaSpent(lua_State* L);
 
 		static int luaVocationGetCapacityGain(lua_State* L);
 

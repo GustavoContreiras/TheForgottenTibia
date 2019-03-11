@@ -3,38 +3,47 @@ SkillFirstWidget < UIWidget
 SkillButton < UIButton
   height: 21
   margin-bottom: 2
-  &onClick: onSkillButtonClick
 
 SmallSkillButton < SkillButton
   height: 14
-  
+
 SkillNameLabel < GameLabel
   font: verdana-11px-monochrome
-  anchors.left: parent.left
   anchors.top: parent.top
   anchors.bottom: parent.bottom
-  
-SkillNameLabelAlignedRight < GameLabel
-  margin-right: 80
-  text-align: topright
-  anchors.right: parent.right
 
 SkillValueLabel < GameLabel
   id: value
-  width: 80
   font: verdana-11px-monochrome
   text-align: topright
   anchors.top: parent.top
   anchors.bottom: parent.bottom
-  anchors.right: parent.right
-  
-SkillValueLabelAlignedLeft < SkillValueLabel
-  margin-left: 5
+
+SkillArrowLabel < GameLabel
+  id: arrow
+  font: verdana-11px-monochrome
   text-align: topleft
+  width: 15
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
   anchors.left: prev.right
+  margin-left: 5
+  !text: tr('->')
+  visible: false
+
+SkillNewValueLabel < GameLabel
+  id: newValue
+  font: verdana-11px-monochrome
+  text-align: topleft
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  anchors.left: prev.right
+  margin-left: 2
+  color: #008b00
+  visible: false
   
 SkillMinusButton < Button
-  id: minusButton
+  id: minusbutton
   font: verdana-11px-monochrome
   width: 15
   height: 15
@@ -42,10 +51,16 @@ SkillMinusButton < Button
   anchors.right: prev.left
   anchors.top: parent.top
   anchors.bottom: parent.bottom
-  !text: tr('-') 
+  text-offset: 0 -2
+  !text: tr('-')
+  visible: false
+  
+  $pressed:
+    text-offset: 0 -2
+    opacity: 0.8
 
 SkillPlusButton < Button
-  id: plusButton
+  id: plusbutton
   font: verdana-11px-monochrome
   width: 15
   height: 15
@@ -53,7 +68,13 @@ SkillPlusButton < Button
   anchors.right: parent.right
   anchors.top: parent.top
   anchors.bottom: parent.bottom
+  text-offset: 0 -2
   !text: tr('+')
+  visible: false
+  
+  $pressed:
+    text-offset: 0 -2
+    opacity: 0.8
 
 SkillPercentPanel < ProgressBar
   id: percent
@@ -68,19 +89,48 @@ SkillPercentPanel < ProgressBar
 MiniWindow
   id: skillWindow
   !text: tr('Skills')
+  height: 150
   icon: /images/topbuttons/skills
   @onClose: modules.game_skills.onMiniWindowClose()
+  @onOpen: modules.game_skills.onMiniWindowOpen()
   &save: true
-  
+
   Label
     text: ?
+    id: help
     text-align: center
     phantom: false
-    !tooltip: tr('Click \'apply\' to save changes')
+    !tooltip: tr('Click on \'apply\' to save changes')
     anchors.top: minimizeButton.top
     anchors.right: minimizeButton.left
     margin-right: 3
     size: 14 14
+
+  TabButton
+    id: applybutton
+    font: verdana-11px-antialised
+    anchors.top: prev.top
+    anchors.right: prev.left
+    margin-right: 3
+    margin-top: -1
+    size: 81 16
+    text-align: center
+    text-offset: 0 -1
+    color: #008b00
+    !text: tr ('Apply')
+    visible: false
+    @onClick: onClickApply()
+
+    $hover !on:
+      image-clip: 0 23 22 23
+      color: #008b00
+
+    $on:
+      image-clip: 0 46 22 23
+      color: #008b00
+
+    $pressed:
+      image-clip: 0 46 22 23
 
   MiniWindowContents
     padding-left: 5
@@ -92,161 +142,314 @@ MiniWindow
       id: experience
       height: 15
       SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
         !text: tr('Experience')
       SkillValueLabel
+        anchors.left: prev.right
+        anchors.right: parent.right
 
     SkillButton
       id: level
       SkillNameLabel
+        anchors.left: parent.left
+        text-align: topleft
         !text: tr('Level')
       SkillValueLabel
+        anchors.left: prev.right
+        anchors.right: parent.right
       SkillPercentPanel
         background-color: red
 
     SkillButton
       id: health
       height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Health')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
 
     SkillButton
       id: mana
       height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Mana')
-      SkillValueLabelAlignedLeft
-
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
+      SkillNewValueLabel
+        margin-left: 5
+        color: #b22222
+  
     SkillButton
       id: soul
       height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Soul')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
+  
+    SkillButton
+      id: skillpoints
+      height: 15
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
+        !text: tr('Points')
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
+        margin-left: 5
+        color: #b22222
 
     SkillButton
       id: capacity
       height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Capacity')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
 
     SkillButton
-      id: points
+      id: walkspeed
       height: 15
-      SkillNameLabelAlignedRight
-        !text: tr('Points')
-      SkillValueLabelAlignedLeft
-
-    SkillButton
-      id: speed
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Walk Speed')
-      SkillValueLabelAlignedLeft
-
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
+  
     SkillButton
       id: attackspeed
       height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
         !text: tr('Attack Speed')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
 
     SkillButton
       id: regenerationTime
       SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
         !text: tr('Regeneration Time')
       SkillValueLabel
+        anchors.right: parent.right
       SkillPercentPanel
 
     SkillButton
       id: stamina
       SkillNameLabel
+        anchors.left: parent.left
+        text-align: topleft
         !text: tr('Stamina')
       SkillValueLabel
+        anchors.right: parent.right
       SkillPercentPanel
 
-    SkillButton
+    SmallSkillButton
       id: magiclevel
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Magic')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('magiclevel')
       SkillMinusButton
+        @onClick: onClickRemove('magiclevel')
 
-    SkillButton
+
+    SmallSkillButton
       id: skillId0
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Vitality')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('skillId0')
       SkillMinusButton
+        @onClick: onClickRemove('skillId0')
 
-    SkillButton
+    SmallSkillButton
       id: skillId1
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Strenght')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
-        @onClick: g_game.sendIncreaseSkill(1)
+        @onClick: onClickAdd('skillId1')
       SkillMinusButton
-
-    SkillButton
+        @onClick: onClickRemove('skillId1')
+  
+    SmallSkillButton
       id: skillId5
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Defence')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('skillId5')
       SkillMinusButton
+        @onClick: onClickRemove('skillId5')
 
-    SkillButton
+    SmallSkillButton
       id: skillId4
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Dexterity')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('skillId4')
       SkillMinusButton
+        @onClick: onClickRemove('skillId4')
 
-    SkillButton
+    SmallSkillButton
       id: skillId3
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Intelligence')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('skillId3')
       SkillMinusButton
+        @onClick: onClickRemove('skillId3')
 
-    SkillButton
+    SmallSkillButton
       id: skillId2
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Faith')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
+        @onClick: onClickAdd('skillId2')
       SkillMinusButton
+        @onClick: onClickRemove('skillId2')
 
-    SkillButton
+    SmallSkillButton
       id: skillId6
-      height: 15
-      SkillNameLabelAlignedRight
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 94
         !text: tr('Endurance')
-      SkillValueLabelAlignedLeft
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
       SkillPlusButton
-      SkillMinusButton	
+        @onClick: onClickAdd('skillId6')
+      SkillMinusButton
+        @onClick: onClickRemove('skillId6')
 
     SmallSkillButton
       id: skillId7
       SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
         !text: tr('Critical Hit Chance')
       SkillValueLabel
+        anchors.right: parent.right
 
     SmallSkillButton
       id: skillId8
       SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
         !text: tr('Critical Hit Damage')
       SkillValueLabel
+        anchors.right: parent.right

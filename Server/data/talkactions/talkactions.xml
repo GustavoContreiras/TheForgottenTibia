@@ -52,6 +52,7 @@
 	<talkaction words="!leaveCTF" script="ctf.lua" />
 	<talkaction words="!lootlist" script="lootlist.lua" />
 	<talkaction words="!loot" separator=" " script="toggleloot.lua" />
+	<!-- <talkaction words="!setskills" separator=" " script="setskills.lua" />  --> 
 	<!-- <talkaction words="!title" separator=" "  script="title.lua"/> MANAGED BY GUIDE NPC --> 
 
 	<!-- test talkactions -->

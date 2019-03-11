@@ -103,9 +103,8 @@ struct OutfitEntry {
 };
 
 struct Skill {
-	uint64_t tries = 0;
 	uint16_t level = 8;
-	uint8_t percent = 0;
+	uint8_t cost = 1;
 };
 
 using MuteCountMap = std::map<uint32_t, uint32_t>;
@@ -191,25 +190,6 @@ class Player final : public Creature, public Cylinder
 
 		uint16_t getStaminaMinutes() const {
 			return staminaMinutes;
-		}
-
-		bool addOfflineTrainingTries(skills_t skill, uint64_t tries);
-
-		void addOfflineTrainingTime(int32_t addTime) {
-			offlineTrainingTime = std::min<int32_t>(12 * 3600 * 1000, offlineTrainingTime + addTime);
-		}
-		void removeOfflineTrainingTime(int32_t removeTime) {
-			offlineTrainingTime = std::max<int32_t>(0, offlineTrainingTime - removeTime);
-		}
-		int32_t getOfflineTrainingTime() const {
-			return offlineTrainingTime;
-		}
-
-		int32_t getOfflineTrainingSkill() const {
-			return offlineTrainingSkill;
-		}
-		void setOfflineTrainingSkill(int32_t skill) {
-			offlineTrainingSkill = skill;
 		}
 
 		uint64_t getBankBalance() const {
@@ -299,10 +279,6 @@ class Player final : public Creature, public Cylinder
 
 		GuildEmblems_t getGuildEmblem(const Player* player) const;
 
-		uint64_t getSpentMana() const {
-			return manaSpent;
-		}
-
 		bool hasFlag(PlayerFlags value) const {
 			return (group->flags & value) != 0;
 		}
@@ -389,10 +365,10 @@ class Player final : public Creature, public Cylinder
 		uint32_t getLevel() const {
 			return level;
 		}
-		uint32_t getPoints() const {
+		uint32_t getSkillPoints() const {
 			return skillPoints;
 		}
-		void setPoints(uint32_t value) {
+		void setSkillPoints(uint32_t value) {
 			skillPoints = value;
 		}
 		uint8_t getLevelPercent() const {
@@ -403,9 +379,6 @@ class Player final : public Creature, public Cylinder
 		}
 		uint32_t getBaseMagicLevel() const {
 			return magLevel;
-		}
-		uint8_t getMagicLevelPercent() const {
-			return magLevelPercent;
 		}
 		uint8_t getSoul() const {
 			return soul;
@@ -626,9 +599,6 @@ class Player final : public Creature, public Cylinder
 		uint16_t getBaseSkill(uint8_t skill) const {
 			return skills[skill].level;
 		}
-		uint8_t getSkillPercent(uint8_t skill) const {
-			return skills[skill].percent;
-		}
 
 		bool getAddAttackSkill() const {
 			return addAttackSkillPoint;
@@ -675,8 +645,6 @@ class Player final : public Creature, public Cylinder
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void drainMana(Creature* attacker, int32_t manaLoss);
-		void addManaSpent(uint64_t amount);
-		void addSkillAdvance(skills_t skill, uint64_t count);
 
 		int32_t getArmor() const override;
 		int32_t getDefense() const override;
@@ -1191,6 +1159,13 @@ class Player final : public Creature, public Cylinder
 		void removeAutoLootItem(uint16_t itemId);
 		bool getAutoLootItem(uint16_t itemId);
 
+		void setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
+					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
+
+		void refreshStats();
+
+		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
+
 	private:
 		bool setTitleDescription(PlayerTitle_t titleiD); //NEW! TITLE
 
@@ -1271,7 +1246,6 @@ class Player final : public Creature, public Cylinder
 		time_t lastLogout = 0;
 
 		uint64_t experience = 0;
-		uint64_t manaSpent = 0;
 		uint64_t lastAttack = 0;
 		uint64_t bankBalance = 0;
 		uint64_t lastQuestlogUpdate = 0;
@@ -1306,8 +1280,6 @@ class Player final : public Creature, public Cylinder
 		uint32_t conditionImmunities = 0;
 		uint32_t conditionSuppressions = 0;
 		uint32_t level = 1;
-		uint32_t points = 0;
-		uint32_t magLevel = 0;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
 		uint32_t walkTaskEvent = 0;
@@ -1328,10 +1300,10 @@ class Player final : public Creature, public Cylinder
 		int32_t premiumDays = 0;
 		int32_t bloodHitCount = 0;
 		int32_t shieldBlockCount = 0;
-		int32_t offlineTrainingSkill = -1;
-		int32_t offlineTrainingTime = 0;
 		int32_t idleTime = 0;
 
+		uint16_t skillPoints = 0;
+		uint16_t magLevel = 0;
 		uint16_t lastStatsTrainingTime = 0;
 		uint16_t staminaMinutes = 2520;
 		uint16_t maxWriteLen = 0;
@@ -1340,7 +1312,6 @@ class Player final : public Creature, public Cylinder
 		uint8_t soul = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
-		uint8_t magLevelPercent = 0;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;
@@ -1375,8 +1346,9 @@ class Player final : public Creature, public Cylinder
 		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY WALK SPEED
 		void updateBaseSpeed() {
 			if (!hasFlag(PlayerFlag_SetMaxSpeed)) {
+
 				//increase walk speed in 1 = increase baseSpeed in 2
-				baseSpeed = vocation->getBaseSpeed() + (2 * (level - 1)) + ((skills[SKILL_DEXTERITY].level - 8) / 2);
+				baseSpeed = vocation->getBaseSpeed() + 2 * (level - 1) + (skills[SKILL_DEXTERITY].level - 8) / 2.0f;
 			}
 			else {
 				baseSpeed = PLAYER_MAX_SPEED;
@@ -1386,9 +1358,8 @@ class Player final : public Creature, public Cylinder
 		bool isPromoted() const;
 
 		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY AND DUAL WIELD ATTACK SPEED
-		uint16_t getAttackSpeed() const;
+		uint32_t getAttackSpeed() const;
 
-		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 		double getLostPercent() const;
 		uint64_t getLostExperience() const override {
 			return skillLoss ? static_cast<uint64_t>(experience * getLostPercent()) : 0;

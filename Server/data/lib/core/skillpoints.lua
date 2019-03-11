@@ -103,7 +103,7 @@ local endurance = {
 	healthGain = configManager.getNumber(configKeys.ENDURANCE_HEALTHGAIN)}
 
 local skills = { -- skill name, player skill value, cost to raise
-    [1] = {'Magic', function(player) return player:getBaseMagicLevel() end, magic.pointsCost},
+    [1] = {'Magic', function(player) return player:getMagicLevel() end, magic.pointsCost},
     [2] = {'Vitality', function(player) return player:getSkillLevel(SKILL_VITALITY) end, vitality.pointsCost},
     [3] = {'Strenght', function(player) return player:getSkillLevel(SKILL_STRENGHT) end, strenght.pointsCost},
     [4] = {'Defence', function(player) return player:getSkillLevel(SKILL_RESISTANCE) end, resistance.pointsCost},
@@ -200,16 +200,65 @@ function Player:sendSkillPointsTutorialNotesWindow()
 end
 
 function Player:addSkillLevels(skill)
-    if isInArray({SKILL_VITALITY, SKILL_STRENGHT, SKILL_FAITH, SKILL_INTELLIGENCE, SKILL_DEXTERITY, SKILL_RESISTANCE, SKILL_ENDURANCE}, skill) then
-        local xp = math.ceil(self:getVocation():getRequiredSkillTries(skill, self:getSkillLevel(skill) + 1) / configManager.getNumber(configKeys.RATE_SKILL))
-        self:addSkillTries(skill, xp)
-        return true
-    end
-    if skill == SKILL_MAGLEVEL then
-        local xp = math.ceil(self:getVocation():getRequiredManaSpent(self:getBaseMagicLevel() + 1) / configManager.getNumber(configKeys.RATE_MAGIC))
-        self:addManaSpent(xp)
-        return true
-    end
+	
+	if (skill == SKILL_MAGLEVEL) then
+		if self:getMagicLevel() < maxMagic then
+			self:setSkills(self:getMagicLevel() + 1, 0, 0, 0, 0, 0, 0, 0)
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_VITALITY) then
+		if self:getSkillLevel(SKILL_VITALITY) < maxVitality then
+			self:setSkills(0, self:getSkillLevel(SKILL_VITALITY) + 1, 0, 0, 0, 0, 0, 0)
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_STRENGHT) then
+		if self:getSkillLevel(SKILL_STRENGHT) < maxStrenght then
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_INTELLIGENCE) then
+		if self:getSkillLevel(SKILL_INTELLIGENCE) < maxIntelligence then
+	    	return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_FAITH) then
+		if self:getSkillLevel(SKILL_FAITH) < maxFaith then
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_DEXTERITY) then
+		if self:getSkillLevel(SKILL_DEXTERITY) < maxDexterity then
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_RESISTANCE) then
+		if self:getSkillLevel(SKILL_RESISTANCE) < maxResistance then
+			return true
+	    else
+	    	return false
+	    end
+
+	elseif (skill == SKILL_ENDURANCE) then
+		if self:getSkillLevel(SKILL_ENDURANCE) < maxEndurance then
+			return true
+	    else
+	    	return false
+	    end
+	end
 end
  
 function Player:sendSkillPointsWindow()
@@ -944,7 +993,7 @@ function Player:assignSkillPoints(skill)
 
 	if (skill == SKILL_MAGLEVEL) then
 		if self:getMagicLevel() < maxMagic then
-			self:addSkillLevels(SKILL_MAGLEVEL)
+			self:addSkillLevels(SKILL_MAGLEVEL, 1)
 			self:setStorageValue(pointsStorage, self:getStorageValue(pointsStorage) - skills[1][3])
 			return true
 	    else

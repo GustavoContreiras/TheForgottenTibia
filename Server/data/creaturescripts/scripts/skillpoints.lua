@@ -56,7 +56,7 @@ function onModalWindow(player, modalWindowId, buttonId, choiceId)
      elseif modalWindowId == 4877 then
         player:unregisterEvent("skillPoints_tutorialNotes")
         if buttonId == 1 then
-            player:sendSkillPointsWindow()
+            --player:sendSkillPointsWindow()
         end
         return true
     end

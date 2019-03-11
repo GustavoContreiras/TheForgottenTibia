@@ -1551,7 +1551,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(SKILL_FAITH)
 	registerEnum(SKILL_INTELLIGENCE)
 	registerEnum(SKILL_DEXTERITY)
-	registerEnum(SKILL_RESISTANCE)
+	registerEnum(SKILL_DEFENCE)
 	registerEnum(SKILL_ENDURANCE)
 	registerEnum(SKILL_MAGLEVEL)
 	registerEnum(SKILL_LEVEL)
@@ -1853,8 +1853,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::STRENGHT_CAPGAIN)
 	registerEnumIn("configKeys", ConfigManager::INTELLIGENCE_MANAGAIN)
 	registerEnumIn("configKeys", ConfigManager::FAITH_MANAGAIN)
-	registerEnumIn("configKeys", ConfigManager::RESISTANCE_CAPGAIN)
-	registerEnumIn("configKeys", ConfigManager::RESISTANCE_HEALTHGAIN)
+	registerEnumIn("configKeys", ConfigManager::DEFENCE_CAPGAIN)
+	registerEnumIn("configKeys", ConfigManager::DEFENCE_HEALTHGAIN)
 	registerEnumIn("configKeys", ConfigManager::ENDURANCE_CAPGAIN)
 	registerEnumIn("configKeys", ConfigManager::ENDURANCE_HEALTHGAIN)
 
@@ -2260,40 +2260,24 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "removeExperience", LuaScriptInterface::luaPlayerRemoveExperience);
 	registerMethod("Player", "getLevel", LuaScriptInterface::luaPlayerGetLevel);
 
-	registerMethod("Player", "getMagicLevel", LuaScriptInterface::luaPlayerGetMagicLevel);
 	registerMethod("Player", "getBaseMagicLevel", LuaScriptInterface::luaPlayerGetBaseMagicLevel);
+	registerMethod("Player", "getMagicLevel", LuaScriptInterface::luaPlayerGetMagicLevel);
 	registerMethod("Player", "getMana", LuaScriptInterface::luaPlayerGetMana);
 	registerMethod("Player", "addMana", LuaScriptInterface::luaPlayerAddMana);
 	registerMethod("Player", "getMaxMana", LuaScriptInterface::luaPlayerGetMaxMana);
 	registerMethod("Player", "setMaxMana", LuaScriptInterface::luaPlayerSetMaxMana);
-	registerMethod("Player", "getManaSpent", LuaScriptInterface::luaPlayerGetManaSpent);
-	registerMethod("Player", "addManaSpent", LuaScriptInterface::luaPlayerAddManaSpent);
 
 	registerMethod("Player", "getBaseMaxHealth", LuaScriptInterface::luaPlayerGetBaseMaxHealth);
 	registerMethod("Player", "getBaseMaxMana", LuaScriptInterface::luaPlayerGetBaseMaxMana);
 
 	registerMethod("Player", "getSkillLevel", LuaScriptInterface::luaPlayerGetSkillLevel);
 	registerMethod("Player", "getEffectiveSkillLevel", LuaScriptInterface::luaPlayerGetEffectiveSkillLevel);
-	registerMethod("Player", "getSkillPercent", LuaScriptInterface::luaPlayerGetSkillPercent);
-	registerMethod("Player", "getSkillTries", LuaScriptInterface::luaPlayerGetSkillTries);
-	registerMethod("Player", "addSkillTries", LuaScriptInterface::luaPlayerAddSkillTries);
-
-	registerMethod("Player", "addOfflineTrainingTime", LuaScriptInterface::luaPlayerAddOfflineTrainingTime);
-	registerMethod("Player", "getOfflineTrainingTime", LuaScriptInterface::luaPlayerGetOfflineTrainingTime);
-	registerMethod("Player", "removeOfflineTrainingTime", LuaScriptInterface::luaPlayerRemoveOfflineTrainingTime);
-
-	registerMethod("Player", "addOfflineTrainingTries", LuaScriptInterface::luaPlayerAddOfflineTrainingTries);
-
-	registerMethod("Player", "getOfflineTrainingSkill", LuaScriptInterface::luaPlayerGetOfflineTrainingSkill);
-	registerMethod("Player", "setOfflineTrainingSkill", LuaScriptInterface::luaPlayerSetOfflineTrainingSkill);
 
 	registerMethod("Player", "getItemCount", LuaScriptInterface::luaPlayerGetItemCount);
 	registerMethod("Player", "getItemById", LuaScriptInterface::luaPlayerGetItemById);
 
 	registerMethod("Player", "getVocation", LuaScriptInterface::luaPlayerGetVocation);
 	registerMethod("Player", "setVocation", LuaScriptInterface::luaPlayerSetVocation);
-
-	//registerMethod("Player", "setDescriptionTitle", LuaScriptInterface::luaPlayersetDescriptionTitle);
 
 	registerMethod("Player", "getSex", LuaScriptInterface::luaPlayerGetSex);
 	registerMethod("Player", "setSex", LuaScriptInterface::luaPlayerSetSex);
@@ -2397,9 +2381,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "hasSecureMode", LuaScriptInterface::luaPlayerHasSecureMode);
 	registerMethod("Player", "getFightMode", LuaScriptInterface::luaPlayerGetFightMode);
 
-	registerMethod("Player", "toggleAutoLootGold", LuaScriptInterface::luaPlayertoggleAutoLootGold); //NEW! AUTO LOOT GOLD
-	registerMethod("Player", "toggleAutoLootAddon", LuaScriptInterface::luaPlayertoggleAutoLootAddon); //NEW! AUTO LOOT ADDON
-	registerMethod("Player", "setTitleDescription", LuaScriptInterface::luaPlayersetTitleDescription); //NEW! TITLE
+	registerMethod("Player", "setTitleDescription", LuaScriptInterface::luaPlayerSetTitleDescription); //NEW! TITLE
+
+	registerMethod("Player", "setSkills", LuaScriptInterface::luaPlayerSetSkills); //NEW! SKILLS POINTS SYSTEM
 
 	registerMethod("Player", "addAutoLootItem", LuaScriptInterface::luaPlayerAddAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
 	registerMethod("Player", "removeAutoLootItem", LuaScriptInterface::luaPlayerRemoveAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
@@ -2483,9 +2467,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Vocation", "getClientId", LuaScriptInterface::luaVocationGetClientId);
 	registerMethod("Vocation", "getName", LuaScriptInterface::luaVocationGetName);
 	registerMethod("Vocation", "getDescription", LuaScriptInterface::luaVocationGetDescription);
-
-	registerMethod("Vocation", "getRequiredSkillTries", LuaScriptInterface::luaVocationGetRequiredSkillTries);
-	registerMethod("Vocation", "getRequiredManaSpent", LuaScriptInterface::luaVocationGetRequiredManaSpent);
 
 	registerMethod("Vocation", "getCapacityGain", LuaScriptInterface::luaVocationGetCapacityGain);
 
@@ -7901,24 +7882,25 @@ int LuaScriptInterface::luaPlayerGetLevel(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetMagicLevel(lua_State* L)
-{
-	// player:getMagicLevel()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getMagicLevel());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerGetBaseMagicLevel(lua_State* L)
 {
 	// player:getBaseMagicLevel()
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->getBaseMagicLevel());
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetMagicLevel(lua_State* L)
+{
+	// player:getMagicLevel()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getMagicLevel());
 	} else {
 		lua_pushnil(L);
 	}
@@ -7987,31 +7969,6 @@ int LuaScriptInterface::luaPlayerSetMaxMana(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerGetManaSpent(lua_State* L)
-{
-	// player:getManaSpent()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getSpentMana());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddManaSpent(lua_State* L)
-{
-	// player:addManaSpent(amount)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->addManaSpent(getNumber<uint64_t>(L, 2));
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerGetBaseMaxHealth(lua_State* L)
 {
 	// player:getBaseMaxHealth()
@@ -8056,130 +8013,6 @@ int LuaScriptInterface::luaPlayerGetEffectiveSkillLevel(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player && skillType <= SKILL_LAST) {
 		lua_pushnumber(L, player->getSkillLevel(skillType));
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetSkillPercent(lua_State* L)
-{
-	// player:getSkillPercent(skillType)
-	skills_t skillType = getNumber<skills_t>(L, 2);
-	Player* player = getUserdata<Player>(L, 1);
-	if (player && skillType <= SKILL_LAST) {
-		lua_pushnumber(L, player->skills[skillType].percent);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetSkillTries(lua_State* L)
-{
-	// player:getSkillTries(skillType)
-	skills_t skillType = getNumber<skills_t>(L, 2);
-	Player* player = getUserdata<Player>(L, 1);
-	if (player && skillType <= SKILL_LAST) {
-		lua_pushnumber(L, player->skills[skillType].tries);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddSkillTries(lua_State* L)
-{
-	// player:addSkillTries(skillType, tries)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		skills_t skillType = getNumber<skills_t>(L, 2);
-		uint64_t tries = getNumber<uint64_t>(L, 3);
-		player->addSkillAdvance(skillType, tries);
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddOfflineTrainingTime(lua_State* L)
-{
-	// player:addOfflineTrainingTime(time)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		int32_t time = getNumber<int32_t>(L, 2);
-		player->addOfflineTrainingTime(time);
-		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-
-int LuaScriptInterface::luaPlayerGetOfflineTrainingTime(lua_State* L)
-{
-	// player:getOfflineTrainingTime()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getOfflineTrainingTime());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerRemoveOfflineTrainingTime(lua_State* L)
-{
-	// player:removeOfflineTrainingTime(time)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		int32_t time = getNumber<int32_t>(L, 2);
-		player->removeOfflineTrainingTime(time);
-		player->sendStats();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerAddOfflineTrainingTries(lua_State* L)
-{
-	// player:addOfflineTrainingTries(skillType, tries)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		skills_t skillType = getNumber<skills_t>(L, 2);
-		uint64_t tries = getNumber<uint64_t>(L, 3);
-		pushBoolean(L, player->addOfflineTrainingTries(skillType, tries));
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerGetOfflineTrainingSkill(lua_State* L)
-{
-	// player:getOfflineTrainingSkill()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		lua_pushnumber(L, player->getOfflineTrainingSkill());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaPlayerSetOfflineTrainingSkill(lua_State* L)
-{
-	// player:setOfflineTrainingSkill(skillId)
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		uint32_t skillId = getNumber<uint32_t>(L, 2);
-		player->setOfflineTrainingSkill(skillId);
-		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
 	}
@@ -9667,46 +9500,37 @@ int LuaScriptInterface::luaPlayerGetFightMode(lua_State* L)
 	return 1;
 }
 
-//NEW! AUTO LOOT GOLD
-int LuaScriptInterface::luaPlayertoggleAutoLootGold(lua_State* L)
-{
-	// player:toggleAutoLootGold()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->autoLootGold = !player->autoLootGold;
-		player->sendStats();
-		lua_pushboolean(L, player->autoLootGold);
-	}
-	else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-//NEW! AUTO LOOT ADDON
-int LuaScriptInterface::luaPlayertoggleAutoLootAddon(lua_State* L)
-{
-	// player:toggleAutoLootAddon()
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		player->autoLootAddon = !player->autoLootAddon;
-		player->sendStats();
-		lua_pushboolean(L, player->autoLootAddon);
-	}
-	else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 //NEW! TITLE
-int LuaScriptInterface::luaPlayersetTitleDescription(lua_State* L)
+int LuaScriptInterface::luaPlayerSetTitleDescription(lua_State* L)
 {
 	// player:setTitleDescription(newTitle)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		PlayerTitle_t newTitle = getNumber<PlayerTitle_t>(L, 2);
 		player->setTitleDescription(newTitle);
+		pushBoolean(L, true);
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+//NEW! SKILLS POINTS SYSTEM
+int LuaScriptInterface::luaPlayerSetSkills(lua_State* L)
+{
+	// player:setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t magic = getNumber<uint16_t>(L, 2);
+		uint16_t vitality = getNumber<uint16_t>(L, 3);
+		uint16_t strenght = getNumber<uint16_t>(L, 4);
+		uint16_t defence = getNumber<uint16_t>(L, 5);
+		uint16_t dexterity = getNumber<uint16_t>(L, 6);
+		uint16_t intelligence = getNumber<uint16_t>(L, 7);
+		uint16_t faith = getNumber<uint16_t>(L, 8);
+		uint16_t endurance = getNumber<uint16_t>(L, 9);
+		player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 		pushBoolean(L, true);
 	}
 	else {
@@ -10503,33 +10327,6 @@ int LuaScriptInterface::luaVocationGetDescription(lua_State* L)
 	Vocation* vocation = getUserdata<Vocation>(L, 1);
 	if (vocation) {
 		pushString(L, vocation->getVocDescription());
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetRequiredSkillTries(lua_State* L)
-{
-	// vocation:getRequiredSkillTries(skillType, skillLevel)
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		skills_t skillType = getNumber<skills_t>(L, 2);
-		uint16_t skillLevel = getNumber<uint16_t>(L, 3);
-		lua_pushnumber(L, vocation->getReqSkillTries(skillType, skillLevel));
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
-int LuaScriptInterface::luaVocationGetRequiredManaSpent(lua_State* L)
-{
-	// vocation:getRequiredManaSpent(magicLevel)
-	Vocation* vocation = getUserdata<Vocation>(L, 1);
-	if (vocation) {
-		uint32_t magicLevel = getNumber<uint32_t>(L, 2);
-		lua_pushnumber(L, vocation->getReqMana(magicLevel));
 	} else {
 		lua_pushnil(L);
 	}

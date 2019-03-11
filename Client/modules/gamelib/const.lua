@@ -61,6 +61,14 @@ Skill = {
   ManaLeechAmount = 12
 }
 
+Vitality = Skill.Fist
+Strenght = Skill.Club
+Faith = Skill.Sword
+Intelligence = Skill.Axe
+Dexterity = Skill.Distance
+Defence = Skill.Shielding
+Endurance = Skill.Fishing
+
 North = Directions.North
 East = Directions.East
 South = Directions.South
