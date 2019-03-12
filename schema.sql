@@ -1232,23 +1232,15 @@ CREATE TABLE `players` (
   `onlinetime` int(11) NOT NULL DEFAULT '0',
   `deletion` bigint(15) NOT NULL DEFAULT '0',
   `balance` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `offlinetraining_time` smallint(5) UNSIGNED NOT NULL DEFAULT '43200',
-  `offlinetraining_skill` int(11) NOT NULL DEFAULT '-1',
   `stamina` smallint(5) UNSIGNED NOT NULL DEFAULT '2520',
-  `skill_fist` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_fist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_club` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_club_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_sword` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_sword_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_axe` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_axe_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_dist` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_dist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_shielding` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_shielding_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_fishing` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_fishing_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `skill_points` int(10) UNSIGNED NOT NULL DEFAULT '10',
+  `skill_fist` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_club` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_sword` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_axe` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_dist` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_shielding` int(10) UNSIGNED NOT NULL DEFAULT '8',
+  `skill_fishing` int(10) UNSIGNED NOT NULL DEFAULT '8',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
@@ -1262,7 +1254,7 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `manaspent`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `offlinetraining_time`, `offlinetraining_skill`, `stamina`, `skill_fist`, `skill_fist_tries`, `skill_club`, `skill_club_tries`, `skill_sword`, `skill_sword_tries`, `skill_axe`, `skill_axe_tries`, `skill_dist`, `skill_dist_tries`, `skill_shielding`, `skill_shielding_tries`, `skill_fishing`, `skill_fishing_tries`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`) VALUES
-(1, 'God Guto', 3, 1, 120, 0, 1560, 1560, 27413800, 120, 120, 120, 120, 152, 1, 220, 10, 2147483647, 0, 200, 15, 32873, 31146, 7, '', 404, 1, 1537456070, 1845711499, 1, 0, 0, 1537458499, 31, 953507, 0, 1090203, 43200, -1, 2520, 28, 0, 92, 0, 8, 0, 8, 0, 69, 0, 8, 0, 8, 0, 0, '', '', 0, 0, 0),
+(1, 'God', 3, 1, 120, 0, 1560, 1560, 27413800, 120, 120, 120, 120, 152, 1, 220, 10, 2147483647, 0, 200, 15, 32873, 31146, 7, '', 404, 1, 1537456070, 1845711499, 1, 0, 0, 1537458499, 31, 953507, 0, 1090203, 43200, -1, 2520, 28, 0, 92, 0, 8, 0, 8, 0, 69, 0, 8, 0, 8, 0, 0, '', '', 0, 0, 0),
 (8, 'No Build', 1, 2, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 0, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, '', '', 0, 0, 0);
 
 --
@@ -1296,15 +1288,6 @@ CREATE TABLE `player_autoloot` (
   `player_id` int(11) NOT NULL,
   `autoloot_list` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `player_autoloot`
---
-
-INSERT INTO `player_autoloot` (`id`, `player_id`, `autoloot_list`) VALUES
-(1, 15, ''),
-(28, 1, 0x6408),
-(29, 14, 0x6408);
 
 -- --------------------------------------------------------
 
