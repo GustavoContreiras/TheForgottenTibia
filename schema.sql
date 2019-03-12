@@ -3,7 +3,6 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Fev-2019 às 14:42
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.3.1
 
@@ -58,7 +57,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday`, `email`, `creation`, `key`, `email_new`, `email_new_time`, `rlname`, `location`, `page_access`, `email_code`, `next_email`, `premium_points`, `create_date`, `create_ip`, `last_post`, `flag`) VALUES
-(1, '0', 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c', NULL, 5, 90, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, ''),
+(1, '0', 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c', NULL, 5, 0, 0, 'guto.contreiras@gmail.com', 0, '0', '', 0, '', '', 3, '', 0, 0, 0, 0, 1537481910, ''),
 (2, '1', '356a192b7913b04c54574d18c28d46e6395428ab', NULL, 1, 0, 0, 'guto.contreiras@gmail.com', 0, '', '', 0, '', '', 3, '', 0, 0, 0, 0, 0, 'unknown');
 
 -- --------------------------------------------------------
@@ -1065,7 +1064,7 @@ INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_i
 (885, 0, 0, 0, 'Rhyves #37', 0, 15, 0, 0, 0, 0, 26, 1),
 (886, 0, 0, 0, 'Rhyves #38', 0, 15, 0, 0, 0, 0, 29, 1),
 (887, 0, 0, 0, 'Rhyves #39', 0, 15, 0, 0, 0, 0, 28, 1),
-(890, 48, 0, 0, 'Rhyves #40', 0, 15, 0, 0, 0, 0, 295, 8),
+(890, 0, 0, 0, 'Rhyves #40', 0, 15, 0, 0, 0, 0, 295, 8),
 (891, 0, 0, 0, 'Rhyves #41', 0, 15, 0, 0, 0, 0, 332, 16),
 (892, 0, 0, 0, 'Rhyves #42', 0, 15, 0, 0, 0, 0, 38, 1),
 (893, 0, 0, 0, 'Desert #7', 0, 15, 0, 0, 0, 0, 143, 0),
@@ -1213,7 +1212,6 @@ CREATE TABLE `players` (
   `maglevel` int(11) NOT NULL DEFAULT '0',
   `mana` int(11) NOT NULL DEFAULT '0',
   `manamax` int(11) NOT NULL DEFAULT '0',
-  `manaspent` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `soul` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `town_id` int(11) NOT NULL DEFAULT '1',
   `posx` int(11) NOT NULL DEFAULT '0',
@@ -1253,9 +1251,11 @@ CREATE TABLE `players` (
 -- Extraindo dados da tabela `players`
 --
 
-INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `manaspent`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `offlinetraining_time`, `offlinetraining_skill`, `stamina`, `skill_fist`, `skill_fist_tries`, `skill_club`, `skill_club_tries`, `skill_sword`, `skill_sword_tries`, `skill_axe`, `skill_axe_tries`, `skill_dist`, `skill_dist_tries`, `skill_shielding`, `skill_shielding_tries`, `skill_fishing`, `skill_fishing_tries`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`) VALUES
-(1, 'God', 3, 1, 120, 0, 1560, 1560, 27413800, 120, 120, 120, 120, 152, 1, 220, 10, 2147483647, 0, 200, 15, 32873, 31146, 7, '', 404, 1, 1537456070, 1845711499, 1, 0, 0, 1537458499, 31, 953507, 0, 1090203, 43200, -1, 2520, 28, 0, 92, 0, 8, 0, 8, 0, 69, 0, 8, 0, 8, 0, 0, '', '', 0, 0, 0),
-(8, 'No Build', 1, 2, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 0, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, '', '', 0, 0, 0);
+INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `stamina`, `skill_points`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`) VALUES
+(1, 'God', 3, 1, 120, 0, 1000, 1000, 0, 62, 39, 116, 1, 75, 3, 75, 1000, 1000, 100, 15, 33011, 31310, 7, '', 2000, 1, 0, 0, 1, 0, 0, 0, 31, 0, 0, 0, 2520, 100, 50, 50, 50, 50, 50, 50, 50, 0, '', '', 0, 0, 0),
+(8, 'No Build', 1, 2, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2520, 10, 8, 8, 8, 8, 8, 8, 8, 0, '', '', 0, 0, 0),
+(83, 'Tester 1', 1, 1, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2520, 10, 8, 8, 8, 8, 8, 8, 8, 0, '', '', 0, 0, 0),
+(84, 'Tester 2', 1, 1, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2520, 10, 8, 8, 8, 8, 8, 8, 8, 0, '', '', 0, 0, 0);
 
 --
 -- Acionadores `players`
@@ -1288,6 +1288,22 @@ CREATE TABLE `player_autoloot` (
   `player_id` int(11) NOT NULL,
   `autoloot_list` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `player_autoloot`
+--
+
+INSERT INTO `player_autoloot` (`id`, `player_id`, `autoloot_list`) VALUES
+(551, 83, ''),
+(623, 75, 0x640819177129c82b8730),
+(848, 76, ''),
+(1078, 77, 0x48086408),
+(1124, 78, ''),
+(1126, 79, ''),
+(1166, 80, 0x6408),
+(1347, 81, ''),
+(1410, 1, 0x6d09),
+(1422, 82, '');
 
 -- --------------------------------------------------------
 
@@ -1391,38 +1407,29 @@ INSERT INTO `player_items` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `att
 (8, 102, 109, 7618, 3, 0x0f03, ''),
 (8, 102, 110, 7620, 3, 0x0f03, ''),
 (8, 102, 111, 2680, 5, 0x0f05, ''),
-(1, 1, 101, 5461, 1, '', ''),
-(1, 2, 102, 2125, 1, '', ''),
-(1, 3, 103, 2365, 1, '', ''),
-(1, 4, 104, 2503, 1, '', ''),
-(1, 6, 105, 6528, 1, '', ''),
-(1, 10, 106, 26382, 1, '', ''),
-(1, 103, 107, 6132, 1, 0x10c8fd7000, ''),
-(1, 103, 108, 2493, 1, '', ''),
-(1, 103, 109, 2520, 1, '', ''),
-(1, 103, 110, 2645, 1, '', ''),
-(1, 103, 111, 7635, 2, 0x0f02, ''),
-(1, 103, 112, 2148, 75, 0x0f4b, ''),
-(1, 103, 113, 2152, 2, 0x0f02, ''),
-(1, 103, 114, 11305, 1, '', ''),
-(1, 103, 115, 2413, 1, '', ''),
-(1, 103, 116, 2456, 1, '', ''),
-(1, 103, 117, 2293, 1, 0x0f01, ''),
-(1, 103, 118, 2160, 1, 0x0f01, ''),
-(1, 103, 119, 2120, 1, '', ''),
-(1, 103, 120, 5803, 1, '', ''),
-(1, 103, 121, 2195, 1, '', ''),
-(1, 103, 122, 5791, 1, '', ''),
-(1, 103, 123, 2361, 1, '', ''),
-(1, 103, 124, 12559, 1, '', ''),
-(1, 103, 125, 12565, 1, '', ''),
-(1, 103, 126, 12563, 1, '', ''),
-(1, 103, 127, 12561, 1, '', ''),
-(1, 106, 128, 2268, 2, 0x0f02, ''),
-(1, 106, 129, 2201, 200, 0x16c800, ''),
-(1, 106, 130, 2214, 1, '', ''),
-(1, 106, 131, 2432, 1, '', ''),
-(1, 106, 132, 2544, 98, 0x0f62, '');
+(1, 2, 101, 2125, 1, '', ''),
+(1, 3, 102, 2365, 1, '', ''),
+(1, 4, 103, 2503, 1, '', ''),
+(1, 5, 104, 2662, 1, '', ''),
+(1, 10, 105, 26382, 1, '', ''),
+(1, 102, 106, 5461, 1, '', ''),
+(1, 102, 107, 2187, 1, '', ''),
+(1, 102, 108, 2413, 1, '', ''),
+(1, 102, 109, 6132, 1, 0x1028ee7000, ''),
+(1, 102, 110, 2195, 1, '', ''),
+(1, 102, 111, 2304, 1, 0x0f01, ''),
+(1, 102, 112, 7425, 1, '', ''),
+(1, 102, 113, 2187, 1, '', ''),
+(1, 102, 114, 2493, 1, '', ''),
+(1, 102, 115, 2520, 1, '', ''),
+(1, 102, 116, 7635, 2, 0x0f02, ''),
+(1, 102, 117, 2456, 1, '', ''),
+(1, 102, 118, 2120, 1, '', ''),
+(1, 105, 119, 2268, 2, 0x0f02, ''),
+(1, 105, 120, 2201, 200, 0x16c800, ''),
+(1, 105, 121, 2214, 1, '', ''),
+(1, 105, 122, 2432, 1, '', ''),
+(1, 105, 123, 2544, 98, 0x0f62, '');
 
 -- --------------------------------------------------------
 
@@ -1490,6 +1497,7 @@ INSERT INTO `player_storage` (`player_id`, `key`, `value`) VALUES
 (1, 1040, 1),
 (1, 1041, 1),
 (1, 1045, 1),
+(1, 1049, 1),
 (1, 1065, 1),
 (1, 1067, 1),
 (1, 1068, 1),
@@ -1501,14 +1509,15 @@ INSERT INTO `player_storage` (`player_id`, `key`, `value`) VALUES
 (1, 1075, 1),
 (1, 7000, 0),
 (1, 10042, 1),
+(1, 10666, 1),
 (1, 30018, 1),
 (1, 60320, 1),
 (1, 60321, 1),
-(1, 62490, 17),
+(1, 62490, 0),
 (1, 62492, 0),
 (1, 10001001, 8388609),
 (1, 10001002, 8912897),
-(1, 10002011, 1),
+(1, 10002011, 47),
 (8, 10042, 1),
 (8, 62490, 0),
 (8, 62492, 0),
@@ -1532,8 +1541,8 @@ CREATE TABLE `server_config` (
 
 INSERT INTO `server_config` (`config`, `value`) VALUES
 ('db_version', '22'),
-('motd_hash', 'ae15c6b21bd1e6c95311147433487ca8fd74be15'),
-('motd_num', '2'),
+('motd_hash', '477fe3e583894a34c480a112d1185671e9bea256'),
+('motd_num', '3'),
 ('players_record', '8');
 
 -- --------------------------------------------------------
@@ -2610,7 +2619,7 @@ ALTER TABLE `z_shop_offer`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `account_ban_history`
@@ -2622,7 +2631,7 @@ ALTER TABLE `account_ban_history`
 -- AUTO_INCREMENT for table `guilds`
 --
 ALTER TABLE `guilds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guildwar_kills`
@@ -2634,7 +2643,7 @@ ALTER TABLE `guildwar_kills`
 -- AUTO_INCREMENT for table `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guild_wars`
@@ -2652,25 +2661,25 @@ ALTER TABLE `houses`
 -- AUTO_INCREMENT for table `market_history`
 --
 ALTER TABLE `market_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `market_offers`
 --
 ALTER TABLE `market_offers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `player_autoloot`
 --
 ALTER TABLE `player_autoloot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1423;
 
 --
 -- AUTO_INCREMENT for table `towns`
