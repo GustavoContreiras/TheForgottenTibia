@@ -1482,7 +1482,7 @@ function onSkillPointsChange(localPlayer, skillPoints)
 
 	skillPointsValueLabel:setText(skillPoints)
 	skillPointsValueLabel:setWidth(skillPointsValueLabel:getTextSize().width)
-	
+		
 	if skillPoints >= 3 then
 		magicPlusButton:setVisible(true)
 	else
@@ -1640,7 +1640,7 @@ function onAttackSpeedChange(localPlayer, attackSpeed)
 end
 
 function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
-	setSkillBase('magiclevel', localPlayer:getBaseMagicLevel(), baseMagicLevel)
+	setSkillBase('magiclevel', localPlayer:getMagicLevel(), baseMagicLevel)
 	setSkillsTooltips()
 end
 
