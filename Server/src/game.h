@@ -458,8 +458,11 @@ class Game
 			return lightHour;
 		}
 
-		bool loadExperienceStages();
+		bool loadExperienceAndPointsStages();
 		uint64_t getExperienceStage(uint32_t level);
+		uint64_t getPointsPerLevel(uint32_t level);
+		bool loadSkillsGain();
+		std::map<uint32_t, uint32_t> getSkillGains(uint32_t id);
 
 		void loadMotdNum();
 		void saveMotdNum() const;
@@ -521,6 +524,16 @@ class Game
 		std::unordered_map<uint32_t, Guild*> guilds;
 		std::unordered_map<uint16_t, Item*> uniqueItems;
 		std::map<uint32_t, uint32_t> stages;
+		std::map<uint32_t, uint32_t> points;
+		std::map<uint32_t, uint32_t> skill_vitality;
+		std::map<uint32_t, uint32_t> skill_strenght;
+		std::map<uint32_t, uint32_t> skill_defence;
+		std::map<uint32_t, uint32_t> skill_dexterity;
+		std::map<uint32_t, uint32_t> skill_intelligence;
+		std::map<uint32_t, uint32_t> skill_faith;
+		std::map<uint32_t, uint32_t> skill_endurance;
+		std::map<uint32_t, uint32_t> skill_magic;
+
 
 		std::list<Item*> decayItems[EVENT_DECAY_BUCKETS];
 		std::list<Creature*> checkCreatureLists[EVENT_CREATURECOUNT];

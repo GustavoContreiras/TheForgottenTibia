@@ -108,7 +108,8 @@ void Game::setGameState(GameState_t newState)
 	gameState = newState;
 	switch (newState) {
 		case GAME_STATE_INIT: {
-			loadExperienceStages();
+			loadExperienceAndPointsStages();
+			loadSkillsGain();
 
 			groups.load();
 			g_chat->load();
@@ -4792,12 +4793,43 @@ uint64_t Game::getExperienceStage(uint32_t level)
 	return stages[level];
 }
 
-bool Game::loadExperienceStages()
+uint64_t Game::getPointsPerLevel(uint32_t level)
+{
+	if (!stagesEnabled) {
+		return g_config.getNumber(ConfigManager::SKILLPOINTS_PERLEVEL);
+	}
+
+	if (useLastStageLevel && level >= lastStageLevel) {
+		return points[lastStageLevel];
+	}
+
+	return points[level];
+}
+
+std::map<uint32_t, uint32_t> Game::getSkillGains(uint32_t id)
+{
+	switch (id) {
+		case SKILL_VITALITY: return skill_vitality;
+		case SKILL_STRENGHT: return skill_strenght;
+		case SKILL_DEFENCE: return skill_defence;
+		case SKILL_DEXTERITY: return skill_dexterity;
+		case SKILL_INTELLIGENCE: return skill_intelligence;
+		case SKILL_FAITH: return skill_faith;
+		case SKILL_ENDURANCE: return skill_endurance;
+		case SKILL_MAGLEVEL: return skill_magic;
+	}
+
+	std::map<uint32_t, uint32_t> nullMap;
+
+	return nullMap;
+}
+
+bool Game::loadExperienceAndPointsStages()
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/XML/stages.xml");
 	if (!result) {
-		printXMLError("Error - Game::loadExperienceStages", "data/XML/stages.xml", result);
+		printXMLError("Error - Game::loadExperienceAndPointsStages", "data/XML/stages.xml", result);
 		return false;
 	}
 
@@ -4805,16 +4837,16 @@ bool Game::loadExperienceStages()
 		if (strcasecmp(stageNode.name(), "config") == 0) {
 			stagesEnabled = stageNode.attribute("enabled").as_bool();
 		} else {
-			uint32_t minLevel, maxLevel, multiplier;
+			uint32_t minLevel, maxLevel, multiplier, pointsPerLevel;
 
-			pugi::xml_attribute minLevelAttribute = stageNode.attribute("minlevel");
+			pugi::xml_attribute minLevelAttribute = stageNode.attribute("minLevel");
 			if (minLevelAttribute) {
 				minLevel = pugi::cast<uint32_t>(minLevelAttribute.value());
 			} else {
 				minLevel = 1;
 			}
 
-			pugi::xml_attribute maxLevelAttribute = stageNode.attribute("maxlevel");
+			pugi::xml_attribute maxLevelAttribute = stageNode.attribute("maxLevel");
 			if (maxLevelAttribute) {
 				maxLevel = pugi::cast<uint32_t>(maxLevelAttribute.value());
 			} else {
@@ -4830,13 +4862,205 @@ bool Game::loadExperienceStages()
 				multiplier = 1;
 			}
 
+			pugi::xml_attribute pointsPerLevelAttribute = stageNode.attribute("pointsPerLevel");
+			if (pointsPerLevelAttribute) {
+				pointsPerLevel = pugi::cast<uint32_t>(pointsPerLevelAttribute.value());
+			}
+			else {
+				pointsPerLevel = 1;
+			}
+
 			if (useLastStageLevel) {
 				stages[lastStageLevel] = multiplier;
+				points[lastStageLevel] = pointsPerLevel;
 			} else {
 				for (uint32_t i = minLevel; i <= maxLevel; ++i) {
 					stages[i] = multiplier;
+					points[i] = pointsPerLevel;
 				}
 			}
+		}
+	}
+	return true;
+}
+
+bool Game::loadSkillsGain()
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("data/XML/skills.xml");
+	if (!result) {
+		printXMLError("Error - Game::loadSkillsGain", "data/XML/skills.xml", result);
+		return false;
+	}
+
+	for (auto stageNode : doc.child("skills").children()) {
+
+		int id;
+		uint32_t cost, health, mana, soul, cap, attackSpeed, walkSpeed, rodMaxDamage, wandMaxDamage;
+
+		pugi::xml_attribute idAttribute = stageNode.attribute("id");
+		if (idAttribute) {
+			id = pugi::cast<int>(idAttribute.value());
+		}
+		else {
+			id = -1;
+		}
+
+		std::cout << "loading id: " << id << "\n";
+
+		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
+		if (costAttribute) {
+			cost = pugi::cast<uint32_t>(costAttribute.value());
+		} else {
+			cost = 1;
+		}
+
+		std::cout << "loading cost: " << cost << "\n";
+
+		pugi::xml_attribute healthAttribute = stageNode.attribute("health");
+		if (healthAttribute) {
+			health = pugi::cast<uint32_t>(healthAttribute.value());
+		} else {
+			health = 0;
+		}
+
+		pugi::xml_attribute manaAttribute = stageNode.attribute("mana");
+		if (manaAttribute) {
+			mana = pugi::cast<uint32_t>(manaAttribute.value());
+		} else {
+			mana = 0;
+		}
+
+		pugi::xml_attribute soulAttribute = stageNode.attribute("soul");
+		if (soulAttribute) {
+			soul = pugi::cast<uint32_t>(soulAttribute.value());
+		}
+		else {
+			soul = 0;
+		}
+
+		pugi::xml_attribute capAttribute = stageNode.attribute("cap");
+		if (capAttribute) {
+			cap = pugi::cast<uint32_t>(capAttribute.value());
+		}
+		else {
+			cap = 0;
+		}
+
+		pugi::xml_attribute attackSpeedAttribute = stageNode.attribute("attackSpeed");
+		if (attackSpeedAttribute) {
+			attackSpeed = pugi::cast<uint32_t>(attackSpeedAttribute.value());
+		}
+		else {
+			attackSpeed = 0;
+		}
+
+		pugi::xml_attribute walkSpeedAttribute = stageNode.attribute("walkSpeed");
+		if (walkSpeedAttribute) {
+			walkSpeed = pugi::cast<uint32_t>(walkSpeedAttribute.value());
+		}
+		else {
+			walkSpeed = 0;
+		}
+
+		switch (id) {
+			case SKILL_VITALITY:
+				skill_vitality[0] = cost;
+				skill_vitality[1] = health;
+				skill_vitality[2] = mana;
+				skill_vitality[3] = soul;
+				skill_vitality[4] = cap;
+				skill_vitality[5] = walkSpeed;
+				skill_vitality[6] = attackSpeed;
+				skill_vitality[7] = wandMaxDamage;
+				skill_vitality[8] = rodMaxDamage;
+				break;
+
+			case SKILL_STRENGHT:
+				skill_strenght[0] = cost;
+				skill_strenght[1] = health;
+				skill_strenght[2] = mana;
+				skill_strenght[3] = soul;
+				skill_strenght[4] = cap;
+				skill_strenght[5] = walkSpeed;
+				skill_strenght[6] = attackSpeed;
+				skill_strenght[7] = wandMaxDamage;
+				skill_strenght[8] = rodMaxDamage;
+				break;
+
+			case SKILL_DEFENCE:
+				skill_defence[0] = cost;
+				skill_defence[1] = health;
+				skill_defence[2] = mana;
+				skill_defence[3] = soul;
+				skill_defence[4] = cap;
+				skill_defence[5] = walkSpeed;
+				skill_defence[6] = attackSpeed;
+				skill_defence[7] = wandMaxDamage;
+				skill_defence[8] = rodMaxDamage;
+				break;
+
+			case SKILL_DEXTERITY:
+				skill_dexterity[0] = cost;
+				skill_dexterity[1] = health;
+				skill_dexterity[2] = mana;
+				skill_dexterity[3] = soul;
+				skill_dexterity[4] = cap;
+				skill_dexterity[5] = walkSpeed;
+				skill_dexterity[6] = attackSpeed;
+				skill_dexterity[7] = wandMaxDamage;
+				skill_dexterity[8] = rodMaxDamage;
+				break;
+
+			case SKILL_INTELLIGENCE:
+				skill_intelligence[0] = cost;
+				skill_intelligence[1] = health;
+				skill_intelligence[2] = mana;
+				skill_intelligence[3] = soul;
+				skill_intelligence[4] = cap;
+				skill_intelligence[5] = walkSpeed;
+				skill_intelligence[6] = attackSpeed;
+				skill_intelligence[7] = wandMaxDamage;
+				skill_intelligence[8] = rodMaxDamage;
+				break;
+
+			case SKILL_FAITH:
+				skill_faith[0] = cost;
+				skill_faith[1] = health;
+				skill_faith[2] = mana;
+				skill_faith[3] = soul;
+				skill_faith[4] = cap;
+				skill_faith[5] = walkSpeed;
+				skill_faith[6] = attackSpeed;
+				skill_faith[7] = wandMaxDamage;
+				skill_faith[8] = rodMaxDamage;
+				break;
+
+			case SKILL_ENDURANCE:
+				skill_endurance[0] = cost;
+				skill_endurance[1] = health;
+				skill_endurance[2] = mana;
+				skill_endurance[3] = soul;
+				skill_endurance[4] = cap;
+				skill_endurance[5] = walkSpeed;
+				skill_endurance[6] = attackSpeed;
+				skill_endurance[7] = wandMaxDamage;
+				skill_endurance[8] = rodMaxDamage;
+				break;
+
+			case 7:
+				skill_magic[0] = cost;
+				skill_magic[1] = health;
+				skill_magic[2] = mana;
+				skill_magic[3] = soul;
+				skill_magic[4] = cap;
+				skill_magic[5] = walkSpeed;
+				skill_magic[6] = attackSpeed;
+				skill_magic[7] = wandMaxDamage;
+				skill_magic[8] = rodMaxDamage;
+
+				std::cout << "skill_magic[0] (cost): " << skill_magic[0] << "\n";
+				break;
 		}
 	}
 	return true;

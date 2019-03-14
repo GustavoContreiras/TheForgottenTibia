@@ -113,12 +113,13 @@ magicWandRodFactor = 0
 
 
 -- Rates
--- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
+-- NOTE: rateExp and skillPointsPerLevel is not used if you have enabled stages in data/XML/stages.xml
 rateExp = 1
 rateSkill = 1
 rateLoot = 3
 rateMagic = 1
 rateSpawn = 2
+skillPointsPerLevel = 1
 
 -- Monsters
 deSpawnRange = 2

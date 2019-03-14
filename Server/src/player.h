@@ -104,7 +104,6 @@ struct OutfitEntry {
 
 struct Skill {
 	uint16_t level = 8;
-	uint8_t cost = 1;
 };
 
 using MuteCountMap = std::map<uint32_t, uint32_t>;

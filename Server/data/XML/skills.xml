@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skills>
+
+	<skill id="0" name="Vitality" cost="1" 
+		health="15" 
+		mana="0" 
+		soul="0"
+		cap="0" 
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+		
+	<skill id="1" name="Strenght" cost="1" 
+		health="0"
+		mana="0" 
+		soul="0"
+		cap="5" 
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+		
+	<skill id="2" name="Defence" cost="1" 
+		health="5" 
+		mana="0" 
+		soul="0"
+		cap="0" 
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+		
+	<skill id="3" name="Dexterity" cost="1" 
+		health="0" 
+		mana="0" 
+		soul="0"
+		cap="0" 
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+		
+	<skill id="4" name="Intelligence" cost="1"
+		health="0" 
+		mana="10" 
+		cap="0" 
+		soul="0"
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="1"
+		rodMaxDamage="0"/>
+		
+	<skill id="5" name="Faith" cost="1" 
+		health="0" 
+		mana="10" 
+		cap="0" 
+		soul="0"
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="2"/>
+		
+	<skill id="6" name="Endurance" cost="1" 
+		health="5" 
+		mana="0" 
+		cap="15" 
+		soul="0"
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+		
+	<skill id="7" name="Magic" cost="3" 
+		health="0" 
+		mana="15" 
+		cap="0" 
+		soul="0"
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="0"/>
+
+</skills>

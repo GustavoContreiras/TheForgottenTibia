@@ -541,13 +541,32 @@ void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
 	bool sendUpdate = false;
+	uint8_t cost;
+	uint8_t healthGain;
+	uint8_t manaGain;
+	uint8_t soulGain;
+	uint8_t capGain;
+	uint8_t walkSpeedGain;
+	uint8_t attackSpeedGain;
 
 	if (magic > magLevel) {
 
+		std::map<uint32_t, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);
+
+		cost = magicGains[0];
+		healthGain = magicGains[1];
+		manaGain = magicGains[2];
+		soulGain = magicGains[3];
+		capGain = magicGains[4];
+		walkSpeedGain = magicGains[5];
+		attackSpeedGain = magicGains[6];
+
+		std::cout << "cost: " << cost << "\n";
+
 		uint16_t oldMagic = magLevel;
-		skillPoints -= (magic - oldMagic) * 3;
-		magLevel = magic;
-		mana += g_config.getNumber(ConfigManager::MAGIC_MANAGAIN) * (magic - oldMagic);
+		skillPoints -= cost * (magic - oldMagic);
+		magLevel += (magic - oldMagic);
+		mana += manaGain * (magic - oldMagic);
 		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, oldMagic, magic);
 		sendUpdate = true;
 	}
@@ -1728,13 +1747,17 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 	uint32_t prevLevel = level;
 	while (experience >= nextLevelExp) {
+
+		skillPoints += g_game.getPointsPerLevel(level);
+
 		++level;
+
 		healthMax += vocation->getHPGain();
 		health += vocation->getHPGain();
 		manaMax += vocation->getManaGain();
 		mana += vocation->getManaGain();
 		capacity += vocation->getCapGain();
-
+		
 		currLevelExp = nextLevelExp;
 		nextLevelExp = Player::getExpForLevel(level + 1);
 		if (currLevelExp >= nextLevelExp) {
