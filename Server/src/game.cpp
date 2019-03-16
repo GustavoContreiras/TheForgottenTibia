@@ -4906,16 +4906,12 @@ bool Game::loadSkillsGain()
 			id = -1;
 		}
 
-		std::cout << "loading id: " << id << "\n";
-
 		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
 		if (costAttribute) {
 			cost = pugi::cast<uint32_t>(costAttribute.value());
 		} else {
 			cost = 1;
 		}
-
-		std::cout << "loading cost: " << cost << "\n";
 
 		pugi::xml_attribute healthAttribute = stageNode.attribute("health");
 		if (healthAttribute) {

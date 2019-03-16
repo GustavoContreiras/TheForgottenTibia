@@ -409,14 +409,14 @@ function onClickApply()
 	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Sword) end
 	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Fishing) end
 	
-	print('\nNew magic: ' .. newMagic)
+	--[[print('\nNew magic: ' .. newMagic)
 	print('New vitality: ' .. newVitality)
 	print('New strenght: ' .. newStrenght)
 	print('New defence: ' .. newDefence)
 	print('New dexterity: ' .. newDexterity)
 	print('New intelligence: ' .. newIntelligence)
 	print('New faith: ' .. newFaith)
-	print('New endurance: ' .. newEndurance .. '\n')
+	print('New endurance: ' .. newEndurance .. '\n')]]
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
 	
@@ -533,7 +533,7 @@ function onClickAdd(id)
 				local initialCapacity = 36500
 				local levelsCapacity = 500 * (player:getLevel() - 1)
 				local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-				local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
 				
 				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 				newCapacityArrowLabel:setVisible(true)
@@ -676,6 +676,17 @@ function onClickAdd(id)
 				newHealthValueLabel:setText(newMaxHealth)
 				newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
 				newHealthValueLabel:setVisible(true)
+				
+				local initialCapacity = 36500
+				local levelsCapacity = 500 * (player:getLevel() - 1)
+				local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
+				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				
+				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
+				newCapacityArrowLabel:setVisible(true)
+				newCapacityValueLabel:setText(newMaxCapacity / 100.0)
+				newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
+				newCapacityValueLabel:setVisible(true)
 			end			
 		end		
 	end
@@ -794,7 +805,7 @@ function onClickRemove(id)
 			local initialCapacity = 36500
 			local levelsCapacity = 500 * (player:getLevel() - 1)
 			local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-			local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
 			
 			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 						
@@ -974,6 +985,20 @@ function onClickRemove(id)
 			end
 			newHealthValueLabel:setText(newMaxHealth)
 			newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
+			
+			local initialCapacity = 36500
+			local levelsCapacity = 500 * (player:getLevel() - 1)
+			local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
+			local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			
+			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
+			
+			if newMaxCapacity <= player:getTotalCapacity() * 100 then
+				newCapacityArrowLabel:setVisible(false)
+				newCapacityValueLabel:setVisible(false)
+			end
+			newCapacityValueLabel:setText(newMaxCapacity / 100.0)
+			newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
 		end			
 	end
 end
@@ -1645,7 +1670,6 @@ function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
 end
 
 function onMagicLevelChange(localPlayer, magicLevel)
-
 	local baseMagic = localPlayer:getBaseMagicLevel()
 	
 	if baseMagic <= 0 or magicLevel < 0 then
@@ -1674,7 +1698,7 @@ function onNewBaseMagicLevelChange(localPlayer, newBaseMagicLevel)
 end
 
 function onBaseSkillChange(localPlayer, id, baseLevel)
-	setSkillBase('skillId'..id, localPlayer:getBaseSkillLevel(id), baseLevel)
+	setSkillBase('skillId'..id, localPlayer:getSkillLevel(id), baseLevel)
 	setSkillsTooltips()
 end
 
