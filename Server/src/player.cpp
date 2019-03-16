@@ -785,8 +785,6 @@ void Player::refreshStats() {
 	uint8_t intelligenceWandMaxDamageGain = intelligenceGains[7];
 	uint8_t intelligenceRodMaxDamageGain = intelligenceGains[8];
 
-	std::cout << "intelligenceWandMaxDamageGain: " << intelligenceWandMaxDamageGain << "\n";
-
 	std::map<uint32_t, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
 	uint8_t faithHealthGain = faithGains[1];
 	uint8_t faithManaGain = faithGains[2];

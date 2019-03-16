@@ -2951,7 +2951,6 @@ void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
 	msg.addByte(0xA1);
 
 	//base values (real skill)
-	msg.addByte(std::min<uint32_t>(player->getBaseMagicLevel(), std::numeric_limits<uint8_t>::max())); //magic
 	msg.add<uint16_t>(player->getBaseSkill(SKILL_VITALITY));
 	msg.add<uint16_t>(player->getBaseSkill(SKILL_STRENGHT));
 	msg.add<uint16_t>(player->getBaseSkill(SKILL_DEFENCE));
@@ -2967,7 +2966,6 @@ void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
 	msg.add<uint16_t>(0); //mana leech amount
 
 	//current values (with ring, dual wield, etc)
-	msg.addByte(std::min<uint32_t>(player->getMagicLevel(), std::numeric_limits<uint8_t>::max())); //currentMagic
 	msg.add<uint16_t>(std::min<int32_t>(player->getSkillLevel(SKILL_VITALITY), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getSkillLevel(SKILL_STRENGHT), std::numeric_limits<uint16_t>::max()));
 	msg.add<uint16_t>(std::min<int32_t>(player->getSkillLevel(SKILL_DEFENCE), std::numeric_limits<uint16_t>::max()));

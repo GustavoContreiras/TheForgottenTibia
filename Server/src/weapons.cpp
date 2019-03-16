@@ -937,16 +937,12 @@ int32_t WeaponWand::getWeaponDamage(const Player* player, const Creature*, const
 		item->getID() == 8922 || item->getID() == 13760 || item->getID() == 13880 || item->getID() == 18390 || item->getID() == 18409) {
 
 		uint8_t wandMaxDamageBonus = player->getWandMaxDamageBonus();
-		std::cout << "wandMaxDamageBonus: " << wandMaxDamageBonus << "\n";
-		std::cout << "wand max damage: " << maxChange * (100 + wandMaxDamageBonus) / 100 << "\n";
-		return -normal_random(minChange, maxChange * (100 + wandMaxDamageBonus) / 100);
+		return -normal_random(minChange, maxChange * (100 + wandMaxDamageBonus) / 100.0);
 	}
 
 	//rods
 	else {
 		uint8_t rodMaxDamageBonus = player->getRodMaxDamageBonus();
-		std::cout << "rodMaxDamageBonus: " << rodMaxDamageBonus << "\n";
-		std::cout << "rod max damage: " << maxChange * (100 + rodMaxDamageBonus) / 100 << "\n";
-		return -normal_random(minChange, maxChange * (100 + rodMaxDamageBonus) / 100);
+		return -normal_random(minChange, maxChange * (100 + rodMaxDamageBonus) / 100.0);
 	}
 }

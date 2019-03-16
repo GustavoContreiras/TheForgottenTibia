@@ -1368,7 +1368,6 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
 
 void ProtocolGame::parsePlayerSkills(const InputMessagePtr& msg)
 {   
-	int baseMagic = msg->getU8();
 	int baseVitality = msg->getU16();
 	int baseStrenght = msg->getU16();
 	int baseDefence = msg->getU16();
@@ -1384,7 +1383,6 @@ void ProtocolGame::parsePlayerSkills(const InputMessagePtr& msg)
 	int baseManaLeechChance = msg->getU16();
 	int baseManaLeechAmount = msg->getU16();
 
-	int currentMagic = msg->getU8();
 	int currentVitality = msg->getU16();
 	int currentStrenght = msg->getU16();
 	int currentDefence = msg->getU16();
@@ -1399,9 +1397,6 @@ void ProtocolGame::parsePlayerSkills(const InputMessagePtr& msg)
 	int currentHitpointsLeechAmount = msg->getU16();
 	int currentManaLeechChance = msg->getU16();
 	int currentManaLeechAmount = msg->getU16();
-
-	m_localPlayer->setBaseMagicLevel(baseMagic);
-	m_localPlayer->setMagicLevel(currentMagic);
 
 	m_localPlayer->setBaseSkill(Otc::Vitality, baseVitality);
 	m_localPlayer->setSkill(Otc::Vitality, currentVitality);

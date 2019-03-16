@@ -5034,7 +5034,6 @@ bool Game::loadSkillsGain()
 				skill_intelligence[6] = attackSpeed;
 				skill_intelligence[7] = wandMaxDamage;
 				skill_intelligence[8] = rodMaxDamage;
-				std::cout << "wand max damage bonus: " << skill_intelligence[7] << "\n";
 				break;
 
 			case SKILL_FAITH:
