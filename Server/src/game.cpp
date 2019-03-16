@@ -4959,6 +4959,22 @@ bool Game::loadSkillsGain()
 			walkSpeed = 0;
 		}
 
+		pugi::xml_attribute wandMaxDamageAttribute = stageNode.attribute("wandMaxDamage");
+		if (wandMaxDamageAttribute) {
+			wandMaxDamage = pugi::cast<uint32_t>(wandMaxDamageAttribute.value());
+		}
+		else {
+			wandMaxDamage = 0;
+		}
+
+		pugi::xml_attribute rodMaxDamageAttribute = stageNode.attribute("rodMaxDamage");
+		if (rodMaxDamageAttribute) {
+			rodMaxDamage = pugi::cast<uint32_t>(rodMaxDamageAttribute.value());
+		}
+		else {
+			rodMaxDamage = 0;
+		}
+
 		switch (id) {
 			case SKILL_VITALITY:
 				skill_vitality[0] = cost;
@@ -4982,7 +4998,7 @@ bool Game::loadSkillsGain()
 				skill_strenght[6] = attackSpeed;
 				skill_strenght[7] = wandMaxDamage;
 				skill_strenght[8] = rodMaxDamage;
-				break;
+				break;	
 
 			case SKILL_DEFENCE:
 				skill_defence[0] = cost;
@@ -5018,6 +5034,7 @@ bool Game::loadSkillsGain()
 				skill_intelligence[6] = attackSpeed;
 				skill_intelligence[7] = wandMaxDamage;
 				skill_intelligence[8] = rodMaxDamage;
+				std::cout << "wand max damage bonus: " << skill_intelligence[7] << "\n";
 				break;
 
 			case SKILL_FAITH:

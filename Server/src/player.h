@@ -633,8 +633,13 @@ class Player final : public Creature, public Cylinder
 		//NEW! DUAL WIELD SYSTEM
 		bool isDualWielding() const;
 
-		//NEW! CONFIG LUA (not implemented)
-		//uint32_t getAttackSpeed(Player * player) const;
+		uint8_t getWandMaxDamageBonus() const {
+			return wandMaxDamageBonus;
+		}
+
+		uint8_t getRodMaxDamageBonus() const {
+			return rodMaxDamageBonus;
+		}
 
 		Item* getWeapon(slots_t slot, bool ignoreAmmo) const;
 		Item* getWeapon(bool ignoreAmmo = false) const;
@@ -1311,6 +1316,10 @@ class Player final : public Creature, public Cylinder
 		uint8_t soul = 0;
 		uint8_t blessings = 0;
 		uint8_t levelPercent = 0;
+		uint8_t wandMaxDamageBonus = 0;
+		uint8_t rodMaxDamageBonus = 0;
+		uint8_t walkSpeedBonus = 0;
+		uint8_t	attackSpeedBonus = 0;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;

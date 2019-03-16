@@ -21,7 +21,17 @@
 		wandMaxDamage="0"
 		rodMaxDamage="0"/>
 		
-	<skill id="2" name="Intelligence" cost="1"
+	<skill id="2" name="Faith" cost="1" 
+		health="0" 
+		mana="10" 
+		cap="0" 
+		soul="0"
+		walkSpeed="0" 
+		attackSpeed="0"  
+		wandMaxDamage="0"
+		rodMaxDamage="2"/>	
+		
+	<skill id="3" name="Intelligence" cost="1"
 		health="0" 
 		mana="10" 
 		cap="0" 
@@ -30,16 +40,6 @@
 		attackSpeed="0"  
 		wandMaxDamage="1"
 		rodMaxDamage="0"/>
-		
-	<skill id="3" name="Faith" cost="1" 
-		health="0" 
-		mana="10" 
-		cap="0" 
-		soul="0"
-		walkSpeed="0" 
-		attackSpeed="0"  
-		wandMaxDamage="0"
-		rodMaxDamage="2"/>
 
 	<skill id="4" name="Dexterity" cost="1" 
 		health="0" 

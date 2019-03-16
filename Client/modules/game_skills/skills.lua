@@ -1665,11 +1665,16 @@ function onAttackSpeedChange(localPlayer, attackSpeed)
 end
 
 function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
-	setSkillBase('magiclevel', localPlayer:getMagicLevel(), baseMagicLevel)
+	--print('setting base magic')
+	
+	magicValueLabel:setText(baseMagicLevel)
+	magicValueLabel:setWidth(magicValueLabel:getTextSize().width)
+	
 	setSkillsTooltips()
 end
 
 function onMagicLevelChange(localPlayer, magicLevel)
+	--print('setting magic')
 	local baseMagic = localPlayer:getBaseMagicLevel()
 	
 	if baseMagic <= 0 or magicLevel < 0 then

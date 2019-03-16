@@ -924,7 +924,7 @@ void WeaponWand::configureWeapon(const ItemType& it)
 	Weapon::configureWeapon(it);
 }
 
-//CHANGED! SKILL POINTS SYSTEM
+//CHANGED! SKILL POINTS SYSTEM WAND ROD MAX DAMAGE
 int32_t WeaponWand::getWeaponDamage(const Player* player, const Creature*, const Item* item, bool maxDamage /*= false*/) const
 {
 	if (maxDamage) {
@@ -935,11 +935,18 @@ int32_t WeaponWand::getWeaponDamage(const Player* player, const Creature*, const
 	if (item->getID() == 23719 || item->getID() == 2190 || item->getID() == 2191 || item->getID() == 2188 ||
 		item->getID() == 8921 || item->getID() == 2189 || item->getID() == 2187 || item->getID() == 8920 ||
 		item->getID() == 8922 || item->getID() == 13760 || item->getID() == 13880 || item->getID() == 18390 || item->getID() == 18409) {
-		return -normal_random(minChange, maxChange + (maxChange * (player->getSkillLevel(SKILL_INTELLIGENCE) - 8) / 100) * g_config.getNumber(ConfigManager::WAND_INTELLIGENCEFACTOR) / 100) + player->getMagicLevel() * g_config.getNumber(ConfigManager::MAGIC_WANDRODFACTOR) / 100;
+
+		uint8_t wandMaxDamageBonus = player->getWandMaxDamageBonus();
+		std::cout << "wandMaxDamageBonus: " << wandMaxDamageBonus << "\n";
+		std::cout << "wand max damage: " << maxChange * (100 + wandMaxDamageBonus) / 100 << "\n";
+		return -normal_random(minChange, maxChange * (100 + wandMaxDamageBonus) / 100);
 	}
 
 	//rods
 	else {
-		return -normal_random(minChange, maxChange + (maxChange * (player->getSkillLevel(SKILL_FAITH) - 8) / 100) * g_config.getNumber(ConfigManager::ROD_FAITHFACTOR) / 100) + player->getMagicLevel() * g_config.getNumber(ConfigManager::MAGIC_WANDRODFACTOR) / 100;
+		uint8_t rodMaxDamageBonus = player->getRodMaxDamageBonus();
+		std::cout << "rodMaxDamageBonus: " << rodMaxDamageBonus << "\n";
+		std::cout << "rod max damage: " << maxChange * (100 + rodMaxDamageBonus) / 100 << "\n";
+		return -normal_random(minChange, maxChange * (100 + rodMaxDamageBonus) / 100);
 	}
 }
