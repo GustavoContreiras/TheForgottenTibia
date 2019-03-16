@@ -424,7 +424,7 @@ uint32_t Player::getAttackSpeed() const
 		return 1000;
 	}
 	else {
-		return 2020 - skills[SKILL_DEXTERITY].level * 2.5;
+		return 2000 - (skills[SKILL_DEXTERITY].level - 8) * 2.5;
 	}
 }
 
@@ -560,8 +560,6 @@ void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 		capGain = magicGains[4];
 		walkSpeedGain = magicGains[5];
 		attackSpeedGain = magicGains[6];
-
-		std::cout << "cost: " << cost << "\n";
 
 		uint16_t oldMagic = magLevel;
 		skillPoints -= cost * (magic - oldMagic);

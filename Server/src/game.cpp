@@ -5054,8 +5054,6 @@ bool Game::loadSkillsGain()
 				skill_magic[6] = attackSpeed;
 				skill_magic[7] = wandMaxDamage;
 				skill_magic[8] = rodMaxDamage;
-
-				std::cout << "skill_magic[0] (cost): " << skill_magic[0] << "\n";
 				break;
 		}
 	}
