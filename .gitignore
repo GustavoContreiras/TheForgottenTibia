@@ -23,4 +23,5 @@ Client/TheForgottenTibia.exp
 Client/TheForgottenTibia.lib
 Client/TheForgottenTibia.pdb
 Server/TheForgottenTibiaServer-x64.pdb
-Website/
+
+MyWebsite/
