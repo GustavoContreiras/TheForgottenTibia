@@ -395,13 +395,13 @@ elseif($page == 'step')
 			$newPlayer->setSkill(5, 10);
 			$newPlayer->setSkill(6, 10);
 
-			$newPlayer->setSkillCount(0, 0);
+			/*$newPlayer->setSkillCount(0, 0);
 			$newPlayer->setSkillCount(1, 0);
 			$newPlayer->setSkillCount(2, 0);
 			$newPlayer->setSkillCount(3, 0);
 			$newPlayer->setSkillCount(4, 0);
 			$newPlayer->setSkillCount(5, 0);
-			$newPlayer->setSkillCount(6, 0);
+			$newPlayer->setSkillCount(6, 0);*/
 
 			$newPlayer->save();
 		}

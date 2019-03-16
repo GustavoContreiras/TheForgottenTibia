@@ -18,31 +18,31 @@ switch($list)
 {
 	case "fist":
 		$id=Highscores::SKILL_FIST;
-		$list_name='Fist Fighting';
+		$list_name='Vitality';
 		break;
 	case "club":
 		$id=Highscores::SKILL_CLUB;
-		$list_name='Club Fighting';
+		$list_name='Strenght';
 		break;
 	case "sword":
 		$id=Highscores::SKILL_SWORD;
-		$list_name='Sword Fighting';
+		$list_name='Faith';
 		break;
 	case "axe":
 		$id=Highscores::SKILL_AXE;
-		$list_name='Axe Fighting';
+		$list_name='Intelligence';
 		break;
 	case "distance":
 		$id=Highscores::SKILL_DISTANCE;
-		$list_name='Distance Fighting';
+		$list_name='Dexterity';
 		break;
 	case "shield":
 		$id=Highscores::SKILL_SHIELD;
-		$list_name='Shielding';
+		$list_name='Defence';
 		break;
 	case "fishing":
 		$id=Highscores::SKILL_FISHING;
-		$list_name='Fishing';
+		$list_name='Endurance';
 		break;
 	case "magic":
 		$id=Highscores::SKILL__MAGLEVEL;

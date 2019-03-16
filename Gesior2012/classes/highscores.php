@@ -53,7 +53,7 @@ class Highscores extends DatabaseList
 	{
 		$this->setClass('Highscore');
 		$this->addOrder(new SQL_Order(new SQL_Field('skill_' . $this->skillType), SQL_Order::DESC));
-		$this->addOrder(new SQL_Order(new SQL_Field('skill_' . $this->skillType . '_tries'), SQL_Order::DESC));
+		//$this->addOrder(new SQL_Order(new SQL_Field('skill_' . $this->skillType . '_tries'), SQL_Order::DESC));
 		$this->addExtraField(new SQL_Field('flag', 'accounts'));
 		$this->addExtraField(new SQL_Field('skill_' . $this->skillType, 'players', 'value'));
 		$filter = new SQL_Filter(new SQL_Field('account_id', 'players'), SQL_Filter::EQUAL, new SQL_Field('id', 'accounts'));
@@ -76,7 +76,7 @@ class Highscores extends DatabaseList
 	{
 		$this->setClass('Highscore');
 		$this->addOrder(new SQL_Order(new SQL_Field('maglevel'), SQL_Order::DESC));
-		$this->addOrder(new SQL_Order(new SQL_Field('manaspent'), SQL_Order::DESC));
+		//$this->addOrder(new SQL_Order(new SQL_Field('manaspent'), SQL_Order::DESC));
 		$this->addExtraField(new SQL_Field('flag', 'accounts'));
 		$filter = new SQL_Filter(new SQL_Field('account_id', 'players'), SQL_Filter::EQUAL, new SQL_Field('id', 'accounts'));
 
