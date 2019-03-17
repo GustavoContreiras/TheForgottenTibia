@@ -190,7 +190,7 @@ class ProtocolGame final : public Protocol
 		void sendQuestLine(const Quest* quest);
 
 		void sendCancelWalk();
-		void sendChangeSpeed(const Creature* creature, uint32_t speed);
+		void sendChangeSpeed(const Creature* creature, double speed);
 		void sendCancelTarget();
 		void sendCreatureOutfit(const Creature* creature, const Outfit_t& outfit);
 		void sendStats();

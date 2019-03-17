@@ -2227,13 +2227,13 @@ void ProtocolGame::sendCancelTarget()
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendChangeSpeed(const Creature* creature, uint32_t speed)
+void ProtocolGame::sendChangeSpeed(const Creature* creature, double speed)
 {
 	NetworkMessage msg;
 	msg.addByte(0x8F);
 	msg.add<uint32_t>(creature->getID());
-	msg.add<uint32_t>(creature->getBaseSpeed());
-	msg.add<uint32_t>(speed);
+	msg.addDouble(creature->getBaseSpeed());
+	msg.addDouble(speed);
 	writeToOutputBuffer(msg);
 }
 
@@ -2929,7 +2929,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(player->getSkillPoints()); //skillPoints
 	msg.add<uint32_t>(player->getFreeCapacity()); //freeCap
 	msg.add<uint32_t>(player->getCapacity()); //totalCap
-	msg.add<uint32_t>(player->getBaseSpeed()); //baseSpeed
+	msg.addDouble(player->getBaseSpeed()); //baseSpeed
 	msg.add<uint32_t>(player->getAttackSpeed()); //attackSpeed
 
 	Condition* condition = player->getCondition(CONDITION_REGENERATION);

@@ -417,7 +417,7 @@ class Game
 		                      int32_t rangex = Map::maxClientViewportX, int32_t rangey = Map::maxClientViewportY) const;
 		bool isSightClear(const Position& fromPos, const Position& toPos, bool floorCheck) const;
 
-		void changeSpeed(Creature* creature, int32_t varSpeedDelta);
+		void changeSpeed(Creature* creature, double varSpeedDelta);
 		void internalCreatureChangeOutfit(Creature* creature, const Outfit_t& outfit);
 		void internalCreatureChangeVisible(Creature* creature, bool visible);
 		void changeLight(const Creature* creature);

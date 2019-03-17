@@ -3654,9 +3654,9 @@ void Game::checkCreatures(size_t index)
 	cleanup();
 }
 
-void Game::changeSpeed(Creature* creature, int32_t varSpeedDelta)
+void Game::changeSpeed(Creature* creature, double varSpeedDelta)
 {
-	int32_t varSpeed = creature->getSpeed() - creature->getBaseSpeed();
+	double varSpeed = creature->getSpeed() - creature->getBaseSpeed();
 	varSpeed += varSpeedDelta;
 
 	creature->setSpeed(varSpeed);

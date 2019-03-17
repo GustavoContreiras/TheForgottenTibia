@@ -914,7 +914,7 @@ class Player final : public Creature, public Cylinder
 				client->sendCancelWalk();
 			}
 		}
-		void sendChangeSpeed(const Creature* creature, uint32_t newSpeed) const {
+		void sendChangeSpeed(const Creature* creature, double newSpeed) const {
 			if (client) {
 				client->sendChangeSpeed(creature, newSpeed);
 			}
@@ -1347,8 +1347,8 @@ class Player final : public Creature, public Cylinder
 		static uint32_t playerAutoID;
 
 		void updateItemsLight(bool internal = false);
-		int32_t getStepSpeed() const override {
-			return std::max<int32_t>(PLAYER_MIN_SPEED, std::min<int32_t>(PLAYER_MAX_SPEED, getSpeed()));
+		double getStepSpeed() const override {
+			return std::max<double>(PLAYER_MIN_SPEED, std::min<double>(PLAYER_MAX_SPEED, getSpeed()));
 		}
 
 		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY WALK SPEED

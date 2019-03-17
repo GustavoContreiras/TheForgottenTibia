@@ -1201,9 +1201,9 @@ void ProtocolGame::parseCreatureSpeed(const InputMessagePtr& msg)
     uint id = msg->getU32();
 
     double baseSpeed = -1;
-    baseSpeed = msg->getU32() / 2.0f;
+    baseSpeed = msg->getDouble() / 2.0f;
 
-	double speed = msg->getU32() / 2.0f;
+	double speed = msg->getDouble() / 2.0f;
 
     CreaturePtr creature = g_map.getCreatureById(id);
     if(creature) {
@@ -1332,7 +1332,7 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
 	double skillPoints = msg->getU16();
 	double freeCapacity = msg->getU32() / 100.0;
 	double totalCapacity = msg->getU32() / 100.0;
-	double baseSpeed = msg->getU32() / 2.0;
+	double baseSpeed = msg->getDouble() / 2.0;
 	double attackSpeed = msg->getU32();
 
 	double regeneration = msg->getU16();
