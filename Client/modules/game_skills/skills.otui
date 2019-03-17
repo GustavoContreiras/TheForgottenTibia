@@ -453,3 +453,21 @@ MiniWindow
         !text: tr('Critical Hit Damage')
       SkillValueLabel
         anchors.right: parent.right
+
+    SmallSkillButton
+      id: wanddamage
+      SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
+        !text: tr('Wand Damage')
+      SkillValueLabel
+        anchors.right: parent.right
+
+    SmallSkillButton
+      id: roddamage
+      SkillNameLabel
+        anchors.left: parent.left
+        text-align:topleft
+        !text: tr('Rod Damage')
+      SkillValueLabel
+        anchors.right: parent.right

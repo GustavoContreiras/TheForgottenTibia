@@ -88,8 +88,17 @@ newEnduranceValueLabel = nil
 endurancePlusButton = nil
 enduranceMinusButton = nil
 
+criticalChanceButton = nil
+criticalChanceValueLabel = nil
+
 criticalDamageButton = nil
 criticalValueLabel = nil
+
+wandDamageButton = nil
+wandValueLabel = nil
+
+rodDamageButton = nil
+rodValueLabel = nil
 
 player = nil
 
@@ -203,6 +212,12 @@ function init()
 	criticalDamageButton = skillsWindow:recursiveGetChildById('skillId8')
 	criticalDamageValueLabel = criticalDamageButton:recursiveGetChildById('value')
 	
+	wandDamageButton = skillsWindow:recursiveGetChildById('wanddamage')
+	wandDamageValueLabel = wandDamageButton:recursiveGetChildById('value')
+	
+	rodDamageButton = skillsWindow:recursiveGetChildById('roddamage')
+	rodDamageValueLabel = rodDamageButton:recursiveGetChildById('value')
+	
 	g_keyboard.bindKeyDown('Ctrl+S', toggle)
 			
 	skillsButton:setOn(true)
@@ -301,12 +316,11 @@ function terminate()
 	newMagicArrowLabel = nil
 	newMagicValueLabel = nil
 
-
 	vitalityButton:destroy()
+	vitalityValueLabel = nil
 	newVitalityArrowLabel = nil
 	newVitalityValueLabel = nil
-
-
+	
 	strenghtButton:destroy()
 	strenghtValueLabel = nil
 	newStrenghtArrowLabel = nil
@@ -342,6 +356,12 @@ function terminate()
 	
 	criticalDamageButton:destroy()
 	criticalDamageValueLabel = nil
+	
+	wandDamageButton:destroy()
+	wandDamageValueLabel = nil
+	
+	rodDamageButton:destroy()
+	rodDamageValueLabel = nil
 
 	player = nil
 
@@ -386,6 +406,12 @@ function setSkillsTooltips()
 	local skillEndurance = skillsWindow:recursiveGetChildById('skillId6')
 	skillEndurance:setTooltip('+ 15 capacity\n+ 5 health     ')
 	
+	local skillWand = skillsWindow:recursiveGetChildById('wanddamage')
+	skillWand:setTooltip('Maximum damage')
+	
+	local skillRod = skillsWindow:recursiveGetChildById('roddamage')
+	skillRod:setTooltip('Maximum damage')
+	
 end
 
 function onClickApply()
@@ -408,15 +434,6 @@ function onClickApply()
 	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Axe) end
 	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Sword) end
 	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Fishing) end
-	
-	--[[print('\nNew magic: ' .. newMagic)
-	print('New vitality: ' .. newVitality)
-	print('New strenght: ' .. newStrenght)
-	print('New defence: ' .. newDefence)
-	print('New dexterity: ' .. newDexterity)
-	print('New intelligence: ' .. newIntelligence)
-	print('New faith: ' .. newFaith)
-	print('New endurance: ' .. newEndurance .. '\n')]]
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
 	
@@ -1337,15 +1354,6 @@ function resetChanges()
 	faithValueLabel:setText(newFaith)
 	enduranceValueLabel:setText(newEndurance)
 	
-	--[[print('\nNew magic: ' .. newMagic)
-	print('New vitality: ' .. newVitality)
-	print('New strenght: ' .. newStrenght)
-	print('New defence: ' .. newDefence)
-	print('New dexterity: ' .. newDexterity)
-	print('New intelligence: ' .. newIntelligence)
-	print('New faith: ' .. newFaith)
-	print('New endurance: ' .. newEndurance .. '\n')]]
-	
 	setExtraLabelsInvisible()
 	checkPlusAndMinusButtons(player, newSkillPoints)
 	
@@ -1603,8 +1611,6 @@ end
 
 function onBaseSpeedChange(localPlayer, baseSpeed)
 
-	print('baseSpeed: ' .. baseSpeed)
-
 	walkSpeedValueLabel:setText(baseSpeed)
 	walkSpeedValueLabel:setWidth(walkSpeedValueLabel:getTextSize().width)
 	
@@ -1623,8 +1629,6 @@ function onBaseSpeedChange(localPlayer, baseSpeed)
 end
 
 function onSpeedChange(localPlayer, speed)
-
-	print('speed: ' .. speed)
 
 	walkSpeedValueLabel:setText(speed)
 	walkSpeedValueLabel:setWidth(walkSpeedValueLabel:getTextSize().width)
@@ -1705,6 +1709,27 @@ end
 function onBaseSkillChange(localPlayer, id, baseLevel)
 	setSkillBase('skillId'..id, localPlayer:getSkillLevel(id), baseLevel)
 	setSkillsTooltips()
+	
+	if id == Skill.Sword then
+	
+		local rodBonus = (localPlayer:getBaseSkillLevel(Skill.Sword) - 8) * 2
+		if rodBonus > 0 then
+			rodDamageValueLabel:setText(rodBonus + 100 .. '%')
+		else
+			rodDamageValueLabel:setText('100%')
+		end
+		rodDamageValueLabel:setWidth(rodDamageValueLabel:getTextSize().width)
+		
+	elseif id == Skill.Axe then
+	
+		local wandBonus = localPlayer:getBaseSkillLevel(Skill.Axe) - 8
+		if wandBonus > 0 then
+			wandDamageValueLabel:setText(wandBonus + 100 .. '%')
+		else
+			wandDamageValueLabel:setText('100%')
+		end
+		wandDamageValueLabel:setWidth(wandDamageValueLabel:getTextSize().width)
+	end
 end
 
 function onSkillChange(localPlayer, id, level)
