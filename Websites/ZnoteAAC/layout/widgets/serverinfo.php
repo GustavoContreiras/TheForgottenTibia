@@ -1,6 +1,8 @@
-<div class="sidebar">
-	<h2>Server Information</h2>
-	<div class="inner">
+<div class="well widget">
+	<div class="header">
+		Server Information
+	</div>
+	<div class="body">
 		<ul>
 			<?php
 			$status = true;

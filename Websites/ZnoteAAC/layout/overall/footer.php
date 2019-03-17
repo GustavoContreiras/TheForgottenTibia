@@ -1,16 +1,29 @@
-      </div>
-    </div>
-    <?php include 'layout/footer.php'; ?>
-  </div>
-  <!-- javascript at the bottom for fast page loading -->
-  <script type="text/javascript" src="layout/js/jquery.js"></script>
-  <script type="text/javascript" src="layout/js/jquery.easing-sooper.js"></script>
-  <script type="text/javascript" src="layout/js/jquery.sooperfish.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('ul.sf-menu').sooperfish();
-      $('.top').click(function() {$('html, body').animate({scrollTop:0}, 'fast'); return false;});
-    });
-  </script>
-</body>
+				</div>
+				<!-- MAIN FEED END -->
+
+				<?php include 'layout/aside.php'; ?>
+			</div>
+
+			<footer class="well preventCollapse">
+				<div class="pull-left">
+					<p>&copy; <?php echo $config['site_title'];?>. <?php echo ' Page generated in '. elapsedTime() .' seconds. Q: '.$aacQueries; ?>. Designed By <a href="https://otland.net/members/snavy.155163/" target="_blank">Snavy</a>. Engine: <a href="credits.php">Znote AAC</a>.</p>
+				</div>
+				<div class="pull-right">
+					<p><?php echo 'Server date and clock is: '. getClock(false, true); ?></p>
+				</div>
+				<!--
+					Designed By <a href="https://otland.net/members/snavy.155163/" target="_blank">Snavy</a>
+				-->
+				
+				
+			</footer>
+		</div><!-- Main container END -->
+	</body>
 </html>
+<!--
+	Layout author: Blackwolf (Snavy on otland)
+	Otland: https://otland.net/members/snavy.155163/
+	Facebook: http://www.facebook.com/idont.reallywolf.1
+	Twitter: @idontreallywolf
+	Converted to Znote AAC by: Znote
+-->
