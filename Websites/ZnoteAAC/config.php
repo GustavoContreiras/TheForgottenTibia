@@ -29,35 +29,19 @@
 	// MYSQL CONNECTION DETAILS \\
 	// ------------------------ \\
 
-	if ($config['ServerEngine'] !== 'OTHIRE') {
-
-	// TFS DATABASE CONFIGS
+	// TFS DATABASE CONFIGS (SAME AS CONFIG.LUA)
 	// phpmyadmin username for OT server: (DONT USE "root" if ur hosting to public.).
-	$config['sqlUser'] = 'tfs13';
+	$config['sqlUser'] = 'EDIT ON CONFIG.PHP MUST BE THE SAME AS CONFIG.LUA';
 
 	// phpmyadmin password for OT server:
-	$config['sqlPassword'] = 'tfs13';
+	$config['sqlPassword'] = '';
 
 	// The database name to connect to. (This is usually same as username).
-	$config['sqlDatabase'] = 'tfs13';
+	$config['sqlDatabase'] = '';
 
 	// Hostname is usually localhost or 127.0.0.1.
 	$config['sqlHost'] = '127.0.0.1';
-	} else {
-
-	// OTHIRE DATABASE CONFIG
-	// phpmyadmin username for OT server: (DONT USE "root" if ur hosting to public.).
-	$config['sql_user'] = 'tfs13';
-
-	// phpmyadmin password for OT server:
-	$config['sql_pass'] = 'tfs13';
-
-	// The database name to connect to. (This is usually same as username).
-	$config['sql_db'] = 'tfs13';
-
-	// Hostname is usually localhost or 127.0.0.1.
-	$config['sql_host'] = '127.0.0.1';
-	}
+	} 
 
 	// QR code authenticator Only works with TFS 1.2+
 	$config['twoFactorAuthenticator'] = false;

@@ -36,15 +36,15 @@ $rowsPerPage = $highscore['rowsPerPage'];
 
 function skillName($type) {
 	$types = array(
-		1 => "Club",
-		2 => "Sword",
-		3 => "Axe",
-		4 => "Distance",
-		5 => "Shield",
-		6 => "Fish",
+		1 => "Strenght",
+		2 => "Faith",
+		3 => "Intelligence",
+		4 => "Dexterity",
+		5 => "Defence",
+		6 => "Endurance",
 		7 => "Experience", // Hardcoded
-		8 => "Magic Level", // Hardcoded
-		9 => "Fist", // Since 0 returns false I will make 9 = 0. :)
+		8 => "Magic", // Hardcoded
+		9 => "Vitality", // Since 0 returns false I will make 9 = 0. :)
 	);
 	return $types[(int)$type];
 }
