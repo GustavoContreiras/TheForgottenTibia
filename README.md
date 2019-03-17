@@ -70,7 +70,7 @@ https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 - ### Compiling the client
 https://github.com/edubart/otclient/wiki/Compiling-on-Windows
 
-- ### Installing Gesior Website
+- ### Setting Gesior Website
 https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Installing-Gesior-Website
 
 - ### Anything else
