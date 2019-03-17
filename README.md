@@ -70,6 +70,9 @@ https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 - ### Compiling the client
 https://github.com/edubart/otclient/wiki/Compiling-on-Windows
 
+- ### Installing Gesior Website
+https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Installing-Gesior-Website
+
 - ### Anything else
 If you want to customize the server or the client, see our [wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).  
 There you can find tutorials to change spells, skills, damages, titles, names, texts and etc.
