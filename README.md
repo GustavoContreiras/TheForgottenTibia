@@ -2,7 +2,7 @@ The Forgotten Tibia
 ===============
 
 The Forgotten Tibia is a free and open-source MMORPG written in C++ and LUA.  
-It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/) ([3b63f65](https://github.com/otland/forgottenserver/commit/3b63f65)) and [OTClient](https://github.com/edubart/otclient/) ([07b4b78](https://github.com/edubart/otclient/commit/07b4b78)) projects.
+It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/) ([3b63f65](https://github.com/otland/forgottenserver/commit/3b63f65)), [OTClient](https://github.com/edubart/otclient/) ([07b4b78](https://github.com/edubart/otclient/commit/07b4b78)) and [ZNoteAAC](https://github.com/Znote/ZnoteAAC) projects.
 
 ## What makes it different from Tibia / The Forgotten Server 1.3?
 
