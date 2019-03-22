@@ -70,8 +70,8 @@ https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 - ### Compiling the client
 https://github.com/edubart/otclient/wiki/Compiling-on-Windows
 
-- ### Setting Gesior Website
-https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Installing-Gesior-Website
+- ### Configuring ZNote AAC Website
+https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Configuring-ZNote-AAC-Website
 
 - ### Anything else
 If you want to customize the server or the client, see our [wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).  
