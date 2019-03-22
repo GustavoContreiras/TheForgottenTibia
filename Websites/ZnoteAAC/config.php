@@ -18,7 +18,7 @@
 	// As far as I know, OTX is based on TFS_03, so make sure TFS version is configured TFS_03
 	$config['CustomVersion'] = false;
 
-	$config['site_title'] = 'Znote AAC';
+	$config['site_title'] = 'The Forgotten Tibia';
 	$config['site_title_context'] = 'Because open communities are good communities. :3';
 	$config['site_url'] = "http://demo.znote.eu";
 
@@ -450,57 +450,57 @@
 				// No vocation
 				0 => array(
 					'magic' => 0,
-					'fist' => 10,
-					'club' => 10,
-					'axe' => 10,
-					'sword' => 10,
-					'dist' => 10,
-					'shield' => 10,
-					'fishing' => 10,
+					'fist' => 8,
+					'club' => 8,
+					'axe' => 8,
+					'sword' => 8,
+					'dist' => 8,
+					'shield' => 8,
+					'fishing' => 8,
 				),
 				// Sorcerer
 				1 => array(
 					'magic' => 0,
-					'fist' => 10,
-					'club' => 10,
-					'axe' => 10,
-					'sword' => 10,
-					'dist' => 10,
-					'shield' => 10,
-					'fishing' => 10,
+					'fist' => 8,
+					'club' => 8,
+					'axe' => 8,
+					'sword' => 8,
+					'dist' => 8,
+					'shield' => 8,
+					'fishing' => 8,
 				),
 				// Druid
 				2 => array(
 					'magic' => 0,
-					'fist' => 10,
-					'club' => 10,
-					'axe' => 10,
-					'sword' => 10,
-					'dist' => 10,
-					'shield' => 10,
-					'fishing' => 10,
+					'fist' => 8,
+					'club' => 8,
+					'axe' => 8,
+					'sword' => 8,
+					'dist' => 8,
+					'shield' => 8,
+					'fishing' => 8,
 				),
 				// Paladin
 				3 => array(
 					'magic' => 0,
-					'fist' => 10,
-					'club' => 10,
-					'axe' => 10,
-					'sword' => 10,
-					'dist' => 10,
-					'shield' => 10,
-					'fishing' => 10,
+					'fist' => 8,
+					'club' => 8,
+					'axe' => 8,
+					'sword' => 8,
+					'dist' => 8,
+					'shield' => 8,
+					'fishing' => 8,
 				),
 				// Knight
 				4 => array(
 					'magic' => 0,
-					'fist' => 10,
-					'club' => 10,
-					'axe' => 10,
-					'sword' => 10,
-					'dist' => 10,
-					'shield' => 10,
-					'fishing' => 10,
+					'fist' => 8,
+					'club' => 8,
+					'axe' => 8,
+					'sword' => 8,
+					'dist' => 8,
+					'shield' => 8,
+					'fishing' => 8,
 				),
 			),
 			'male_outfit' => array(
@@ -619,7 +619,7 @@
 	$config['gameserver'] = array(
 		'ip' => '127.0.0.1',
 		'port' => 7172,
-		'name' => 'OTXServer-Global' // Must be identical to config.lua (OT config file) server name.
+		'name' => 'The Forgotten Tibia' // Must be identical to config.lua (OT config file) server name.
 	);
 
 	// How often do you want highscores to update?
@@ -627,8 +627,8 @@
 
 	// WARNING! Account names written here will have admin access to web page!
 	$config['page_admin_access'] = array(
-		'firstaccountName',
-		'secondaccountName',
+		'1',
+		//'secondaccountName',
 	);
 
 	// Built-in FORUM
