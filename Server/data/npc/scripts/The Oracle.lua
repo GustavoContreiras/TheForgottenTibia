@@ -27,7 +27,7 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	if msgcontains(msg, "yes") and npcHandler.topic[cid] == 0 then
-		npcHandler:say("YOUR {SKILL POINTS} WILL BE RESET AND YOU WILL REBORN IN MAINLAND, ARE YOU READY?", cid)
+		npcHandler:say("YOUR SKILL POINTS WILL BE RESET AND YOU WILL REBORN IN MAINLAND, ARE YOU READY?", cid)
 		npcHandler.topic[cid] = 1
 	elseif npcHandler.topic[cid] == 1 then
 		if msgcontains(msg, "yes") or msgcontains(msg, "reset") then
@@ -40,7 +40,7 @@ local function creatureSayCallback(cid, type, msg)
 			player:teleportTo(destination)
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 			destination:sendMagicEffect(CONST_ME_TELEPORT)
-			player:resetAllSkills()
+			player:setSkills(0, 8, 8, 8, 8, 8, 8, 8)
 		elseif msgcontains(msg, "no") then
 			npcHandler:say("COME BACK WHEN YOU ARE!", cid)
 			npcHandler:releaseFocus(cid)

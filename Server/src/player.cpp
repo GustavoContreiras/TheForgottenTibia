@@ -540,187 +540,138 @@ void Player::updateInventoryWeight()
 void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
-	bool sendUpdate = false;
-	uint8_t cost;
-	uint8_t healthGain;
-	uint8_t manaGain;
-	uint8_t soulGain;
-	uint8_t capGain;
-	uint8_t walkSpeedGain;
-	uint8_t attackSpeedGain;
 
-	if (magic > magLevel) {
+	std::map<uint32_t, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);	
+	std::map<uint32_t, uint32_t> vitalityGains = g_game.getSkillGains(SKILL_VITALITY);
+	std::map<uint32_t, uint32_t> strenghtGains = g_game.getSkillGains(SKILL_STRENGHT);
+	std::map<uint32_t, uint32_t> defenceGains = g_game.getSkillGains(SKILL_DEFENCE);
+	std::map<uint32_t, uint32_t> intelligenceGains = g_game.getSkillGains(SKILL_INTELLIGENCE);
+	std::map<uint32_t, uint32_t> dexterityGains = g_game.getSkillGains(SKILL_DEXTERITY);
+	std::map<uint32_t, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
+	std::map<uint32_t, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
 
-		std::map<uint32_t, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);
+	uint8_t magicCost = magicGains[0];
+	uint8_t magicHealthGain = magicGains[1];
+	uint8_t magicManaGain = magicGains[2];
+	uint8_t magicSoulGain = magicGains[3];
+	uint8_t magicCapGain = magicGains[4];
+	uint8_t magicWalkSpeedGain = magicGains[5];
+	uint8_t magicAttackSpeedGain = magicGains[6];
 
-		cost = magicGains[0];
-		healthGain = magicGains[1];
-		manaGain = magicGains[2];
-		soulGain = magicGains[3];
-		capGain = magicGains[4];
-		walkSpeedGain = magicGains[5];
-		attackSpeedGain = magicGains[6];
+	uint8_t vitalityCost = vitalityGains[0];
+	uint8_t vitalityHealthGain = vitalityGains[1];
+	uint8_t vitalityManaGain = vitalityGains[2];
+	uint8_t vitalitySoulGain = vitalityGains[3];
+	uint8_t vitalityCapGain = vitalityGains[4];
+	uint8_t vitalityWalkSpeedGain = vitalityGains[5];
+	uint8_t vitalityAttackSpeedGain = vitalityGains[6];
 
-		uint16_t oldMagic = magLevel;
-		skillPoints -= cost * (magic - oldMagic);
-		magLevel += (magic - oldMagic);
-		mana += manaGain * (magic - oldMagic);
-		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, oldMagic, magic);
-		sendUpdate = true;
-	}
+	uint8_t strenghtCost = strenghtGains[0];
+	uint8_t strenghtHealthGain = strenghtGains[1];
+	uint8_t strenghtManaGain = strenghtGains[2];
+	uint8_t strenghtSoulGain = strenghtGains[3];
+	uint8_t strenghtCapGain = strenghtGains[4];
+	uint8_t strenghtWalkSpeedGain = strenghtGains[5];
+	uint8_t strenghtAttackSpeedGain = strenghtGains[6];
 
-	if (vitality > skills[SKILL_VITALITY].level) {
+	uint8_t defenceCost = defenceGains[0];
+	uint8_t defenceHealthGain = defenceGains[1];
+	uint8_t defenceManaGain = defenceGains[2];
+	uint8_t defenceSoulGain = defenceGains[3];
+	uint8_t defenceCapGain = defenceGains[4];
+	uint8_t defenceWalkSpeedGain = defenceGains[5];
+	uint8_t defenceAttackSpeedGain = defenceGains[6];
 
-		std::map<uint32_t, uint32_t> vitalityGains = g_game.getSkillGains(SKILL_VITALITY);
+	uint8_t intelligenceCost = intelligenceGains[0];
+	uint8_t intelligenceHealthGain = intelligenceGains[1];
+	uint8_t intelligenceManaGain = intelligenceGains[2];
+	uint8_t intelligenceSoulGain = intelligenceGains[3];
+	uint8_t intelligenceCapGain = intelligenceGains[4];
+	uint8_t intelligenceWalkSpeedGain = intelligenceGains[5];
+	uint8_t intelligenceAttackSpeedGain = intelligenceGains[6];
 
-		cost = vitalityGains[0];
-		healthGain = vitalityGains[1];
-		manaGain = vitalityGains[2];
-		soulGain = vitalityGains[3];
-		capGain = vitalityGains[4];
-		walkSpeedGain = vitalityGains[5];
-		attackSpeedGain = vitalityGains[6];
+	uint8_t faithCost = faithGains[0];
+	uint8_t faithHealthGain = faithGains[1];
+	uint8_t faithManaGain = faithGains[2];
+	uint8_t faithSoulGain = faithGains[3];
+	uint8_t faithCapGain = faithGains[4];
+	uint8_t faithWalkSpeedGain = faithGains[5];
+	uint8_t faithAttackSpeedGain = faithGains[6];
 
-		uint16_t oldVitality = skills[SKILL_VITALITY].level;
-		skillPoints -= cost * (vitality - oldVitality);
-		skills[SKILL_VITALITY].level += (vitality - oldVitality);
-		health += healthGain * (vitality - oldVitality);
-		g_creatureEvents->playerAdvance(this, SKILL_VITALITY, oldVitality, vitality);
-		sendUpdate = true;
-	}
+	uint8_t dexterityCost = dexterityGains[0];
+	uint8_t dexterityHealthGain = dexterityGains[1];
+	uint8_t dexterityManaGain = dexterityGains[2];
+	uint8_t dexteritySoulGain = dexterityGains[3];
+	uint8_t dexterityCapGain = dexterityGains[4];
+	uint8_t dexterityWalkSpeedGain = dexterityGains[5];
+	uint8_t dexterityAttackSpeedGain = dexterityGains[6];
 
-	if (strenght > skills[SKILL_STRENGHT].level) {
+	uint8_t enduranceCost = enduranceGains[0];
+	uint8_t enduranceHealthGain = enduranceGains[1];
+	uint8_t enduranceManaGain = enduranceGains[2];
+	uint8_t enduranceSoulGain = enduranceGains[3];
+	uint8_t enduranceCapGain = enduranceGains[4];
+	uint8_t enduranceWalkSpeedGain = enduranceGains[5];
+	uint8_t enduranceAttackSpeedGain = enduranceGains[6];
 
-		std::map<uint32_t, uint32_t> strenghtGains = g_game.getSkillGains(SKILL_STRENGHT);
+	uint16_t oldMagic = magLevel;
+	uint16_t oldVitality = skills[SKILL_VITALITY].level;
+	uint16_t oldStrenght = skills[SKILL_STRENGHT].level;
+	uint16_t oldDefence = skills[SKILL_DEFENCE].level;
+	uint16_t oldDexterity = skills[SKILL_DEXTERITY].level;
+	uint16_t oldIntelligence = skills[SKILL_INTELLIGENCE].level;
+	uint16_t oldFaith = skills[SKILL_FAITH].level;
+	uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
 
-		cost = strenghtGains[0];
-		healthGain = strenghtGains[1];
-		manaGain = strenghtGains[2];
-		soulGain = strenghtGains[3];
-		capGain = strenghtGains[4];
-		walkSpeedGain = strenghtGains[5];
-		attackSpeedGain = strenghtGains[6];
+	skillPoints -= magicCost * (magic - oldMagic);
+	skillPoints -= vitalityCost * (vitality - oldVitality);
+	skillPoints -= strenghtCost * (strenght - oldStrenght);
+	skillPoints -= defenceCost * (defence - oldDefence);
+	skillPoints -= intelligenceCost * (intelligence - oldIntelligence);
+	skillPoints -= faithCost * (faith - oldFaith);
+	skillPoints -= dexterityCost * (dexterity - oldDexterity);
+	skillPoints -= enduranceCost * (endurance - oldEndurance);
 
-		uint16_t oldStrenght = skills[SKILL_STRENGHT].level;
-		skillPoints -= cost * (strenght - oldStrenght);
-		skills[SKILL_STRENGHT].level += (strenght - oldStrenght);
-		g_creatureEvents->playerAdvance(this, SKILL_STRENGHT, oldStrenght, strenght);
-		sendUpdate = true;
-	}
+	magLevel += (magic - oldMagic);
+	mana += magicManaGain * (magic - oldMagic);
+	g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, oldMagic, magic);
+
+	skills[SKILL_VITALITY].level += (vitality - oldVitality);
+	health += vitalityHealthGain * (vitality - oldVitality);
+	g_creatureEvents->playerAdvance(this, SKILL_VITALITY, oldVitality, vitality);
+
+	skills[SKILL_STRENGHT].level += (strenght - oldStrenght);
+	g_creatureEvents->playerAdvance(this, SKILL_STRENGHT, oldStrenght, strenght);
 	
-	if (defence > skills[SKILL_DEFENCE].level) {
+	skills[SKILL_DEFENCE].level += (defence - oldDefence);
+	health += defenceHealthGain * (defence - oldDefence);
+	g_creatureEvents->playerAdvance(this, SKILL_DEFENCE, oldDefence, defence);
 
-		std::map<uint32_t, uint32_t> defenceGains = g_game.getSkillGains(SKILL_DEFENCE);
+	skills[SKILL_DEXTERITY].level += (dexterity - oldDexterity);
+	g_creatureEvents->playerAdvance(this, SKILL_DEXTERITY, oldDexterity, dexterity);
 
-		cost = defenceGains[0];
-		healthGain = defenceGains[1];
-		manaGain = defenceGains[2];
-		soulGain = defenceGains[3];
-		capGain = defenceGains[4];
-		walkSpeedGain = defenceGains[5];
-		attackSpeedGain = defenceGains[6];
+	skills[SKILL_INTELLIGENCE].level += (intelligence - oldIntelligence);
+	mana += intelligenceManaGain * (intelligence - oldIntelligence);
+	g_creatureEvents->playerAdvance(this, SKILL_INTELLIGENCE, oldIntelligence, intelligence);
 
-		uint16_t oldDefence = skills[SKILL_DEFENCE].level;
-		skillPoints -= cost * (defence - oldDefence);
-		skills[SKILL_DEFENCE].level += (defence - oldDefence);
-		health += healthGain * (defence - oldDefence);
-		g_creatureEvents->playerAdvance(this, SKILL_DEFENCE, oldDefence, defence);
-		sendUpdate = true;
-	}
-
-	if (dexterity > skills[SKILL_DEXTERITY].level) {
-
-		std::map<uint32_t, uint32_t> dexterityGains = g_game.getSkillGains(SKILL_DEXTERITY);
-
-		cost = dexterityGains[0];
-		healthGain = dexterityGains[1];
-		manaGain = dexterityGains[2];
-		soulGain = dexterityGains[3];
-		capGain = dexterityGains[4];
-		walkSpeedGain = dexterityGains[5];
-		attackSpeedGain = dexterityGains[6];
-
-		uint16_t oldDexterity = skills[SKILL_DEXTERITY].level;
-		skillPoints -= cost * (dexterity - oldDexterity);
-		skills[SKILL_DEXTERITY].level += (dexterity - oldDexterity);
-		g_creatureEvents->playerAdvance(this, SKILL_DEXTERITY, oldDexterity, dexterity);
-		sendUpdate = true;
-	}
+	skills[SKILL_FAITH].level += (faith - oldFaith);
+	mana += faithManaGain * (faith - oldFaith);
+	g_creatureEvents->playerAdvance(this, SKILL_FAITH, oldFaith, faith);
 	
-	if (intelligence > skills[SKILL_INTELLIGENCE].level) {
-
-		std::map<uint32_t, uint32_t> intelligenceGains = g_game.getSkillGains(SKILL_INTELLIGENCE);
-
-		cost = intelligenceGains[0];
-		healthGain = intelligenceGains[1];
-		manaGain = intelligenceGains[2];
-		soulGain = intelligenceGains[3];
-		capGain = intelligenceGains[4];
-		walkSpeedGain = intelligenceGains[5];
-		attackSpeedGain = intelligenceGains[6];
-
-		uint16_t oldIntelligence = skills[SKILL_INTELLIGENCE].level;
-		skillPoints -= cost * (intelligence - oldIntelligence);
-		skills[SKILL_INTELLIGENCE].level += (intelligence - oldIntelligence);
-		mana += manaGain * (intelligence - oldIntelligence);
-		g_creatureEvents->playerAdvance(this, SKILL_INTELLIGENCE, oldIntelligence, intelligence);
-		sendUpdate = true;
-	}
-	
-	if (faith > skills[SKILL_FAITH].level) {
-
-		std::map<uint32_t, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
-
-		cost = faithGains[0];
-		healthGain = faithGains[1];
-		manaGain = faithGains[2];
-		soulGain = faithGains[3];
-		capGain = faithGains[4];
-		walkSpeedGain = faithGains[5];
-		attackSpeedGain = faithGains[6];
-
-		uint16_t oldFaith = skills[SKILL_FAITH].level;	
-		skillPoints -= cost * (faith - oldFaith);
-		skills[SKILL_FAITH].level += (faith - oldFaith);
-		mana += manaGain * (faith - oldFaith);
-		g_creatureEvents->playerAdvance(this, SKILL_FAITH, oldFaith, faith);
-		sendUpdate = true;
-	}
-	
-	if (endurance > skills[SKILL_ENDURANCE].level) {
-
-		std::map<uint32_t, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
-
-		cost = enduranceGains[0];
-		healthGain = enduranceGains[1];
-		manaGain = enduranceGains[2];
-		soulGain = enduranceGains[3];
-		capGain = enduranceGains[4];
-		walkSpeedGain = enduranceGains[5];
-		attackSpeedGain = enduranceGains[6];
-
-		uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
-		skillPoints -= cost * (endurance - oldEndurance);
-		skills[SKILL_ENDURANCE].level += (endurance - oldEndurance);		
-		health += healthGain * (endurance - oldEndurance);
-		g_creatureEvents->playerAdvance(this, SKILL_ENDURANCE, oldEndurance, endurance);
-		sendUpdate = true;
-	}
+	skills[SKILL_ENDURANCE].level += (endurance - oldEndurance);		
+	health += enduranceHealthGain * (endurance - oldEndurance);
+	g_creatureEvents->playerAdvance(this, SKILL_ENDURANCE, oldEndurance, endurance);
 
 	refreshStats();
 
-	bool saved = false;
 	for (uint32_t tries = 0; tries < 3; ++tries) {
 		if (IOLoginData::savePlayer(this)) {
-			saved = true;
 			break;
 		}
 	}
 
-	if (sendUpdate) {
-		sendStats();
-		sendSkills();
-	}
+	sendStats();
+	sendSkills();
 }
 
 void Player::refreshStats() {

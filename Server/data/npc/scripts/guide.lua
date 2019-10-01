@@ -60,7 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- se falar 'yes' depois de falar 'TESER'
 	elseif npcHandler.topic[cid] == 10 and msgcontains(msg, "yes") then
 		player:setTitleDescription(0)
-		if not player:resetAllSkills() then
+		if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
 			npcHandler:say("It looks like you don't need it.", cid)
 			npcHandler.topic[cid] = 0
 		end
@@ -71,7 +71,7 @@ local function creatureSayCallback(cid, type, msg)
 			if player:getLevel() < 60 then
 				player:setStorageValue(skillPointsResetStorage, 0)
 				player:setTitleDescription(0)
-				if not player:resetAllSkills() then
+				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
 					npcHandler:say("It looks like you don't need it.", cid)
 					player:setStorageValue(skillPointsResetStorage, 1)
 					npcHandler.topic[cid] = 0
@@ -83,7 +83,7 @@ local function creatureSayCallback(cid, type, msg)
 			if player:getMoney() > price then
 				player:removeMoney(price)
 				player:setTitleDescription(0)
-				if not player:resetAllSkills() then
+				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
 					npcHandler:say("It looks like you don't need it.", cid)
 					player:addMoney(price)
 					npcHandler.topic[cid] = 0
