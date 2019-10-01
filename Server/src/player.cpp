@@ -551,68 +551,68 @@ void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	std::map<uint32_t, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
 
 	uint8_t magicCost = magicGains[0];
-	uint8_t magicHealthGain = magicGains[1];
+	//uint8_t magicHealthGain = magicGains[1];
 	uint8_t magicManaGain = magicGains[2];
-	uint8_t magicSoulGain = magicGains[3];
-	uint8_t magicCapGain = magicGains[4];
-	uint8_t magicWalkSpeedGain = magicGains[5];
-	uint8_t magicAttackSpeedGain = magicGains[6];
+	//uint8_t magicSoulGain = magicGains[3];
+	//uint8_t magicCapGain = magicGains[4];
+	//uint8_t magicWalkSpeedGain = magicGains[5];
+	//uint8_t magicAttackSpeedGain = magicGains[6];
 
 	uint8_t vitalityCost = vitalityGains[0];
 	uint8_t vitalityHealthGain = vitalityGains[1];
-	uint8_t vitalityManaGain = vitalityGains[2];
-	uint8_t vitalitySoulGain = vitalityGains[3];
-	uint8_t vitalityCapGain = vitalityGains[4];
-	uint8_t vitalityWalkSpeedGain = vitalityGains[5];
-	uint8_t vitalityAttackSpeedGain = vitalityGains[6];
+	//uint8_t vitalityManaGain = vitalityGains[2];
+	//uint8_t vitalitySoulGain = vitalityGains[3];
+	//uint8_t vitalityCapGain = vitalityGains[4];
+	//uint8_t vitalityWalkSpeedGain = vitalityGains[5];
+	//uint8_t vitalityAttackSpeedGain = vitalityGains[6];
 
 	uint8_t strenghtCost = strenghtGains[0];
-	uint8_t strenghtHealthGain = strenghtGains[1];
-	uint8_t strenghtManaGain = strenghtGains[2];
-	uint8_t strenghtSoulGain = strenghtGains[3];
-	uint8_t strenghtCapGain = strenghtGains[4];
-	uint8_t strenghtWalkSpeedGain = strenghtGains[5];
-	uint8_t strenghtAttackSpeedGain = strenghtGains[6];
+	//uint8_t strenghtHealthGain = strenghtGains[1];
+	//uint8_t strenghtManaGain = strenghtGains[2];
+	//uint8_t strenghtSoulGain = strenghtGains[3];
+	//uint8_t strenghtCapGain = strenghtGains[4];
+	//uint8_t strenghtWalkSpeedGain = strenghtGains[5];
+	//uint8_t strenghtAttackSpeedGain = strenghtGains[6];
 
 	uint8_t defenceCost = defenceGains[0];
 	uint8_t defenceHealthGain = defenceGains[1];
-	uint8_t defenceManaGain = defenceGains[2];
-	uint8_t defenceSoulGain = defenceGains[3];
-	uint8_t defenceCapGain = defenceGains[4];
-	uint8_t defenceWalkSpeedGain = defenceGains[5];
-	uint8_t defenceAttackSpeedGain = defenceGains[6];
+	//uint8_t defenceManaGain = defenceGains[2];
+	//uint8_t defenceSoulGain = defenceGains[3];
+	//uint8_t defenceCapGain = defenceGains[4];
+	//uint8_t defenceWalkSpeedGain = defenceGains[5];
+	//uint8_t defenceAttackSpeedGain = defenceGains[6];
 
 	uint8_t intelligenceCost = intelligenceGains[0];
-	uint8_t intelligenceHealthGain = intelligenceGains[1];
+	//uint8_t intelligenceHealthGain = intelligenceGains[1];
 	uint8_t intelligenceManaGain = intelligenceGains[2];
-	uint8_t intelligenceSoulGain = intelligenceGains[3];
-	uint8_t intelligenceCapGain = intelligenceGains[4];
-	uint8_t intelligenceWalkSpeedGain = intelligenceGains[5];
-	uint8_t intelligenceAttackSpeedGain = intelligenceGains[6];
+	//uint8_t intelligenceSoulGain = intelligenceGains[3];
+	//uint8_t intelligenceCapGain = intelligenceGains[4];
+	//uint8_t intelligenceWalkSpeedGain = intelligenceGains[5];
+	//uint8_t intelligenceAttackSpeedGain = intelligenceGains[6];
 
 	uint8_t faithCost = faithGains[0];
-	uint8_t faithHealthGain = faithGains[1];
+	//uint8_t faithHealthGain = faithGains[1];
 	uint8_t faithManaGain = faithGains[2];
-	uint8_t faithSoulGain = faithGains[3];
-	uint8_t faithCapGain = faithGains[4];
-	uint8_t faithWalkSpeedGain = faithGains[5];
-	uint8_t faithAttackSpeedGain = faithGains[6];
+	//uint8_t faithSoulGain = faithGains[3];
+	//uint8_t faithCapGain = faithGains[4];
+	//uint8_t faithWalkSpeedGain = faithGains[5];
+	//uint8_t faithAttackSpeedGain = faithGains[6];
 
 	uint8_t dexterityCost = dexterityGains[0];
-	uint8_t dexterityHealthGain = dexterityGains[1];
-	uint8_t dexterityManaGain = dexterityGains[2];
-	uint8_t dexteritySoulGain = dexterityGains[3];
-	uint8_t dexterityCapGain = dexterityGains[4];
-	uint8_t dexterityWalkSpeedGain = dexterityGains[5];
-	uint8_t dexterityAttackSpeedGain = dexterityGains[6];
+	//uint8_t dexterityHealthGain = dexterityGains[1];
+	//uint8_t dexterityManaGain = dexterityGains[2];
+	//uint8_t dexteritySoulGain = dexterityGains[3];
+	//uint8_t dexterityCapGain = dexterityGains[4];
+	//uint8_t dexterityWalkSpeedGain = dexterityGains[5];
+	//uint8_t dexterityAttackSpeedGain = dexterityGains[6];
 
 	uint8_t enduranceCost = enduranceGains[0];
 	uint8_t enduranceHealthGain = enduranceGains[1];
-	uint8_t enduranceManaGain = enduranceGains[2];
-	uint8_t enduranceSoulGain = enduranceGains[3];
-	uint8_t enduranceCapGain = enduranceGains[4];
-	uint8_t enduranceWalkSpeedGain = enduranceGains[5];
-	uint8_t enduranceAttackSpeedGain = enduranceGains[6];
+	//uint8_t enduranceManaGain = enduranceGains[2];
+	//uint8_t enduranceSoulGain = enduranceGains[3];
+	//uint8_t enduranceCapGain = enduranceGains[4];
+	//uint8_t enduranceWalkSpeedGain = enduranceGains[5];
+	//uint8_t enduranceAttackSpeedGain = enduranceGains[6];
 
 	uint16_t oldMagic = magLevel;
 	uint16_t oldVitality = skills[SKILL_VITALITY].level;
@@ -1914,10 +1914,13 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 	uint32_t prevLevel = level;
 	while (experience >= nextLevelExp) {
-
-		skillPoints += g_game.getPointsPerLevel(level);
-
+			
 		++level;
+
+		if (level > maxLevelReached) {
+			skillPoints += g_game.getPointsPerLevel(level);
+			maxLevelReached += 1;
+		}
 
 		healthMax += vocation->getHPGain();
 		health += vocation->getHPGain();
