@@ -1918,7 +1918,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		++level;
 
 		if (level > maxLevelReached) {
-			skillPoints += g_game.getPointsPerLevel(level);
+			skillPoints += g_game.getPointsPerLevel(level-1);
 			maxLevelReached += 1;
 		}
 
