@@ -1231,7 +1231,7 @@ CREATE TABLE `players` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `description` varchar(255) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
-  `create_ip` int(11) NOT NULL DEFAULT '0',
+  `create_ip` char(11) DEFAULT NULL,
   `create_date` int(11) NOT NULL DEFAULT '0',
   `hide_char` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1324,7 +1324,7 @@ CREATE TABLE `player_items` (
   `itemtype` smallint(6) NOT NULL DEFAULT '0',
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
-  `abilities` blob NOT NULL
+  `abilities` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1368,6 +1368,16 @@ INSERT INTO `player_items` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `att
 (1, 105, 123, 2544, 98, 0x0f62, '');
 
 -- --------------------------------------------------------
+
+CREATE TABLE `player_inboxitems` (
+  `player_id` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `itemtype` smallint(6) NOT NULL,
+  `count` smallint(5) NOT NULL DEFAULT '0',
+  `attributes` blob NOT NULL,
+  `abilities` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Estrutura da tabela `player_namelocks`
@@ -1490,7 +1500,7 @@ INSERT INTO `server_config` (`config`, `value`) VALUES
 CREATE TABLE `tile_store` (
   `house_id` int(11) NOT NULL,
   `data` longblob NOT NULL,
-  `abilities` blob NOT NULL
+  `abilities` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
