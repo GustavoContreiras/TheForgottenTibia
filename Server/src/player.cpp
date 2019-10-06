@@ -20,6 +20,8 @@
 #include "otpch.h"
 
 #include <bitset>
+#include <string>
+#include <iomanip>
 
 #include "bed.h"
 #include "chat.h"
@@ -33,6 +35,8 @@
 #include "movement.h"
 #include "scheduler.h"
 #include "weapons.h"
+
+using namespace std;
 
 extern ConfigManager g_config;
 extern Game g_game;
@@ -537,7 +541,7 @@ void Player::updateInventoryWeight()
 }
 
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
-void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
+bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
 
@@ -549,6 +553,118 @@ void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	std::map<uint32_t, uint32_t> dexterityGains = g_game.getSkillGains(SKILL_DEXTERITY);
 	std::map<uint32_t, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
 	std::map<uint32_t, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
+
+	double maxMagic;
+	double maxVitality;
+	double maxStrenght;
+	double maxDefence;
+	double maxIntelligence;
+	double maxFaith;
+	double maxDexterity;
+	double maxEndurance;
+
+	if (this->level >= 8) {
+		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
+		maxVitality 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxStrenght 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxIntelligence = ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxFaith 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxDexterity 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxDefence 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxEndurance 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+	}
+
+	if (this->level >= 72) {
+        maxMagic 		= 72;
+		maxVitality 	= 90;
+		maxStrenght 	= 90;
+		maxIntelligence = 90;
+		maxFaith 		= 90;
+		maxDexterity 	= 90;
+		maxDefence 		= 90;
+		maxEndurance 	= 90;
+	}
+
+	if (this->level > 90) {
+        maxMagic 		= 72 + this->level - 90;
+		maxVitality 	= this->level;
+		maxStrenght 	= this->level;
+		maxIntelligence = this->level;
+		maxFaith 		= this->level;
+		maxDexterity 	= this->level;
+		maxDefence 		= this->level;
+		maxEndurance 	= this->level;
+	}
+
+	if (this->level > 100) {
+        maxMagic 		= ceil(82 + (this->level - 100) / 2);
+		maxVitality 	= this->level;
+		maxStrenght 	= this->level;
+		maxIntelligence = this->level;
+		maxFaith 		= this->level;
+		maxDexterity 	= this->level;
+		maxDefence 		= this->level;
+		maxEndurance 	= this->level;
+	}
+
+	if (this->level > 130) {
+		maxMagic 		= ceil(92 + (this->level - 100) / 2);
+		maxVitality 	= 130;
+		maxStrenght 	= 130;
+		maxIntelligence = 130;
+		maxFaith 		= 130;
+		maxDexterity 	= 130;
+		maxDefence 		= 130;
+		maxEndurance 	= 130;
+	}
+
+	if (magic > maxMagic) {
+		std::string message = "The maximum magic at your level is " + std::to_string((uint32_t) maxMagic) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	}
+	
+	if (vitality > maxVitality) {
+		std::string message = "The maximum vitality at your level is " + std::to_string((uint32_t) maxVitality) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	} 
+	
+	if (strenght > maxStrenght) {
+		std::string message = "The maximum strenght at your level is " + std::to_string((uint32_t) maxStrenght) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	} 
+
+	if (defence > maxDefence) {
+		std::string message = "The maximum defence at your level is " + std::to_string((uint32_t) maxDefence) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	} 
+	
+	if (intelligence > maxIntelligence) {
+		std::string message = "The maximum intelligence at your level is " + std::to_string((uint32_t) maxIntelligence) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	}
+	
+	if (faith > maxFaith) {
+		std::string message = "The maximum faith at your level is " + std::to_string((uint32_t) maxFaith) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	}
+	
+	if (dexterity > maxDexterity) {
+		std::string message = "The maximum dexterity at your level is " + std::to_string((uint32_t) maxDexterity) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	}
+	
+	if (endurance > maxEndurance) {
+		std::string message = "The maximum endurance at your level is " + std::to_string((uint32_t) maxEndurance) + ".";
+		this->sendCancelMessage(message);
+		return false;
+	}   
 
 	uint8_t magicCost = magicGains[0];
 	//uint8_t magicHealthGain = magicGains[1];
@@ -672,6 +788,8 @@ void Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 	sendStats();
 	sendSkills();
+
+	return true;
 }
 
 void Player::refreshStats() {
@@ -1524,8 +1642,8 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 
 		bool saved = false;
 		for (uint32_t tries = 0; tries < 3; ++tries) {
-			if (IOLoginData::savePlayer(this)) {
-				saved = true;
+			saved = IOLoginData::savePlayer(this);
+			if (saved) {
 				break;
 			}
 		}
@@ -1533,6 +1651,8 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 		if (!saved) {
 			std::cout << "Error while saving player: " << getName() << std::endl;
 		}
+
+		std::cout << "Saved player: " << saved << " " << getName() << std::endl;
 	}
 }
 

@@ -47,7 +47,7 @@
 	<talkaction words="!kills" script="kills.lua" />
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
-	<talkaction words="!skills" separator=" "  script="skillpoints.lua"/>
+	<!-- <talkaction words="!skills" separator=" "  script="skillpoints.lua"/> --> 
 	<talkaction words="!joinCTF" script="ctf.lua" />
 	<talkaction words="!leaveCTF" script="ctf.lua" />
 	<talkaction words="!lootlist" script="lootlist.lua" />
