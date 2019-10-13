@@ -62,191 +62,78 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
+	local mountId = 0
 
 	if msgcontains(msg, "mounts") then
-		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor} and {undead cavebear} for now. The {donkey} is for free!", cid)
+		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {armoured scorpion}, {armoured dragonling}, {armoured cavebear}, {the hellgrip}, {lion}, {golden lion} and {shock head}. The {donkey} is for free!", cid)
 
-	-- WIDOW QUEEN --
-	elseif msgcontains(msg, "widow queen") then
-		local mountId = 1
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have a widow queen!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = 1
-		end
+	
+	elseif msgcontains(msg, "widow queen") then mountId = 1
+	elseif msgcontains(msg, "racing bird") then mountId = 2
+	elseif msgcontains(msg, "war bear") then mountId = 3
+	elseif msgcontains(msg, "black sheep") then mountId = 4
+	elseif msgcontains(msg, "midnight panther") then mountId = 5
+	elseif msgcontains(msg, "draptor") then mountId = 6
+	elseif msgcontains(msg, "titanica") then mountId = 7
+	elseif msgcontains(msg, "tin lizzard") then mountId = 8
+	elseif msgcontains(msg, "blazebringer") then mountId = 9
+	elseif msgcontains(msg, "rapid boar") then mountId = 10
+	elseif msgcontains(msg, "stampor") then mountId = 11
+	elseif msgcontains(msg, "undead cavebear") then mountId = 12
+	elseif msgcontains(msg, "donkey") then mountId = 13
+	elseif msgcontains(msg, "tiger slug") then mountId = 14
+	elseif msgcontains(msg, "uniwheel") then mountId = 15
+	elseif msgcontains(msg, "crystal wolf") then mountId = 16	
+	elseif msgcontains(msg, "brown war horse") then mountId = 17
+	elseif msgcontains(msg, "kingly deer") then mountId = 18
+	elseif msgcontains(msg, "tamed panda") then mountId = 19	
+	elseif msgcontains(msg, "dromedary") then mountId = 20
+	elseif msgcontains(msg, "king scorpion") then mountId = 21	
+	elseif msgcontains(msg, "dark brown horse") then mountId = 22
+	elseif msgcontains(msg, "armoured war horse") then mountId = 23
+	elseif msgcontains(msg, "shadow draptor") then mountId = 24
+	elseif msgcontains(msg, "grey horse") then mountId = 25
+	elseif msgcontains(msg, "light brown horse") then mountId = 26
+	elseif msgcontains(msg, "lady bug") then mountId = 27
+	elseif msgcontains(msg, "manta") then mountId = 28
+	elseif msgcontains(msg, "ironblight") then mountId = 29
+	elseif msgcontains(msg, "magma") then mountId = 30
+	elseif msgcontains(msg, "dragonling") then mountId = 31
+	elseif msgcontains(msg, "gnarlhound") then mountId = 32
+	elseif msgcontains(msg, "crimsom ray") then mountId = 33
+	elseif msgcontains(msg, "steelbeak") then mountId = 34
+	elseif msgcontains(msg, "water buffalo") then mountId = 35
+	elseif msgcontains(msg, "armoured scorpion") then mountId = 36
+	elseif msgcontains(msg, "armoured dragonling") then mountId = 37
+	elseif msgcontains(msg, "armoured cavebear") then mountId = 38
+	elseif msgcontains(msg, "the hellgrip") then mountId = 39
+	elseif msgcontains(msg, "lion") then mountId = 40
+	elseif msgcontains(msg, "golden lion") then mountId = 41
+	elseif msgcontains(msg, "shock head") then mountId = 42
 
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "yes") then
-		local mountId = 1
- 		if not player:hasMount(mountId) then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-			npcHandler.topic[cid] = 0
+	if player:hasMount(mountId) then
+		npcHandler:say("Well... It looks like you already have it!", cid)
+	else
+		npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
+		npcHandler.topic[cid] = mountId
+	end
+
+	if npcHandler.topic[cid] == mountId then 
+		if msgcontains(msg, "yes") then
+			if not player:hasMount(mountId) then 
+				player:addMount(mountId)
+				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+				player:removeMoney(mounts[mountId][2])
+				npcHandler:say("Here you are! Anything else?", cid)
+				npcHandler.topic[cid] = 0
+			else
+				npcHandler:say("Well... It looks like you already have it!", cid)
+				npcHandler:releaseFocus(cid)
+			end
 		else
-			npcHandler:say("Well... It looks like you already have it!", cid)
+			npcHandler:say("Maybe later!", cid)
 			npcHandler:releaseFocus(cid)
 		end
-	elseif npcHandler.topic[cid] == 13 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-		
-	-- DONKEY --
-	elseif msgcontains(msg, "donkey") then
-		local mountId = 13
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have a donkey!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("This one is for free! I don't have much space back there. But I need to know one thing first. Do you really want it?", cid)
-			npcHandler.topic[cid] = 13
-		end
-
-	elseif npcHandler.topic[cid] == 13 and msgcontains(msg, "yes") then
-		local mountId = 13
- 		if not player:hasMount(mountId) then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			npcHandler:say("Here you are! Anything else?", cid)
-			npcHandler.topic[cid] = 0
-		else
-			npcHandler:say("Well... It looks like you already have a donkey!", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 13 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
-	-- HORSES --
-	elseif msgcontains(msg, "horses") then
-			npcHandler:say("I have a {dark brown} horse, a {grey} one and a {light brown}. Also there is a {brown war horse}, he is the fastest. And if you have money enough, we can {equip} him with a special {armor} for horses.", cid)
-			npcHandler.topic[cid] = 0
-
-	-- DARK BROWN HORSE --
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "dark") or msgcontains(msg, "dark brown") or msgcontains(msg, "dark brown horse") then
-		local mountId = 22
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have that one!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("These kind is known for their friendship with humans, they are very loyal. It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = 22
-		end
-	elseif npcHandler.topic[cid] == 22 and msgcontains(msg, "yes") then
-		local mountId = 22
- 		if not player:hasMount(mountId) and player:getMoney() >= mounts[mountId][2] then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-			npcHandler.topic[cid] = 0
-		else
-			npcHandler:say("Sorry, but it looks like you don't have enough money.", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 22 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
-	-- GRAY HORSE --
-	elseif npcHandler.topic[cid] == 0 and (msgcontains(msg, "grey") or msgcontains(msg, "grey horse") or msgcontains(msg, "gray")) then
-		local mountId = 25
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have that!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("These kind is known for their friendship with humans, they are very loyal. It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = 25
-		end
-	elseif npcHandler.topic[cid] == 25 and msgcontains(msg, "yes") then
-		local mountId = 25
- 		if not player:hasMount(mountId) and player:getMoney() >= mounts[mountId][2] then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-			npcHandler.topic[cid] = 0
-		else
-			npcHandler:say("Sorry, but it looks like you don't have enough money.", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 25 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
-	-- LIGHT BROWN HORSE --
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "light") or msgcontains(msg, "light brown") or msgcontains(msg, "light brown horse") then
-		local mountId = 26
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have that!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("These kind is known for their friendship with humans, they are very loyal. It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = 26
-		end
-	elseif npcHandler.topic[cid] == 26 and msgcontains(msg, "yes") then
-		local mountId = 26
- 		if not player:hasMount(mountId) and player:getMoney() >= mounts[mountId][2] then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-		else
-			npcHandler:say("Sorry, but it looks like you don't have enough money.", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 26 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
-	-- BROWN WAR HORSE --
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "war horse") or msgcontains(msg, "brown war horse") then
-		local mountId = 17
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have that!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("This is a great choice, he is as fast as any other mountable wild animal. It will cost you " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = 17
-		end
-	elseif npcHandler.topic[cid] == 17 and msgcontains(msg, "yes") then
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-		local mountId = 17
- 		if not player:hasMount(mountId) and player:getMoney() >= mounts[mountId][2] then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-		else
-			npcHandler:say("Sorry, but it looks like you don't have enough money.", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 17 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
-	-- ARMOURED WAR HORSE --
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "armor") or msgcontains(msg, "equip") then
-		local mountId = 23
-		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you did that already!", cid)
-		elseif not player:hasMount(mountId) then
-			npcHandler:say("It will cost you " .. mounts[mountId][2] .. " gold coins, is he ready?", cid)
-			npcHandler.topic[cid] = 23
-		elseif not player:hasMount(17) then
-			npcHandler:say("You need a {war horse} to do that.", cid)
-		end
-	elseif npcHandler.topic[cid] == 23 and msgcontains(msg, "yes") then
-		local mountId = 23
- 		if not player:hasMount(mountId) and player:getMoney() >= mounts[mountId][2] then 
-			player:addMount(mountId)
-			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			player:removeMoney(mounts[mountId][2])
-			npcHandler:say("Here you are! Anything else?", cid)
-		else
-			npcHandler:say("Sorry, but it looks like you don't have enough money.", cid)
-			npcHandler:releaseFocus(cid)
-		end
-	elseif npcHandler.topic[cid] == 23 and msgcontains(msg, "no") then
-		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
-
 	end
 	return true
 end
