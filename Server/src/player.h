@@ -1163,7 +1163,7 @@ class Player final : public Creature, public Cylinder
 		void removeAutoLootItem(uint16_t itemId);
 		bool getAutoLootItem(uint16_t itemId);
 
-		void setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
+		bool setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
 
 		void refreshStats();
@@ -1284,6 +1284,7 @@ class Player final : public Creature, public Cylinder
 		uint32_t conditionImmunities = 0;
 		uint32_t conditionSuppressions = 0;
 		uint32_t level = 1;
+		uint32_t maxLevelReached = 1;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
 		uint32_t walkTaskEvent = 0;

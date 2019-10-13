@@ -24,7 +24,12 @@ exhaust:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.
 -- 1000 - 100 due to exact condition timing. -100 doesn't hurt us, and players don't have reminding ~50ms exhaustion.
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	if target == nil or not target:isPlayer() then
+
+	if target == nil then
+		return true
+	end
+
+	if not target:isPlayer() then
 		return true
 	end
 

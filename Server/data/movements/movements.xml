@@ -606,10 +606,50 @@
 	<!-- Weapons -->
 	<movevent event="Equip" itemid="2414" slot="hand" function="onEquipItem" />
 	<movevent event="DeEquip" itemid="2414" slot="hand" function="onDeEquipItem" />
-	<movevent event="Equip" itemid="6528" slot="hand" function="onEquipItem" />		//the avenger
+	<movevent event="Equip" itemid="6528" slot="hand" function="onEquipItem" />	//the avenger
 	<movevent event="DeEquip" itemid="6528" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7382" slot="hand" function="onEquipItem" />	//demonrage sword
+	<movevent event="DeEquip" itemid="7382" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7391" slot="hand" function="onEquipItem" />	//thaian sword
+	<movevent event="DeEquip" itemid="7391" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7392" slot="hand" function="onEquipItem" />	//orcish maul
+	<movevent event="DeEquip" itemid="7392" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7402" slot="hand" function="onEquipItem" />	//dragon slayer
+	<movevent event="DeEquip" itemid="7402" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7403" slot="hand" function="onEquipItem" />	//berserker
+	<movevent event="DeEquip" itemid="7403" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7405" slot="hand" function="onEquipItem" />	//havoc blade
+	<movevent event="DeEquip" itemid="7405" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7413" slot="hand" function="onEquipItem" />	//titan axe
+	<movevent event="DeEquip" itemid="7413" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7406" slot="hand" function="onEquipItem" />	//blacksteel sword
+	<movevent event="DeEquip" itemid="7406" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7407" slot="hand" function="onEquipItem" />	//haunted blade
+	<movevent event="DeEquip" itemid="7407" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7414" slot="hand" function="onEquipItem" />	//abyss hammer
+	<movevent event="DeEquip" itemid="7414" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7423" slot="hand" function="onEquipItem" />	//skull crusher
+	<movevent event="DeEquip" itemid="7423" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7426" slot="hand" function="onEquipItem" />	//amber staff
+	<movevent event="DeEquip" itemid="7426" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7427" slot="hand" function="onEquipItem" />	//chaos mace
+	<movevent event="DeEquip" itemid="7427" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7428" slot="hand" function="onEquipItem" />	//bonebreaker
+	<movevent event="DeEquip" itemid="7428" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7436" slot="hand" function="onEquipItem" />	//angelic axe
+	<movevent event="DeEquip" itemid="7436" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7449" slot="hand" function="onEquipItem" />	//crystal sword
+	<movevent event="DeEquip" itemid="7449" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7450" slot="hand" function="onEquipItem" />	//hammer of prophecy
+	<movevent event="DeEquip" itemid="7450" slot="hand" function="onDeEquipItem" />
 	<movevent event="Equip" itemid="7425" slot="hand" function="onEquipItem" /> 	//taurus mace
 	<movevent event="DeEquip" itemid="7425" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7452" slot="hand" function="onEquipItem" /> 	//spiked squelcher
+	<movevent event="DeEquip" itemid="7452" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7453" slot="hand" function="onEquipItem" /> 	//executioner
+	<movevent event="DeEquip" itemid="7453" slot="hand" function="onDeEquipItem" />
+	<movevent event="Equip" itemid="7454" slot="hand" function="onEquipItem" /> 	//glorious axe
+	<movevent event="DeEquip" itemid="7454" slot="hand" function="onDeEquipItem" />
 	<movevent event="Equip" itemid="11305" slot="hand" function="onEquipItem" />
 	<movevent event="DeEquip" itemid="11305" slot="hand" function="onDeEquipItem" />
 	<movevent event="Equip" itemid="2391" slot="hand" function="onEquipItem" />

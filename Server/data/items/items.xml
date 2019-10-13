@@ -13205,13 +13205,13 @@
 		<attribute key="weaponType" value="club" />
 	</item>
 	<item id="7452" article="a" name="spiked squelcher">
+		<attribute key="criticalhitamount" value="100" />
+		<attribute key="criticalhitchance" value="25" />
 		<attribute key="weight" value="6800" />
 		<attribute key="defense" value="21" />
 		<attribute key="attack" value="41" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
 	</item>
 	<item id="7453" article="an" name="executioner">
 		<attribute key="weight" value="9900" />
