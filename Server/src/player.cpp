@@ -554,14 +554,14 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	std::map<uint32_t, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
 	std::map<uint32_t, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
 
-	double maxMagic;
-	double maxVitality;
-	double maxStrenght;
-	double maxDefence;
-	double maxIntelligence;
-	double maxFaith;
-	double maxDexterity;
-	double maxEndurance;
+	double maxMagic = 15;
+	double maxVitality = 20;
+	double maxStrenght = 20;
+	double maxDefence = 20;
+	double maxIntelligence = 20;
+	double maxFaith = 20;
+	double maxDexterity = 20;
+	double maxEndurance = 20;
 
 	if (this->level >= 8) {
 		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
@@ -618,53 +618,67 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 		maxEndurance 	= 130;
 	}
 
+	bool _checks = true;
+
 	if (magic > maxMagic) {
 		std::string message = "The maximum magic at your level is " + std::to_string((uint32_t) maxMagic) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	}
 	
 	if (vitality > maxVitality) {
 		std::string message = "The maximum vitality at your level is " + std::to_string((uint32_t) maxVitality) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	} 
 	
 	if (strenght > maxStrenght) {
 		std::string message = "The maximum strenght at your level is " + std::to_string((uint32_t) maxStrenght) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	} 
 
 	if (defence > maxDefence) {
 		std::string message = "The maximum defence at your level is " + std::to_string((uint32_t) maxDefence) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	} 
 	
 	if (intelligence > maxIntelligence) {
 		std::string message = "The maximum intelligence at your level is " + std::to_string((uint32_t) maxIntelligence) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	}
 	
 	if (faith > maxFaith) {
 		std::string message = "The maximum faith at your level is " + std::to_string((uint32_t) maxFaith) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	}
 	
 	if (dexterity > maxDexterity) {
 		std::string message = "The maximum dexterity at your level is " + std::to_string((uint32_t) maxDexterity) + ".";
-		this->sendCancelMessage(message);
-		return false;
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
 	}
 	
 	if (endurance > maxEndurance) {
 		std::string message = "The maximum endurance at your level is " + std::to_string((uint32_t) maxEndurance) + ".";
-		this->sendCancelMessage(message);
+		//this->sendCancelMessage(message);
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		_checks = false;
+	}
+
+	if (!_checks) {
 		return false;
-	}   
+	}
 
 	uint8_t magicCost = magicGains[0];
 	//uint8_t magicHealthGain = magicGains[1];

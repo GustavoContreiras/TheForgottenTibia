@@ -14,6 +14,27 @@ local skillPointsAdvanceStorage = 62491 	-- storage to avoid giving points twice
 -- level 140 = 292 (815 hp, 705 mana, 1755 cap)
 -- level 150 = 297 (865 hp, 755 mana, 1855 cap)
 
+local configPoints = {
+	pointsOnAdvanceRook = 2, 	-- points per level till end phase rook
+	levelPhaseRook = 8,			-- end level of phase rook
+	pointsOnAdvance1 = 4,		-- points per level till end phase 1
+	levelPhase1 = 40,			-- end level of phase 1
+	pointsOnAdvance2 = 3,		-- points per level till end phase 2
+	levelPhase2 = 60,			-- end level of phase 2
+	pointsOnAdvance3 = 2,		-- points per level till end phase 3
+	levelPhase3 = 80,			-- end level of phase 3
+	pointsOnAdvance4 = 1,		-- points per level till end phase 4
+	levelPhase4 = 100,			-- end level of phase 4
+	initialMagicPoints = 0,			-- points when reseting
+	initialVitalityPoints = 8,		-- points when reseting
+	initialStrenghtPoints = 8,		-- points when reseting
+	initialIntelligencePoints = 8,	-- points when reseting
+	initialFaithPoints = 8,			-- points when reseting
+	initialDexterityPoints = 8,		-- points when reseting
+	initialResistancePoints = 8,	-- points when reseting
+	initialEndurancePoints = 8		-- points when reseting
+} 
+
 local titleNoSkillSelected = "No skill selected"
 local descNoSkillSelected = "Select a skill to assign."
 
@@ -35,6 +56,77 @@ local descCanNotReset = "You already have minimum skills."
 
 local pointsAvailable = "Skill points available"
 local pointAvailable = "Skill point available"
+
+function Player:addSkillPoints(count)
+    count = math.max(1, count or 1)
+   
+    local pts = self:getStorageValue(pointsStorage)
+    if pts < 0 then
+        self:setStorageValue(pointsStorage, 0)
+        pts = 0
+    end
+   
+    return self:setStorageValue(pointsStorage, pts + count)
+end
+
+function Player:addSkillPointsOnLevelAdvance(oldLevel, newLevel)
+
+    if self:getStorageValue(skillPointsAdvanceStorage) < newLevel then
+    	if newLevel <= configPoints.levelPhaseRook then
+    		if oldLevel == newLevel - 1 then
+	    		self:addSkillPoints(configPoints.pointsOnAdvanceRook)
+	    		self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvanceRook .. ")")
+	    	else
+	    		local levelsAdvanced = newLevel - oldLevel
+	    		self:addSkillPoints(configPoints.pointsOnAdvanceRook * levelsAdvanced)
+	    		for i = 1, levelsAdvanced do
+	    			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvanceRook .. ")")
+	    		end
+	    	end
+    	elseif newLevel <= configPoints.levelPhase1 then
+    		if oldLevel == newLevel - 1 then
+        		self:addSkillPoints(configPoints.pointsOnAdvance1)
+        		self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance1 .. ")")
+        	else
+        		local levelsAdvanced = newLevel - oldLevel
+        		self:addSkillPoints(configPoints.pointsOnAdvance1 * levelsAdvanced)
+        		for i = 1, levelsAdvanced do
+        			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance1 .. ")")
+        		end
+        	end
+        elseif newLevel <= configPoints.levelPhase2 then
+        	if oldLevel == newLevel - 1 then
+	    		self:addSkillPoints(configPoints.pointsOnAdvance2)
+	    		self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance2 .. ")")
+    		else
+        		local levelsAdvanced = newLevel - oldLevel
+        		self:addSkillPoints(configPoints.pointsOnAdvance2 * levelsAdvanced)
+        		for i = 1, levelsAdvanced do
+        			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance2 .. ")")
+        		end
+        	end
+    	elseif newLevel <= configPoints.levelPhase3 then
+    		if oldLevel == newLevel - 1 then
+				self:addSkillPoints(configPoints.pointsOnAdvance3)
+				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance3 .. ")")
+			else
+        		local levelsAdvanced = newLevel - oldLevel
+        		self:addSkillPoints(configPoints.pointsOnAdvance3 * levelsAdvanced)
+        		for i = 1, levelsAdvanced do
+        			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointsAvailable .. " (+" .. configPoints.pointsOnAdvance3 .. ")")
+        		end
+        	end
+    	elseif newLevel <= configPoints.levelPhase4 then
+			self:addSkillPoints(configPoints.pointsOnAdvance4)
+			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointAvailable .. " (+" .. configPoints.pointsOnAdvance4 .. ")")
+    	elseif (newLevel % 2) == 0 then
+			self:addSkillPoints(configPoints.pointsOnAdvance4)
+			self:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, pointAvailable .. " (+" .. configPoints.pointsOnAdvance4 .. ")")
+		end
+        self:setStorageValue(skillPointsAdvanceStorage, newLevel)
+    end
+    return true
+end
 
 function Player:sendSkillPointsTutorialWelcomeWindow()
 	self:registerEvent("skillPoints_tutorialWelcome")
@@ -115,7 +207,7 @@ function Player:sendSkillPointsTutorialNotesWindow()
 	local title = "Notes"
  	local message = "From level 1 to 8, you will receive 2 points per level.\nFrom level 8 to 40, you will receive 4 points per level.\nFrom level 40 to 60, you will receive 3 points per level.\nFrom level 60 to 80, you will receive 2 points per level.\nFrom level 80 to 100, you will receive 1 point per level.\nAfter level 100, you will receive 1 point each 2 levels you get.\n\nYou will start in the beginner island and, when you reach level 8, you will have to talk to The Oracle to reborn in Rhyves.\n\nSome quest items are delivery directly to your special depot localized beside the normal depot in Rhyves.\n\nThere is a Guide NPC in the temple of Rhyves that can reset your skills and give you some tips.\nThe first reset is for free if you didn't reach level 60 yet, but after that it will cost a value based on your level.\n\nThere are new stats available in the skill panel: walk speed and attack speed.\n\nThe donkey mount gives +3 speed and can be get by talking to Palomino in the south gate of Rhyves.\n\n\n\n"
     local window = ModalWindow(4877, title, message)
-    window:addButton(1, "Go to Character's Mastery")   
+    window:addButton(1, "Ok")   
     window:setDefaultEnterButton(1)
     window:setDefaultEscapeButton(1)
     window:sendToPlayer(self)

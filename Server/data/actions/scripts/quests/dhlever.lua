@@ -1,14 +1,17 @@
-local timeToReset = 1 -- Time to reset the quest in minutes.
 
-local objectId = 1355 -- Id of the item Blocking the pathlocal 
 
-p = {   
-	Position(33117, 31315, 15), -- Position of the item blocking the path
-	Position(33119, 31313, 15), -- Teleport Creation p
-	Position(33125, 31315, 14), -- Position where it sends you
-}
 	        
 function onUse(cid, item, fromPosition, itemEx, toPosition, isHotkey) 
+
+	local timeToReset = 1 -- Time to reset the quest in minutes.
+
+	local objectId = 1355 -- Id of the item Blocking the pathlocal 
+
+	local p = {   
+		Position(33117, 31315, 15), -- Position of the item blocking the path
+		Position(33119, 31313, 15), -- Teleport Creation p
+		Position(33125, 31315, 14), -- Position where it sends you
+	}
 
 	local stone = Tile(p[1])    
 	local tp = Tile(p[2])   

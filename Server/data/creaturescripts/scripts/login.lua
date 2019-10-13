@@ -15,7 +15,6 @@ function onLogin(player)
 		player:sendSkillPointsTutorialWelcomeWindow()
 		if player:getLastLoginSaved() <= 0 then
 			player:setStorageValue(62492, 1) -- storage to check free first reset in npc
-			player:addSkillPoints(10)
 			-- player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Click on your character holding 'ctrl' to access character's mastery.")
 		end
 	else
@@ -26,20 +25,6 @@ function onLogin(player)
 
 	-- Stamina
 	nextUseStaminaTime[player.uid] = 0
-
-	-- Promotion
-	local vocation = player:getVocation()
-	local promotion = vocation:getPromotion()
-	if player:isPremium() then
-		local value = player:getStorageValue(STORAGEVALUE_PROMOTION)
-		if not promotion and value ~= 1 then
-			player:setStorageValue(STORAGEVALUE_PROMOTION, 1)
-		elseif value == 1 then
-			player:setVocation(promotion)
-		end
-	elseif not promotion then
-		player:setVocation(vocation:getDemotion())
-	end
 
 	-- God outfit
 	if getPlayerAccess(cid) == 6 then
