@@ -111,16 +111,18 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, "shock head") then mountId = 42
 	
 	elseif mountId ~= 0 and player:hasMount(mountId) then
+		npcHandler.topic[cid] = mountId
 		npcHandler:say("Well... It looks like you already have it!", cid)
-	elseif mountId ~= 0 and not player:hasMount(mountId) then
+	elseif npcHandler.topic[cid] == mountId and not player:hasMount(mountId) then
 		npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-	elseif mountId ~= 0  then 
+	elseif npcHandler.topic[cid] == mountId then 
 		if msgcontains(msg, "yes") then
 			if not player:hasMount(mountId) then 
 				player:addMount(mountId)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 				player:removeMoney(mounts[mountId][2])
 				npcHandler:say("Here you are! Anything else?", cid)
+				
 			else
 				npcHandler:say("Well... It looks like you already have it!", cid)
 				npcHandler:releaseFocus(cid)
