@@ -10,7 +10,7 @@
 		itemName, 5883, 120;
 		itemName, 7965, 15;
 		itemName, 12401, 30;
-		itemName, 12467, 55,
+		itemName, 12467, 55;
 		itemName, 6492, 2000;
 		itemName, 5894, 50;
 		itemName, 5896, 100;
@@ -87,7 +87,7 @@
 		itemName, 11223, 360;
 		itemName, 13870; 150;
 		itemName, 12627, 390;
-		itemName, 10553, 375,
+		itemName, 10553, 375;
 		itemName, 5895, 150;
 		itemName, 12422, 30;
 		itemName, 5885, 10000;
@@ -103,7 +103,7 @@
 		itemName, 11197, 380;
 		itemName, 12399, 30;
 		itemName, 8971, 500;
-		itemName, 9967, 25,
+		itemName, 9967, 25;
 		itemName, 9966, 20;
 		itemName, 9968, 30;
 		itemName, 12495, 20;
@@ -111,10 +111,10 @@
 		itemName, 5920, 100;
 		itemName, 5910, 200;
 		itemName, 12402, 350;
-		itemName, 11200, 55,
-		itemName, 10576, 85,
+		itemName, 11200, 55;
+		itemName, 10576, 85;
 		itemName, 5925, 70;
-		itemName, 10600; 115,
+		itemName, 10600; 115;
 		itemName, 2743, 50;
 		itemName, 10554, 500;
 		itemName, 11221, 475,
@@ -141,7 +141,7 @@
 		itemName, 5904, 8000;
 		itemName, 11238, 100;
 		itemName, 12445, 280;
-		itemName, 12428, 75,
+		itemName, 12428, 75;
 		itemName, 5878, 80;
 		itemName, 12430, 60;
 		itemName, 6537, 50000;
@@ -150,24 +150,24 @@
 		itemName, 10585, 150;
 		itemName, 10577, 700;
 		itemName, 12431, 250;
-		itemName, 11231, 75,
-		itemName, 12432, 25,
+		itemName, 11231, 75;
+		itemName, 12432, 25;
 		itemName, 12442, 430;
 		itemName, 5804, 2000;
 		itemName, 12435, 30;
 		itemName, 11113, 150;
-		itemName, 12433, 85,
+		itemName, 12433, 85;
 		itemName, 12437, 30;
 		itemName, 5893, 250;
 		itemName, 11337, 250;
 		itemName, 12439, 20;
-		itemName, 11196, 15,
+		itemName, 11196, 15;
 		itemName, 10580, 420;
 		itemName, 6540, 50000;
-		itemName, 10558, 45,
+		itemName, 10558, 45;
 		itemName, 12438, 50;
 		itemName, 10610, 10;
-		itemName, 12440, 25,
+		itemName, 12440, 25;
 		itemName, 12441, 10;
 		itemName, 10557, 50;
 		itemName, 10567, 30;
@@ -180,25 +180,25 @@
 		itemName, 5948, 200;
 		itemName, 5882, 200;
 		itemName, 5911, 300;
-		itemName, 12448, 66,
+		itemName, 12448, 66;
 		itemName, 11208, 30;
 		itemName, 11228, 400;
 		itemName, 12449, 120;
 		itemName, 11373, 20;
 		itemName, 12629, 680;
 		itemName, 10548, 280;
-		itemName, 10568, 25,
+		itemName, 10568, 25;
 		itemName, 12466, 230;
 		itemName, 11229, 450;
 		itemName, 10583, 520;
 		itemName, 7732, 150;
-		itemName, 11324, 25,
-		itemName, 12434, 45,
-		itemName, 11209, 35,
+		itemName, 11324, 25;
+		itemName, 12434, 45;
+		itemName, 11209, 35;
 		itemName, 6524, 3000;
 		itemName, 12436, 80;
 		itemName, 11191, 50;
-		itemName, 12468, 95,
+		itemName, 12468, 95;
 		itemName, 12406, 480;
 		itemName, 2062, 150;
 		itemName, 12469, 70;
@@ -211,8 +211,8 @@
 		itemName, 15485, 450;
 		itemName, 11325, 100;
 		itemName, 15481, 340;
-		itemName, 10559, 95,
-		itemName, 2800, 15,
+		itemName, 10559, 95;
+		itemName, 2800, 15;
 		itemName, 2799, 20;
 		itemName, 11195, 120;
 		itemName, 11226, 600;
@@ -227,20 +227,20 @@
 		itemName, 11370, 50;
 		itemName, 11371, 60;
 		itemName, 11369, 170;
-		itemName, 11190; 95,
+		itemName, 11190; 95;
 		itemName, 6539, 50000;
 		itemName, 6534, 50000;
 		itemName, 6535, 50000;
 		itemName, 11224, 150;
 		itemName, 10560, 100;
-		itemName, 2805, 25,
+		itemName, 2805, 25;
 		itemName, 12471, 50;
 		itemName, 5899, 90;
 		itemName, 8614, 100;
 		itemName, 11367, 200;
 		itemName, 11233, 480;
 		itemName, 5905, 100;
-		itemName, 10602, 275,
+		itemName, 10602, 275;
 		itemName, 11322, 200;
 		itemName, 11235, 30;
 		itemName, 15483, 320;
@@ -253,10 +253,10 @@
 		itemName, 11212, 20;
 		itemName, 10569, 60;
 		itemName, 5897, 70;
-		itemName, 5901, 5,
-		itemName, 11236, 15,
+		itemName, 5901, 5;
+		itemName, 11236, 15;
 		itemName, 10582, 400;
-		itemName, 10561, 265,
+		itemName, 10561, 265;
 		itemName, 5914, 150;
 		itemName, 11330, 600;
 		itemName, 11331, 150; 
