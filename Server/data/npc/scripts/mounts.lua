@@ -147,7 +147,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 
 	-- GRAY HORSE --
-	elseif npcHandler.topic[cid] == 0 and (msgcontains(msg, "grey") or msgcontains(msg, "grey horse") or or msgcontains(msg, "gray")) then
+	elseif npcHandler.topic[cid] == 0 and (msgcontains(msg, "grey") or msgcontains(msg, "grey horse") or msgcontains(msg, "gray")) then
 		local mountId = 25
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have that!", cid)
