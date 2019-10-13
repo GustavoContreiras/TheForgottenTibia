@@ -118,9 +118,21 @@ MainWindow
     !text: tr('Cooldown') .. ':'
 
   SpellInfoLabel
-    id: labelFaith
+    id: labelStrenght
     anchors.left: spellList.right
     anchors.top: labelCooldown.bottom
+    !text: tr('Strenght') .. ':'
+
+  SpellInfoLabel
+    id: labelDexterity
+    anchors.left: spellList.right
+    anchors.top: labelStrenght.bottom
+    !text: tr('Dexterity') .. ':'
+
+  SpellInfoLabel
+    id: labelFaith
+    anchors.left: spellList.right
+    anchors.top: labelDexterity.bottom
     !text: tr('Faith') .. ':'
 
   SpellInfoLabel
@@ -134,12 +146,6 @@ MainWindow
     anchors.left: spellList.right
     anchors.top: labelIntelligence.bottom
     !text: tr('Mana') .. ' / ' .. tr('Soul') .. ':'
-
-  SpellInfoLabel
-    id: labelDescription
-    anchors.left: spellList.right
-    anchors.top: labelMana.bottom
-    !text: tr('Description') .. ':'
 
   SpellInfoValueLabel
     id: labelNameValue
@@ -167,9 +173,19 @@ MainWindow
     anchors.top: labelTypeValue.bottom
 
   SpellInfoValueLabel
+    id: labelStrenghtValue
+    anchors.left: labelStrenght.right
+    anchors.top: labelCooldownValue.bottom
+
+  SpellInfoValueLabel
+    id: labelDexterityValue
+    anchors.left: labelDexterity.right
+    anchors.top: labelStrenghtValue.bottom
+
+  SpellInfoValueLabel
     id: labelFaithValue
     anchors.left: labelFaith.right
-    anchors.top: labelCooldownValue.bottom
+    anchors.top: labelDexterityValue.bottom
 
   SpellInfoValueLabel
     id: labelIntelligenceValue
@@ -181,27 +197,12 @@ MainWindow
     anchors.left: labelMana.right
     anchors.top: labelIntelligenceValue.bottom
 
-  SpellInfoValueLabel
-    id: labelDescriptionValue
-    anchors.left: labelDescription.right
-    anchors.top: labelManaValue.bottom
-
-  Label
-    id: labelGroupFilter
-    anchors.top: labelManaValue.bottom
-    anchors.left: spellsScrollBar.right
-    width: 70
-    font: verdana-11px-monochrome
-    !text: tr('Group')
-    margin-top: 30
-    margin-left: 20
-
   CheckBox
     id: groupBoxAny
-    anchors.left: prev.left
+    anchors.left: spellsScrollBar.right
     anchors.top: prev.bottom
-    margin-top: 3
-    margin-left: 3
+    margin-top: 10
+    margin-left: 11
     !text: tr('Any')
     width: 75
 

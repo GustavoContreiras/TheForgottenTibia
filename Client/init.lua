@@ -53,3 +53,7 @@ local script = '/' .. g_app.getCompactName() .. 'rc.lua'
 if g_resources.fileExists(script) then
   dofile(script)
 end
+
+g_things.loadOtb('data/things/1098/items.otb')
+-- g_things.loadXml('modules/game_skills/skills.xml')
+print 'Startup done :]'

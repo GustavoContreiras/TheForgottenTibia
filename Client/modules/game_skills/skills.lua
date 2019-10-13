@@ -419,9 +419,6 @@ function onClickApply()
 	if not player then 
 		player = g_game.getLocalPlayer()
 		resetChanges()
-	end
-	
-	if not player then
 		print('[onClickApply] player == nil') 
 		return 
 	end

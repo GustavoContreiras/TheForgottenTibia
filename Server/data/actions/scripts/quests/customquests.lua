@@ -153,7 +153,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		elseif item.uid == config.theScorcherUniqueId then
 			if player:getStorageValue(config.theScorcherUniqueId) ~= 1 then
 				player:addItem(23719, 1)
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found the chiller rod.')
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found the scorcher wand.')
 				player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Wands's maximum damage are increased by 1% each intelligence skill you advance.")
 				player:setStorageValue(config.theScorcherUniqueId, 1)
 

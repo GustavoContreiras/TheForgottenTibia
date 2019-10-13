@@ -8,6 +8,8 @@ formulaValueLabel     = nil
 groupValueLabel       = nil
 typeValueLabel        = nil
 cooldownValueLabel    = nil
+strenghtValueLabel       = nil
+dexterityValueLabel       = nil
 faithValueLabel       = nil
 intelligenceValueLabel = nil
 manaValueLabel        = nil
@@ -77,6 +79,8 @@ function init()
   groupValueLabel       = spelllistWindow:getChildById('labelGroupValue')
   typeValueLabel        = spelllistWindow:getChildById('labelTypeValue')
   cooldownValueLabel    = spelllistWindow:getChildById('labelCooldownValue')
+  strenghtValueLabel       = spelllistWindow:getChildById('labelStrenghtValue')
+  dexterityValueLabel       = spelllistWindow:getChildById('labelDexterityValue')
   faithValueLabel       = spelllistWindow:getChildById('labelFaithValue')
   intelligenceValueLabel = spelllistWindow:getChildById('labelIntelligenceValue')
   manaValueLabel        = spelllistWindow:getChildById('labelManaValue')
@@ -198,6 +202,8 @@ function updateSpellInformation(widget)
   local group       = ''
   local type        = ''
   local cooldown    = ''
+  local strenght    = ''
+  local dexterity    = ''
   local faith       = ''
   local intelligence = ''
   local mana        = ''
@@ -217,13 +223,15 @@ function updateSpellInformation(widget)
         cooldown = cooldown .. ' / ' .. (info.group[groupId] / 1000) .. 's'
       end
     end
+	
 
     type    = info.type
+	strenght = info.strenght or '-'
+	dexterity = info.dexterity or '-'
     faith = info.faith or '-'
     intelligence = info.intelligence or '-'
     mana    = info.mana .. ' / ' .. info.soul
     premium = (info.premium and 'yes' or 'no')
-    description = info.description or '-'
   end
 
   nameValueLabel:setText(name)
@@ -231,10 +239,11 @@ function updateSpellInformation(widget)
   groupValueLabel:setText(group)
   typeValueLabel:setText(type)
   cooldownValueLabel:setText(cooldown)
+  strenghtValueLabel:setText(strenght)
+  dexterityValueLabel:setText(dexterity)
   faithValueLabel:setText(faith)
   intelligenceValueLabel:setText(intelligence)
   manaValueLabel:setText(mana)
-  descriptionValueLabel:setText(description)
 end
 
 function toggle()
