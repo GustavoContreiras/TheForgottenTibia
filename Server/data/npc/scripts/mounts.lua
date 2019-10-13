@@ -1,47 +1,47 @@
 local mounts = { 
   --[0] = {'Name', price},
-	[1] = {'Widow Queen', 1},
-	[2] = {'Racing Bird', 1},
-	[3] = {'War Bear', 1},
-	[4] = {'Black Sheep', 1},
-	[5] = {'Midnight Panther', 1},
-	[6] = {'Draptor', 1},
-	[7] = {'Titanica', 1},
-	[8] = {'Tin Lizzard', 1},
-	[9] = {'Blazebringer', 1},
-	[10] = {'Rapid Boar', 1},
-	[11] = {'Stampor', 1},
-	[12] = {'Undead Cavebear', 1},
+	[1] = {'Widow Queen', 20000},
+	[2] = {'Racing Bird', 20000},
+	[3] = {'War Bear', 20000},
+	[4] = {'Black Sheep', 20000},
+	[5] = {'Midnight Panther', 20000},
+	[6] = {'Draptor', 20000},
+	[7] = {'Titanica', 20000},
+	[8] = {'Tin Lizzard', 20000},
+	[9] = {'Blazebringer', 20000},
+	[10] = {'Rapid Boar', 20000},
+	[11] = {'Stampor', 20000},
+	[12] = {'Undead Cavebear', 20000},
 	[13] = {'Donkey', 1},
-	[14] = {'Tiger Slug', 1},
-	[15] = {'Uniwheel', 1},
-	[16] = {'Crystal Wolf', 1},
+	[14] = {'Tiger Slug', 20000},
+	[15] = {'Uniwheel', 20000},
+	[16] = {'Crystal Wolf', 20000},
 	[17] = {'Brown War Horse', 10000},
-	[18] = {'Kingly Deer', 1},
-	[19] = {'Tamed Panda', 1},
-	[20] = {'Dromedary', 1},
-	[21] = {'King Scorpion', 1},
+	[18] = {'Kingly Deer', 20000},
+	[19] = {'Tamed Panda', 20000},
+	[20] = {'Dromedary', 20000},
+	[21] = {'King Scorpion', 20000},
 	[22] = {'Rented Horse', 1000},
 	[23] = {'Armoured War Horse', 5000},
-	[24] = {'Shadow Draptor', 1},
+	[24] = {'Shadow Draptor', 20000},
 	[25] = {'Rented Horse', 1000},
 	[26] = {'Rented Horse', 1000},
-	[27] = {'Ladybug', 1},
-	[28] = {'Manta', 1},
-	[29] = {'Ironblight', 1},
-	[30] = {'Magma', 1},
-	[31] = {'Dragonling', 1},
-	[32] = {'Gnarlhound', 1},
-	[33] = {'Crimson Ray', 1},
-	[34] = {'Steelbeak', 1},
-	[35] = {'Water Buffalo', 1},
-	[36] = {'Armoured Scorpion', 1},
-	[37] = {'Armoured Dragonling', 1},
-	[38] = {'Armoured Cavebear', 1},
-	[39] = {'The Hellgrip', 1},
-	[40] = {'Lion', 1},
-	[41] = {'Golden Lion', 1},
-	[42] = {'Shock Head', 1}
+	[27] = {'Ladybug', 20000},
+	[28] = {'Manta', 20000},
+	[29] = {'Ironblight', 20000},
+	[30] = {'Magma', 20000},
+	[31] = {'Dragonling', 20000},
+	[32] = {'Gnarlhound', 20000},
+	[33] = {'Crimson Ray', 20000},
+	[34] = {'Steelbeak', 20000},
+	[35] = {'Water Buffalo', 20000},
+	[36] = {'Armoured Scorpion', 20000},
+	[37] = {'Armoured Dragonling', 20000},
+	[38] = {'Armoured Cavebear', 20000},
+	[39] = {'The Hellgrip', 20000},
+	[40] = {'Lion', 20000},
+	[41] = {'Golden Lion', 20000},
+	[42] = {'Shock Head', 20000}
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -64,8 +64,33 @@ local function creatureSayCallback(cid, type, msg)
 	local player = Player(cid)
 
 	if msgcontains(msg, "mounts") then
-		npcHandler:say("For now, the only mounts avaible are four kinds of {horses}. But if you're afraid of horses I have a {donkey} back there.", cid)
+		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor} and {undead cavebear} for now. The {donkey} is for free!", cid)
 
+	-- WIDOW QUEEN --
+	elseif msgcontains(msg, "widow queen") then
+		local mountId = 1
+		if player:hasMount(mountId) then
+			npcHandler:say("Well... It looks like you already have a donkey!", cid)
+		elseif not player:hasMount(mountId) then
+			npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
+			npcHandler.topic[cid] = 1
+		end
+
+	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "yes") then
+		local mountId = 1
+ 		if not player:hasMount(mountId) then 
+			player:addMount(mountId)
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+			npcHandler:say("Here you are! Anything else?", cid)
+			npcHandler.topic[cid] = 0
+		else
+			npcHandler:say("Well... It looks like you already have it!", cid)
+			npcHandler:releaseFocus(cid)
+		end
+	elseif npcHandler.topic[cid] == 13 and msgcontains(msg, "no") then
+		npcHandler:say("Maybe later!", cid)
+		npcHandler:releaseFocus(cid)
+		
 	-- DONKEY --
 	elseif msgcontains(msg, "donkey") then
 		local mountId = 13
@@ -94,10 +119,10 @@ local function creatureSayCallback(cid, type, msg)
 	-- HORSES --
 	elseif msgcontains(msg, "horses") then
 			npcHandler:say("I have a {dark brown} horse, a {grey} one and a {light brown}. Also there is a {brown war horse}, he is the fastest. And if you have money enough, we can {equip} him with a special {armor} for horses.", cid)
-			npcHandler.topic[cid] = 1
+			npcHandler.topic[cid] = 0
 
 	-- DARK BROWN HORSE --
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "dark") or msgcontains(msg, "dark brown") or msgcontains(msg, "dark brown horse") then
+	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "dark") or msgcontains(msg, "dark brown") or msgcontains(msg, "dark brown horse") then
 		local mountId = 22
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have that one!", cid)
@@ -122,7 +147,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 
 	-- GRAY HORSE --
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "grey") or msgcontains(msg, "grey horse") then
+	elseif npcHandler.topic[cid] == 0 and (msgcontains(msg, "grey") or msgcontains(msg, "grey horse") or or msgcontains(msg, "gray")) then
 		local mountId = 25
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have that!", cid)
@@ -147,7 +172,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 
 	-- LIGHT BROWN HORSE --
-	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "light") or msgcontains(msg, "light brown") or msgcontains(msg, "light brown horse") then
+	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "light") or msgcontains(msg, "light brown") or msgcontains(msg, "light brown horse") then
 		local mountId = 26
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have that!", cid)

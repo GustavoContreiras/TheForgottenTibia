@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <npc name="Yasir" script="default.lua" walkinterval="1500" speed="100" walkradius="4" floorchange="0" speechbubble="2">
   <health max="100" now="100"/>
-  <look type="633" head="0" body="76" legs="114" feet="19" addons="2"/>
+  <look type="146" head="85" body="7" legs="12" feet="19" addons="2" mount="405" corpse="13528"/>
   <parameters>
     <parameter key="module_shop" value="1"/>
     <parameter key="shop_sellable" value="
@@ -57,7 +57,7 @@
 		itemName, 12411, 500;
 		itemName, 11327, 320;
 		itemName, 10574, 55;
-		itemName, 11220; 48;
+		itemName, 11220, 48;
 		itemName, 15424, 90;
 		itemName, 15455, 430;
 		itemName, 15423, 230;
@@ -114,7 +114,7 @@
 		itemName, 11200, 55;
 		itemName, 10576, 85;
 		itemName, 5925, 70;
-		itemName, 10600; 115;
+		itemName, 10600, 115;
 		itemName, 2743, 50;
 		itemName, 10554, 500;
 		itemName, 11221, 475,
