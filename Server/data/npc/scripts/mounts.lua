@@ -70,7 +70,7 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, "widow queen") then
 		local mountId = 1
 		if player:hasMount(mountId) then
-			npcHandler:say("Well... It looks like you already have a donkey!", cid)
+			npcHandler:say("Well... It looks like you already have a widow queen!", cid)
 		elseif not player:hasMount(mountId) then
 			npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
 			npcHandler.topic[cid] = 1
@@ -81,6 +81,7 @@ local function creatureSayCallback(cid, type, msg)
  		if not player:hasMount(mountId) then 
 			player:addMount(mountId)
 			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+			player:removeMoney(mounts[mountId][2])
 			npcHandler:say("Here you are! Anything else?", cid)
 			npcHandler.topic[cid] = 0
 		else
