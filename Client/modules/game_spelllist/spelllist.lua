@@ -31,8 +31,7 @@ FILTER_GROUP_SUPPORT      = 3
 
 -- Filter Settings
 local filters = {
-  intelligence = false,
-  faith        = false,
+  canUse = false,
   groupId      = FILTER_GROUP_ANY
 }
 
@@ -186,7 +185,9 @@ function updateSpelllist()
     local tmpLabel = spellList:getChildById(spell)
 
     local localPlayer = g_game.getLocalPlayer()
-    if (not(filters.intelligence) or info.intelligence <= localPlayer:getSkillLevel(3)) and (not(filters.faith) or info.faith <= localPlayer:getSkillLevel(2)) and (filters.groupId == FILTER_GROUP_ANY or info.group[filters.groupId]) and (filters.premium == FILTER_PREMIUM_ANY or (info.premium and filters.premium == FILTER_PREMIUM_YES) or (not(info.premium) and filters.premium == FILTER_PREMIUM_NO)) then
+    if (not(filters.canUse) or (info.intelligence <= localPlayer:getSkillLevel(Skill.Intelligence) and info.faith <= localPlayer:getSkillLevel(Skill.Faith) and info.strenght <= localPlayer:getSkillLevel(Skill.Strenght) and info.dexterity <= localPlayer:getSkillLevel(Skill.Dexterity))) and 
+	   (filters.groupId == FILTER_GROUP_ANY or info.group[filters.groupId]) and 
+	   (filters.premium == FILTER_PREMIUM_ANY or (info.premium and filters.premium == FILTER_PREMIUM_YES) or (not(info.premium) and filters.premium == FILTER_PREMIUM_NO)) then
       tmpLabel:setVisible(true)
     else
       tmpLabel:setVisible(false)
@@ -208,7 +209,6 @@ function updateSpellInformation(widget)
   local intelligence = ''
   local mana        = ''
   local premium     = ''
-  local description = ''
 
   if SpellInfo[SpelllistProfile][spell] then
     local info = SpellInfo[SpelllistProfile][spell]
@@ -282,13 +282,9 @@ function toggleFilter(widget, selectedWidget)
     end
   else
     local id = widget:getId()
-    if id == 'buttonFilterIntelligence' then
-      filters.intelligence = not(filters.intelligence)
-      widget:setOn(filters.intelligence)
-    end
-    if id == 'buttonFilterFaith' then
-      filters.faith = not(filters.faith)
-      widget:setOn(filters.faith)
+    if id == 'buttonFilterCanUse' then
+      filters.canUse = not(filters.canUse)
+      widget:setOn(filters.canUse)
     end
   end
 
@@ -305,14 +301,10 @@ function resetWindow()
   spelllistButton:setOn(false)
 
   -- Resetting filters
-  filters.intelligence = false
-  filters.faith        = false
+  filters.canUse = false
 
-  local buttonFilterIntelligence = spelllistWindow:getChildById('buttonFilterIntelligence')
-  buttonFilterIntelligence:setOn(filters.intelligence)
-
-  local buttonFilterFaith = spelllistWindow:getChildById('buttonFilterFaith')
-  buttonFilterFaith:setOn(filters.faith)
+  local buttonFilterCanUse = spelllistWindow:getChildById('buttonFilterCanUse')
+  buttonFilterCanUse:setOn(filters.canUse)
 
   groupRadioGroup:selectWidget(groupBoxAny)
 

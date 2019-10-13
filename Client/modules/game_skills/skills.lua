@@ -383,34 +383,34 @@ end
 function setSkillsTooltips()
 	
 	local skillMagic = skillsWindow:recursiveGetChildById('magiclevel')
-	skillMagic:setTooltip('+ spell damage\n+ rune damage\n+ 15 mana       ')
+	skillMagic:setTooltip(SkillDescription.Magic)
 
 	local skillVitality = skillsWindow:recursiveGetChildById('skillId0')
-	skillVitality:setTooltip('+ 15 health')
+	skillVitality:setTooltip(SkillDescription.Vitality)
 
 	local skillStrenght = skillsWindow:recursiveGetChildById('skillId1')
-	skillStrenght:setTooltip('+ melee damage   \n+ distance damage\n+ 5 capacity         ')
+	skillStrenght:setTooltip(SkillDescription.Strenght)
 
 	local skillFaith = skillsWindow:recursiveGetChildById('skillId2')
-	skillFaith:setTooltip('+ 2% of maximum damage for rod\n+ support spells                             \n+ healing spells                              \n+ 10 mana                                     ')
+	skillFaith:setTooltip(SkillDescription.Faith)
 
 	local skillIntelligence = skillsWindow:recursiveGetChildById('skillId3')
-	skillIntelligence:setTooltip('+ 1% of maximum damage for wand\n+ attack spells                                 \n+ 10 mana                                       ')
+	skillIntelligence:setTooltip(SkillDescription.Intelligence)
 
 	local skillDexterity = skillsWindow:recursiveGetChildById('skillId4')
-	skillDexterity:setTooltip('+ distance damage     \n+ 0.25 walk speed      \n+ 0.25% attack speed')
+	skillDexterity:setTooltip(SkillDescription.Dexterity)
 
 	local skillResistance = skillsWindow:recursiveGetChildById('skillId5')
-	skillResistance:setTooltip('+ resistance to physical damage\n+ 5 health                                ')
+	skillResistance:setTooltip(SkillDescription.Resistance)
 
 	local skillEndurance = skillsWindow:recursiveGetChildById('skillId6')
-	skillEndurance:setTooltip('+ 15 capacity\n+ 5 health     ')
+	skillEndurance:setTooltip(SkillDescription.Endurance)
 	
 	local skillWand = skillsWindow:recursiveGetChildById('wanddamage')
-	skillWand:setTooltip('Maximum damage')
+	skillWand:setTooltip((SkillDescription.Wand)
 	
 	local skillRod = skillsWindow:recursiveGetChildById('roddamage')
-	skillRod:setTooltip('Maximum damage')
+	skillRod:setTooltip((SkillDescription.Rod)
 	
 end
 
@@ -424,13 +424,13 @@ function onClickApply()
 	end
 
 	if newMagic == -1 then newMagic = player:getBaseMagicLevel() end
-	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Fist) end
-	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Club) end
-	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Shielding) end
-	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Distance) end
-	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Axe) end
-	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Sword) end
-	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Fishing) end
+	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
+	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
+	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Defence) end
+	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
+	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
+	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
+	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
 	
@@ -485,8 +485,8 @@ function onClickAdd(id)
 			local initialMana = 10
 			local levelsMana = 5 * (player:getLevel() - 1)
 			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 			
 			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 			newManaArrowLabel:setVisible(true)
@@ -510,7 +510,7 @@ function onClickAdd(id)
 			
 				print('[+] vitality')
 			
-				if newVitality < 8 or newVitality == nil then newVitality = player:getBaseSkillLevel(Skill.Fist) end
+				if newVitality < 8 or newVitality == nil then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
 				
 				newVitality = newVitality + 1
 				newVitalityArrowLabel:setVisible(true)
@@ -521,9 +521,9 @@ function onClickAdd(id)
 				
 				local initialHealth = 120
 				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 				
 				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 				newHealthArrowLabel:setVisible(true)
@@ -535,7 +535,7 @@ function onClickAdd(id)
 			
 				print('[+] strenght')
 			
-				if newStrenght < 8 or newStrenght == nil then newStrenght = player:getBaseSkillLevel(Skill.Club) end
+				if newStrenght < 8 or newStrenght == nil then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
 				
 				newStrenght = newStrenght + 1
 				newStrenghtArrowLabel:setVisible(true)
@@ -546,8 +546,8 @@ function onClickAdd(id)
 				
 				local initialCapacity = 36500
 				local levelsCapacity = 500 * (player:getLevel() - 1)
-				local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
+				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 				
 				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 				newCapacityArrowLabel:setVisible(true)
@@ -559,7 +559,7 @@ function onClickAdd(id)
 			
 				print('[+] faith')
 			
-				if newFaith < 8 or newFaith == nil then newFaith = player:getBaseSkillLevel(Skill.Sword) end
+				if newFaith < 8 or newFaith == nil then newFaith = player:getBaseSkillLevel(Skill.Faith) end
 				
 				newFaith = newFaith + 1
 				newFaithArrowLabel:setVisible(true)
@@ -571,8 +571,8 @@ function onClickAdd(id)
 				local initialMana = 10
 				local levelsMana = 5 * (player:getLevel() - 1)
 				local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 				
 				local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 				newManaArrowLabel:setVisible(true)
@@ -584,7 +584,7 @@ function onClickAdd(id)
 			
 				print('[+] intelligence')
 			
-				if newIntelligence < 8 or newIntelligence == nil then newIntelligence = player:getBaseSkillLevel(Skill.Axe) end
+				if newIntelligence < 8 or newIntelligence == nil then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
 				
 				newIntelligence = newIntelligence + 1
 				newIntelligenceArrowLabel:setVisible(true)
@@ -596,8 +596,8 @@ function onClickAdd(id)
 				local initialMana = 10
 				local levelsMana = 5 * (player:getLevel() - 1)
 				local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 				
 				local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 				newManaArrowLabel:setVisible(true)
@@ -609,7 +609,7 @@ function onClickAdd(id)
 			
 				print('[+] dexterity')
 			
-				if newDexterity < 8 or newDexterity == nil then newDexterity = player:getBaseSkillLevel(Skill.Distance) end
+				if newDexterity < 8 or newDexterity == nil then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
 				
 				newDexterity = newDexterity + 1
 				newDexterityArrowLabel:setVisible(true)
@@ -619,7 +619,7 @@ function onClickAdd(id)
 				dexterityMinusButton:setVisible(true)
 				
 				local initialWalkSpeed = player:getBaseSpeed()
-				local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Distance)) - player:getBaseSkillLevel(Skill.Distance))
+				local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 				
 				local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
 				newWalkSpeedArrowLabel:setVisible(true)
@@ -630,10 +630,10 @@ function onClickAdd(id)
 				local initialAttackSpeed = player:getAttackSpeed()
 				
 				if initialAttackSpeed == 1000 then --isDualWielding
-					initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Distance) * 2.5)
+					initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Dexterity) * 2.5)
 				end
 				
-				local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Distance)) - player:getBaseSkillLevel(Skill.Distance))
+				local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 				
 				local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
 				newAttackSpeedArrowLabel:setVisible(true)
@@ -645,7 +645,7 @@ function onClickAdd(id)
 			
 				print('[+] defence')
 			
-				if newDefence < 8 or newDefence == nil then newDefence = player:getBaseSkillLevel(Skill.Shielding) end
+				if newDefence < 8 or newDefence == nil then newDefence = player:getBaseSkillLevel(Skill.Defence) end
 				
 				newDefence = newDefence + 1
 				newDefenceArrowLabel:setVisible(true)
@@ -656,9 +656,9 @@ function onClickAdd(id)
 				
 				local initialHealth = 120
 				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 				
 				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 				newHealthArrowLabel:setVisible(true)
@@ -670,7 +670,7 @@ function onClickAdd(id)
 			
 				print('[+] endurance')
 			
-				if newEndurance < 8 or newEndurance == nil then newEndurance = player:getBaseSkillLevel(Skill.Fishing) end
+				if newEndurance < 8 or newEndurance == nil then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
 				
 				newEndurance = newEndurance + 1
 				newEnduranceArrowLabel:setVisible(true)
@@ -681,9 +681,9 @@ function onClickAdd(id)
 				
 				local initialHealth = 120
 				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 				
 				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 				newHealthArrowLabel:setVisible(true)
@@ -693,8 +693,8 @@ function onClickAdd(id)
 				
 				local initialCapacity = 36500
 				local levelsCapacity = 500 * (player:getLevel() - 1)
-				local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+				local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
+				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 				
 				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 				newCapacityArrowLabel:setVisible(true)
@@ -745,8 +745,8 @@ function onClickRemove(id)
 		local initialMana = 10
 		local levelsMana = 5 * (player:getLevel() - 1)
 		local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-		local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-		local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+		local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+		local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 		
 		local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 		
@@ -776,7 +776,7 @@ function onClickRemove(id)
 					
 			newVitality = newVitality - 1
 			
-			if newVitality <= player:getBaseSkillLevel(Skill.Fist) then
+			if newVitality <= player:getBaseSkillLevel(Skill.Vitality) then
 				newVitalityArrowLabel:setVisible(false)
 				newVitalityValueLabel:setVisible(false)
 				vitalityMinusButton:setVisible(false)
@@ -787,9 +787,9 @@ function onClickRemove(id)
 			
 			local initialHealth = 120
 			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 			
 			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 			
@@ -807,7 +807,7 @@ function onClickRemove(id)
 				
 			newStrenght = newStrenght - 1
 			
-			if newStrenght <= player:getBaseSkillLevel(Skill.Club) then
+			if newStrenght <= player:getBaseSkillLevel(Skill.Strenght) then
 				newStrenghtArrowLabel:setVisible(false)
 				newStrenghtValueLabel:setVisible(false)
 				strenghtMinusButton:setVisible(false)
@@ -818,8 +818,8 @@ function onClickRemove(id)
 			
 			local initialCapacity = 36500
 			local levelsCapacity = 500 * (player:getLevel() - 1)
-			local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-			local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
+			local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 			
 			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 						
@@ -837,7 +837,7 @@ function onClickRemove(id)
 					
 			newFaith = newFaith - 1
 			
-			if newFaith <= player:getBaseSkillLevel(Skill.Sword) then
+			if newFaith <= player:getBaseSkillLevel(Skill.Faith) then
 				newFaithArrowLabel:setVisible(false)
 				newFaithValueLabel:setVisible(false)
 				faithMinusButton:setVisible(false)
@@ -849,8 +849,8 @@ function onClickRemove(id)
 			local initialMana = 10
 			local levelsMana = 5 * (player:getLevel() - 1)
 			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 			
 			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 			
@@ -868,7 +868,7 @@ function onClickRemove(id)
 					
 			newIntelligence = newIntelligence - 1
 			
-			if newIntelligence <= player:getBaseSkillLevel(Skill.Axe) then
+			if newIntelligence <= player:getBaseSkillLevel(Skill.Intelligence) then
 				newIntelligenceArrowLabel:setVisible(false)
 				newIntelligenceValueLabel:setVisible(false)
 				intelligenceMinusButton:setVisible(false)
@@ -880,8 +880,8 @@ function onClickRemove(id)
 			local initialMana = 10
 			local levelsMana = 5 * (player:getLevel() - 1)
 			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Axe)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Sword)) - 8)
+			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
+			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
 			
 			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
 			
@@ -899,7 +899,7 @@ function onClickRemove(id)
 					
 			newDexterity = newDexterity - 1
 			
-			if newDexterity <= player:getBaseSkillLevel(Skill.Distance) then
+			if newDexterity <= player:getBaseSkillLevel(Skill.Dexterity) then
 				newDexterityArrowLabel:setVisible(false)
 				newDexterityValueLabel:setVisible(false)
 				dexterityMinusButton:setVisible(false)
@@ -909,7 +909,7 @@ function onClickRemove(id)
 			newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
 			
 			local initialWalkSpeed = player:getBaseSpeed()
-			local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Distance)) - player:getBaseSkillLevel(Skill.Distance))
+			local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 			
 			local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
 			
@@ -924,10 +924,10 @@ function onClickRemove(id)
 			local initialAttackSpeed = player:getAttackSpeed()
 				
 			if initialAttackSpeed == 1000 then --isDualWielding
-				initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Distance) * 2.5)
+				initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Dexterity) * 2.5)
 			end
 			
-			local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Distance)) - player:getBaseSkillLevel(Skill.Distance))
+			local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 			
 			local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
 			
@@ -945,7 +945,7 @@ function onClickRemove(id)
 				
 			newDefence = newDefence - 1
 			
-			if newDefence <= player:getBaseSkillLevel(Skill.Shielding) then
+			if newDefence <= player:getBaseSkillLevel(Skill.Defence) then
 				newDefenceArrowLabel:setVisible(false)
 				newDefenceValueLabel:setVisible(false)
 				defenceMinusButton:setVisible(false)
@@ -956,9 +956,9 @@ function onClickRemove(id)
 			
 			local initialHealth = 120
 			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 			
 			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 			
@@ -976,7 +976,7 @@ function onClickRemove(id)
 				
 			newEndurance = newEndurance - 1
 			
-			if newEndurance <= player:getBaseSkillLevel(Skill.Fishing) then
+			if newEndurance <= player:getBaseSkillLevel(Skill.Endurance) then
 				newEnduranceArrowLabel:setVisible(false)
 				newEnduranceValueLabel:setVisible(false)
 				enduranceMinusButton:setVisible(false)
@@ -987,9 +987,9 @@ function onClickRemove(id)
 			
 			local initialHealth = 120
 			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Fist)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Shielding)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
+			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
+			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 			
 			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
 			
@@ -1002,8 +1002,8 @@ function onClickRemove(id)
 			
 			local initialCapacity = 36500
 			local levelsCapacity = 500 * (player:getLevel() - 1)
-			local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Club)) - 8)
-			local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Fishing)) - 8)
+			local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
+			local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
 			
 			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
 			
@@ -1185,17 +1185,17 @@ function refresh()
 	
 	local hasAdditionalSkills = g_game.getFeature(GameAdditionalSkills)
 	
-	for i = Skill.Fist, Skill.CriticalDamage do
+	for i = Skill.Vitality, Skill.CriticalDamage do
 	
 		onSkillChange(player, i, player:getSkillLevel(i))
 		onBaseSkillChange(player, i, player:getBaseSkillLevel(i))
 
-		if i > Skill.Fishing then
+		if i > Skill.Endurance then
 			toggleSkill('skillId'.. i, hasAdditionalSkills)
 		end
 	end
 	
-	for i = Skill.Fist, Skill.Fishing do
+	for i = Skill.Vitality, Skill.Endurance do
 		onNewBaseSkillChange(player, i, player:getNewBaseSkillLevel(i))
 	end
 
@@ -1333,13 +1333,13 @@ function resetChanges()
 
 	newSkillPoints = player:getSkillPoints()
 	newMagic = player:getBaseMagicLevel()
-	newVitality = player:getBaseSkillLevel(Skill.Fist)
-	newStrenght = player:getBaseSkillLevel(Skill.Club)
-	newDefence = player:getBaseSkillLevel(Skill.Shielding)
-	newDexterity = player:getBaseSkillLevel(Skill.Distance)
-	newIntelligence = player:getBaseSkillLevel(Skill.Axe)
-	newFaith = player:getBaseSkillLevel(Skill.Sword)
-	newEndurance = player:getBaseSkillLevel(Skill.Fishing)
+	newVitality = player:getBaseSkillLevel(Skill.Vitality)
+	newStrenght = player:getBaseSkillLevel(Skill.Strenght)
+	newDefence = player:getBaseSkillLevel(Skill.Defence)
+	newDexterity = player:getBaseSkillLevel(Skill.Dexterity)
+	newIntelligence = player:getBaseSkillLevel(Skill.Intelligence)
+	newFaith = player:getBaseSkillLevel(Skill.Faith)
+	newEndurance = player:getBaseSkillLevel(Skill.Endurance)
 
 	newSkillPointsValueLabel:setText(newSkillPoints)
 	magicValueLabel:setText(newMagic)
@@ -1388,37 +1388,37 @@ function checkPlusAndMinusButtons(localPlayer, skillPoints)
 		magicMinusButton:setVisible(false)
 	end
 	
-	if newStrenght > localPlayer:getBaseSkillLevel(Skill.Club) then
+	if newStrenght > localPlayer:getBaseSkillLevel(Skill.Strenght) then
 		strenghtMinusButton:setVisible(true)
 	else
 		strenghtMinusButton:setVisible(false)
 	end
 		
-	if newDefence > localPlayer:getBaseSkillLevel(Skill.Shielding) then
+	if newDefence > localPlayer:getBaseSkillLevel(Skill.Defence) then
 		defenceMinusButton:setVisible(true)
 	else
 		defenceMinusButton:setVisible(false)
 	end
 
-	if newDexterity > localPlayer:getBaseSkillLevel(Skill.Distance) then
+	if newDexterity > localPlayer:getBaseSkillLevel(Skill.Dexterity) then
 		dexterityMinusButton:setVisible(true)
 	else
 		dexterityMinusButton:setVisible(false)
 	end
 		
-	if newIntelligence > localPlayer:getBaseSkillLevel(Skill.Axe) then
+	if newIntelligence > localPlayer:getBaseSkillLevel(Skill.Intelligence) then
 		intelligenceMinusButton:setVisible(true)
 	else
 		intelligenceMinusButton:setVisible(false)
 	end
 			
-	if newDefence > localPlayer:getBaseSkillLevel(Skill.Sword) then
+	if newDefence > localPlayer:getBaseSkillLevel(Skill.Faith) then
 		faithMinusButton:setVisible(true)
 	else
 		faithMinusButton:setVisible(false)
 	end
 
-	if newEndurance > localPlayer:getBaseSkillLevel(Skill.Fishing) then
+	if newEndurance > localPlayer:getBaseSkillLevel(Skill.Endurance) then
 		enduranceMinusButton:setVisible(true)
 	else
 		enduranceMinusButton:setVisible(false)
@@ -1502,13 +1502,13 @@ function onSkillPointsChange(localPlayer, skillPoints)
 	end
 
 	if newMagic == -1 then newMagic = player:getBaseMagicLevel() end
-	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Fist) end
-	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Club) end
-	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Shielding) end
-	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Distance) end
-	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Axe) end
-	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Sword) end
-	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Fishing) end
+	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
+	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
+	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Defence) end
+	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
+	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
+	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
+	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
 
 	skillPointsValueLabel:setText(skillPoints)
 	skillPointsValueLabel:setWidth(skillPointsValueLabel:getTextSize().width)
@@ -1707,9 +1707,9 @@ function onBaseSkillChange(localPlayer, id, baseLevel)
 	setSkillBase('skillId'..id, localPlayer:getSkillLevel(id), baseLevel)
 	setSkillsTooltips()
 	
-	if id == Skill.Sword then
+	if id == Skill.Faith then
 	
-		local rodBonus = (localPlayer:getBaseSkillLevel(Skill.Sword) - 8) * 2
+		local rodBonus = (localPlayer:getBaseSkillLevel(Skill.Faith) - 8) * 2
 		if rodBonus > 0 then
 			rodDamageValueLabel:setText(rodBonus + 100 .. '%')
 		else
@@ -1717,9 +1717,9 @@ function onBaseSkillChange(localPlayer, id, baseLevel)
 		end
 		rodDamageValueLabel:setWidth(rodDamageValueLabel:getTextSize().width)
 		
-	elseif id == Skill.Axe then
+	elseif id == Skill.Intelligence then
 	
-		local wandBonus = localPlayer:getBaseSkillLevel(Skill.Axe) - 8
+		local wandBonus = localPlayer:getBaseSkillLevel(Skill.Intelligence) - 8
 		if wandBonus > 0 then
 			wandDamageValueLabel:setText(wandBonus + 100 .. '%')
 		else
@@ -1737,9 +1737,9 @@ function onSkillChange(localPlayer, id, level)
 		setSkillsTooltips()
 	--end
 
-	if id == Skill.Fist then
+	if id == Skill.Vitality then
 	
-		local baseVitality = localPlayer:getBaseSkillLevel(Skill.Fist)
+		local baseVitality = localPlayer:getBaseSkillLevel(Skill.Vitality)
 		
 		if baseVitality <= 0 or level < 0 then
 			return
@@ -1759,9 +1759,9 @@ function onSkillChange(localPlayer, id, level)
 			vitalityValueLabel:removeTooltip()
 		end
 	
-	elseif id == Skill.Club then
+	elseif id == Skill.Strenght then
 		
-		local baseStrenght = localPlayer:getBaseSkillLevel(Skill.Club)
+		local baseStrenght = localPlayer:getBaseSkillLevel(Skill.Strenght)
 
 		if baseStrenght <= 0 or level < 0 then
 			return
@@ -1781,9 +1781,9 @@ function onSkillChange(localPlayer, id, level)
 			strenghtValueLabel:removeTooltip()
 		end
 		
-	elseif id == Skill.Sword then
+	elseif id == Skill.Faith then
 		
-		local baseFaith = localPlayer:getBaseSkillLevel(Skill.Sword)
+		local baseFaith = localPlayer:getBaseSkillLevel(Skill.Faith)
 
 		if baseFaith <= 0 or level < 0 then
 			return
@@ -1803,9 +1803,9 @@ function onSkillChange(localPlayer, id, level)
 			faithValueLabel:removeTooltip()
 		end
 		
-	elseif id == Skill.Axe then
+	elseif id == Skill.Intelligence then
 		
-		local baseIntelligence = localPlayer:getBaseSkillLevel(Skill.Axe)
+		local baseIntelligence = localPlayer:getBaseSkillLevel(Skill.Intelligence)
 
 		if baseIntelligence <= 0 or level < 0 then
 			return
@@ -1825,9 +1825,9 @@ function onSkillChange(localPlayer, id, level)
 			intelligenceValueLabel:removeTooltip()
 		end
 		
-	elseif id == Skill.Distance then
+	elseif id == Skill.Dexterity then
 		
-		local baseDexterity = localPlayer:getBaseSkillLevel(Skill.Distance)
+		local baseDexterity = localPlayer:getBaseSkillLevel(Skill.Dexterity)
 
 		if baseDexterity <= 0 or level < 0 then
 			return
@@ -1847,9 +1847,9 @@ function onSkillChange(localPlayer, id, level)
 			dexterityValueLabel:removeTooltip()
 		end
 		
-	elseif id == Skill.Shielding then
+	elseif id == Skill.Defence then
 		
-		local baseDefence = localPlayer:getBaseSkillLevel(Skill.Shielding)
+		local baseDefence = localPlayer:getBaseSkillLevel(Skill.Defence)
 
 		if baseDefence <= 0 or level < 0 then
 			return
@@ -1869,9 +1869,9 @@ function onSkillChange(localPlayer, id, level)
 			defenceValueLabel:removeTooltip()
 		end
 		
-	elseif id == Skill.Fishing then
+	elseif id == Skill.Endurance then
 		
-		local baseEndurance = localPlayer:getBaseSkillLevel(Skill.Fishing)
+		local baseEndurance = localPlayer:getBaseSkillLevel(Skill.Endurance)
 
 		if baseEndurance <= 0 or level < 0 then
 			return

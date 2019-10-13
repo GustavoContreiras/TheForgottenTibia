@@ -82,16 +82,10 @@ MainWindow
     margin-top: 8
 
   FilterButton
-    id: buttonFilterIntelligence
-    width: 80
-    !text: tr('Intelligence')
-    !tooltip: tr('Hide spells for higher intelligence')
-
-  FilterButton
-    id: buttonFilterFaith
-    width: 64
-    !text: tr('Faith')
-    !tooltip: tr('Hide spells for higher faith')
+    id: buttonFilterCanUse
+    width: 180
+    !text: tr('Show only spells I can use')
+    !tooltip: tr('Hide spells you can not use')
 
   SpellInfoLabel
     id: labelFormula

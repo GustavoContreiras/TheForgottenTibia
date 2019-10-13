@@ -46,13 +46,13 @@ Directions = {
 }
 
 Skill = {
-  Fist = 0,
-  Club = 1,
-  Sword = 2,
-  Axe = 3,
-  Distance = 4,
-  Shielding = 5,
-  Fishing = 6,
+  Vitality = 0,
+  Strenght = 1,
+  Faith = 2,
+  Intelligence = 3,
+  Dexterity = 4,
+  Defence = 5,
+  Endurance = 6,
   CriticalChance = 7,
   CriticalDamage = 8,
   LifeLeechChance = 9,
@@ -61,13 +61,18 @@ Skill = {
   ManaLeechAmount = 12
 }
 
-Vitality = Skill.Fist
-Strenght = Skill.Club
-Faith = Skill.Sword
-Intelligence = Skill.Axe
-Dexterity = Skill.Distance
-Defence = Skill.Shielding
-Endurance = Skill.Fishing
+SkillDescription = {
+	Magic = '+ spell damage\n+ rune damage\n+ 15 mana       ',
+	Vitality = '+ 15 health', 
+	Strenght = '+ melee damage   \n+ distance damage\n+ 5 capacity         ', 
+	Faith = '+ 2% of maximum damage for rod\n+ support spells                             \n+ healing spells                              \n+ 10 mana                                     ', 
+	Intelligence = '+ 1% of maximum damage for wand\n+ attack spells                                 \n+ 10 mana                                       ', 
+	Dexterity = '+ distance damage     \n+ 0.25 walk speed      \n+ 0.25% attack speed', 
+	Defence = '+ resistance to physical damage\n+ 5 health                                ', 
+	Endurance = '+ 15 capacity\n+ 5 health     ',
+	Wand = 'Maximum damage',
+	Rod = 'Maximum damage',
+}
 
 North = Directions.North
 East = Directions.East
