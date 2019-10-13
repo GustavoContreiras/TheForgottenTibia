@@ -109,8 +109,9 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, "lion") then mountId = 40
 	elseif msgcontains(msg, "golden lion") then mountId = 41
 	elseif msgcontains(msg, "shock head") then mountId = 42
+	end
 	
-	elseif mountId ~= 0 and player:hasMount(mountId) then
+	if mountId ~= 0 and player:hasMount(mountId) then
 		npcHandler.topic[cid] = mountId
 		npcHandler:say("Well... It looks like you already have it!", cid)
 	elseif npcHandler.topic[cid] == mountId and not player:hasMount(mountId) then
