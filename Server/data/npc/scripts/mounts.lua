@@ -66,7 +66,6 @@ local function creatureSayCallback(cid, type, msg)
 
 	if msgcontains(msg, "mounts") then
 		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {armoured scorpion}, {armoured dragonling}, {armoured cavebear}, {the hellgrip}, {lion}, {golden lion} and {shock head}. The {donkey} is for free!", cid)
-
 	
 	elseif msgcontains(msg, "widow queen") then mountId = 1
 	elseif msgcontains(msg, "racing bird") then mountId = 2
@@ -110,6 +109,8 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, "lion") then mountId = 40
 	elseif msgcontains(msg, "golden lion") then mountId = 41
 	elseif msgcontains(msg, "shock head") then mountId = 42
+	
+	end
 
 	if player:hasMount(mountId) then
 		npcHandler:say("Well... It looks like you already have it!", cid)
