@@ -407,10 +407,10 @@ function setSkillsTooltips()
 	skillEndurance:setTooltip(SkillDescription.Endurance)
 	
 	local skillWand = skillsWindow:recursiveGetChildById('wanddamage')
-	skillWand:setTooltip((SkillDescription.Wand)
+	skillWand:setTooltip(SkillDescription.Wand)
 	
 	local skillRod = skillsWindow:recursiveGetChildById('roddamage')
-	skillRod:setTooltip((SkillDescription.Rod)
+	skillRod:setTooltip(SkillDescription.Rod)
 	
 end
 
