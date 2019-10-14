@@ -792,7 +792,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	health += enduranceHealthGain * (endurance - oldEndurance);
 	g_creatureEvents->playerAdvance(this, SKILL_ENDURANCE, oldEndurance, endurance);
 
-	refreshStats();
+	refreshStats(skillPoints);
 
 	for (uint32_t tries = 0; tries < 3; ++tries) {
 		if (IOLoginData::savePlayer(this)) {
@@ -806,7 +806,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	return true;
 }
 
-void Player::refreshStats() {
+void Player::refreshStats(uint16_t newSkillPoints) {
 
 	std::map<uint32_t, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);
 	uint8_t magicHealthGain = magicGains[1];
@@ -910,6 +910,45 @@ void Player::refreshStats() {
 		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceManaGain +
 		(skills[SKILL_FAITH].level - 8) * faithManaGain +
 		(skills[SKILL_ENDURANCE].level - 8) * enduranceManaGain;
+
+	if (newSkillPoints > -1) {
+		skillPoints = newSkillPoints;
+	} //TODO: need to calculate total points and remove used points
+
+	/*uint8_t usedSkillPoints = 0;
+	usedSkillPoints += magLevel * 3;
+	usedSkillPoints += skills[SKILL_VITALITY].level - 8;
+	usedSkillPoints += skills[SKILL_STRENGHT].level - 8;
+	usedSkillPoints += skills[SKILL_DEFENCE].level - 8;
+	usedSkillPoints += skills[SKILL_DEXTERITY].level - 8;
+	usedSkillPoints += skills[SKILL_INTELLIGENCE].level - 8;
+	usedSkillPoints += skills[SKILL_FAITH].level - 8;
+	usedSkillPoints += skills[SKILL_ENDURANCE].level - 8;
+	
+	uint8_t totalSkillPoints = 10;
+	
+	if (maxLevelReached >= 8) {
+		totalSkillPoints += 14;
+	}
+	
+	if (maxLevelReached >= 40) {
+		totalSkillPoints += 132;
+	}
+
+	if (maxLevelReached >= 60) {
+		totalSkillPoints += 60;
+	}
+
+	if (maxLevelReached >= 80) {
+		totalSkillPoints += 40;
+	}
+
+	if (maxLevelReached >= 100) {
+		totalSkillPoints += 20;
+	}
+
+	skillPoints = totalSkillPoints - usedSkillPoints;
+	*/
 
 	soul = vocation->getSoulMax() +
 		(magLevel) * magicSoulGain +
