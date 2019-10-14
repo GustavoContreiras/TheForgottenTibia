@@ -510,7 +510,7 @@ function onClickAdd(id)
 			newManaValueLabel:setVisible(true)
 
 		else 
-			print('not enough skill points')
+			print('not enough skill points:' .. newSkillPoints)
 		end
 	else
 		if newSkillPoints - 1 >= 0 then
@@ -1592,6 +1592,7 @@ function onSkillPointsChange(localPlayer, skillPoints)
 		return 
 	end
 
+	if newSkillPoints == -1 then newSkillPoints = skillPoints end
 	if newMagic == -1 then newMagic = player:getBaseMagicLevel() end
 	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
 	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
@@ -1627,15 +1628,10 @@ function onSkillPointsChange(localPlayer, skillPoints)
 		faithPlusButton:setVisible(false)
 		endurancePlusButton:setVisible(false)
 	end
-		
-	magicMinusButton:setVisible(false)
-	vitalityMinusButton:setVisible(false)
-	strenghtMinusButton:setVisible(false)
-	defenceMinusButton:setVisible(false)
-	dexterityMinusButton:setVisible(false)
-	intelligenceMinusButton:setVisible(false)
-	faithMinusButton:setVisible(false)
-	enduranceMinusButton:setVisible(false)
+	
+	toggle()
+	toggle()
+
 end
 
 function onFreeCapacityChange(localPlayer, freeCapacity)
