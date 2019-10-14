@@ -62,79 +62,77 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
-	local mountId = 0
+	local npcHandler.topic[cid] = 0
 
 	if msgcontains(msg, "mounts") then
 		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {armoured scorpion}, {armoured dragonling}, {armoured cavebear}, {the hellgrip}, {lion}, {golden lion} and {shock head}. The {donkey} is for free!", cid)
 	
-	elseif msgcontains(msg, "widow queen") then mountId = 1
-	elseif msgcontains(msg, "racing bird") then mountId = 2
-	elseif msgcontains(msg, "war bear") then mountId = 3
-	elseif msgcontains(msg, "black sheep") then mountId = 4
-	elseif msgcontains(msg, "midnight panther") then mountId = 5
-	elseif msgcontains(msg, "draptor") then mountId = 6
-	elseif msgcontains(msg, "titanica") then mountId = 7
-	elseif msgcontains(msg, "tin lizzard") then mountId = 8
-	elseif msgcontains(msg, "blazebringer") then mountId = 9
-	elseif msgcontains(msg, "rapid boar") then mountId = 10
-	elseif msgcontains(msg, "stampor") then mountId = 11
-	elseif msgcontains(msg, "undead cavebear") then mountId = 12
-	elseif msgcontains(msg, "donkey") then mountId = 13
-	elseif msgcontains(msg, "tiger slug") then mountId = 14
-	elseif msgcontains(msg, "uniwheel") then mountId = 15
-	elseif msgcontains(msg, "crystal wolf") then mountId = 16	
-	elseif msgcontains(msg, "brown war horse") then mountId = 17
-	elseif msgcontains(msg, "kingly deer") then mountId = 18
-	elseif msgcontains(msg, "tamed panda") then mountId = 19	
-	elseif msgcontains(msg, "dromedary") then mountId = 20
-	elseif msgcontains(msg, "king scorpion") then mountId = 21	
-	elseif msgcontains(msg, "dark brown horse") then mountId = 22
-	elseif msgcontains(msg, "armoured war horse") then mountId = 23
-	elseif msgcontains(msg, "shadow draptor") then mountId = 24
-	elseif msgcontains(msg, "grey horse") then mountId = 25
-	elseif msgcontains(msg, "light brown horse") then mountId = 26
-	elseif msgcontains(msg, "lady bug") then mountId = 27
-	elseif msgcontains(msg, "manta") then mountId = 28
-	elseif msgcontains(msg, "ironblight") then mountId = 29
-	elseif msgcontains(msg, "magma") then mountId = 30
-	elseif msgcontains(msg, "dragonling") then mountId = 31
-	elseif msgcontains(msg, "gnarlhound") then mountId = 32
-	elseif msgcontains(msg, "crimsom ray") then mountId = 33
-	elseif msgcontains(msg, "steelbeak") then mountId = 34
-	elseif msgcontains(msg, "water buffalo") then mountId = 35
-	elseif msgcontains(msg, "armoured scorpion") then mountId = 36
-	elseif msgcontains(msg, "armoured dragonling") then mountId = 37
-	elseif msgcontains(msg, "armoured cavebear") then mountId = 38
-	elseif msgcontains(msg, "the hellgrip") then mountId = 39
-	elseif msgcontains(msg, "lion") then mountId = 40
-	elseif msgcontains(msg, "golden lion") then mountId = 41
-	elseif msgcontains(msg, "shock head") then mountId = 42
-	end
+	elseif msgcontains(msg, "widow queen") then npcHandler.topic[cid] = 1 
+	elseif msgcontains(msg, "racing bird") then npcHandler.topic[cid] = 2
+	elseif msgcontains(msg, "war bear") then npcHandler.topic[cid] = 3
+	elseif msgcontains(msg, "black sheep") then npcHandler.topic[cid] = 4
+	elseif msgcontains(msg, "midnight panther") then npcHandler.topic[cid] = 5
+	elseif msgcontains(msg, "draptor") then npcHandler.topic[cid] = 6
+	elseif msgcontains(msg, "titanica") then npcHandler.topic[cid] = 7
+	elseif msgcontains(msg, "tin lizzard") then npcHandler.topic[cid] = 8
+	elseif msgcontains(msg, "blazebringer") then npcHandler.topic[cid] = 9
+	elseif msgcontains(msg, "rapid boar") then npcHandler.topic[cid] = 10
+	elseif msgcontains(msg, "stampor") then npcHandler.topic[cid] = 11
+	elseif msgcontains(msg, "undead cavebear") then npcHandler.topic[cid] = 12
+	elseif msgcontains(msg, "donkey") then npcHandler.topic[cid] = 13
+	elseif msgcontains(msg, "tiger slug") then npcHandler.topic[cid] = 14
+	elseif msgcontains(msg, "uniwheel") then npcHandler.topic[cid] = 15
+	elseif msgcontains(msg, "crystal wolf") then npcHandler.topic[cid] = 16	
+	elseif msgcontains(msg, "brown war horse") then npcHandler.topic[cid] = 17
+	elseif msgcontains(msg, "kingly deer") then npcHandler.topic[cid] = 18
+	elseif msgcontains(msg, "tamed panda") then npcHandler.topic[cid] = 19	
+	elseif msgcontains(msg, "dromedary") then npcHandler.topic[cid] = 20
+	elseif msgcontains(msg, "king scorpion") then npcHandler.topic[cid] = 21	
+	elseif msgcontains(msg, "dark brown horse") then npcHandler.topic[cid] = 22
+	elseif msgcontains(msg, "armoured war horse") then npcHandler.topic[cid] = 23
+	elseif msgcontains(msg, "shadow draptor") then npcHandler.topic[cid] = 24
+	elseif msgcontains(msg, "grey horse") then npcHandler.topic[cid] = 25
+	elseif msgcontains(msg, "light brown horse") then npcHandler.topic[cid] = 26
+	elseif msgcontains(msg, "lady bug") then npcHandler.topic[cid] = 27
+	elseif msgcontains(msg, "manta") then npcHandler.topic[cid] = 28
+	elseif msgcontains(msg, "ironblight") then npcHandler.topic[cid] = 29
+	elseif msgcontains(msg, "magma") then npcHandler.topic[cid] = 30
+	elseif msgcontains(msg, "dragonling") then npcHandler.topic[cid] = 31
+	elseif msgcontains(msg, "gnarlhound") then npcHandler.topic[cid] = 32
+	elseif msgcontains(msg, "crimsom ray") then npcHandler.topic[cid] = 33
+	elseif msgcontains(msg, "steelbeak") then npcHandler.topic[cid] = 34
+	elseif msgcontains(msg, "water buffalo") then npcHandler.topic[cid] = 35
+	elseif msgcontains(msg, "armoured scorpion") then npcHandler.topic[cid] = 36
+	elseif msgcontains(msg, "armoured dragonling") then npcHandler.topic[cid] = 37
+	elseif msgcontains(msg, "armoured cavebear") then npcHandler.topic[cid] = 38
+	elseif msgcontains(msg, "the hellgrip") then npcHandler.topic[cid] = 39
+	elseif msgcontains(msg, "lion") then npcHandler.topic[cid] = 40
+	elseif msgcontains(msg, "golden lion") then npcHandler.topic[cid] = 41
+	elseif msgcontains(msg, "shock head") then npcHandler.topic[cid] = 42	
 	
-	if mountId ~= 0 then
-	
+	elseif npcHandler.topic[cid] ~= 0 and npcHandler.topic[cid] ~= 200 then 
+		mountId = npcHandler.topic[cid]
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
 		elseif not player:hasMount(mountId) then
 			npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
-			npcHandler.topic[cid] = mountId
+			npcHandler.topic[cid] = 200
 		end
 		
-		if npcHandler.topic[cid] == mountId then 
-			if msgcontains(msg, "yes") then
-				if not player:hasMount(mountId) then 
-					player:addMount(mountId)
-					player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-					player:removeMoney(mounts[mountId][2])
-					npcHandler:say("Here you are! Anything else?", cid)
-				else
-					npcHandler:say("Well... It looks like you already have it!", cid)
-					npcHandler:releaseFocus(cid)
-				end
+	elseif npcHandler.topic[cid] == 200 then 
+		if msgcontains(msg, "yes") then
+			if not player:hasMount(mountId) then 
+				player:addMount(mountId)
+				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+				player:removeMoney(mounts[mountId][2])
+				npcHandler:say("Here you are! Anything else?", cid)
 			else
-				npcHandler:say("Maybe later!", cid)
+				npcHandler:say("Well... It looks like you already have it!", cid)
 				npcHandler:releaseFocus(cid)
 			end
+		else
+			npcHandler:say("Maybe later!", cid)
+			npcHandler:releaseFocus(cid)
 		end
 	end
 	return true
