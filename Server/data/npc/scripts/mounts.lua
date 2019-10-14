@@ -119,9 +119,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("It costs " .. mounts[mountId][2] .. " gold coins, can I go bring it to you?", cid)
 			npcHandler.topic[cid] = 200
 		end
-	end
-		
-	if npcHandler.topic[cid] == 200 then 
+	elseif npcHandler.topic[cid] == 200 then 
 		if msgcontains(msg, "yes") then
 			if not player:hasMount(mountId) then 
 				player:addMount(mountId)
