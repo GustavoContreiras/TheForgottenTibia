@@ -536,7 +536,6 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
     menu:addSeparator()
 
     if creatureThing:isLocalPlayer() then
-      menu:addOption(tr('Character Mastery'), function() g_game.talk('!skills mastery') end)
       menu:addOption(tr('Set Outfit and Mount'), function() g_game.requestOutfit() end)
 	  menu:addOption(tr('Loot List'), function() g_game.talk('!lootlist') end)
 

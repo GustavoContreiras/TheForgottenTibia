@@ -71,7 +71,7 @@ SkillDescription = {
 	Defence = '+ resistance to physical damage\n+ 5 health                                ', 
 	Endurance = '+ 15 capacity\n+ 5 health     ',
 	Wand = 'Maximum damage',
-	Rod = 'Maximum damage',
+	Rod = 'Maximum damage'
 }
 
 North = Directions.North
