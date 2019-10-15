@@ -2029,6 +2029,9 @@ function onSkillChange(localPlayer, id, level)
 			criticalDamageValueLabel:removeTooltip()
 		end		
 	end
+	
+	toggle()
+	toggle()
 end
 
 function onNewBaseSkillChange(localPlayer, id, level)

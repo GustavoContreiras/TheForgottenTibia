@@ -1065,7 +1065,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\TheForgottenTibiaIcons\forgottentibiaicon_8JB_icon.ico">
+    <Image Include="icon-forgottentibiaicon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
