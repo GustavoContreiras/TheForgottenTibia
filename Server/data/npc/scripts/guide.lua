@@ -34,7 +34,10 @@ local function creatureSayCallback(cid, type, msg)
 		return false
 	end
 
-    if npcHandler.topic[cid] == 0 and msgcontains(msg, "save") then
+	if msgcontains(msg, "hi") or msgcontains(msg, "hello") then
+		npcHandler:addFocus(cid)
+
+    elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "save") then
     	saveServer()
         cleanMap()
 

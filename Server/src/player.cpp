@@ -541,6 +541,16 @@ void Player::updateInventoryWeight()
 }
 
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
+bool Player::addSkillPoints(uint16_t count)
+{
+	if (count != NULL) {
+		skillPoints += count;
+		return true;
+	}
+	return false;
+}
+
+//CHANGED! SKILL POINTS SYSTEM - STATS GAIN
 bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
