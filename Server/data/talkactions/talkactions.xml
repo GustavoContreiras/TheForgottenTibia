@@ -47,13 +47,14 @@
 	<talkaction words="!kills" script="kills.lua" />
 	<talkaction words="!online" script="online.lua" />
 	<talkaction words="!serverinfo" script="serverinfo.lua" />
-	<!-- <talkaction words="!skills" separator=" "  script="skillpoints.lua"/> --> 
 	<talkaction words="!joinCTF" script="ctf.lua" />
 	<talkaction words="!leaveCTF" script="ctf.lua" />
 	<talkaction words="!lootlist" script="lootlist.lua" />
 	<talkaction words="!loot" separator=" " script="toggleloot.lua" />
 	<!-- <talkaction words="!setskills" separator=" " script="setskills.lua" />  --> 
 	<!-- <talkaction words="!title" separator=" "  script="title.lua"/> MANAGED BY GUIDE NPC --> 
+
+	<talkaction words="/skilladdpoints" separator=" " script="addskillpoints.lua" />
 
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />
