@@ -95,9 +95,6 @@ function creatureSayCallback(cid, type, msg)
         else
             return false
         end
-    elseif msgcontains(msg, "monsters") or msgcontains(msg, "monster") and npcHandler.topic[cid] == 1 then
-       	npcHandler:say(tasksString, cid)
-
     elseif monsters[cmsg] and npcHandler.topic[cid] == 1 then
         if player:getStorageValue(monsters[cmsg].storage) == -1 then
             npcHandler:say("Good luck, come back when you killed "..monsters[cmsg].amount.." "..cmsg..".", cid)
@@ -109,70 +106,23 @@ function creatureSayCallback(cid, type, msg)
         npcHandler.topic[cid] = 0
     elseif msgcontains(msg, "yes") and npcHandler.topic[cid] == 2 then
         local task = monsters[xmsg[cid]]
-        if player:getStorageValue(task.mstorage) >= (task.amount-1) then
+        if player:getStorageValue(task.mstorage) >= task.amount then
             npcHandler:say("Good job, here is your reward!", cid)
             for x = 1, #task.items do
-                player:addItem(task.items[x].id, task.items[countg].count)
+                player:addItem(task.items[x].id, task.items[x].count)
             end
             player:addExperience(task.exp)
             player:addSkillPoints(task.skillpoints)
             player:setStorageValue(task.storage, 2)
             player:setStorageValue(storage, -1)
-            --npcHandler.topic[cid] = 3
-            npcHandler:releaseFocus(cid)
         else
-            npcHandler:say("You didn't kill them all, you still need to kill "..task.amount -(player:getStorageValue(task.mstorage) + 1).." "..xmsg[cid]..".", cid)
+            npcHandler:say("You didn't kill them all, you still need to kill "..task.amount -(player:getStorageValue(task.mstorage)).." "..xmsg[cid]..".", cid)
         end
-    elseif msgcontains(msg, "task") and npcHandler.topic[cid] == 3 then
-        local text, n = "",  0
-        for monster, task in pairs(monsters) do
-            if player:getStorageValue(task.mstorage) < task.amount then
-                n = n + 1
-                text = text .. (n == 1 and "" or ", ")
-                text = text .. "{"..monster.."}"
-            end
-        end
-        if text ~= "" then
-            local text = ""
-	        for monster, task in pairs(monsters) do
-	            if player:getStorageValue(task.mstorage) < task.amount then
-	                text = text .. monster .." ["..(player:getStorageValue(task.mstorage) + 1).."/"..task.amount.."]:\n  "..getItemsFromTable(task.items).."\n  "..task.exp.." experience \n\n"
-	            else
-	                text = text .. monster .." ["..task.amount.."/"..task.amount.."]: DONE\n\n"
-	            end
-	        end
-	        player:showTextDialog(1949, "" .. text)
-		 	npcHandler:say(tasksString, cid)
-        else
-            npcHandler:say("You already did all tasks.", cid)
-        end
-    elseif msgcontains(msg, "no") and npcHandler.topic[cid] == 1 then
-        npcHandler:say("Ok then.", cid)
-        npcHandler.topic[cid] = 0
-    elseif msgcontains(msg, "stop") then
-        local text, n = "",  0
-        for monster, task in pairs(monsters) do
-            if player:getStorageValue(task.mstorage) < task.amount then
-                n = n + 1
-                text = text .. (n == 1 and "" or ", ")
-                text = text .. "{"..monster.."}"
-                if player:getStorageValue(task.storage) == 1 then
-                     player:setStorageValue(task.storage, -1)
-                end
-            end
-        end
-        if player:getStorageValue(storage) == 1 then
-            npcHandler:say("Alright, let me know if you want to continue an other task, you can still choose "..text..".", cid)
-        else
-            npcHandler:say("You didn't start any new task yet, if you want to start one, you can choose "..text..".", cid)
-        end
-        player:setStorageValue(storage, -1)
-        npcHandler.topic[cid] = 1
     elseif msgcontains(msg, "tasks") or msgcontains(msg, "task") or msgcontains(msg, "list") then
         local text = ""
         for monster, task in pairs(monsters) do
             if player:getStorageValue(task.mstorage) < task.amount then
-                text = text ..monster .." ["..(player:getStorageValue(task.mstorage) + 1).."/"..task.amount.."]:\n  "..getItemsFromTable(task.items).."\n  "..task.exp.." experience\n  "..task.skillpoints.." skillpoints\n\n"
+                text = text ..monster .." ["..(player:getStorageValue(task.mstorage)).."/"..task.amount.."]:\n  "..getItemsFromTable(task.items).."\n  "..task.exp.." experience\n  "..task.skillpoints.." skillpoints\n\n"
             else
                 text = text .. monster .." ["..task.amount.."/"..task.amount.."]: DONE\n\n"
             end
@@ -183,8 +133,6 @@ function creatureSayCallback(cid, type, msg)
     elseif msgcontains(msg, "bye") then
         npcHandler:say("Bye.", cid)
         npcHandler:releaseFocus(cid)
-    else
-        npcHandler:say("What?", cid)
     end
     return true
 end
