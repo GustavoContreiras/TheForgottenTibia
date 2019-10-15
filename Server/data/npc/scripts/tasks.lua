@@ -150,7 +150,7 @@ function creatureSayCallback(cid, type, msg)
         local text = ""
         for k, x in pairs(monsters) do
             if player:getStorageValue(x.mstorage) < x.amount then
-                text = text ..k .." ["..(player:getStorageValue(x.mstorage) + 1).."/"..x.amount.."]:\n  "..getItemsFromTable(x.items).."\n  "..x.exp.." experience \n\n  "..x.skillpoints.." skillpoints \n\n"
+                text = text ..k .." ["..(player:getStorageValue(x.mstorage) + 1).."/"..x.amount.."]:\n  "..getItemsFromTable(x.items).."\n  "..x.exp.." experience \n  "..x.skillpoints.." skillpoints \n\n"
             else
                 text = text .. k .." ["..x.amount.."/"..x.amount.."]: DONE\n\n"
             end
