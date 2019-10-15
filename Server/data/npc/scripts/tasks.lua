@@ -32,7 +32,7 @@ local monsters = {
    ["Hydras"] 			        = {storage = 5023, mstorage = 19013, amount = 250, 	exp = 0, 	    skillpoints = 2,    items = {{id = 2160, count = 5}}}, -- 2100 xp
    ["Serpent Spawns"]	        = {storage = 5027, mstorage = 19017, amount = 200, 	exp = 0, 	    skillpoints = 3,    items = {{id = 2160, count = 5}}}, -- 3050 xp
    ["Grim Reapers"] 	        = {storage = 5025, mstorage = 19015, amount = 200, 	exp = 0, 	    skillpoints = 4,    items = {{id = 2160, count = 5}}}, -- 5500 xp
-   ["Demons"] 			        = {storage = 5024, mstorage = 19014, amount = 250, 	exp = 0, 	    skillpoints = 4,    items = {{id = 2160, count = 10}}} -- 6000 xp
+   ["Demons"] 			        = {storage = 5024, mstorage = 19014, amount = 250, 	exp = 0, 	    skillpoints = 4,    items = {{id = 2160, count = 10}}}, -- 6000 xp
    ["Hellhounds"] 			    = {storage = 5030, mstorage = 19020, amount = 200, 	exp = 0, 	    skillpoints = 4,    items = {{id = 2160, count = 7}}} -- 6800 xp
 }
 
