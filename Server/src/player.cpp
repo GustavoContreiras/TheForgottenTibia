@@ -546,6 +546,12 @@ bool Player::addSkillPoints(uint16_t count)
 	if (count != NULL) {
 		skillPoints += count;
 		return true;
+		sendStats();
+		for (uint32_t tries = 0; tries < 3; ++tries) {
+			if (IOLoginData::savePlayer(this)) {
+				break;
+			}
+		}
 	}
 	return false;
 }
