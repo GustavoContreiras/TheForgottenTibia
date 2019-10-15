@@ -125,6 +125,10 @@ function creatureSayCallback(cid, type, msg)
     elseif msgcontains(msg, "no") and npcHandler.topic[cid] == 1 then
         npcHandler:say("Ok then.", cid)
         npcHandler.topic[cid] = 0
+
+    elseif msgcontains(msg, "medapontos") then
+        player:addSkillPoints(10)
+        player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 		
     elseif msgcontains(msg, "stop") then
         local text, n = "",  0
