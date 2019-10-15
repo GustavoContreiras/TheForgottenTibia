@@ -111,8 +111,8 @@ function creatureSayCallback(cid, type, msg)
         local task = monsters[xmsg[cid]]
         if player:getStorageValue(task.mstorage) >= (task.amount-1) then
             npcHandler:say("Good job, here is your reward!", cid)
-            for count = 1, #task.items do
-                player:addItem(task.items[count].id, task.items[countg].count)
+            for x = 1, #task.items do
+                player:addItem(task.items[x].id, task.items[countg].count)
             end
             player:addExperience(task.exp)
             player:addSkillPoints(task.skillpoints)
