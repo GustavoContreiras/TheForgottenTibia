@@ -543,17 +543,14 @@ void Player::updateInventoryWeight()
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
 bool Player::addSkillPoints(uint16_t count)
 {
-	if (count != NULL) {
-		skillPoints += count;
-		return true;
-		sendStats();
-		for (uint32_t tries = 0; tries < 3; ++tries) {
-			if (IOLoginData::savePlayer(this)) {
-				break;
-			}
+	skillPoints += count;
+	sendStats();
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
+			break;
 		}
 	}
-	return false;
+	return true;
 }
 
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
