@@ -115,20 +115,17 @@ function creatureSayCallback(cid, type, msg)
                 player:addItem(x.items[g].id, x.items[g].count)
             end
             player:addExperience(x.exp)
+            player:addSkillPoints(x.skillpoints)
             player:setStorageValue(x.storage, 2)
             player:setStorageValue(storage, -1)
-            npcHandler:releaseFocus(cid)
+            player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
         else
             npcHandler:say("You didn't kill them all, you still need to kill "..x.amount -(player:getStorageValue(x.mstorage) + 1).." "..xmsg[cid]..".", cid)
         end
 		
     elseif msgcontains(msg, "no") and npcHandler.topic[cid] == 1 then
         npcHandler:say("Ok then.", cid)
-        npcHandler.topic[cid] = 0
-
-    elseif msgcontains(msg, "medapontos") then
-        player:addSkillPoints(10)
-        player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+        npcHandler.topic[cid] = 0        
 		
     elseif msgcontains(msg, "stop") then
         local text, n = "",  0

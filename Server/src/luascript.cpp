@@ -9549,6 +9549,7 @@ int LuaScriptInterface::luaPlayerAddSkillPoints(lua_State* L)
 	if (player) {
 		uint16_t count = getNumber<uint16_t>(L, 2);
 		player->addSkillPoints(count);
+		player->sendStats();
 		pushBoolean(L, true);
 	}
 	else {

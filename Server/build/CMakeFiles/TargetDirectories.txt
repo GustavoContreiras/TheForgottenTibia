@@ -1,8 +1,0 @@
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/edit_cache.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/all_pch.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/rebuild_cache.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/tfs.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/clean_cotire.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/CMakeFiles/tfs_pch.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/src/CMakeFiles/rebuild_cache.dir
-/home/gustavocontreiras/TheForgottenTibia/Server/build/src/CMakeFiles/edit_cache.dir

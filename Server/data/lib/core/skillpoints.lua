@@ -57,18 +57,6 @@ local descCanNotReset = "You already have minimum skills."
 local pointsAvailable = "Skill points available"
 local pointAvailable = "Skill point available"
 
-function Player:addSkillPoints(count)
-    count = math.max(1, count or 1)
-   
-    local pts = self:getStorageValue(pointsStorage)
-    if pts < 0 then
-        self:setStorageValue(pointsStorage, 0)
-        pts = 0
-    end
-   
-    return self:setStorageValue(pointsStorage, pts + count)
-end
-
 function Player:addSkillPointsOnLevelAdvance(oldLevel, newLevel)
 
     if self:getStorageValue(skillPointsAdvanceStorage) < newLevel then

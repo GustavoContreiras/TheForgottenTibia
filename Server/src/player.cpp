@@ -544,7 +544,6 @@ void Player::updateInventoryWeight()
 bool Player::addSkillPoints(uint16_t count)
 {
 	skillPoints += count;
-	sendStats();
 	for (uint32_t tries = 0; tries < 3; ++tries) {
 		if (IOLoginData::savePlayer(this)) {
 			break;
