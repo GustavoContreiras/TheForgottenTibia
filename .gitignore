@@ -8,6 +8,7 @@ Client/vc14/Win32/
 Client/vc14/x64/
 Client/vc14/Release/
 Server/etc/
+Server/build/
 Server/config.lua
 Server/data/world/forgottenworld1098oldglobal.otbm
 Server/data/world/forgottenworld1098oldglobal-spawn.xml
