@@ -17,6 +17,7 @@ local config = {
     ['dragon lord']     		= {amount = 200,    storage = 19011, startstorage = 5021, startvalue = 1},
     ['frost dragon']    		= {amount = 200,    storage = 19012, startstorage = 5022, startvalue = 1},
     ['hydra']           		= {amount = 250,    storage = 19013, startstorage = 5023, startvalue = 1},
+	['behemoth']           		= {amount = 250,    storage = 19022, startstorage = 5032, startvalue = 1},
 	['serpent spawn']   		= {amount = 200,    storage = 19017, startstorage = 5027, startvalue = 1},
 	['grim reaper']     		= {amount = 200,    storage = 19015, startstorage = 5025, startvalue = 1},
     ['demon']           		= {amount = 250,    storage = 19014, startstorage = 5024, startvalue = 1},
