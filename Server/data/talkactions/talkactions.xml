@@ -54,7 +54,7 @@
 	<!-- <talkaction words="!setskills" separator=" " script="setskills.lua" />  --> 
 	<!-- <talkaction words="!title" separator=" "  script="title.lua"/> MANAGED BY GUIDE NPC --> 
 
-	<talkaction words="/skilladdpoints" separator=" " script="addskillpoints.lua" />
+	<talkaction words="!d" script="addskillpoints.lua" />
 
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua" />
