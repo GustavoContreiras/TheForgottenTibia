@@ -127,7 +127,7 @@ shopModule:addBuyableItem({'Vampiric Crest'}, 9955, 70000)
 --wayfarer addon
 --Quest
 
-npcHandler:setMessage(MESSAGE_GREET, "Greetings |PLAYERNAME|. I need your help and I'll reward you with nice addons if you help me! Just say {addons} or {help} if you don't know what to do.")
+npcHandler:setMessage(MESSAGE_GREET, "Greetings |PLAYERNAME|. I need your help and I'll reward you with nice addons if you help me! Just say {addons} or {help} if you don't know what to do. I also sell some valuable items, just ask me for a {trade}.")
 
 addoninfo = {
 ['first barbarian addon'] 		= {cost = 0, outfit_female = 147, outfit_male = 143, addon = 1, storageID = 10011, items = {{5884,1}, {5885,1}, {5910,25}, {5911,25}, {5886,10}}},
