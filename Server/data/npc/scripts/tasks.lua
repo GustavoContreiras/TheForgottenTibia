@@ -109,7 +109,7 @@ function creatureSayCallback(cid, type, msg)
         npcHandler.topic[cid] = 0
     elseif msgcontains(msg, "yes") and npcHandler.topic[cid] == 2 then
         local task = monsters[xmsg[cid]]
-        if player:getStorageValue(task.mstorage) >= task.amount then
+        if player:getStorageValue(task.mstorage) >= (task.amount-1) then
             npcHandler:say("Good job, here is your reward!", cid)
             for count = 1, #task.items do
                 player:addItem(task.items[count].id, task.items[countg].count)
@@ -172,7 +172,7 @@ function creatureSayCallback(cid, type, msg)
         local text = ""
         for monster, task in pairs(monsters) do
             if player:getStorageValue(task.mstorage) < task.amount then
-                text = text ..monster .." ["..(player:getStorageValue(task.mstorage) + 1).."/"..task.amount.."]:\n  "..getItemsFromTable(task.items).."\n  "..task.exp.." experience\n  "..task.skillpoints.." skillpoits\n\n"
+                text = text ..monster .." ["..(player:getStorageValue(task.mstorage) + 1).."/"..task.amount.."]:\n  "..getItemsFromTable(task.items).."\n  "..task.exp.." experience\n  "..task.skillpoints.." skillpoints\n\n"
             else
                 text = text .. monster .." ["..task.amount.."/"..task.amount.."]: DONE\n\n"
             end
