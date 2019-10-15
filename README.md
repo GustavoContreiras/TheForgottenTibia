@@ -68,7 +68,7 @@ https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Running-the-server-t
 https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 
 - ### Compiling the client
-https://github.com/edubart/otclient/wiki/Compiling-on-Windows
+https://github.com/GustavoContreiras/TheForgottenTibia/wiki
 
 - ### Configuring ZNote AAC Website
 https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Configuring-ZNote-AAC-Website
