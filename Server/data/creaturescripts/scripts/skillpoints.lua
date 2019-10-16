@@ -64,27 +64,25 @@ end
  
 function onAdvance(player, skill, oldLevel, newLevel)
     if skill == SKILL_LEVEL then
-    	player:addSkillPointsOnLevelAdvance(oldLevel, newLevel)
+		if oldLevel == 1 or newLevel == 2 then
+				player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Close and open again skill window if you are having trouble to assign points.")
 
-	if oldLevel == 1 or newLevel == 2 then
-    		player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Close and open again skill window if you are having trouble to assign points.")
+		elseif oldLevel == 2 or newLevel == 3 then
+				player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Ctrl + click on an item and then choose 'Loot' to enable or disable auto-loot system.")
 
-	elseif oldLevel == 2 or newLevel == 3 then
-    		player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Ctrl + click on an item and then choose 'Loot' to enable or disable auto-loot system.")
+		elseif oldLevel == 3 or  newLevel == 4 then
+				player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Ctrl + click on on yourself and then choose 'Loot List' to see your current loot list.")
+			
+		elseif oldLevel == 7 or newLevel == 8 then
+			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Talk to The Oracle to go to the main island.")
 
-	elseif oldLevel == 3 or  newLevel == 4 then
-    		player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Ctrl + click on on yourself and then choose 'Loot List' to see your current loot list.")
-    	
-    	elseif oldLevel == 7 or newLevel == 8 then
-    		player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Talk to The Oracle to go to the main island.")
+		elseif newLevel == 19 then
+			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "This is your last chance to buy blessings for 200 gold coins each. Talk to Alice north from the temple if you want it.")
 
-        elseif newLevel == 19 then
-            player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "This is your last chance to buy blessings for 200 gold coins each. Talk to Alice north from the temple if you want it.")
-
-        elseif newLevel == 59 and player:getStorageValue (62492) ~= 0 then
-            player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "This is your last chance to use your free reset for skills. Talk to the Guider in Rhyves temple before getting level 60 if you want do do that.")
-    	end
-    end
+		elseif newLevel == 59 and player:getStorageValue (62492) ~= 0 then
+			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "This is your last chance to use your free reset for skills. Talk to the Guider in Rhyves temple before getting level 60 if you want do do that.")
+		end
+	end
     return true
 end
  
