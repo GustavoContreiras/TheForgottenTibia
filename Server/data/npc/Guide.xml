@@ -1,4 +1,4 @@
-<npc name="Guide" script="guide.lua" walkinterval="1500" speechbubble="3">
+<npc name="Guide" script="guide.lua" walkinterval="4000" speechbubble="3">
 	<look type="57" />
 	<parameters>
 		<parameter key="message_greet" value="Hello, |PLAYERNAME|, how can I {help} you?" />

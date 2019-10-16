@@ -437,7 +437,138 @@ function onClickApply()
 	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
 	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
 	
+	local playerLevel = player:getLevel()
+	
+	local maxMagic 		= 10
+	local maxVitality 	= 20
+	local maxStrenght 	= 20
+	local maxIntelligence = 20
+	local maxFaith 		= 20
+	local maxDexterity 	= 20
+	local maxDefence 	= 20
+	local maxEndurance 	= 20
+	
+	if (playerLevel >= 8) then
+		maxMagic 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ) * 0.5, playerLevel * 1.0 ) )
+		maxVitality 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxStrenght 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxIntelligence = math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxFaith 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxDexterity 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxDefence 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxEndurance 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+	end
+
+	if (playerLevel >= 72) then
+        maxMagic 		= 72
+		maxVitality 	= 90
+		maxStrenght 	= 90
+		maxIntelligence = 90
+		maxFaith 		= 90
+		maxDexterity 	= 90
+		maxDefence 		= 90
+		maxEndurance 	= 90
+	end
+
+	if (playerLevel > 90) then
+        maxMagic 		= 72 + playerLevel - 90
+		maxVitality 	= playerLevel
+		maxStrenght 	= playerLevel
+		maxIntelligence = playerLevel
+		maxFaith 		= playerLevel
+		maxDexterity 	= playerLevel
+		maxDefence 		= playerLevel
+		maxEndurance 	= playerLevel
+	end
+
+	if (playerLevel > 100) then
+        maxMagic 		= math.ceil(82 + (playerLevel - 100) / 2)
+		maxVitality 	= playerLevel
+		maxStrenght 	= playerLevel
+		maxIntelligence = playerLevel
+		maxFaith 		= playerLevel
+		maxDexterity 	= playerLevel
+		maxDefence 		= playerLevel
+		maxEndurance 	= playerLevel
+	end
+
+	if (playerLevel > 130) then
+		maxMagic 		= math.ceil(92 + (playerLevel - 100) / 2)
+		maxVitality 	= 130
+		maxStrenght 	= 130
+		maxIntelligence = 130
+		maxFaith 		= 130
+		maxDexterity 	= 130
+		maxDefence 		= 130
+		maxEndurance 	= 130
+	end
+	
+	local checks = true
+	local message = ""
+	
+	if (newMagic > maxMagic) then
+		message = "The maximum magic at your level is " .. maxMagic .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end
+	
+	if (newVitality > maxVitality) then
+		message = "The maximum vitality at your level is " .. maxVitality .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end 
+	
+	if (newStrenght > maxStrenght) then
+		message = "The maximum strenght at your level is " .. maxStrenght .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end 
+
+	if (newDefence > maxDefence) then
+		message = "The maximum defence at your level is " .. maxDefence .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end 
+	
+	if (newIntelligence > maxIntelligence) then
+		message = "The maximum intelligence at your level is " .. maxIntelligence .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end
+	
+	if (newFaith > maxFaith) then
+		message = "The maximum faith at your level is " .. maxFaith .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end
+	
+	if (newDexterity > maxDexterity) then
+		message = "The maximum dexterity at your level is " .. maxDexterity .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end
+	
+	if (newEndurance > maxEndurance) then
+		message = "The maximum endurance at your level is " .. maxEndurance .. ".";
+		print(message);
+		modules.game_textmessage.displayBroadcastMessage(message)
+		checks = false;
+	end
+
+	if (checks == false) then
+		return false;
+	end
+	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
+	
+	print('game_skills: applied skills')
 	
 	magicMinusButton:setVisible(false)
 	vitalityMinusButton:setVisible(false)
@@ -458,7 +589,6 @@ function onClickApply()
 	newEndurance = player:getBaseSkillLevel(Skill.Endurance)
 	
 	setExtraLabelsInvisible()
-	
 end
 
 function onClickAdd(id)
@@ -471,8 +601,8 @@ function onClickAdd(id)
 	if not player then
 		print('[onClickAdd] player == nil') 
 		return 
-	end
-			
+	end		
+	
 	if id == 'magiclevel' then
 		if newSkillPoints - 3 >= 0 then
 		
@@ -718,8 +848,32 @@ function onClickAdd(id)
 				newCapacityValueLabel:setText(newMaxCapacity / 100.0)
 				newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
 				newCapacityValueLabel:setVisible(true)
-			end			
+			end
 		end		
+	end
+	
+	if newSkillPoints >= 3 then
+		magicPlusButton:setVisible(true)
+	else
+		magicPlusButton:setVisible(false)
+	end
+	
+	if newSkillPoints >= 1 then
+		vitalityPlusButton:setVisible(true)
+		strenghtPlusButton:setVisible(true)
+		defencePlusButton:setVisible(true)
+		dexterityPlusButton:setVisible(true)
+		intelligencePlusButton:setVisible(true)
+		faithPlusButton:setVisible(true)
+		endurancePlusButton:setVisible(true)
+	else
+		vitalityPlusButton:setVisible(false)
+		strenghtPlusButton:setVisible(false)
+		defencePlusButton:setVisible(false)
+		dexterityPlusButton:setVisible(false)
+		intelligencePlusButton:setVisible(false)
+		faithPlusButton:setVisible(false)
+		endurancePlusButton:setVisible(false)
 	end
 end
 
@@ -733,7 +887,7 @@ function onClickRemove(id)
 	if not player then
 		print('[onClickRemove] player == nil') 
 		return 
-	end
+	end	
 			
 	if id == 'magiclevel' then
 		
@@ -1098,6 +1252,30 @@ function onClickRemove(id)
 			newCapacityValueLabel:setText(newMaxCapacity / 100.0)
 			newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
 		end			
+	end
+	
+	if newSkillPoints >= 3 then
+		magicPlusButton:setVisible(true)
+	else
+		magicPlusButton:setVisible(false)
+	end
+	
+	if newSkillPoints >= 1 then
+		vitalityPlusButton:setVisible(true)
+		strenghtPlusButton:setVisible(true)
+		defencePlusButton:setVisible(true)
+		dexterityPlusButton:setVisible(true)
+		intelligencePlusButton:setVisible(true)
+		faithPlusButton:setVisible(true)
+		endurancePlusButton:setVisible(true)
+	else
+		vitalityPlusButton:setVisible(false)
+		strenghtPlusButton:setVisible(false)
+		defencePlusButton:setVisible(false)
+		dexterityPlusButton:setVisible(false)
+		intelligencePlusButton:setVisible(false)
+		faithPlusButton:setVisible(false)
+		endurancePlusButton:setVisible(false)
 	end
 end
 
