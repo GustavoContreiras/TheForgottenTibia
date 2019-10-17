@@ -1,11 +1,13 @@
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local itemId = item:getId()
 	if table.contains(questDoors, itemId) then
-		if player:getStorageValue(item.actionid) ~= -1 then
-			item:transform(itemId + 1)
-			player:teleportTo(toPosition, true)
-		else
-			player:sendTextMessage(MESSAGE_INFO_DESCR, "The door seems to be sealed against unwanted intruders.")
+		if item.actionid ~= 13100 and item.actionid ~= 26100 and item.actionid ~= 27100 and item.actionid ~= 28100 then
+			if player:getStorageValue(item.actionid) ~= -1 then
+				item:transform(itemId + 1)
+				player:teleportTo(toPosition, true)
+			else
+				player:sendTextMessage(MESSAGE_INFO_DESCR, "The door seems to be sealed against unwanted intruders.")
+			end
 		end
 		return true
 	elseif table.contains(levelDoors, itemId) then
