@@ -13,10 +13,10 @@
 	<movevent event="StepIn" itemid="461" script="decay.lua" />
 	
 	<!--Svargrond Arena Quest-->
- 	<movevent event="StepIn" actionid="25100" script="svargrond arena_arenaEnter.lua" />
-	<movevent event="StepIn" actionid="25200" script="svargrond arena_arenaPit.lua" />
-	<movevent event="StepIn" actionid="25300" script="svargrond arena_arenaPit.lua" />
-	<movevent event="StepIn" fromuid="23201" touid="23203" script="svargrond arena_arenaTrophy.lua" />
+ 	<movevent event="StepIn" actionid="25100" script="svargrond_arena_arenaEnter.lua" />
+	<movevent event="StepIn" actionid="25200" script="svargrond_arena_arenaPit.lua" />
+	<movevent event="StepIn" actionid="25300" script="svargrond_arena_arenaPit.lua" />
+	<movevent event="StepIn" fromuid="23201" touid="23203" script="svargrond_arena_arenaTrophy.lua" />
 
 	<!-- (Depot & Level) tiles -->
 	<movevent event="StepIn" itemid="416" script="tiles.lua" />
