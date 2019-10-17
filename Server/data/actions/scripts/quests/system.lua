@@ -1,3 +1,9 @@
+local specialQuests = {
+	[26300] = SvargrondArena.Storages.RewardGreenhorn,
+	[27300] = SvargrondArena.Storages.RewardScrapper,
+	[28300] = SvargrondArena.Storages.RewardWarlord
+}
+
 local questsExperience = {
 	[2217] = 1 -- dummy values
 }

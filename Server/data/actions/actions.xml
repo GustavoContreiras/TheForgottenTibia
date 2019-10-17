@@ -29,6 +29,12 @@
 	<action actionid="1110" script="quests/bansheelever.lua" />
 	<action actionid="1111" script="quests/bansheelever.lua" />
 	<action actionid="1115" script="quests/annihilever.lua" />
+	
+	<!-- Svargrond Arena Quest-->
+	<action actionid="13100" script="quests/svargrond_arena_door.lua" />
+	<action actionid="26100" script="quests/svargrond_arena_door.lua" />
+	<action actionid="27100" script="quests/svargrond_arena_door.lua" />
+	<action actionid="28100" script="quests/svargrond_arena_door.lua" />
 
 	<!-- Custom Quest Chests -->
 	<action actionid="2001" script="quests/customquests.lua" />

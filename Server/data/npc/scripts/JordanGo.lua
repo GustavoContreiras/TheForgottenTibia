@@ -18,8 +18,20 @@ local function creatureSayCallback(cid, type, msg)
 		return false
 	end
 
-	if msgcontains(msg, "explore") or msgcontains(msg, "travel") or msgcontains(msg, "trip") or msgcontains(msg, "frost dragons") and npcHandler.topic[cid] == 0 then
+	if msgcontains(msg, "explore") or msgcontains(msg, "travel") or msgcontains(msg, "trip") then 
+		npcHandler:say('Do you want to go to the {Svargrond Arena} or to the {frost dragons}?', cid)
+	
+	elseif msgcontains(msg, "frost dragons") or msgcontains(msg, "frost") or msgcontains(msg, "dragons") then
 		destination[cid] = Position(32846, 31125, 7)
+		local player = Player(cid)
+		local destination = destination[cid]
+		npcHandler:releaseFocus(cid)
+		player:teleportTo(destination)
+		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+		destination:sendMagicEffect(CONST_ME_TELEPORT)
+		
+	elseif msgcontains(msg, "arena") then
+		destination[cid] = Position(32765, 31061, 7)
 		local player = Player(cid)
 		local destination = destination[cid]
 		npcHandler:releaseFocus(cid)

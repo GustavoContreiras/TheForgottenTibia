@@ -1,3 +1,36 @@
+-- ordered as in creaturescripts.xml
+local events = {
+	--'TutorialCockroach',
+	--'ElementalSpheresOverlords',
+	--'BigfootBurdenVersperoth',
+	--'BigfootBurdenWarzone',
+	--'BigfootBurdenWeeper',
+	--'BigfootBurdenWiggler',
+	'SvargrondArenaKill',
+	--'NewFrontierShardOfCorruption',
+	--'NewFrontierTirecz',
+	--'ServiceOfYalaharDiseasedTrio',
+	--'ServiceOfYalaharAzerus',
+	--'ServiceOfYalaharQuaraLeaders',
+	--'InquisitionBosses',
+	--'InquisitionUngreez',
+	--'KillingInTheNameOfKills',
+	--'MastersVoiceServants',
+	--'SecretServiceBlackKnight',
+	--'ThievesGuildNomad',
+	--'WotELizardMagistratus',
+	--'WotELizardNoble',
+	--'WotEKeeper',
+	--'WotEBosses',
+	--'WotEZalamon',
+	'PlayerDeath',
+	--'AdvanceSave',
+	--'AdvanceRookgaard',
+	--'PythiusTheRotten',
+	'DropLoot',
+	'Tasks'
+}
+
 function onLogin(player)
 	local loginStr = "Welcome to " .. configManager.getString(configKeys.SERVER_NAME) .. "!"
 	if player:getLastLoginSaved() <= 0 or player:getLevel() == 1 then
@@ -33,8 +66,9 @@ function onLogin(player)
 	end
 
 	-- Events
-	player:registerEvent("PlayerDeath")
-	player:registerEvent("DropLoot")
-	player:registerEvent("Tasks")
+	for i = 1, #events do
+		player:registerEvent(events[i])
+	end
+	
 	return true
 end
