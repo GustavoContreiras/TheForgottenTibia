@@ -357,8 +357,9 @@ class Game
 		void playerWriteItem(uint32_t playerId, uint32_t windowTextId, const std::string& text);
 		void playerBrowseField(uint32_t playerId, const Position& pos);
 		void playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_t index);
-		void playerSetNewSkills(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
+		void playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 								uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
+		uint32_t calculateTotalSkillPoints(uint32_t playerId);
 		void playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text);
 		void playerRequestTrade(uint32_t playerId, const Position& pos, uint8_t stackPos,
 		                        uint32_t tradePlayerId, uint16_t spriteId);
@@ -462,7 +463,7 @@ class Game
 		uint64_t getExperienceStage(uint32_t level);
 		uint64_t getPointsPerLevel(uint32_t level);
 		bool loadSkillsGain();
-		std::map<uint32_t, uint32_t> getSkillGains(uint32_t id);
+		std::unordered_map<std::string, uint32_t> getSkillGains(uint32_t id);
 
 		void loadMotdNum();
 		void saveMotdNum() const;
@@ -525,14 +526,14 @@ class Game
 		std::unordered_map<uint16_t, Item*> uniqueItems;
 		std::map<uint32_t, uint32_t> stages;
 		std::map<uint32_t, uint32_t> points;
-		std::map<uint32_t, uint32_t> skill_vitality;
-		std::map<uint32_t, uint32_t> skill_strenght;
-		std::map<uint32_t, uint32_t> skill_defence;
-		std::map<uint32_t, uint32_t> skill_dexterity;
-		std::map<uint32_t, uint32_t> skill_intelligence;
-		std::map<uint32_t, uint32_t> skill_faith;
-		std::map<uint32_t, uint32_t> skill_endurance;
-		std::map<uint32_t, uint32_t> skill_magic;
+		std::unordered_map<std::string, uint32_t> skillVitalityGains;
+		std::unordered_map<std::string, uint32_t> skillStrenghtGains;
+		std::unordered_map<std::string, uint32_t> skillDefenceGains;
+		std::unordered_map<std::string, uint32_t> skillDexterityGains;
+		std::unordered_map<std::string, uint32_t> skillIntelligenceGains;
+		std::unordered_map<std::string, uint32_t> skillFaithGains;
+		std::unordered_map<std::string, uint32_t> skillEnduranceGains;
+		std::unordered_map<std::string, uint32_t> skillMagicGains;
 
 
 		std::list<Item*> decayItems[EVENT_DECAY_BUCKETS];

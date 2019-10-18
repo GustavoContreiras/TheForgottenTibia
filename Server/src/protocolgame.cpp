@@ -421,7 +421,7 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0x1D: addGameTask(&Game::playerReceivePingBack, player->getID()); break;											//ClientPingBack
 		case 0x1E: addGameTask(&Game::playerReceivePing, player->getID()); break;												//ClientPing
 		case 0x32: parseExtendedOpcode(msg); break;																				//ClientExtendedOpcode
-		case 0x34: parseSetNewSkills(msg); break;																				//ClientSendSetNewSkills
+		case 0x34: parseSetSkillsRequest(msg); break;																				//ClientSendSetNewSkills
 		case 0x64: parseAutoWalk(msg); break;																					//ClientAutoWalk
 		case 0x65: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTH); break;										//ClientWalkNorth
 		case 0x66: addGameTask(&Game::playerMove, player->getID(), DIRECTION_EAST); break;										//ClientWalkEast
@@ -1167,7 +1167,7 @@ void ProtocolGame::parseSeekInContainer(NetworkMessage& msg)
 	addGameTask(&Game::playerSeekInContainer, player->getID(), containerId, index);
 }
 
-void ProtocolGame::parseSetNewSkills(NetworkMessage& msg)
+void ProtocolGame::parseSetSkillsRequest(NetworkMessage& msg)
 {
 	uint16_t magic = msg.get<uint16_t>();
 	uint16_t vitality = msg.get<uint16_t>();
@@ -1177,7 +1177,7 @@ void ProtocolGame::parseSetNewSkills(NetworkMessage& msg)
 	uint16_t intelligence = msg.get<uint16_t>();
 	uint16_t faith = msg.get<uint16_t>();
 	uint16_t endurance = msg.get<uint16_t>();
-	addGameTask(&Game::playerSetNewSkills, player->getID(), magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
+	addGameTask(&Game::playerSetSkillsRequest, player->getID(), magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 }
 
 // Send methods

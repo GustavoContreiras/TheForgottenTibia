@@ -2387,6 +2387,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "setSkills", LuaScriptInterface::luaPlayerSetSkills); //NEW! SKILLS POINTS SYSTEM
 	registerMethod("Player", "addSkillPoints", LuaScriptInterface::luaPlayerAddSkillPoints); //NEW! SKILLS POINTS SYSTEM
 
+	registerMethod("Player", "getTotalSkillPoints", LuaScriptInterface::luaPlayerGetTotalSkillPoints); //NEW! SKILLS POINTS SYSTEM
+
 	registerMethod("Player", "addAutoLootItem", LuaScriptInterface::luaPlayerAddAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
 	registerMethod("Player", "removeAutoLootItem", LuaScriptInterface::luaPlayerRemoveAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
 	registerMethod("Player", "getAutoLootItem", LuaScriptInterface::luaPlayerGetAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
@@ -9555,6 +9557,20 @@ int LuaScriptInterface::luaPlayerAddSkillPoints(lua_State* L)
 	else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+//NEW! SKILLS POINTS SYSTEM
+int LuaScriptInterface::luaPlayerGetTotalSkillPoints(lua_State* L)
+{
+	// player:getTotalSkillPoints()
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	lua_pushnumber(L, player->totalSkillPoints);
 	return 1;
 }
 

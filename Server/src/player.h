@@ -367,6 +367,9 @@ class Player final : public Creature, public Cylinder
 		uint32_t getSkillPoints() const {
 			return skillPoints;
 		}
+		uint32_t getTotalSkillPoints() const {
+			return totalSkillPoints;
+		}
 		void setSkillPoints(uint32_t value) {
 			skillPoints = value;
 		}
@@ -1166,6 +1169,7 @@ class Player final : public Creature, public Cylinder
 		bool addSkillPoints(uint16_t count);
 		bool setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
+		//uint32_t getTotalSkillPoints();
 
 		void refreshStats();
 
@@ -1309,6 +1313,7 @@ class Player final : public Creature, public Cylinder
 		int32_t idleTime = 0;
 
 		uint16_t skillPoints = 0;
+		uint16_t totalSkillPoints = 10;
 		uint16_t magLevel = 0;
 		uint16_t lastStatsTrainingTime = 0;
 		uint16_t staminaMinutes = 2520;
@@ -1322,6 +1327,7 @@ class Player final : public Creature, public Cylinder
 		uint8_t rodMaxDamageBonus = 0;
 		uint8_t walkSpeedBonus = 0;
 		uint8_t	attackSpeedBonus = 0;
+		bool isSetingSkills = false;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;

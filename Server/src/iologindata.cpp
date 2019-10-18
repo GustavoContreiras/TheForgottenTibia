@@ -235,7 +235,7 @@ bool IOLoginData::loadPlayerById(Player* player, uint32_t id)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `name`, `group_id`, `account_id`, `level`, `maxLevelReached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `skull`, `skulltime`, `lastlogout`, `blessings`, `balance`, `stamina`, `skill_points`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `id` = " << id;
+	query << "SELECT `id`, `name`, `group_id`, `account_id`, `level`, `maxLevelReached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `skull`, `skulltime`, `lastlogout`, `blessings`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `id` = " << id;
 	return loadPlayer(player, db.storeQuery(query.str()));
 }
 
@@ -243,7 +243,7 @@ bool IOLoginData::loadPlayerByName(Player* player, const std::string& name)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `name`, `group_id`, `account_id`, `sex`, `vocation`, `experience`, `level`, `maxLevelReached`, `maglevel`, `health`, `healthmax`, `blessings`, `mana`, `manamax`, `soul`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `posx`, `posy`, `posz`, `cap`, `lastlogin`, `lastlogout`, `lastip`, `conditions`, `skulltime`, `skull`, `town_id`, `balance`, `stamina`, `skill_points`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `name` = " << db.escapeString(name);
+	query << "SELECT `id`, `name`, `group_id`, `account_id`, `sex`, `vocation`, `experience`, `level`, `maxLevelReached`, `maglevel`, `health`, `healthmax`, `blessings`, `mana`, `manamax`, `soul`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `posx`, `posy`, `posz`, `cap`, `lastlogin`, `lastlogout`, `lastip`, `conditions`, `skulltime`, `skull`, `town_id`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `name` = " << db.escapeString(name);
 	return loadPlayer(player, db.storeQuery(query.str()));
 }
 
@@ -377,6 +377,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	player->staminaMinutes = result->getNumber<uint16_t>("stamina");
 
 	player->skillPoints = result->getNumber<uint16_t>("skill_points");
+	player->totalSkillPoints = result->getNumber<uint16_t>("skill_points_total") != NULL ? result->getNumber<uint16_t>("skill_points_total") : 10;
 
 	static const std::string skillNames[] = {"skill_fist", "skill_club", "skill_sword", "skill_axe", "skill_dist", "skill_shielding", "skill_fishing"};
 	static constexpr size_t size = sizeof(skillNames) / sizeof(std::string);
@@ -666,7 +667,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`maxLevelReached` = " << player->maxLevelReached << ',';
 	query << "`group_id` = " << player->group->id << ',';
 	query << "`vocation` = " << player->getVocationId() << ',';
-	query << "`health` = " << player->health << ',';
+	query << "`health` = " << ((player->health > 0) ? (player->health) : (80)) << ',';
 	query << "`healthmax` = " << player->healthMax << ',';
 	query << "`experience` = " << player->experience << ',';
 	query << "`lookbody` = " << static_cast<uint32_t>(player->defaultOutfit.lookBody) << ',';
@@ -676,7 +677,13 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`looktype` = " << player->defaultOutfit.lookType << ',';
 	query << "`lookaddons` = " << static_cast<uint32_t>(player->defaultOutfit.lookAddons) << ',';
 	query << "`maglevel` = " << player->magLevel << ',';
-	query << "`mana` = " << player->mana << ',';
+
+	if (player->mana < 0 || player->mana >= std::numeric_limits<uint16_t>::max()) {
+		query << "`mana` = " << 0 << ',';
+	} else {
+		query << "`mana` = " << player->mana << ',';
+	}
+	
 	query << "`manamax` = " << player->manaMax << ',';
 	query << "`soul` = " << static_cast<uint16_t>(player->soul) << ',';
 	query << "`town_id` = " << player->town->getID() << ',';
@@ -722,6 +729,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`stamina` = " << player->getStaminaMinutes() << ',';
 
 	query << "`skill_points` = " << player->getSkillPoints() << ',';
+	query << "`skill_points_total` = " << player->getTotalSkillPoints() << ',';
 	query << "`skill_fist` = " << player->skills[SKILL_VITALITY].level << ',';
 	query << "`skill_club` = " << player->skills[SKILL_STRENGHT].level << ',';
 	query << "`skill_sword` = " << player->skills[SKILL_FAITH].level << ',';
