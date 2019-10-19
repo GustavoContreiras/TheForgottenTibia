@@ -120,6 +120,7 @@ function creatureSayCallback(cid, type, msg)
             player:setStorageValue(x.storage, 2)
             player:setStorageValue(storage, -1)
             player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+	    npcHandler:releaseFocus(cid)
         else
             npcHandler:say("You didn't kill them all, you still need to kill "..x.amount -(player:getStorageValue(x.mstorage) + 1).." "..xmsg[cid]..".", cid)
         end
