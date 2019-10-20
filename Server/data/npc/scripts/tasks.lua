@@ -117,6 +117,7 @@ function creatureSayCallback(cid, type, msg)
             end
             player:addExperience(x.exp)
             player:addSkillPoints(x.skillpoints)
+	    player:addSkillPointsTotal(x.skillpoints)
             player:setStorageValue(x.storage, 2)
             player:setStorageValue(storage, -1)
             player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)

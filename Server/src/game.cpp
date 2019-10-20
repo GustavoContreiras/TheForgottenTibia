@@ -4835,17 +4835,17 @@ uint64_t Game::getPointsPerLevel(uint32_t level)
 	return points[level];
 }
 
-std::unordered_map<std::string, uint32_t> Game::getSkillGains(uint32_t id)
+std::unordered_map<std::string, uint32_t> Game::getSkillInfo(uint32_t id)
 {
 	switch (id) {
-		case SKILL_VITALITY: return skillVitalityGains;
-		case SKILL_STRENGHT: return skillStrenghtGains;
-		case SKILL_DEFENCE: return skillDefenceGains;
-		case SKILL_DEXTERITY: return skillDexterityGains;
-		case SKILL_INTELLIGENCE: return skillIntelligenceGains;
-		case SKILL_FAITH: return skillFaithGains;
-		case SKILL_ENDURANCE: return skillEnduranceGains;
-		case SKILL_MAGLEVEL: return skillMagicGains;
+		case SKILL_VITALITY: return skillVitalityInfo;
+		case SKILL_STRENGHT: return skillStrenghtInfo;
+		case SKILL_DEFENCE: return skillDefenceInfo;
+		case SKILL_DEXTERITY: return skillDexterityInfo;
+		case SKILL_INTELLIGENCE: return skillIntelligenceInfo;
+		case SKILL_FAITH: return skillFaithInfo;
+		case SKILL_ENDURANCE: return skillEnduranceInfo;
+		case SKILL_MAGLEVEL: return skillMagicInfo;
 	}
 
 	std::unordered_map<std::string, uint32_t> nullMap;
@@ -5006,99 +5006,99 @@ bool Game::loadSkillsGain()
 
 		switch (id) {
 			case SKILL_VITALITY:
-				skillVitalityGains["cost"] = cost;
-				skillVitalityGains["health"] = health;
-				skillVitalityGains["mana"] = mana;
-				skillVitalityGains["soul"] = soul;
-				skillVitalityGains["cap"] = cap;
-				skillVitalityGains["walkSpeed"] = walkSpeed;
-				skillVitalityGains["attackSpeed"] = attackSpeed;
-				skillVitalityGains["wand"] = wandMaxDamage;
-				skillVitalityGains["rod"] = rodMaxDamage;
+				skillVitalityInfo["cost"] = cost;
+				skillVitalityInfo["health"] = health;
+				skillVitalityInfo["mana"] = mana;
+				skillVitalityInfo["soul"] = soul;
+				skillVitalityInfo["cap"] = cap;
+				skillVitalityInfo["walkSpeed"] = walkSpeed;
+				skillVitalityInfo["attackSpeed"] = attackSpeed;
+				skillVitalityInfo["wand"] = wandMaxDamage;
+				skillVitalityInfo["rod"] = rodMaxDamage;
 				break;
 
 			case SKILL_STRENGHT:
-				skillStrenghtGains["cost"] = cost;
-				skillStrenghtGains["health"] = health;
-				skillStrenghtGains["mana"] = mana;
-				skillStrenghtGains["soul"] = soul;
-				skillStrenghtGains["cap"] = cap;
-				skillStrenghtGains["walkSpeed"] = walkSpeed;
-				skillStrenghtGains["attackSpeed"] = attackSpeed;
-				skillStrenghtGains["wand"] = wandMaxDamage;
-				skillStrenghtGains["rod"] = rodMaxDamage;
+				skillStrenghtInfo["cost"] = cost;
+				skillStrenghtInfo["health"] = health;
+				skillStrenghtInfo["mana"] = mana;
+				skillStrenghtInfo["soul"] = soul;
+				skillStrenghtInfo["cap"] = cap;
+				skillStrenghtInfo["walkSpeed"] = walkSpeed;
+				skillStrenghtInfo["attackSpeed"] = attackSpeed;
+				skillStrenghtInfo["wand"] = wandMaxDamage;
+				skillStrenghtInfo["rod"] = rodMaxDamage;
 				break;	
 
 			case SKILL_DEFENCE:
-				skillDefenceGains["cost"] = cost;
-				skillDefenceGains["health"] = health;
-				skillDefenceGains["mana"] = mana;
-				skillDefenceGains["soul"] = soul;
-				skillDefenceGains["cap"] = cap;
-				skillDefenceGains["walkSpeed"] = walkSpeed;
-				skillDefenceGains["attackSpeed"] = attackSpeed;
-				skillDefenceGains["wand"] = wandMaxDamage;
-				skillDefenceGains["rod"] = rodMaxDamage;
+				skillDefenceInfo["cost"] = cost;
+				skillDefenceInfo["health"] = health;
+				skillDefenceInfo["mana"] = mana;
+				skillDefenceInfo["soul"] = soul;
+				skillDefenceInfo["cap"] = cap;
+				skillDefenceInfo["walkSpeed"] = walkSpeed;
+				skillDefenceInfo["attackSpeed"] = attackSpeed;
+				skillDefenceInfo["wand"] = wandMaxDamage;
+				skillDefenceInfo["rod"] = rodMaxDamage;
 				break;
 
 			case SKILL_DEXTERITY:
-				skillDexterityGains["cost"] = cost;
-				skillDexterityGains["health"] = health;
-				skillDexterityGains["mana"] = mana;
-				skillDexterityGains["soul"] = soul;
-				skillDexterityGains["cap"] = cap;
-				skillDexterityGains["walkSpeed"] = walkSpeed;
-				skillDexterityGains["attackSpeed"] = attackSpeed;
-				skillDexterityGains["wand"] = wandMaxDamage;
-				skillDexterityGains["rod"] = rodMaxDamage;
+				skillDexterityInfo["cost"] = cost;
+				skillDexterityInfo["health"] = health;
+				skillDexterityInfo["mana"] = mana;
+				skillDexterityInfo["soul"] = soul;
+				skillDexterityInfo["cap"] = cap;
+				skillDexterityInfo["walkSpeed"] = walkSpeed;
+				skillDexterityInfo["attackSpeed"] = attackSpeed;
+				skillDexterityInfo["wand"] = wandMaxDamage;
+				skillDexterityInfo["rod"] = rodMaxDamage;
 				break;
 
 			case SKILL_INTELLIGENCE:
-				skillIntelligenceGains["cost"] = cost;
-				skillIntelligenceGains["health"] = health;
-				skillIntelligenceGains["mana"] = mana;
-				skillIntelligenceGains["soul"] = soul;
-				skillIntelligenceGains["cap"] = cap;
-				skillIntelligenceGains["walkSpeed"] = walkSpeed;
-				skillIntelligenceGains["attackSpeed"] = attackSpeed;
-				skillIntelligenceGains["wand"] = wandMaxDamage;
-				skillIntelligenceGains["rod"] = rodMaxDamage;
+				skillIntelligenceInfo["cost"] = cost;
+				skillIntelligenceInfo["health"] = health;
+				skillIntelligenceInfo["mana"] = mana;
+				skillIntelligenceInfo["soul"] = soul;
+				skillIntelligenceInfo["cap"] = cap;
+				skillIntelligenceInfo["walkSpeed"] = walkSpeed;
+				skillIntelligenceInfo["attackSpeed"] = attackSpeed;
+				skillIntelligenceInfo["wand"] = wandMaxDamage;
+				skillIntelligenceInfo["rod"] = rodMaxDamage;
 				break;
 
 			case SKILL_FAITH:
-				skillFaithGains["cost"] = cost;
-				skillFaithGains["health"] = health;
-				skillFaithGains["mana"] = mana;
-				skillFaithGains["soul"] = soul;
-				skillFaithGains["cap"] = cap;
-				skillFaithGains["walkSpeed"] = walkSpeed;
-				skillFaithGains["attackSpeed"] = attackSpeed;
-				skillFaithGains["wand"] = wandMaxDamage;
-				skillFaithGains["rod"] = rodMaxDamage;
+				skillFaithInfo["cost"] = cost;
+				skillFaithInfo["health"] = health;
+				skillFaithInfo["mana"] = mana;
+				skillFaithInfo["soul"] = soul;
+				skillFaithInfo["cap"] = cap;
+				skillFaithInfo["walkSpeed"] = walkSpeed;
+				skillFaithInfo["attackSpeed"] = attackSpeed;
+				skillFaithInfo["wand"] = wandMaxDamage;
+				skillFaithInfo["rod"] = rodMaxDamage;
 				break;
 
 			case SKILL_ENDURANCE:
-				skillEnduranceGains["cost"] = cost;
-				skillEnduranceGains["health"] = health;
-				skillEnduranceGains["mana"] = mana;
-				skillEnduranceGains["soul"] = soul;
-				skillEnduranceGains["cap"] = cap;
-				skillEnduranceGains["walkSpeed"] = walkSpeed;
-				skillEnduranceGains["attackSpeed"] = attackSpeed;
-				skillEnduranceGains["wand"] = wandMaxDamage;
-				skillEnduranceGains["rod"] = rodMaxDamage;
+				skillEnduranceInfo["cost"] = cost;
+				skillEnduranceInfo["health"] = health;
+				skillEnduranceInfo["mana"] = mana;
+				skillEnduranceInfo["soul"] = soul;
+				skillEnduranceInfo["cap"] = cap;
+				skillEnduranceInfo["walkSpeed"] = walkSpeed;
+				skillEnduranceInfo["attackSpeed"] = attackSpeed;
+				skillEnduranceInfo["wand"] = wandMaxDamage;
+				skillEnduranceInfo["rod"] = rodMaxDamage;
 				break;
 
 			case 7:
-				skillMagicGains["cost"] = cost;
-				skillMagicGains["health"] = health;
-				skillMagicGains["mana"] = mana;
-				skillMagicGains["soul"] = soul;
-				skillMagicGains["cap"] = cap;
-				skillMagicGains["walkSpeed"] = walkSpeed;
-				skillMagicGains["attackSpeed"] = attackSpeed;
-				skillMagicGains["wand"] = wandMaxDamage;
-				skillMagicGains["rod"] = rodMaxDamage;
+				skillMagicInfo["cost"] = cost;
+				skillMagicInfo["health"] = health;
+				skillMagicInfo["mana"] = mana;
+				skillMagicInfo["soul"] = soul;
+				skillMagicInfo["cap"] = cap;
+				skillMagicInfo["walkSpeed"] = walkSpeed;
+				skillMagicInfo["attackSpeed"] = attackSpeed;
+				skillMagicInfo["wand"] = wandMaxDamage;
+				skillMagicInfo["rod"] = rodMaxDamage;
 				break;
 		}
 	}

@@ -3318,8 +3318,8 @@
 		<attribute key="attack" value="30" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2378" article="a" name="battle axe">
 		<attribute key="weight" value="5000" />
@@ -3327,8 +3327,8 @@
 		<attribute key="attack" value="25" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2379" article="a" name="dagger">
 		<attribute key="weight" value="950" />
@@ -3348,8 +3348,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2382" article="a" name="club">
 		<attribute key="weight" value="2500" />
@@ -3391,8 +3391,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2388" article="a" name="hatchet">
 		<attribute key="weight" value="3500" />
@@ -3415,8 +3415,8 @@
 		<attribute key="attack" value="55" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitchance" value="25" />
-		<attribute key="criticalhitamount" value="100" />
+		<!--<attribute key="criticalhitchance" value="25" />-->
+		<!--<attribute key="criticalhitamount" value="100" />-->
 	</item>
 	<item id="2391" article="a" name="war hammer">
 		<attribute key="weight" value="8500" />
@@ -3424,8 +3424,8 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2392" article="a" name="fire sword">
 		<attribute key="description" value="The blade is a magic flame." />
@@ -3443,8 +3443,8 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitchance" value="25" />
-		<attribute key="criticalhitamount" value="100" />
+		<!--<attribute key="criticalhitchance" value="25" />-->
+		<!--<attribute key="criticalhitamount" value="100" />-->
 	</item>
 	<item id="2394" article="a" name="morning star">
 		<attribute key="weight" value="5400" />
@@ -3502,8 +3502,8 @@
 		<attribute key="attack" value="10" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2402" article="a" name="silver dagger">
 		<attribute key="weight" value="1020" />
@@ -3550,8 +3550,8 @@
 		<attribute key="attack" value="53" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2409" article="a" name="serpent sword">
 		<attribute key="weight" value="4100" />
@@ -3589,8 +3589,8 @@
 		<attribute key="attack" value="26" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2414" article="a" name="dragon lance">
 		<attribute key="description" value="The extraordinary sharp blade penetrates every armor." />
@@ -3599,8 +3599,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2415" article="a" name="great axe">
 		<attribute key="description" value="A masterpiece of a dwarven smith." />
@@ -3609,8 +3609,8 @@
 		<attribute key="attack" value="52" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2416" article="a" name="crowbar">
 		<attribute key="description" value="It may come in handy sometime." />
@@ -3679,8 +3679,8 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2426" article="a" name="naginata">
 		<attribute key="weight" value="7800" />
@@ -3688,8 +3688,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2427" article="a" name="guardian halberd">
 		<attribute key="weight" value="11000" />
@@ -3697,8 +3697,8 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2428" article="an" name="orcish axe">
 		<attribute key="weight" value="4500" />
@@ -3792,8 +3792,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2441" article="a" name="daramian axe">
 		<attribute key="weight" value="4100" />
@@ -3813,8 +3813,8 @@
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2444" article="a" name="hammer of wrath">
 		<attribute key="description" value="A giant is said to have forged this hammer to take revenge for the death of his brother." />
@@ -3823,8 +3823,8 @@
 		<attribute key="attack" value="48" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2445" article="a" name="crystal mace">
 		<attribute key="weight" value="8000" />
@@ -3846,8 +3846,8 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2448" article="a" name="studded club">
 		<attribute key="description" value="It has been reinforced with iron." />
@@ -3883,8 +3883,8 @@
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2453" article="an" name="arcane staff">
 		<attribute key="description" value="It is enchanted with ancient magic that renders a weak staff into a powerful weapon." />
@@ -3893,8 +3893,8 @@
 		<attribute key="attack" value="50" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2454" article="a" name="war axe">
 		<attribute key="weight" value="6150" />
@@ -3902,8 +3902,8 @@
 		<attribute key="attack" value="48" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2455" article="a" name="crossbow">
 		<attribute key="weight" value="4000" />
@@ -4423,8 +4423,8 @@
 		<attribute key="attack" value="8" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="2551" article="a" name="broom">
 		<attribute key="weight" value="1100" />
@@ -7549,8 +7549,8 @@
 		<attribute key="attack" value="28" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="3965" article="a" name="hunting spear">
 		<attribute key="weight" value="2200" />
@@ -11617,8 +11617,8 @@
 		<attribute key="attack" value="50" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="6529" article="an" name="infernal bolt">
 		<attribute key="weight" value="90" />
@@ -11707,8 +11707,8 @@
 		<attribute key="attack" value="50" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item fromid="6554" toid="6555" name="" />
 	<item fromid="6556" toid="6557" article="a" name="tic-tac-toe token">
@@ -12715,8 +12715,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="description" value="Barbarian women are said to use it for conjuring beasts." />
 	</item>
 	<item id="7380" article="a" name="headchopper">
@@ -12725,8 +12725,8 @@
 		<attribute key="defense" value="20" />
 		<attribute key="attack" value="42" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weaponType" value="axe" />
 	</item>
 	<item id="7381" article="a" name="mammoth whopper">
@@ -12742,8 +12742,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7383" article="a" name="relic sword">
 		<attribute key="weight" value="4800" />
@@ -12773,8 +12773,8 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7387" article="a" name="diamond sceptre">
 		<attribute key="weight" value="1500" />
@@ -12812,8 +12812,8 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7392" article="an" name="orcish maul">
 		<attribute key="weight" value="5400" />
@@ -12821,8 +12821,8 @@
 		<attribute key="attack" value="42" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="description" value="This club is only granted to a greenhorn of the Svargrond arena." />
 	</item>
 	<item id="7393" article="a" name="demon trophy">
@@ -12858,8 +12858,8 @@
 		<attribute key="attack" value="44" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7403" article="a" name="berserker">
 		<attribute key="weight" value="13000" />
@@ -12867,8 +12867,8 @@
 		<attribute key="attack" value="48" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7404" article="an" name="assassin dagger">
 		<attribute key="weight" value="1700" />
@@ -12883,8 +12883,8 @@
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7406" article="a" name="blacksteel sword">
 		<attribute key="description" value="This sword is only granted to a greenhorn of the Svargrond arena." />
@@ -12893,8 +12893,8 @@
 		<attribute key="attack" value="42" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7407" article="a" name="haunted blade">
 		<attribute key="weight" value="3100" />
@@ -12902,8 +12902,8 @@
 		<attribute key="attack" value="40" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7408" article="a" name="wyvern fang">
 		<attribute key="weight" value="2000" />
@@ -12945,8 +12945,8 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7414" article="a" name="abyss hammer">
 		<attribute key="description" value="Floating stones form the tip of this strange weapon, held in place by unspeakable magic." />
@@ -12955,8 +12955,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7415" article="a" name="cranial basher">
 		<attribute key="description" value="This club is only granted to a scrapper of the Svargrond arena." />
@@ -13020,8 +13020,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7424" article="a" name="lunar staff">
 		<attribute key="weight" value="3800" />
@@ -13029,8 +13029,8 @@
 		<attribute key="attack" value="40" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7425" article="a" name="taurus mace">
 		<attribute key="weight" value="5100" />
@@ -13038,8 +13038,8 @@
 		<attribute key="attack" value="30" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7426" article="an" name="amber staff">
 		<attribute key="weight" value="3500" />
@@ -13047,8 +13047,8 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7427" article="a" name="chaos mace">
 		<attribute key="description" value="Only those who have descended to the deepest depths may wield this hammer without it cursing them." />
@@ -13057,8 +13057,8 @@
 		<attribute key="attack" value="44" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7428" article="a" name="bonebreaker">
 		<attribute key="description" value="This weapon has to be swung in both hands and requires a lot of strength." />
@@ -13067,8 +13067,8 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7429" article="a" name="blessed sceptre">
 		<attribute key="description" value="This spectre is only granted to a warlord of the Svarground arena." />
@@ -13127,8 +13127,8 @@
 		<attribute key="attack" value="44" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7437" article="a" name="sapphire hammer">
 		<attribute key="description" value="A beautiful gem is embedded in this weapon." />
@@ -13186,8 +13186,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7450" article="a" name="hammer of prophecy">
 		<attribute key="weight" value="11000" />
@@ -13195,8 +13195,8 @@
 		<attribute key="attack" value="52" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7451" article="a" name="shadow sceptre">
 		<attribute key="weight" value="4100" />
@@ -13205,8 +13205,8 @@
 		<attribute key="weaponType" value="club" />
 	</item>
 	<item id="7452" article="a" name="spiked squelcher">
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weight" value="6800" />
 		<attribute key="defense" value="21" />
 		<attribute key="attack" value="41" />
@@ -13219,8 +13219,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7454" article="a" name="glorious axe">
 		<attribute key="weight" value="9500" />
@@ -13228,8 +13228,8 @@
 		<attribute key="attack" value="40" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="7455" article="a" name="mythril axe">
 		<attribute key="weight" value="5500" />
@@ -13866,8 +13866,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -13879,8 +13879,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -13925,8 +13925,8 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="8" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -13938,8 +13938,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -13984,8 +13984,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -13997,8 +13997,8 @@
 		<attribute key="attack" value="36" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementFire" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14055,8 +14055,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14068,8 +14068,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14114,8 +14114,8 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="8" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14127,8 +14127,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14173,8 +14173,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14186,8 +14186,8 @@
 		<attribute key="attack" value="36" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementIce" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14557,8 +14557,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14570,8 +14570,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14616,8 +14616,8 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="8" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14629,8 +14629,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14675,8 +14675,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14688,8 +14688,8 @@
 		<attribute key="attack" value="36" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14734,8 +14734,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14747,8 +14747,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14793,8 +14793,8 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="8" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14806,8 +14806,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14852,8 +14852,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="7" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -14865,8 +14865,8 @@
 		<attribute key="attack" value="36" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEnergy" value="9" />
 		<attribute key="charges" value="1000" />
 		<attribute key="showcharges" value="1" />
@@ -16446,8 +16446,8 @@
 		<attribute key="attack" value="53" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="8927" article="a" name="dark trinity mace">
 		<attribute key="weight" value="9900" />
@@ -16469,8 +16469,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="8930" article="an" name="emerald sword">
 		<attribute key="weight" value="4100" />
@@ -16492,8 +16492,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="8933" name="remains of an earth elemental">
 		<attribute key="weight" value="50000" />
@@ -18725,8 +18725,8 @@
 		<attribute key="attack" value="16" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="10302" article="a" name="club of the fury">
 		<attribute key="description" value="It's ready to unleash a fury's wrath on its enemies." />
@@ -18742,8 +18742,8 @@
 		<attribute key="attack" value="17" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="10304" article="a" name="poet's fencing quill">
 		<attribute key="description" value="This feather is mightier than a sword." />
@@ -20159,8 +20159,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="11306" article="a" name="sai">
 		<attribute key="weight" value="5000" />
@@ -20168,8 +20168,8 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="11307" article="a" name="Zaoan sword">
 		<attribute key="weight" value="4900" />
@@ -20184,8 +20184,8 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="11309" article="a" name="twin hooks">
 		<attribute key="weight" value="5000" />
@@ -20193,8 +20193,8 @@
 		<attribute key="attack" value="32" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="11310" article="a" name="dead wailing widow">
 		<attribute key="containerSize" value="10" />
@@ -20261,8 +20261,8 @@
 		<attribute key="attack" value="37" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weight" value="8700" />
 	</item>
 	<item id="11324" article="a" name="shaggy tail">
@@ -21467,8 +21467,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="12614" name="draken sulphur">
 		<attribute key="weight" value="68" />
@@ -22875,8 +22875,8 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="13839" article="a" name="dead deepling scout">
 		<attribute key="weight" value="26000" />
@@ -24013,8 +24013,8 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item fromid="15401" toid="15402" name="shallow water" />
 	<item id="15403" article="a" name="necklace of the deep">
@@ -24216,8 +24216,8 @@
 		<attribute key="defense" value="11" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="15455" article="a" name="deepling claw">
 		<attribute key="weight" value="180" />
@@ -26811,8 +26811,8 @@
 		<attribute key="defense" value="17" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="20109" article="a" name="buckle">
 		<attribute key="weight" value="7500" />
@@ -29930,8 +29930,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22402" article="a" name="umbral slayer">
 		<attribute key="weight" value="9500" />
@@ -29939,8 +29939,8 @@
 		<attribute key="attack" value="52" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22403" article="a" name="umbral master slayer">
 		<attribute key="weight" value="9000" />
@@ -29949,8 +29949,8 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="skillSword" value="3" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="skillSword" value="3" />
 	</item>
 	<item id="22404" article="a" name="crude umbral axe">
@@ -29981,8 +29981,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22408" article="a" name="umbral chopper">
 		<attribute key="weight" value="11500" />
@@ -29990,8 +29990,8 @@
 		<attribute key="attack" value="52" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22409" article="a" name="umbral master chopper">
 		<attribute key="weight" value="11000" />
@@ -30000,8 +30000,8 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="skillAxe" value="3" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22410" article="a" name="crude umbral mace">
 		<attribute key="weight" value="9000" />
@@ -30031,8 +30031,8 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22414" article="a" name="umbral hammer">
 		<attribute key="weight" value="16500" />
@@ -30040,8 +30040,8 @@
 		<attribute key="attack" value="53" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22415" article="a" name="umbral master hammer">
 		<attribute key="weight" value="16000" />
@@ -30050,8 +30050,8 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="skillClub" value="3" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 	</item>
 	<item id="22416" article="a" name="crude umbral bow">
 		<attribute key="weight" value="5000" />
@@ -31185,8 +31185,8 @@
 		<attribute key="attack" value="47" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weight" value="8500" />
 	</item>
 	<item id="23545" article="a" name="mino lance">
@@ -31207,8 +31207,8 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weight" value="8200" />
 	</item>
 	<item id="23548" article="a" name="cowtana">
@@ -31225,8 +31225,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="26" />
 		<attribute key="charges" value="2" />
 		<attribute key="weight" value="1900" />
@@ -31237,8 +31237,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="26" />
 		<attribute key="charges" value="2" />
 		<attribute key="weight" value="1900" />
@@ -31249,8 +31249,8 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="elementEarth" value="26" />
 		<attribute key="charges" value="2" />
 		<attribute key="weight" value="1900" />
@@ -31358,8 +31358,8 @@
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
-		<attribute key="criticalhitamount" value="100" />
-		<attribute key="criticalhitchance" value="25" />
+		<!--<attribute key="criticalhitamount" value="100" />-->
+		<!--<attribute key="criticalhitchance" value="25" />-->
 		<attribute key="weight" value="9600" />
 	</item>
 	<item id="23662" article="a" name="juicy roots">

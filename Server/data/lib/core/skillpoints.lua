@@ -29,7 +29,7 @@ end
 function Player:sendSkillPointsTutorialOneHandedMeleeWindow()
 	self:registerEvent("skillPoints_tutorialOneHandedMelee")
 	local title = "One-Handed Melee Weapons"
- 	local message = "One-handed melee weapons are based 100% on strenght skill.\n\nYou can use them with a shield, like the classic gameplay, or with another melee or one-handed distance weapon, then you will be in dual wield mode that fixes your attack speed in 200% but downgrades your weapon attack to 75%.\n\nShields are based 100% on defence skill.\n\n"
+ 	local message = "One-handed melee weapons are based 100% on strenght skill.\n\nYou can use them with a shield, like the classic gameplay, or with another melee or one-handed distance weapon, then you will be in dual wield mode that fixes your attack speed in 200% but downgrades your weapon attack to 90%.\n\nDefence skill just works if you are wearing a shield and uses 100% of its value.\n\n"
     local window = ModalWindow(4872, title, message)
     window:addButton(1, "Advance")   
     window:setDefaultEnterButton(1)
@@ -53,7 +53,7 @@ end
 function Player:sendSkillPointsTutorialOneHandedDistanceWindow()
 	self:registerEvent("skillPoints_tutorialOneHandedDistance")
 	local title = "One-Handed Distance Weapons"
- 	local message = "One-handed distance weapons are based 100% on dexterity skill.\n\nIf you want to play as an one-handed ranger that uses a shield, your main skills will be dexterity and defence.\n"
+ 	local message = "One-handed distance weapons uses 100% of your dexterity skill.\n\nIf you want to play as an one-handed ranger that uses a shield, your main skills will be dexterity and defence.\n"
     local window = ModalWindow(4874, title, message)
     window:addButton(1, "Advance")   
     window:setDefaultEnterButton(1)
@@ -65,7 +65,7 @@ end
 function Player:sendSkillPointsTutorialTwoHandedDistanceWindow()
 	self:registerEvent("skillPoints_tutorialTwoHandedDistance")
 	local title = "Two-Handed Distance Weapons"
- 	local message = "Two-handed distance weapons are based 75% on dexterity and 50% on strenght skill.\n\nIf you want to play as a two-handed ranger, they will be your main skills.\n"
+ 	local message = "Two-handed distance weapons uses 75% of your dexterity and 75% of your strenght skill.\n\nIf you want to play as a two-handed ranger, your main skills will be dexterity and strenght.\n"
     local window = ModalWindow(4875, title, message)
     window:addButton(1, "Advance")   
     window:setDefaultEnterButton(1)
@@ -89,7 +89,7 @@ end
 function Player:sendSkillPointsTutorialNotesWindow()
 	self:registerEvent("skillPoints_tutorialNotes")
 	local title = "Notes"
- 	local message = "From level 1 to 8, you will receive 2 points per level.\nFrom level 8 to 40, you will receive 4 points per level.\nFrom level 40 to 60, you will receive 3 points per level.\nFrom level 60 to 80, you will receive 2 points per level.\nFrom level 80 to 100, you will receive 1 point per level.\nAfter level 100, you will receive 1 point each 2 levels you get.\n\nYou will start in the beginner island and, when you reach level 8, you will have to talk to The Oracle to reborn in Rhyves.\n\nSome quest items are delivery directly to your special depot localized beside the normal depot in Rhyves.\n\nThere is a Guide NPC in the temple of Rhyves that can reset your skills and give you some tips.\nThe first reset is for free if you didn't reach level 60 yet, but after that it will cost a value based on your level.\n\nThere are new stats available in the skill panel: walk speed and attack speed.\n\nThe donkey mount gives +3 speed and can be get by talking to Palomino in the south gate of Rhyves.\n\n\n\n"
+ 	local message = "From level 1 to 7, you will receive 2 points per level.\nFrom level 8 to 39, you will receive 4 points per level.\nFrom level 40 to 59, you will receive 3 points per level.\nFrom level 60 to 79, you will receive 2 points per level.\nAfter level 80, you will receive 1 point per level.\n\nYou will start in the beginner island and, when you reach level 8, you will have to talk to The Oracle to reborn in Rhyves.\n\nThere is a Guide NPC in the temple of Rhyves that can reset your skills and give you some tips.\nThe first reset is for free, but after that it will cost a value based on your level.\n\nThere are new stats available in the skill panel: walk speed and attack speed.\n\nThe donkey mount gives +3 speed and can be get by talking to Palomino in the south gate of Rhyves.\n\n\n\n"
     local window = ModalWindow(4877, title, message)
     window:addButton(1, "Ok")   
     window:setDefaultEnterButton(1)

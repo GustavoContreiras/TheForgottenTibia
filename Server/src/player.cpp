@@ -439,9 +439,10 @@ bool Player::setTitleDescription(PlayerTitle_t titleId)
 	return true;
 }
 
+//CHANGED TO MAKE DEFENCE SKILL WORK WITH WEAPON
 int32_t Player::getDefense() const
 {
-	int32_t defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
+	int32_t defenseSkill;
 	int32_t defenseValue = 7;
 	const Item* weapon;
 	const Item* shield;
@@ -449,12 +450,12 @@ int32_t Player::getDefense() const
 
 	if (weapon) {
 		defenseValue = weapon->getDefense() + weapon->getExtraDefense();
-		defenseSkill = getWeaponSkill(weapon);
+		defenseSkill = getSkillLevel(SKILL_DEFENCE); // original: getWeaponSkill(weapon);
 	}
 
 	if (shield) {
 		defenseValue = weapon != nullptr ? shield->getDefense() + weapon->getExtraDefense() : shield->getDefense();
-		defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
+		defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_DEFENCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
 	}
 
 	if (defenseSkill == 0) {
@@ -553,6 +554,18 @@ bool Player::addSkillPoints(uint16_t count)
 }
 
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
+bool Player::addSkillPointsTotal(uint16_t count)
+{
+	totalSkillPoints += count;
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
+			break;
+		}
+	}
+	return true;
+}
+
+//CHANGED! SKILL POINTS SYSTEM - STATS GAIN
 bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
@@ -562,14 +575,14 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 	isSetingSkills = true;
 
-	std::unordered_map<std::string, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);	
-	std::unordered_map<std::string, uint32_t> vitalityGains = g_game.getSkillGains(SKILL_VITALITY);
-	std::unordered_map<std::string, uint32_t> strenghtGains = g_game.getSkillGains(SKILL_STRENGHT);
-	std::unordered_map<std::string, uint32_t> defenceGains = g_game.getSkillGains(SKILL_DEFENCE);
-	std::unordered_map<std::string, uint32_t> intelligenceGains = g_game.getSkillGains(SKILL_INTELLIGENCE);
-	std::unordered_map<std::string, uint32_t> dexterityGains = g_game.getSkillGains(SKILL_DEXTERITY);
-	std::unordered_map<std::string, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
-	std::unordered_map<std::string, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
+	std::unordered_map<std::string, uint32_t> magicInfo = g_game.getSkillInfo(SKILL_MAGLEVEL);	
+	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
+	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);
+	std::unordered_map<std::string, uint32_t> defenceInfo = g_game.getSkillInfo(SKILL_DEFENCE);
+	std::unordered_map<std::string, uint32_t> intelligenceInfo = g_game.getSkillInfo(SKILL_INTELLIGENCE);
+	std::unordered_map<std::string, uint32_t> dexterityInfo = g_game.getSkillInfo(SKILL_DEXTERITY);
+	std::unordered_map<std::string, uint32_t> faithInfo = g_game.getSkillInfo(SKILL_FAITH);
+	std::unordered_map<std::string, uint32_t> enduranceInfo = g_game.getSkillInfo(SKILL_ENDURANCE);
 
 	double maxMagic = 10;
 	double maxVitality = 20;
@@ -690,70 +703,6 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 		return false;
 	}
 
-	uint8_t magicCost = magicGains["cost"];
-	//uint8_t magicHealthGain = magicGains["health"];
-	uint8_t magicManaGain = magicGains["mana"];
-	//uint8_t magicSoulGain = magicGains["soul"];
-	//uint8_t magicCapGain = magicGains["cap"];
-	//uint8_t magicWalkSpeedGain = magicGains["walkSpeed"];
-	//uint8_t magicAttackSpeedGain = magicGains["attackSpeed"];
-
-	uint8_t vitalityCost = vitalityGains["cost"];
-	uint8_t vitalityHealthGain = vitalityGains["health"];
-	//uint8_t vitalityManaGain = vitalityGains["mana"];
-	//uint8_t vitalitySoulGain = vitalityGains["soul"];
-	//uint8_t vitalityCapGain = vitalityGains["cap"];
-	//uint8_t vitalityWalkSpeedGain = vitalityGains["walkSpeed"];
-	//uint8_t vitalityAttackSpeedGain = vitalityGains["attackSpeed"];
-
-	uint8_t strenghtCost = strenghtGains["cost"];
-	//uint8_t strenghtHealthGain = strenghtGains["health"];
-	//uint8_t strenghtManaGain = strenghtGains["mana"];
-	//uint8_t strenghtSoulGain = strenghtGains["soul"];
-	//uint8_t strenghtCapGain = strenghtGains["cap"];
-	//uint8_t strenghtWalkSpeedGain = strenghtGains["walkSpeed"];
-	//uint8_t strenghtAttackSpeedGain = strenghtGains["attackSpeed"];
-
-	uint8_t defenceCost = defenceGains["cost"];
-	uint8_t defenceHealthGain = defenceGains["health"];
-	//uint8_t defenceManaGain = defenceGains["mana"];
-	//uint8_t defenceSoulGain = defenceGains["soul"];
-	//uint8_t defenceCapGain = defenceGains["cap"];
-	//uint8_t defenceWalkSpeedGain = defenceGains["walkSpeed"];
-	//uint8_t defenceAttackSpeedGain = defenceGains["attackSpeed"];
-
-	uint8_t intelligenceCost = intelligenceGains["cost"];
-	//uint8_t intelligenceHealthGain = intelligenceGains["health"];
-	uint8_t intelligenceManaGain = intelligenceGains["mana"];
-	//uint8_t intelligenceSoulGain = intelligenceGains["soul"];
-	//uint8_t intelligenceCapGain = intelligenceGains["cap"];
-	//uint8_t intelligenceWalkSpeedGain = intelligenceGains["walkSpeed"];
-	//uint8_t intelligenceAttackSpeedGain = intelligenceGains["attackSpeed"];
-
-	uint8_t faithCost = faithGains["cost"];
-	//uint8_t faithHealthGain = faithGains["health"];
-	uint8_t faithManaGain = faithGains["mana"];
-	//uint8_t faithSoulGain = faithGains["soul"];
-	//uint8_t faithCapGain = faithGains["cap"];
-	//uint8_t faithWalkSpeedGain = faithGains["walkSpeed"];
-	//uint8_t faithAttackSpeedGain = faithGains["attackSpeed"];
-
-	uint8_t dexterityCost = dexterityGains["cost"];
-	//uint8_t dexterityHealthGain = dexterityGains["health"];
-	//uint8_t dexterityManaGain = dexterityGains["mana"];
-	//uint8_t dexteritySoulGain = dexterityGains["soul"];
-	//uint8_t dexterityCapGain = dexterityGains["cap"];
-	//uint8_t dexterityWalkSpeedGain = dexterityGains["walkSpeed"];
-	//uint8_t dexterityAttackSpeedGain = dexterityGains["attackSpeed"];
-
-	uint8_t enduranceCost = enduranceGains["cost"];
-	uint8_t enduranceHealthGain = enduranceGains["health"];
-	//uint8_t enduranceManaGain = enduranceGains["mana"];
-	//uint8_t enduranceSoulGain = enduranceGains["soul"];
-	//uint8_t enduranceCapGain = enduranceGains["cap"];
-	//uint8_t enduranceWalkSpeedGain = enduranceGains["walkSpeed"];
-	//uint8_t enduranceAttackSpeedGain = enduranceGains["attackSpeed"];
-
 	uint16_t oldMagic = magLevel;
 	uint16_t oldVitality = skills[SKILL_VITALITY].level;
 	uint16_t oldStrenght = skills[SKILL_STRENGHT].level;
@@ -763,36 +712,36 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	uint16_t oldFaith = skills[SKILL_FAITH].level;
 	uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
 
-	skillPoints -= magicCost * (magic - oldMagic);
-	skillPoints -= vitalityCost * (vitality - oldVitality);
-	skillPoints -= strenghtCost * (strenght - oldStrenght);
-	skillPoints -= defenceCost * (defence - oldDefence);
-	skillPoints -= intelligenceCost * (intelligence - oldIntelligence);
-	skillPoints -= faithCost * (faith - oldFaith);
-	skillPoints -= dexterityCost * (dexterity - oldDexterity);
-	skillPoints -= enduranceCost * (endurance - oldEndurance);
+	skillPoints -= magicInfo["cost"] * (magic - oldMagic);
+	skillPoints -= vitalityInfo["cost"] * (vitality - oldVitality);
+	skillPoints -= strenghtInfo["cost"] * (strenght - oldStrenght);
+	skillPoints -= defenceInfo["cost"] * (defence - oldDefence);
+	skillPoints -= intelligenceInfo["cost"] * (intelligence - oldIntelligence);
+	skillPoints -= faithInfo["cost"] * (faith - oldFaith);
+	skillPoints -= dexterityInfo["cost"] * (dexterity - oldDexterity);
+	skillPoints -= enduranceInfo["cost"] * (endurance - oldEndurance);
 
 	magLevel += (magic - oldMagic);
-	mana += magicManaGain * (magic - oldMagic);
+	mana += magicInfo["mana"] * (magic - oldMagic);
 
 	skills[SKILL_VITALITY].level += (vitality - oldVitality);
-	health += vitalityHealthGain * (vitality - oldVitality);
+	health += vitalityInfo["health"] * (vitality - oldVitality);
 
 	skills[SKILL_STRENGHT].level += (strenght - oldStrenght);
 	
 	skills[SKILL_DEFENCE].level += (defence - oldDefence);
-	health += defenceHealthGain * (defence - oldDefence);
+	health += defenceInfo["health"] * (defence - oldDefence);
 	
 	skills[SKILL_DEXTERITY].level += (dexterity - oldDexterity);
 
 	skills[SKILL_INTELLIGENCE].level += (intelligence - oldIntelligence);
-	mana += intelligenceManaGain * (intelligence - oldIntelligence);
+	mana += intelligenceInfo["mana"] * (intelligence - oldIntelligence);
 	
 	skills[SKILL_FAITH].level += (faith - oldFaith);
-	mana += faithManaGain * (faith - oldFaith);
+	mana += faithInfo["mana"] * (faith - oldFaith);
 	
 	skills[SKILL_ENDURANCE].level += (endurance - oldEndurance);		
-	health += enduranceHealthGain * (endurance - oldEndurance);
+	health += enduranceInfo["health"] * (endurance - oldEndurance);
 
 	if (skillPoints < 0) {
 		skillPoints = 0;
@@ -802,11 +751,11 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 		mana = 0;
 	}
 
-	if (health < 0) {
+	if (health < 0 || health >= std::numeric_limits<int32_t>::max()) {
 		health = 60;
 	}
 
-	if (magLevel < 0) {
+	if (magLevel < 0 || mana >= std::numeric_limits<uint8_t>::max()) {
 		magLevel = 0;
 	}
 
@@ -865,168 +814,97 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 void Player::refreshStats() {
 
-	std::unordered_map<std::string, uint32_t> magicGains = g_game.getSkillGains(SKILL_MAGLEVEL);
-	uint8_t magicHealthGain = magicGains["health"];
-	uint8_t magicManaGain = magicGains["mana"];
-	uint8_t magicSoulGain = magicGains["soul"];
-	uint8_t magicCapGain = magicGains["cap"];
-	uint8_t magicWalkSpeedGain = magicGains["walkSpeed"];
-	uint8_t magicAttackSpeedGain = magicGains["attackSpeed"];
-	uint8_t magicWandMaxDamageGain = magicGains["wand"];
-	uint8_t magicRodMaxDamageGain = magicGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> vitalityGains = g_game.getSkillGains(SKILL_VITALITY);
-	uint8_t vitalityHealthGain = vitalityGains["health"];
-	uint8_t vitalityManaGain = vitalityGains["mana"];
-	uint8_t vitalitySoulGain = vitalityGains["soul"];
-	uint8_t vitalityCapGain = vitalityGains["cap"];
-	uint8_t vitalityWalkSpeedGain = vitalityGains["walkSpeed"];
-	uint8_t vitalityAttackSpeedGain = vitalityGains["attackSpeed"];
-	uint8_t vitalityWandMaxDamageGain = vitalityGains["wand"];
-	uint8_t vitalityRodMaxDamageGain = vitalityGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> strenghtGains = g_game.getSkillGains(SKILL_STRENGHT);
-	uint8_t strenghtHealthGain = strenghtGains["health"];
-	uint8_t strenghtManaGain = strenghtGains["mana"];
-	uint8_t strenghtSoulGain = strenghtGains["soul"];
-	uint8_t strenghtCapGain = strenghtGains["cap"];
-	uint8_t strenghtWalkSpeedGain = strenghtGains["walkSpeed"];
-	uint8_t strenghtAttackSpeedGain = strenghtGains["attackSpeed"];
-	uint8_t strenghtWandMaxDamageGain = strenghtGains["wand"];
-	uint8_t strenghtRodMaxDamageGain = strenghtGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> defenceGains = g_game.getSkillGains(SKILL_DEFENCE);
-	uint8_t defenceHealthGain = defenceGains["health"];
-	uint8_t defenceManaGain = defenceGains["mana"];
-	uint8_t defenceSoulGain = defenceGains["soul"];
-	uint8_t defenceCapGain = defenceGains["cap"];
-	uint8_t defenceWalkSpeedGain = defenceGains["walkSpeed"];
-	uint8_t defenceAttackSpeedGain = defenceGains["attackSpeed"];
-	uint8_t defenceWandMaxDamageGain = defenceGains["wand"];
-	uint8_t defenceRodMaxDamageGain = defenceGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> dexterityGains = g_game.getSkillGains(SKILL_DEXTERITY);
-	uint8_t dexterityHealthGain = dexterityGains["health"];
-	uint8_t dexterityManaGain = dexterityGains["mana"];
-	uint8_t dexteritySoulGain = dexterityGains["soul"];
-	uint8_t dexterityCapGain = dexterityGains["cap"];
-	uint8_t dexterityWalkSpeedGain = dexterityGains["walkSpeed"];
-	uint8_t dexterityAttackSpeedGain = dexterityGains["attackSpeed"];
-	uint8_t dexterityWandMaxDamageGain = dexterityGains["wand"];
-	uint8_t dexterityRodMaxDamageGain = dexterityGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> intelligenceGains = g_game.getSkillGains(SKILL_INTELLIGENCE);
-	uint8_t intelligenceHealthGain = intelligenceGains["health"];
-	uint8_t intelligenceManaGain = intelligenceGains["mana"];
-	uint8_t intelligenceSoulGain = intelligenceGains["soul"];
-	uint8_t intelligenceCapGain = intelligenceGains["cap"];
-	uint8_t intelligenceWalkSpeedGain = intelligenceGains["walkSpeed"];
-	uint8_t intelligenceAttackSpeedGain = intelligenceGains["attackSpeed"];
-	uint8_t intelligenceWandMaxDamageGain = intelligenceGains["wand"];
-	uint8_t intelligenceRodMaxDamageGain = intelligenceGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> faithGains = g_game.getSkillGains(SKILL_FAITH);
-	uint8_t faithHealthGain = faithGains["health"];
-	uint8_t faithManaGain = faithGains["mana"];
-	uint8_t faithSoulGain = faithGains["soul"];
-	uint8_t faithCapGain = faithGains["cap"];
-	uint8_t faithWalkSpeedGain = faithGains["walkSpeed"];
-	uint8_t faithAttackSpeedGain = faithGains["attackSpeed"];
-	uint8_t faithWandMaxDamageGain = faithGains["wand"];
-	uint8_t faithRodMaxDamageGain = faithGains["rod"];
-
-	std::unordered_map<std::string, uint32_t> enduranceGains = g_game.getSkillGains(SKILL_ENDURANCE);
-	uint8_t enduranceHealthGain = enduranceGains["health"];
-	uint8_t enduranceManaGain = enduranceGains["mana"];
-	uint8_t enduranceSoulGain = enduranceGains["soul"];
-	uint8_t enduranceCapGain = enduranceGains["cap"];
-	uint8_t enduranceWalkSpeedGain = enduranceGains["walkSpeed"];
-	uint8_t enduranceAttackSpeedGain = enduranceGains["attackSpeed"];
-	uint8_t enduranceWandMaxDamageGain = enduranceGains["wand"];
-	uint8_t enduranceRodMaxDamageGain = enduranceGains["rod"];
+	std::unordered_map<std::string, uint32_t> magicGains = g_game.getSkillInfo(SKILL_MAGLEVEL);
+	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
+	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);
+	std::unordered_map<std::string, uint32_t> defenceInfo = g_game.getSkillInfo(SKILL_DEFENCE);
+	std::unordered_map<std::string, uint32_t> dexterityInfo = g_game.getSkillInfo(SKILL_DEXTERITY);
+	std::unordered_map<std::string, uint32_t> intelligenceInfo = g_game.getSkillInfo(SKILL_INTELLIGENCE);
+	std::unordered_map<std::string, uint32_t> faithInfo = g_game.getSkillInfo(SKILL_FAITH);
+	std::unordered_map<std::string, uint32_t> enduranceInfo = g_game.getSkillInfo(SKILL_ENDURANCE);
 
 	healthMax = 120 +
-		(level - 1) * vocation->getHPGain() +
-		(magLevel) * magicHealthGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityHealthGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtHealthGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceHealthGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityHealthGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceHealthGain +
-		(skills[SKILL_FAITH].level - 8) * faithHealthGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceHealthGain;
+		(level - 1) 							* vocation->getHPGain() +
+		(magLevel) 								* magicGains["health"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["health"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["health"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["health"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["health"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["health"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["health"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["health"];
 
 	manaMax = 10 +
-		(level - 1) * vocation->getManaGain() +
-		(magLevel) * magicManaGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityManaGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtManaGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceManaGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityManaGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceManaGain +
-		(skills[SKILL_FAITH].level - 8) * faithManaGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceManaGain;
+		(level - 1) 							* vocation->getManaGain() +
+		(magLevel) 								* magicGains["mana"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["mana"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["mana"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["mana"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["mana"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["mana"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["mana"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["mana"];
 
 	soul = vocation->getSoulMax() +
-		(magLevel) * magicSoulGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalitySoulGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtSoulGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceSoulGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexteritySoulGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceSoulGain +
-		(skills[SKILL_FAITH].level - 8) * faithSoulGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceSoulGain;
+		(magLevel) 								* magicGains["soul"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["soul"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["soul"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["soul"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["soul"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["soul"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["soul"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["soul"];
 
 	capacity = 36500 +
-		(level - 1) * vocation->getCapGain() +
-		(magLevel) * magicCapGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityCapGain * 100 +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtCapGain * 100 +
-		(skills[SKILL_DEFENCE].level - 8) * defenceCapGain * 100 +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityCapGain * 100 +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceCapGain * 100 +
-		(skills[SKILL_FAITH].level - 8) * faithCapGain * 100 +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceCapGain * 100;
+		(level - 1) 							* vocation->getCapGain() +
+		(magLevel) 								* magicGains["cap"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["cap"] * 100 +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["cap"] * 100 +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["cap"] * 100 +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["cap"] * 100 +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["cap"] * 100 +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["cap"] * 100 +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["cap"] * 100;
 
-	wandMaxDamageBonus = (magLevel) * magicWandMaxDamageGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityWandMaxDamageGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtWandMaxDamageGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceWandMaxDamageGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityWandMaxDamageGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceWandMaxDamageGain +
-		(skills[SKILL_FAITH].level - 8) * faithWandMaxDamageGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceWandMaxDamageGain;
+	wandMaxDamageBonus = (magLevel) 			* magicGains["wand"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["wand"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["wand"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["wand"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["wand"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["wand"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["wand"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["wand"];
 
-	rodMaxDamageBonus = (magLevel) * magicRodMaxDamageGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityRodMaxDamageGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtRodMaxDamageGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceRodMaxDamageGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityRodMaxDamageGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceRodMaxDamageGain +
-		(skills[SKILL_FAITH].level - 8) * faithRodMaxDamageGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceRodMaxDamageGain;
+	rodMaxDamageBonus = (magLevel) 				* magicGains["rod"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["rod"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["rod"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["rod"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["rod"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["rod"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["rod"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["rod"];
 
-	walkSpeedBonus = (magLevel) * magicWalkSpeedGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityWalkSpeedGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtWalkSpeedGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceWalkSpeedGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityWalkSpeedGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceWalkSpeedGain +
-		(skills[SKILL_FAITH].level - 8) * faithWalkSpeedGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceWalkSpeedGain;
+	walkSpeedBonus = (magLevel) 				* magicGains["walkSpeed"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["walkSpeed"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["walkSpeed"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["walkSpeed"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["walkSpeed"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["walkSpeed"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["walkSpeed"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["walkSpeed"];
 
-	attackSpeedBonus = (magLevel) * magicAttackSpeedGain +
-		(skills[SKILL_VITALITY].level - 8) * vitalityAttackSpeedGain +
-		(skills[SKILL_STRENGHT].level - 8) * strenghtAttackSpeedGain +
-		(skills[SKILL_DEFENCE].level - 8) * defenceAttackSpeedGain +
-		(skills[SKILL_DEXTERITY].level - 8) * dexterityAttackSpeedGain +
-		(skills[SKILL_INTELLIGENCE].level - 8) * intelligenceAttackSpeedGain +
-		(skills[SKILL_FAITH].level - 8) * faithAttackSpeedGain +
-		(skills[SKILL_ENDURANCE].level - 8) * enduranceAttackSpeedGain;
+	attackSpeedBonus = (magLevel) 				* magicGains["attackSpeed"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["attackSpeed"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["attackSpeed"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["attackSpeed"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["attackSpeed"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["attackSpeed"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["attackSpeed"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["attackSpeed"];
 
 	//to increase walk speed (clients interface) in 1 you have to increase baseSpeed in 2
-	baseSpeed = vocation->getBaseSpeed() + 
-		2 * (level - 1) + 
+	baseSpeed = 2 * (level - 1) + 
+		vocation->getBaseSpeed() +
 		(skills[SKILL_DEXTERITY].level - 8) / 2.0f; //increases 0.25 on 
 	
 	if (hasFlag(PlayerFlag_SetMaxSpeed)) { baseSpeed = PLAYER_MAX_SPEED; }
@@ -2111,7 +1989,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		if (level > maxLevelReached) {
 			skillPoints += g_game.getPointsPerLevel(level-1);
 			totalSkillPoints += g_game.getPointsPerLevel(level-1);
-			maxLevelReached += 1;	
+			maxLevelReached = level;	
 		}
 
 		healthMax += vocation->getHPGain();

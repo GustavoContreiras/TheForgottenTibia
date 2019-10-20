@@ -235,7 +235,7 @@ bool IOLoginData::loadPlayerById(Player* player, uint32_t id)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `name`, `group_id`, `account_id`, `level`, `maxLevelReached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `skull`, `skulltime`, `lastlogout`, `blessings`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `id` = " << id;
+	query << "SELECT `id`, `name`, `group_id`, `account_id`, `level`, `max_level_reached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `skull`, `skulltime`, `lastlogout`, `blessings`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `id` = " << id;
 	return loadPlayer(player, db.storeQuery(query.str()));
 }
 
@@ -243,7 +243,7 @@ bool IOLoginData::loadPlayerByName(Player* player, const std::string& name)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
-	query << "SELECT `id`, `name`, `group_id`, `account_id`, `sex`, `vocation`, `experience`, `level`, `maxLevelReached`, `maglevel`, `health`, `healthmax`, `blessings`, `mana`, `manamax`, `soul`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `posx`, `posy`, `posz`, `cap`, `lastlogin`, `lastlogout`, `lastip`, `conditions`, `skulltime`, `skull`, `town_id`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `name` = " << db.escapeString(name);
+	query << "SELECT `id`, `name`, `group_id`, `account_id`, `sex`, `vocation`, `experience`, `level`, `max_level_reached`, `maglevel`, `health`, `healthmax`, `blessings`, `mana`, `manamax`, `soul`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `posx`, `posy`, `posz`, `cap`, `lastlogin`, `lastlogout`, `lastip`, `conditions`, `skulltime`, `skull`, `town_id`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing` FROM `players` WHERE `name` = " << db.escapeString(name);
 	return loadPlayer(player, db.storeQuery(query.str()));
 }
 
@@ -282,7 +282,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 
 	player->setSex(static_cast<PlayerSex_t>(result->getNumber<uint16_t>("sex")));
 	player->level = std::max<uint32_t>(1, result->getNumber<uint32_t>("level"));
-	player->maxLevelReached = std::max<uint32_t>(1, result->getNumber<uint32_t>("maxLevelReached"));
+	player->maxLevelReached = std::max<uint32_t>(1, result->getNumber<uint32_t>("max_level_reached"));
 
 	uint64_t experience = result->getNumber<uint64_t>("experience");
 
@@ -664,7 +664,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query.str(std::string());
 	query << "UPDATE `players` SET ";
 	query << "`level` = " << player->level << ',';
-	query << "`maxLevelReached` = " << player->maxLevelReached << ',';
+	query << "`max_level_reached` = " << player->maxLevelReached << ',';
 	query << "`group_id` = " << player->group->id << ',';
 	query << "`vocation` = " << player->getVocationId() << ',';
 	query << "`health` = " << ((player->health > 0) ? (player->health) : (80)) << ',';

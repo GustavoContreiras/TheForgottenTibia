@@ -158,7 +158,7 @@ bool ConfigManager::load()
 	integer[ENDURANCE_CAPGAIN] = getGlobalNumber(L, "enduranceCapGain", 15);
 	integer[ENDURANCE_HEALTHGAIN] = getGlobalNumber(L, "enduranceHealthGain", 5);
 
-	integer[SHIELD_RESISTANCEFACTOR] = getGlobalNumber(L, "shieldResistanceFactor", 100); //default tibia
+	integer[SHIELD_DEFENCEFACTOR] = getGlobalNumber(L, "shieldDefenceFactor", 100); //default tibia
 	integer[SHIELD_DEXTERITYFACTOR] = getGlobalNumber(L, "shieldDexterityFactor", 0); //default tibia
 
 	//integer[MELEE_DEXTERITYFACTOR] = getGlobalNumber(L, "meleeDexterityFactor", 0); //default tibia
@@ -180,6 +180,9 @@ bool ConfigManager::load()
 	//integer[DEXTERITY_INITIALDEXTERITY] = getGlobalNumber(L, "initialDexterity", 8);
 	//integer[DEXTERITY_WALKSPEEDFACTOR] = getGlobalNumber(L, "walkSpeedFactor", 2);
 	//integer[DEXTERITY_ATTACKSPEEDFACTOR] = getGlobalNumber(L, "attackSpeedFactor", 10);
+
+	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
+	integer[CRITICAL_RATE] = getGlobalNumber(L, "criticalRate", 100);
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);

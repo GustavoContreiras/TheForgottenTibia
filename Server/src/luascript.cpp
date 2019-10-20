@@ -1862,7 +1862,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_SPEED_RATE)
 	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_DAMAGE_RATE)
 
-	registerEnumIn("configKeys", ConfigManager::SHIELD_RESISTANCEFACTOR)
+	registerEnumIn("configKeys", ConfigManager::SHIELD_DEFENCEFACTOR)
 	registerEnumIn("configKeys", ConfigManager::SHIELD_DEXTERITYFACTOR)
 
 	//registerEnumIn("configKeys", ConfigManager::MELEE_DEXTERITYFACTOR)
@@ -1881,6 +1881,9 @@ void LuaScriptInterface::registerFunctions()
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_INITIALDEXTERITY)
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_WALKSPEEDFACTOR)
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_ATTACKSPEEDFACTOR)
+
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_RATE)
 
 	//THE FORGOTTEN TIBIA /END
 
@@ -2386,6 +2389,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "setSkills", LuaScriptInterface::luaPlayerSetSkills); //NEW! SKILLS POINTS SYSTEM
 	registerMethod("Player", "addSkillPoints", LuaScriptInterface::luaPlayerAddSkillPoints); //NEW! SKILLS POINTS SYSTEM
+	registerMethod("Player", "addSkillPointsTotal", LuaScriptInterface::luaPlayerAddSkillPointsTotal); //NEW! SKILLS POINTS SYSTEM
 
 	registerMethod("Player", "getTotalSkillPoints", LuaScriptInterface::luaPlayerGetTotalSkillPoints); //NEW! SKILLS POINTS SYSTEM
 
@@ -9551,6 +9555,23 @@ int LuaScriptInterface::luaPlayerAddSkillPoints(lua_State* L)
 	if (player) {
 		uint16_t count = getNumber<uint16_t>(L, 2);
 		player->addSkillPoints(count);
+		player->sendStats();
+		pushBoolean(L, true);
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+//NEW! SKILLS POINTS SYSTEM
+int LuaScriptInterface::luaPlayerAddSkillPointsTotal(lua_State* L)
+{
+	// player:addSkillPointsTotal(count)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t count = getNumber<uint16_t>(L, 2);
+		player->addSkillPointsTotal(count);
 		player->sendStats();
 		pushBoolean(L, true);
 	}

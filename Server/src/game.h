@@ -463,7 +463,7 @@ class Game
 		uint64_t getExperienceStage(uint32_t level);
 		uint64_t getPointsPerLevel(uint32_t level);
 		bool loadSkillsGain();
-		std::unordered_map<std::string, uint32_t> getSkillGains(uint32_t id);
+		std::unordered_map<std::string, uint32_t> getSkillInfo(uint32_t id);
 
 		void loadMotdNum();
 		void saveMotdNum() const;
@@ -526,14 +526,14 @@ class Game
 		std::unordered_map<uint16_t, Item*> uniqueItems;
 		std::map<uint32_t, uint32_t> stages;
 		std::map<uint32_t, uint32_t> points;
-		std::unordered_map<std::string, uint32_t> skillVitalityGains;
-		std::unordered_map<std::string, uint32_t> skillStrenghtGains;
-		std::unordered_map<std::string, uint32_t> skillDefenceGains;
-		std::unordered_map<std::string, uint32_t> skillDexterityGains;
-		std::unordered_map<std::string, uint32_t> skillIntelligenceGains;
-		std::unordered_map<std::string, uint32_t> skillFaithGains;
-		std::unordered_map<std::string, uint32_t> skillEnduranceGains;
-		std::unordered_map<std::string, uint32_t> skillMagicGains;
+		std::unordered_map<std::string, uint32_t> skillVitalityInfo;
+		std::unordered_map<std::string, uint32_t> skillStrenghtInfo;
+		std::unordered_map<std::string, uint32_t> skillDefenceInfo;
+		std::unordered_map<std::string, uint32_t> skillDexterityInfo;
+		std::unordered_map<std::string, uint32_t> skillIntelligenceInfo;
+		std::unordered_map<std::string, uint32_t> skillFaithInfo;
+		std::unordered_map<std::string, uint32_t> skillEnduranceInfo;
+		std::unordered_map<std::string, uint32_t> skillMagicInfo;
 
 
 		std::list<Item*> decayItems[EVENT_DECAY_BUCKETS];
