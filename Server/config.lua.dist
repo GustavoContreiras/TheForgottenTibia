@@ -76,24 +76,18 @@ emoteSpells = true
 classicEquipmentSlots = true
 classicAttackSpeed = false
 refillHealthAndManaOnLevelUp = false
+criticalOnAllWeapons = true
+criticalAmount = 100
+criticalChance = 25
 
--- Skill Gain 
--- NOTE: values has to be changed in data/lib/core/skillpoints.lua too
-magicManaGain = 15
-vitalityHealthGain = 15
-intelligenceManaGain = 10
-faithManaGain = 10
-resistanceCapGain = 5 * 100
-enduranceCapGain = 15 * 100
-enduranceHealthGain = 5
-
--- DUAL WIELDING (70 = 70% of single weapon damage)
+-- DUAL WIELDING (90 = 90% of single weapon damage)
 allowDualWielding = true
-dualWieldingDamageRate = 70
+dualWieldingDamageRate = 90
 
--- SHIELDS (default: 100 resistance, 0 dexterity)
--- Shield formula:	defenseSkill = (RESISTANCE * shieldResistanceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
-shieldResistanceFactor = 100
+-- SHIELDS (default: 100 defence, 0 dexterity)
+-- Shield formula:	defenseSkill = (DEFENCE * shieldDefenceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
+-- Defence is also used with weapons def value (when you are not wearing a shield)
+shieldDefenceFactor = 100
 shieldDexterityFactor = 0
 
 -- DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
@@ -105,8 +99,8 @@ bowDexterityFactor = 75
 bowStrenghtFactor = 50
 
 -- WANDS and RODS (default: 0 int, 0 faith, 0 magic)
--- Rod formula: 	maxDamage = maxDamage 	+ (maxDamage * 		  (FAITH - 8) / 100) 	* (rodFaithFactor / 100) 	+ (MAGIC * magicWandRodFactor / 100);
--- Wand formula: 	maxDamage = maxDamage 	+ (maxDamage * (INTTELIGENCE - 8) / 100) 	* (wandIntFactor  / 100) 	+ (MAGIC * magicWandRodFactor / 100);
+-- Rod formula: 	maxDamage = rodMaxDamage 	+ (rodMaxDamage  * (FAITH - 8) / 100) 		* (rodFaithFactor / 100) 	+ (MAGIC * magicWandRodFactor / 100);
+-- Wand formula: 	maxDamage = wandMaxDamage 	+ (wandMaxDamage * (INTTELIGENCE - 8) / 100) 	* (wandIntFactor  / 100) 	+ (MAGIC * magicWandRodFactor / 100);
 rodFaithFactor = 200
 wandIntelligenceFactor = 100
 magicWandRodFactor = 0

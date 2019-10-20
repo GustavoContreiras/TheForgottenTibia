@@ -450,11 +450,7 @@ int32_t Player::getDefense() const
 
 	if (weapon) {
 		defenseValue = weapon->getDefense() + weapon->getExtraDefense();
-<<<<<<< HEAD
 		defenseSkill = getSkillLevel(SKILL_DEFENCE); // original: getWeaponSkill(weapon);
-=======
-		defenseSkill = getWeaponSkill(weapon); //it uses the strenght skill to defend
->>>>>>> b63449895ab42fee5c4453439e5878967c0f3022
 	}
 
 	if (shield) {

@@ -518,10 +518,26 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 
 		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
 		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
-			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
-			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+
+		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
+			WeaponType_t weaponType = attackerPlayer->getWeapon(true)->getWeaponType();
+			if (weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || 
+				weaponType == WEAPON_CLUB || weaponType == WEAPON_DISTANCE) {
+				chance = g_config.getNumber(ConfigManager::CRITICAL_CHANCE);
+				if (chance != 0 && uniform_random(1, 100) <= chance) {
+					damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+					damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+					g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+				}
+			}
+		}
+
+		else {
+			if (chance != 0 && uniform_random(1, 100) <= chance) {
+				damage.primary.value += std::round(damage.primary.value * (skill / 100.));
+				damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
+				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+			}
 		}
 
 		if (targetPlayer && caster->getPlayer() && targetPlayer->getSkull() != SKULL_BLACK) {
@@ -567,23 +583,10 @@ void Combat::CombatManaFunc(Creature* caster, Creature* target, const CombatPara
 		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
 		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
 
-		WeaponType_t weaponType = attackerPlayer->getWeapon(true)->getWeaponType();
-
-		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
-			if (weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || 
-				weaponType == WEAPON_CLUB || weaponType == WEAPON_DISTANCE) {
-				damageCopy.primary.value += std::round(damageCopy.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_RATE) / 100.));
-				damageCopy.secondary.value += std::round(damageCopy.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_RATE) / 100.));
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
-		}
-		
-		else {
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				damageCopy.primary.value += std::round(damageCopy.primary.value * (skill / 100.));
-				damageCopy.secondary.value += std::round(damageCopy.secondary.value * (skill / 100.));
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
+		if (chance != 0 && uniform_random(1, 100) <= chance) {
+			damageCopy.primary.value += std::round(damageCopy.primary.value * (skill / 100.));
+			damageCopy.secondary.value += std::round(damageCopy.secondary.value * (skill / 100.));
+			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 		}
 	}
 

@@ -182,7 +182,8 @@ bool ConfigManager::load()
 	//integer[DEXTERITY_ATTACKSPEEDFACTOR] = getGlobalNumber(L, "attackSpeedFactor", 10);
 
 	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
-	integer[CRITICAL_RATE] = getGlobalNumber(L, "criticalRate", 100);
+	integer[CRITICAL_AMOUNT] = getGlobalNumber(L, "criticalAmount", 100);
+	integer[CRITICAL_CHANCE] = getGlobalNumber(L, "criticalChance", 25);
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);
