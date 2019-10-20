@@ -89,7 +89,7 @@ SkillPercentPanel < ProgressBar
 MiniWindow
   id: skillWindow
   !text: tr('Skills')
-  height: 150
+  height: 100
   icon: /images/topbuttons/skills
   @onClose: modules.game_skills.onMiniWindowClose()
   @onOpen: modules.game_skills.onMiniWindowOpen()
@@ -435,24 +435,6 @@ MiniWindow
         @onClick: onClickAdd('skillId6')
       SkillMinusButton
         @onClick: onClickRemove('skillId6')
-
-    SmallSkillButton
-      id: skillId7
-      SkillNameLabel
-        anchors.left: parent.left
-        text-align:topleft
-        !text: tr('Critical Hit Chance')
-      SkillValueLabel
-        anchors.right: parent.right
-
-    SmallSkillButton
-      id: skillId8
-      SkillNameLabel
-        anchors.left: parent.left
-        text-align:topleft
-        !text: tr('Critical Hit Damage')
-      SkillValueLabel
-        anchors.right: parent.right
 
     SmallSkillButton
       id: wanddamage

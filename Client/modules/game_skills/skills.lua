@@ -208,11 +208,11 @@ function init()
 	endurancePlusButton = enduranceButton:recursiveGetChildById('plusbutton')
 	enduranceMinusButton = enduranceButton:recursiveGetChildById('minusbutton')
 	
-	criticalChanceButton = skillsWindow:recursiveGetChildById('skillId7')
-	criticalChanceValueLabel = criticalChanceButton:recursiveGetChildById('value')
+	--criticalChanceButton = skillsWindow:recursiveGetChildById('skillId7')
+	--criticalChanceValueLabel = criticalChanceButton:recursiveGetChildById('value')
 	
-	criticalDamageButton = skillsWindow:recursiveGetChildById('skillId8')
-	criticalDamageValueLabel = criticalDamageButton:recursiveGetChildById('value')
+	--criticalDamageButton = skillsWindow:recursiveGetChildById('skillId8')
+	--criticalDamageValueLabel = criticalDamageButton:recursiveGetChildById('value')
 	
 	wandDamageButton = skillsWindow:recursiveGetChildById('wanddamage')
 	wandDamageValueLabel = wandDamageButton:recursiveGetChildById('value')
@@ -354,11 +354,11 @@ function terminate()
 	newEnduranceArrowLabel = nil
 	newEnduranceValueLabel = nil
 	
-	criticalChanceButton:destroy()
-	criticalChanceValueLabel = nil
+	--criticalChanceButton:destroy()
+	--criticalChanceValueLabel = nil
 	
-	criticalDamageButton:destroy()
-	criticalDamageValueLabel = nil
+	--criticalDamageButton:destroy()
+	--criticalDamageValueLabel = nil
 	
 	wandDamageButton:destroy()
 	wandDamageValueLabel = nil
@@ -2003,7 +2003,7 @@ function onSkillChange(localPlayer, id, level)
 
 	print('game_skills: on skill change')
 	
-	if id > 0 and id < Skill.LifeLeechChance then
+	if id > 0 and id < Skill.CriticalChance then
 		setSkillValue('skillId' .. id, level)
 		setSkillBase('skillId'.. id, localPlayer:getSkillLevel(id), level)
 		setSkillsTooltips()
@@ -2163,7 +2163,7 @@ function onSkillChange(localPlayer, id, level)
 			enduranceValueLabel:removeTooltip()
 		end
 	
-	elseif id == Skill.CriticalChance then
+	--[[elseif id == Skill.CriticalChance then
 		
 		local baseCriticalChance = localPlayer:getBaseSkillLevel(Skill.CriticalChance)
 
@@ -2205,7 +2205,7 @@ function onSkillChange(localPlayer, id, level)
 		else
 			criticalDamageValueLabel:setColor('#bbbbbb') -- default
 			criticalDamageValueLabel:removeTooltip()
-		end		
+		end]]	
 	end
 	
 	toggle()
