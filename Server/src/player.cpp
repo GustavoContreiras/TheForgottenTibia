@@ -556,7 +556,7 @@ bool Player::addSkillPoints(uint16_t count)
 //CHANGED! SKILL POINTS SYSTEM - STATS GAIN
 bool Player::addSkillPointsTotal(uint16_t count)
 {
-	totalSkillPoints += count;
+	skillPointsTotal += count;
 	for (uint32_t tries = 0; tries < 3; ++tries) {
 		if (IOLoginData::savePlayer(this)) {
 			break;
@@ -712,50 +712,47 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	uint16_t oldFaith = skills[SKILL_FAITH].level;
 	uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
 
-	skillPoints -= magicInfo["cost"] * (magic - oldMagic);
-	skillPoints -= vitalityInfo["cost"] * (vitality - oldVitality);
-	skillPoints -= strenghtInfo["cost"] * (strenght - oldStrenght);
-	skillPoints -= defenceInfo["cost"] * (defence - oldDefence);
-	skillPoints -= intelligenceInfo["cost"] * (intelligence - oldIntelligence);
-	skillPoints -= faithInfo["cost"] * (faith - oldFaith);
-	skillPoints -= dexterityInfo["cost"] * (dexterity - oldDexterity);
-	skillPoints -= enduranceInfo["cost"] * (endurance - oldEndurance);
+	uint16_t magicDiff = magic - magLevel;
+	uint16_t vitalityDiff = vitality - skills[SKILL_VITALITY].level;
+	//uint16_t strenghtDiff = strenght - skills[SKILL_STRENGHT].level;
+	uint16_t defenceDiff = defence - skills[SKILL_DEFENCE].level;
+	//uint16_t dexterityDiff = dexterity - skills[SKILL_DEXTERITY].level;
+	uint16_t intelligenceDiff = intelligence - skills[SKILL_INTELLIGENCE].level;
+	uint16_t faithDiff = faith - skills[SKILL_FAITH].level;
+	uint16_t enduranceDiff = endurance - skills[SKILL_ENDURANCE].level;
 
-	magLevel += (magic - oldMagic);
-	mana += magicInfo["mana"] * (magic - oldMagic);
+	skillPoints = skillPointsTotal;
+	skillPoints -= (magicInfo["cost"] * magic) - 0;
+	skillPoints -= (vitalityInfo["cost"] * vitality) - 8;
+	skillPoints -= (strenghtInfo["cost"] * strenght) - 8;
+	skillPoints -= (defenceInfo["cost"] * defence) - 8;
+	skillPoints -= (intelligenceInfo["cost"] * intelligence) - 8;
+	skillPoints -= (faithInfo["cost"] * faith) - 8;
+	skillPoints -= (dexterityInfo["cost"] * dexterity) - 8;
+	skillPoints -= (enduranceInfo["cost"] * endurance) - 8;
 
-	skills[SKILL_VITALITY].level += (vitality - oldVitality);
-	health += vitalityInfo["health"] * (vitality - oldVitality);
+	magLevel = magic;
+	skills[SKILL_VITALITY].level = vitality;
+	skills[SKILL_STRENGHT].level = strenght;
+	skills[SKILL_DEFENCE].level = defence;
+	skills[SKILL_DEXTERITY].level = dexterity;
+	skills[SKILL_INTELLIGENCE].level = intelligence;
+	skills[SKILL_FAITH].level = faith;
+	skills[SKILL_ENDURANCE].level = endurance;	
 
-	skills[SKILL_STRENGHT].level += (strenght - oldStrenght);
-	
-	skills[SKILL_DEFENCE].level += (defence - oldDefence);
-	health += defenceInfo["health"] * (defence - oldDefence);
-	
-	skills[SKILL_DEXTERITY].level += (dexterity - oldDexterity);
-
-	skills[SKILL_INTELLIGENCE].level += (intelligence - oldIntelligence);
-	mana += intelligenceInfo["mana"] * (intelligence - oldIntelligence);
-	
-	skills[SKILL_FAITH].level += (faith - oldFaith);
-	mana += faithInfo["mana"] * (faith - oldFaith);
-	
-	skills[SKILL_ENDURANCE].level += (endurance - oldEndurance);		
-	health += enduranceInfo["health"] * (endurance - oldEndurance);
-
-	if (skillPoints < 0) {
-		skillPoints = 0;
-	}
-
-	if (mana < 0 || mana >= std::numeric_limits<uint16_t>::max()) {
+	if (mana < 0 || mana > manaMax) {
 		mana = 0;
 	}
 
-	if (health < 0 || health >= std::numeric_limits<int32_t>::max()) {
+	if (health < 0 || health > healthMax) {
 		health = 60;
+	}	
+
+	if (skillPoints < 0 || skillPoints > skillPointsTotal) {
+		skillPoints = 0;
 	}
 
-	if (magLevel < 0 || mana >= std::numeric_limits<uint8_t>::max()) {
+	if (magLevel < 0 || magLevel > std::numeric_limits<uint8_t>::max()) {
 		magLevel = 0;
 	}
 
@@ -814,7 +811,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 void Player::refreshStats() {
 
-	std::unordered_map<std::string, uint32_t> magicGains = g_game.getSkillInfo(SKILL_MAGLEVEL);
+	std::unordered_map<std::string, uint32_t> magicInfo = g_game.getSkillInfo(SKILL_MAGLEVEL);
 	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
 	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);
 	std::unordered_map<std::string, uint32_t> defenceInfo = g_game.getSkillInfo(SKILL_DEFENCE);
@@ -825,7 +822,7 @@ void Player::refreshStats() {
 
 	healthMax = 120 +
 		(level - 1) 							* vocation->getHPGain() +
-		(magLevel) 								* magicGains["health"] +
+		(magLevel) 								* magicInfo["health"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["health"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["health"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["health"] +
@@ -836,7 +833,7 @@ void Player::refreshStats() {
 
 	manaMax = 10 +
 		(level - 1) 							* vocation->getManaGain() +
-		(magLevel) 								* magicGains["mana"] +
+		(magLevel) 								* magicInfo["mana"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["mana"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["mana"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["mana"] +
@@ -845,8 +842,20 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["mana"] +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["mana"];
 
+	if (mana < 0 || mana > manaMax) {
+		mana = 0;
+	}
+
+	if (health < 0 || health > healthMax) {
+		health = 60;
+	}	
+
+	if (skillPoints < 0 || skillPoints > skillPointsTotal) {
+		skillPoints = 0;
+	}
+
 	soul = vocation->getSoulMax() +
-		(magLevel) 								* magicGains["soul"] +
+		(magLevel) 								* magicInfo["soul"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["soul"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["soul"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["soul"] +
@@ -857,7 +866,7 @@ void Player::refreshStats() {
 
 	capacity = 36500 +
 		(level - 1) 							* vocation->getCapGain() +
-		(magLevel) 								* magicGains["cap"] +
+		(magLevel) 								* magicInfo["cap"] * 100 +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["cap"] * 100 +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["cap"] * 100 +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["cap"] * 100 +
@@ -866,7 +875,7 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["cap"] * 100 +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["cap"] * 100;
 
-	wandMaxDamageBonus = (magLevel) 			* magicGains["wand"] +
+	wandMaxDamageBonus = (magLevel) 			* magicInfo["wand"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["wand"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["wand"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["wand"] +
@@ -875,7 +884,7 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["wand"] +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["wand"];
 
-	rodMaxDamageBonus = (magLevel) 				* magicGains["rod"] +
+	rodMaxDamageBonus = (magLevel) 				* magicInfo["rod"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["rod"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["rod"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["rod"] +
@@ -884,7 +893,7 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["rod"] +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["rod"];
 
-	walkSpeedBonus = (magLevel) 				* magicGains["walkSpeed"] +
+	walkSpeedBonus = (magLevel) 				* magicInfo["walkSpeed"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["walkSpeed"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["walkSpeed"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["walkSpeed"] +
@@ -893,7 +902,7 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["walkSpeed"] +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["walkSpeed"];
 
-	attackSpeedBonus = (magLevel) 				* magicGains["attackSpeed"] +
+	attackSpeedBonus = (magLevel) 				* magicInfo["attackSpeed"] +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["attackSpeed"] +
 		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["attackSpeed"] +
 		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["attackSpeed"] +
@@ -1988,7 +1997,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 		if (level > maxLevelReached) {
 			skillPoints += g_game.getPointsPerLevel(level-1);
-			totalSkillPoints += g_game.getPointsPerLevel(level-1);
+			skillPointsTotal += g_game.getPointsPerLevel(level-1);
 			maxLevelReached = level;	
 		}
 

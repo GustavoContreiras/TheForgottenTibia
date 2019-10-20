@@ -28,6 +28,82 @@ SKILL_RESISTANCE = SKILL_DEFENCE -- skill resistance has to be deprecated
 
 STORAGEVALUE_PROMOTION = 30018
 
+KILLTASKS_STARTSTORAGE = 62003
+KILLTASKS_STATUS_NOT_DOING = -1
+KILLTASKS_STATUS_DOING = 1
+KILLTASKS_STATUS_DONE = 2
+KILLTASKS_MONSTERS = {
+    ['troll']           	= {plural = "trolls", 		onlist = 1, amount = 25,     countstorage = 19000, statusstorage = 5010, startvalue = 1, exp = 5000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 10}}}, -- 20 xp
+    ['orc']             	= {plural = "orcs", 		onlist = 1, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}}, -- 25 xp
+    ['orc spearman']           	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc warrior']           	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc berserker']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc leader']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc rider']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc marauder']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc shaman']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['orc warlord']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 15}}},
+    ['rotworm']         	= {plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19002, statusstorage = 5012, startvalue = 1, exp = 10000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 25}}}, -- 40 xp
+    ['minotaur']        	= {plural = "minotaurs", 	onlist = 1, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 25}}}, -- 50 xp
+    ['minotaur archer']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 25}}},
+    ['minotaur guard']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 25}}},
+    ['minotaur mage']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 25}}},
+    ['amazon']          	= {plural = "amazons", 		onlist = 1, amount = 75,     countstorage = 19004, statusstorage = 5014, startvalue = 1, exp = 45000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 35}}}, -- 60 xp
+    ['ghoul']           	= {plural = "ghouls", 		onlist = 1, amount = 75,	 countstorage = 19005, statusstorage = 5015, startvalue = 1, exp = 63750, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 40}}}, -- 85 xp
+    ['cyclops']         	= {plural = "cyclops", 		onlist = 1, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 50}}}, -- 150 xp
+    ['cyclops drone']         	= {plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 50}}}, 
+    ['cyclops smith']         	= {plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 50}}},
+    ['vampire']         	= {plural = "vampires", 	onlist = 1, amount = 100,    countstorage = 19007, statusstorage = 5017, startvalue = 1, exp = 152500, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 50}}}, -- 305 xp
+    ['necromancer']     	= {plural = "necromancers", 	onlist = 1, amount = 100,    countstorage = 19008, statusstorage = 5018, startvalue = 1, exp = 290000, 	skillpoints = 0, 
+	 items = {{id = 2152, count = 50}}}, -- 580 xp
+    ['dragon']          	= {plural = "dragons", 		onlist = 0, amount = 100,    countstorage = 19009, statusstorage = 5019, startvalue = 1, exp = 0, 	skillpoints = 1, 
+	 items = {{id = 2152, count = 100}}}, -- 700 xp
+    ['bog raider']      	= {plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, startvalue = 1, exp = 0, 	skillpoints = 1, 
+	 items = {{id = 2152, count = 100}}}, -- 800 xp
+    ['giant spider']    	= {plural = "giant spiders", 	onlist = 1, amount = 150,    countstorage = 19010, statusstorage = 5020, startvalue = 1, exp = 0, 	skillpoints = 1, 
+	 items = {{id = 2152, count = 100}}}, -- 900 xp
+    ['quara predator']  	= {plural = "quara predators", 	onlist = 1, amount = 150,    countstorage = 19018, statusstorage = 5028, startvalue = 1, exp = 0, 	skillpoints = 1, 
+	 items = {{id = 2152, count = 100}}}, -- 1200 xp
+    ['hero']  			= {plural = "heroes", 		onlist = 1, amount = 150,    countstorage = 19021, statusstorage = 5031, startvalue = 1, exp = 0, 	skillpoints = 1, 
+	 items = {{id = 2152, count = 100}}}, -- 1200 xp
+    ['dragon lord']     	= {plural = "dragon lords", 	onlist = 1, amount = 200,    countstorage = 19011, statusstorage = 5021, startvalue = 1, exp = 0, 	skillpoints = 2, 
+	 items = {{id = 2160, count = 4}}}, -- 2100 xp
+    ['frost dragon']    	= {plural = "frost dragons", 	onlist = 1, amount = 200,    countstorage = 19012, statusstorage = 5022, startvalue = 1, exp = 0, 	skillpoints = 2, 
+	 items = {{id = 2160, count = 4}}}, -- 2100 xp
+    ['hydra']           	= {plural = "hydras", 		onlist = 1, amount = 250,    countstorage = 19013, statusstorage = 5023, startvalue = 1, exp = 0, 	skillpoints = 2, 
+	 items = {{id = 2160, count = 5}}}, -- 2100 xp
+    ['behemoth']           	= {plural = "behemoths", 	onlist = 1, amount = 250,    countstorage = 19022, statusstorage = 5032, startvalue = 1, exp = 0, 	skillpoints = 2, 
+	 items = {{id = 2160, count = 5}}}, -- 2500 xp
+    ['serpent spawn']   	= {plural = "serpent spawns", 	onlist = 1, amount = 200,    countstorage = 19017, statusstorage = 5027, startvalue = 1, exp = 0, 	skillpoints = 3, 
+	 items = {{id = 2160, count = 5}}}, -- 3050 xp
+    ['grim reaper']     	= {plural = "grim reapers", 	onlist = 1, amount = 200,    countstorage = 19015, statusstorage = 5025, startvalue = 1, exp = 0, 	skillpoints = 4, 
+	 items = {{id = 2160, count = 5}}}, -- 5500 xp
+    ['demon']           	= {plural = "demons", 		onlist = 1, amount = 250,    countstorage = 19014, statusstorage = 5024, startvalue = 1, exp = 0, 	skillpoints = 4, 
+	 items = {{id = 2160, count = 10}}}, -- 6000 xp
+    ['hellhound']       	= {plural = "hellhounds", 	onlist = 1, amount = 250,    countstorage = 19020, statusstorage = 5030, startvalue = 1, exp = 0, 	skillpoints = 4, items = {{id = 2160, count = 10}}} -- 6800 xp
+}
+
 ropeSpots = {384, 418, 8278, 8592, 13189, 14435, 14436, 15635, 19518}
 
 doors = {[1209] = 1211, [1210] = 1211, [1212] = 1214, [1213] = 1214, [1219] = 1220, [1221] = 1222, [1231] = 1233, [1232] = 1233, [1234] = 1236, [1235] = 1236, [1237] = 1238, [1239] = 1240, [1249] = 1251, [1250] = 1251, [1252] = 1254, [1253] = 1254, [1539] = 1540, [1541] = 1542, [3535] = 3537, [3536] = 3537, [3538] = 3539, [3544] = 3546, [3545] = 3546, [3547] = 3548, [4913] = 4915, [4914] = 4915, [4916] = 4918, [4917] = 4918, [5082] = 5083, [5084] = 5085, [5098] = 5100, [5099] = 5100, [5101] = 5102, [5107] = 5109, [5108] = 5109, [5110] = 5111, [5116] = 5118, [5117] = 5118, [5119] = 5120, [5125] = 5127, [5126] = 5127, [5128] = 5129, [5134] = 5136, [5135] = 5136, [5137] = 5139, [5138] = 5139, [5140] = 5142, [5141] = 5142, [5143] = 5145, [5144] = 5145, [5278] = 5280, [5279] = 5280, [5281] = 5283, [5282] = 5283, [5284] = 5285, [5286] = 5287, [5515] = 5516, [5517] = 5518, [5732] = 5734, [5733] = 5734, [5735] = 5737, [5736] = 5737, [6192] = 6194, [6193] = 6194, [6195] = 6197, [6196] = 6197, [6198] = 6199, [6200] = 6201, [6249] = 6251, [6250] = 6251, [6252] = 6254, [6253] = 6254, [6255] = 6256, [6257] = 6258, [6795] = 6796, [6797] = 6798, [6799] = 6800, [6801] = 6802, [6891] = 6893, [6892] = 6893, [6894] = 6895, [6900] = 6902, [6901] = 6902, [6903] = 6904, [7033] = 7035, [7034] = 7035, [7036] = 7037, [7042] = 7044, [7043] = 7044, [7045] = 7046, [7054] = 7055, [7056] = 7057, [8541] = 8543, [8542] = 8543, [8544] = 8546, [8545] = 8546, [8547] = 8548, [8549] = 8550, [9165] = 9167, [9166] = 9167, [9168] = 9170, [9169] = 9170, [9171] = 9172, [9173] = 9174, [9267] = 9269, [9268] = 9269, [9270] = 9272, [9271] = 9272, [9273] = 9274, [9275] = 9276, [10276] = 10277, [10274] = 10275, [10268] = 10270, [10269] = 10270, [10271] = 10273, [10272] = 10273, [10471] = 10472, [10480] = 10481, [10477] = 10479, [10478] = 10479, [10468] = 10470, [10469] = 10470, [10775] = 10777, [10776] = 10777, [12092] = 12094, [12093] = 12094, [12188] = 12190, [12189] = 12190, [19840] = 19842, [19841] = 19842, [19843] = 19844, [19980] = 19982, [19981] = 19982, [19983] = 19984, [20273] = 20275, [20274] = 20275, [20276] = 20277, [17235] = 17236, [18208] = 18209, [13022] = 13023, [10784] = 10786, [10785] = 10786, [12099] = 12101, [12100] = 12101, [12197] = 12199, [12198] = 12199, [19849] = 19851, [19850] = 19851, [19852] = 19853, [19989] = 19991, [19990] = 19991, [19992] = 19993, [20282] = 20284, [20283] = 20284, [20285] = 20286, [17237] = 17238, [13020] = 13021, [10780] = 10781, [12095] = 12096, [12195] = 12196, [19845] = 19846, [19985] = 19986, [20278] = 20279, [10789] = 10790, [12102] = 12103, [12204] = 12205, [19854] = 19855, [19994] = 19995, [20287] = 20288, [10782] = 10783, [12097] = 12098, [12193] = 12194, [19847] = 19848, [19987] = 19988, [20280] = 20281, [10791] = 10792, [12104] = 12105, [12202] = 12203, [19856] = 19857, [19996] = 19997, [20289] = 20290}

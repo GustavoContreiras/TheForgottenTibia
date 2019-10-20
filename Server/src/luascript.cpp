@@ -2391,8 +2391,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "setSkills", LuaScriptInterface::luaPlayerSetSkills); //NEW! SKILLS POINTS SYSTEM
 	registerMethod("Player", "addSkillPoints", LuaScriptInterface::luaPlayerAddSkillPoints); //NEW! SKILLS POINTS SYSTEM
 	registerMethod("Player", "addSkillPointsTotal", LuaScriptInterface::luaPlayerAddSkillPointsTotal); //NEW! SKILLS POINTS SYSTEM
-
-	registerMethod("Player", "getTotalSkillPoints", LuaScriptInterface::luaPlayerGetTotalSkillPoints); //NEW! SKILLS POINTS SYSTEM
+	registerMethod("Player", "getSkillPointsTotal", LuaScriptInterface::luaPlayerGetSkillPointsTotal); //NEW! SKILLS POINTS SYSTEM
+	registerMethod("Player", "setSkillPointsTotal", LuaScriptInterface::luaPlayerSetSkillPointsTotal); //NEW! SKILLS POINTS SYSTEM
 
 	registerMethod("Player", "addAutoLootItem", LuaScriptInterface::luaPlayerAddAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
 	registerMethod("Player", "removeAutoLootItem", LuaScriptInterface::luaPlayerRemoveAutoLootItem); //NEW! AUTO LOOT PSYCHONAUT
@@ -9549,6 +9549,22 @@ int LuaScriptInterface::luaPlayerSetSkills(lua_State* L)
 }
 
 //NEW! SKILLS POINTS SYSTEM
+int LuaScriptInterface::luaPlayerSetSkillPointsTotal(lua_State* L)
+{
+	// player:setSkillPointsTotal(count)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t count = getNumber<uint16_t>(L, 2);
+		player->setSkillPointsTotal(count);
+		pushBoolean(L, true);
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+//NEW! SKILLS POINTS SYSTEM
 int LuaScriptInterface::luaPlayerAddSkillPoints(lua_State* L)
 {
 	// player:addSkillPoints(count)
@@ -9583,16 +9599,16 @@ int LuaScriptInterface::luaPlayerAddSkillPointsTotal(lua_State* L)
 }
 
 //NEW! SKILLS POINTS SYSTEM
-int LuaScriptInterface::luaPlayerGetTotalSkillPoints(lua_State* L)
+int LuaScriptInterface::luaPlayerGetSkillPointsTotal(lua_State* L)
 {
-	// player:getTotalSkillPoints()
+	// player:getSkillPointsTotal()
 	Player* player = getUserdata<Player>(L, 1);
 	if (!player) {
 		lua_pushnil(L);
 		return 1;
 	}
 
-	lua_pushnumber(L, player->totalSkillPoints);
+	lua_pushnumber(L, player->skillPointsTotal);
 	return 1;
 }
 

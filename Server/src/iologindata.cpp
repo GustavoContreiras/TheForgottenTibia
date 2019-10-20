@@ -377,7 +377,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	player->staminaMinutes = result->getNumber<uint16_t>("stamina");
 
 	player->skillPoints = result->getNumber<uint16_t>("skill_points");
-	player->totalSkillPoints = result->getNumber<uint16_t>("skill_points_total") != NULL ? result->getNumber<uint16_t>("skill_points_total") : 10;
+	player->skillPointsTotal = result->getNumber<uint16_t>("skill_points_total") != NULL ? result->getNumber<uint16_t>("skill_points_total") : 10;
 
 	static const std::string skillNames[] = {"skill_fist", "skill_club", "skill_sword", "skill_axe", "skill_dist", "skill_shielding", "skill_fishing"};
 	static constexpr size_t size = sizeof(skillNames) / sizeof(std::string);
@@ -729,7 +729,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`stamina` = " << player->getStaminaMinutes() << ',';
 
 	query << "`skill_points` = " << player->getSkillPoints() << ',';
-	query << "`skill_points_total` = " << player->getTotalSkillPoints() << ',';
+	query << "`skill_points_total` = " << player->getSkillPointsTotal() << ',';
 	query << "`skill_fist` = " << player->skills[SKILL_VITALITY].level << ',';
 	query << "`skill_club` = " << player->skills[SKILL_STRENGHT].level << ',';
 	query << "`skill_sword` = " << player->skills[SKILL_FAITH].level << ',';

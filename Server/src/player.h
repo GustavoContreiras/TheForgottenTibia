@@ -367,11 +367,14 @@ class Player final : public Creature, public Cylinder
 		uint32_t getSkillPoints() const {
 			return skillPoints;
 		}
-		uint32_t getTotalSkillPoints() const {
-			return totalSkillPoints;
+		uint32_t getSkillPointsTotal() const {
+			return skillPointsTotal;
 		}
 		void setSkillPoints(uint32_t value) {
 			skillPoints = value;
+		}
+		void setSkillPointsTotal(uint32_t value) {
+			skillPointsTotal = value;
 		}
 		uint8_t getLevelPercent() const {
 			return levelPercent;
@@ -1170,7 +1173,6 @@ class Player final : public Creature, public Cylinder
 		bool addSkillPointsTotal(uint16_t count);
 		bool setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
-		//uint32_t getTotalSkillPoints();
 
 		void refreshStats();
 
@@ -1314,7 +1316,7 @@ class Player final : public Creature, public Cylinder
 		int32_t idleTime = 0;
 
 		uint16_t skillPoints = 0;
-		uint16_t totalSkillPoints = 10;
+		uint16_t skillPointsTotal = 10;
 		uint16_t magLevel = 0;
 		uint16_t lastStatsTrainingTime = 0;
 		uint16_t staminaMinutes = 2520;

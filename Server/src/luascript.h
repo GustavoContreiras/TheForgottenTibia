@@ -973,7 +973,8 @@ class LuaScriptInterface
 		static int luaPlayerSetSkills(lua_State* L); //NEW! SKILLS POINTS SYSTEM
 		static int luaPlayerAddSkillPoints(lua_State* L); //NEW! SKILLS POINTS SYSTEM
 		static int luaPlayerAddSkillPointsTotal(lua_State* L); //NEW! SKILLS POINTS SYSTEM
-		static int luaPlayerGetTotalSkillPoints(lua_State* L); //NEW! SKILLS POINTS SYSTEM
+		static int luaPlayerGetSkillPointsTotal(lua_State* L); //NEW! SKILLS POINTS SYSTEM
+		static int luaPlayerSetSkillPointsTotal(lua_State* L); //NEW! SKILLS POINTS SYSTEM
 
 		static int luaPlayerAddAutoLootItem(lua_State* L); //NEW! AUTO LOOT PSYCHONAUT
 		static int luaPlayerRemoveAutoLootItem(lua_State* L); //NEW! AUTO LOOT PSYCHONAUT
