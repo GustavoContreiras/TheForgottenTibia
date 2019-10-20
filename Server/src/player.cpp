@@ -441,7 +441,7 @@ bool Player::setTitleDescription(PlayerTitle_t titleId)
 
 int32_t Player::getDefense() const
 {
-	int32_t defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_RESISTANCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
+	int32_t defenseSkill;
 	int32_t defenseValue = 7;
 	const Item* weapon;
 	const Item* shield;
@@ -449,7 +449,7 @@ int32_t Player::getDefense() const
 
 	if (weapon) {
 		defenseValue = weapon->getDefense() + weapon->getExtraDefense();
-		defenseSkill = getWeaponSkill(weapon);
+		defenseSkill = getWeaponSkill(weapon); //it uses the strenght skill to defend
 	}
 
 	if (shield) {
