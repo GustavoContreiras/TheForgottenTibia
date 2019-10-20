@@ -20,9 +20,9 @@ local function creatureSayCallback(cid, type, msg)
 	price = 200
 
 	if player:getLevel() >= 20 then
-		price = player:getLevel() * 10
-	elseif player:getLevel() >= 50 then
 		price = player:getLevel() * 20
+	elseif player:getLevel() >= 50 then
+		price = player:getLevel() * 40
 		if price > 5000 then
 			price = 5000
 		end
@@ -44,6 +44,8 @@ local function creatureSayCallback(cid, type, msg)
 		elseif not player:hasBlessing(5) then
 			npcHandler:say("Do you want to buy the {fifth bless} for " .. price .. " gold coins?", cid)
 			npcHandler.topic[cid] = 5
+		else
+			npcHandler:say("You do not need blessing, you already have all!", cid)
 		end
 
 	elseif (msgcontains(msg, "yes") or msgcontains(msg, "first")) and npcHandler.topic[cid] == 1 then

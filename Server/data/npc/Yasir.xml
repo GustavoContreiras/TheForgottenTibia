@@ -5,6 +5,8 @@
   <parameters>
     <parameter key="module_shop" value="1"/>
     <parameter key="shop_sellable" value="
+		soul orb, 5944, 25;
+		demonic essence, 6500, 500;
 		acorn, 11213, 10;
 		antlers, 11214, 50;
 		itemName, 5883, 120;

@@ -52,7 +52,7 @@ local function creatureSayCallback(cid, type, msg)
 		
 	-- se falar 'reset'
 	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "reset") then
-		price = player:getLevel() * player:getLevel() * 10
+		price = player:getLevel() * player:getLevel() * 5
 		if player:getStorageValue(skillPointsResetStorage) ~= 0 and player:getLevel() < 60 then
 			npcHandler:say("Since it is your first time asking me that, I'll make it for free! Are you sure?", cid)
 		else
@@ -71,7 +71,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- se falar 'yes' depois de falar 'reset'
 	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "yes") then
 		if player:getStorageValue(skillPointsResetStorage) == 1 then
-			if player:getLevel() < 60 then
+			--if player:getLevel() < 60 then
 				player:setStorageValue(skillPointsResetStorage, 0)
 				player:setTitleDescription(0)
 				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
@@ -79,11 +79,11 @@ local function creatureSayCallback(cid, type, msg)
 					player:setStorageValue(skillPointsResetStorage, 1)
 					npcHandler.topic[cid] = 0
 				end
-			else
-				npcHandler:say("Sorry, but you can't reset for free after reaching level 60.", cid)
-			end
+			--else
+				--npcHandler:say("Sorry, but you can't reset for free after reaching level 60.", cid)
+			--end
 		else
-			if player:getMoney() > price then
+			if player:getMoney() >= price then
 				player:removeMoney(price)
 				player:setTitleDescription(0)
 				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then

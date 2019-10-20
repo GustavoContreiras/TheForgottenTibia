@@ -17,11 +17,8 @@ local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
 	end
-
-	if msgcontains(msg, "explore") or msgcontains(msg, "travel") or msgcontains(msg, "trip") then 
-		npcHandler:say('Do you want to go to the {Svargrond Arena} or to the {frost dragons}?', cid)
 	
-	elseif msgcontains(msg, "frost dragons") or msgcontains(msg, "frost") or msgcontains(msg, "dragons") then
+	if msgcontains(msg, "frost dragons") or msgcontains(msg, "frost") or msgcontains(msg, "explore") or msgcontains(msg, "dragons") then
 		destination[cid] = Position(32846, 31125, 7)
 		local player = Player(cid)
 		local destination = destination[cid]

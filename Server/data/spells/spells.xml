@@ -89,7 +89,7 @@
 
 	<instant group="healing" spellid="2" name="Intense Healing" words="exura gran" intelligence="8" faith="22" mana="70" aggressive="0" selftarget="1" cooldown="1000" groupcooldown="1000" needlearn="0" script="healing/intense_healing.lua"/>
 
-	<instant group="support" spellid="38" name="Creature Illusion" words="utevo res ina" intelligence="8" faith="22" mana="100" aggressive="0" params="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="support/creature_illusion.lua"/>
+	<!--<instant group="support" spellid="38" name="Creature Illusion" words="utevo res ina" intelligence="8" faith="22" mana="100" aggressive="0" params="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="support/creature_illusion.lua"/>-->
 
 	<instant group="attack" spellid="22" name="Energy Beam" words="exevo vis lux" intelligence="23" faith="8" mana="40" direction="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="attack/energy_beam.lua"/>
 
@@ -105,7 +105,7 @@
 
 	<instant group="support" name="Create Poison Bomb Rune" words="adevo mas pox" intelligence="25" faith="8" mana="520" soul="2" premium="1" aggressive="0" cooldown="2000" groupcooldown="2000" needlearn="0" script="conjuring/poison_bomb_rune.lua"/>
 
-	<instant group="support" spellid="9" name="Summon Creature" words="utevo res" intelligence="25" faith="25" params="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="support/summon_creature.lua"/>
+	<!--<instant group="support" spellid="9" name="Summon Creature" words="utevo res" intelligence="25" faith="25" params="1" cooldown="2000" groupcooldown="2000" needlearn="0" script="support/summon_creature.lua"/>-->
 
 	<instant group="support" name="Create Animate Dead Rune" words="adana mort" intelligence="25" faith="8" mana="600" soul="5" premium="1" aggressive="0" cooldown="2000" groupcooldown="2000" needlearn="0" script="conjuring/animate_dead_rune.lua"/>
 

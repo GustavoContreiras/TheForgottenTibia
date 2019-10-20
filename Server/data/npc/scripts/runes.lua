@@ -132,16 +132,16 @@ function creatureSayCallback(cid, type, msg)
 		return false
 	end
 
-	local player = Player(cid)
+	--[[local player = Player(cid)
 	local vocationId = player:getVocation():getId()
 	local items = {
 		[1] = 2190,
 		[2] = 2182,
 		[5] = 2190,
 		[6] = 2182
-	}
+	}]]
 
-	if msgcontains(msg, 'first rod') or msgcontains(msg, 'first wand') then
+	--[[if msgcontains(msg, 'first rod') or msgcontains(msg, 'first wand') then
 		if table.contains({1, 2, 5, 6}, vocationId) then
 			if player:getStorageValue(30002) == -1 then
 				selfSay('So you ask me for a {' .. ItemType(items[vocationId]):getName() .. '} to begin your advanture?', cid)
@@ -162,7 +162,7 @@ function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, 'no') and npcHandler.topic[cid] == 1 then
 		selfSay('Ok then.', cid)
 		npcHandler.topic[cid] = 0
-	end
+	end]]
 
 	return true
 end

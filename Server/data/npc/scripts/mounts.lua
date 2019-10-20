@@ -29,18 +29,18 @@ local mounts = {
 	[27] = {'Ladybug', 20000},
 	[28] = {'Manta', 20000},
 	[29] = {'Ironblight', 20000},
-	[30] = {'Magma', 20000},
+	[30] = {'Magma Crawler', 20000},
 	[31] = {'Dragonling', 20000},
 	[32] = {'Gnarlhound', 20000},
-	[33] = {'Crimson Ray', 20000},
+	[33] = {'Crimsom Ray', 20000},
 	[34] = {'Steelbeak', 20000},
 	[35] = {'Water Buffalo', 20000},
-	[36] = {'Armoured Scorpion', 20000},
-	[37] = {'Armoured Dragonling', 20000},
-	[38] = {'Armoured Cavebear', 20000},
+	[36] = {'Tombstinger', 20000},
+	[37] = {'Platesaurian', 20000},
+	[38] = {'Ursagrodon', 20000},
 	[39] = {'The Hellgrip', 20000},
-	[40] = {'Lion', 20000},
-	[41] = {'Golden Lion', 20000},
+	[40] = {'Noble Lion', 20000},
+	[41] = {'Desert King', 20000},
 	[42] = {'Shock Head', 20000}
 }
 
@@ -65,7 +65,7 @@ local function creatureSayCallback(cid, type, msg)
 	local mountId = 0
 
 	if msgcontains(msg, "mounts") then
-		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {armoured scorpion}, {armoured dragonling}, {armoured cavebear}, {the hellgrip}, {lion}, {golden lion} and {shock head}. The {donkey} is for free!", cid)
+		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {tombstinger}, {platesaurian}, {ursagrodon}, {the hellgrip}, {noble lion}, {desert king} and {shock head}. The {donkey} is for free!", cid)
 
 	-- WIDOW QUEEN --
 	elseif msgcontains(msg, "widow queen") then
@@ -779,6 +779,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 
 	elseif npcHandler.topic[cid] == 33 and msgcontains(msg, "yes") then
+		mountId = 33
  		if not player:hasMount(mountId) then 
 			player:addMount(mountId)
 			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
@@ -846,7 +847,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- ARMOURED SCORPION --
-	elseif msgcontains(msg, "armoured scorpion") then
+	elseif msgcontains(msg, "tombstinger") then
 		mountId = 36
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -872,7 +873,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- ARMOURED DRAGONLING --
-	elseif msgcontains(msg, "armoured dragonling") then
+	elseif msgcontains(msg, "platesaurian") then
 		mountId = 37
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -896,9 +897,9 @@ local function creatureSayCallback(cid, type, msg)
 	elseif npcHandler.topic[cid] == 37 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
 		npcHandler:releaseFocus(cid)
-	
+
 	-- ARMORED CAVEBEAR --
-	elseif msgcontains(msg, "armoured cavebear") then
+	elseif msgcontains(msg, "ursagrodon") then
 		mountId = 38
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -950,7 +951,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- LION --
-	elseif msgcontains(msg, "lion") then
+	elseif msgcontains(msg, "noble lion") then
 		mountId = 40
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -976,7 +977,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- GOLDEN LION --
-	elseif msgcontains(msg, "golden lion") then
+	elseif msgcontains(msg, "desert king") or msgcontains(msg, "desert") then
 		mountId = 41
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -1136,7 +1137,7 @@ local function creatureSayCallback(cid, type, msg)
 		mountId = 23
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you did that already!", cid)
-		elseif not player:hasMount(mountId) then
+		elseif not player:hasMount(mountId) and player:hasMount(17) then
 			npcHandler:say("It will cost you " .. mounts[mountId][2] .. " gold coins, is he ready?", cid)
 			npcHandler.topic[cid] = mountId
 		elseif not player:hasMount(mountId) then
