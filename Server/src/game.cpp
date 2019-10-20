@@ -2488,7 +2488,7 @@ void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vi
 							faith - player->skills[SKILL_FAITH].level + 
 							endurance - player->skills[SKILL_ENDURANCE].level;
 
-	uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
+	//uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
 	bool checks = true;
 
 	if (player->skillPoints < pointsNeeded) {
