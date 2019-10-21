@@ -519,15 +519,19 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
 		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
 
+		Item* weapon = attackerPlayer->getWeapon(true);
+
 		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
-			WeaponType_t weaponType = attackerPlayer->getWeapon(true)->getWeaponType();
-			if (weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || 
-				weaponType == WEAPON_CLUB || weaponType == WEAPON_DISTANCE) {
-				chance = g_config.getNumber(ConfigManager::CRITICAL_CHANCE);
-				if (chance != 0 && uniform_random(1, 100) <= chance) {
-					damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
-					damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
-					g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+			if (weapon != nullptr) {
+				WeaponType_t weaponType = weapon->getWeaponType();
+				if (weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || 
+					weaponType == WEAPON_CLUB || weaponType == WEAPON_DISTANCE) {
+					chance = g_config.getNumber(ConfigManager::CRITICAL_CHANCE);
+					if (chance != 0 && uniform_random(1, 100) <= chance) {
+						damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+						damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+						g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+					}
 				}
 			}
 		}

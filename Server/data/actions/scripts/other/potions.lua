@@ -31,9 +31,9 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
-	--if not target:isPlayer() then
-	--	return true
-	--end
+	if not target:isPlayer() then
+		return true
+	end
 
 	if player:getCondition(CONDITION_EXHAUST_HEAL) then
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
