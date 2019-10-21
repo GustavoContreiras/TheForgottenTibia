@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monsters>
 	<monster name="Tester" file="tester.xml" />
+	<monster name="Experience" file="experience.xml" />
 
 	<!-- Amazons -->
 	<monster name="Amazon" file="Amazons/amazon.xml" />
@@ -136,6 +137,7 @@
 	<monster name="Baron Brute" file="Bosses/baron_brute.xml" />
 	<monster name="Battlemaster Zunzu" file="Bosses/battlemaster_zunzu.xml" />
 	<monster name="Bazir" file="Bosses/bazir.xml" />
+	<monster name="Bibby Bloodbath" file="Bosses/bibby_bloodbath.xml" />
 	<monster name="Big Boss Trolliver" file="Bosses/big_boss_trolliver.xml" />
 	<monster name="Bones" file="Bosses/bones.xml" />
 	<monster name="Boogey" file="Bosses/boogey.xml" />

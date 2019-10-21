@@ -36,15 +36,15 @@ $rowsPerPage = $highscore['rowsPerPage'];
 
 function skillName($type) {
 	$types = array(
-		1 => "Strenght",
-		2 => "Faith",
-		3 => "Intelligence",
-		4 => "Dexterity",
-		5 => "Defence",
-		6 => "Endurance",
+		1 => "Club",
+		2 => "Sword",
+		3 => "Axe",
+		4 => "Distance",
+		5 => "Shield",
+		6 => "Fish",
 		7 => "Experience", // Hardcoded
-		8 => "Magic", // Hardcoded
-		9 => "Vitality", // Since 0 returns false I will make 9 = 0. :)
+		8 => "Magic Level", // Hardcoded
+		9 => "Fist", // Since 0 returns false I will make 9 = 0. :)
 	);
 	return $types[(int)$type];
 }
@@ -73,13 +73,13 @@ if ($vocGroups) {
 		<select name="type">
 			<option value="7" <?php if ($type == 7) echo "selected"; ?>>Experience</option>
 			<option value="8" <?php if ($type == 8) echo "selected"; ?>>Magic</option>
-			<option value="5" <?php if ($type == 5) echo "selected"; ?>>Defence</option>
-			<option value="2" <?php if ($type == 2) echo "selected"; ?>>Faith</option>
-			<option value="1" <?php if ($type == 1) echo "selected"; ?>>Strenght</option>
-			<option value="3" <?php if ($type == 3) echo "selected"; ?>>Intelligence</option>
-			<option value="4" <?php if ($type == 4) echo "selected"; ?>>Dexterity</option>
-			<option value="6" <?php if ($type == 6) echo "selected"; ?>>Endurance</option>
-			<option value="9" <?php if ($type == 9) echo "selected"; ?>>Vitality</option>
+			<option value="5" <?php if ($type == 5) echo "selected"; ?>>Shield</option>
+			<option value="2" <?php if ($type == 2) echo "selected"; ?>>Sword</option>
+			<option value="1" <?php if ($type == 1) echo "selected"; ?>>Club</option>
+			<option value="3" <?php if ($type == 3) echo "selected"; ?>>Axe</option>
+			<option value="4" <?php if ($type == 4) echo "selected"; ?>>Distance</option>
+			<option value="6" <?php if ($type == 6) echo "selected"; ?>>Fish</option>
+			<option value="9" <?php if ($type == 9) echo "selected"; ?>>Fist</option>
 		</select>
 
 		<select name="vocation">

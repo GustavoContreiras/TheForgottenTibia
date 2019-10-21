@@ -25,14 +25,6 @@ $subpages = array(
 		// false means don't run this file instead of the regular file at website.com/blank.php
 		'override' => false
 	),
-	'recover' => array(
-		'file' => 'recover.php',
-		'override' => false
-	),
-	'search' => array(
-		'file' => 'search.php',
-		'override' => false
-	),
 	'houses' => array(
 		'file' => 'houses.php',
 		'override' => false
@@ -41,9 +33,5 @@ $subpages = array(
 		'file' => 'downloads.php',
 		'override' => false
 	),
-	'loginhelp' => array(
-		'file' => 'loginhelp.php',
-		'override' => false
-	)
 );
 ?>

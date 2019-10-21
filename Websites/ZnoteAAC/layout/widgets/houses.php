@@ -1,14 +1,13 @@
-<div class="well widget">
-	<div class="header">
-		Town list / houses
-	</div>
-	<div class="body">
+<div class="sidebar">
+	<h2>Search town list</h2>
+	<div class="inner">
 		<form action="houses.php" method="<?php if ($config['ServerEngine'] !== 'TFS_10') echo "post"; else echo "get" ;?>">
+		
+			Select town:<br>
 			<select name="<?php if ($config['ServerEngine'] !== 'TFS_10') echo "selected"; else echo "id" ;?>">
-				<?php
-				foreach ($config['towns'] as $id => $name) 
-					echo '<option value="'. $id .'">'. $name .'</option>';
-				?>
+			<?php
+			foreach ($config['towns'] as $id => $name) echo '<option value="'. $id .'">'. $name .'</option>';
+			?>
 			</select> 
 			<?php
 				/* Form file */

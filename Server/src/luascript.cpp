@@ -1883,9 +1883,15 @@ void LuaScriptInterface::registerFunctions()
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_ATTACKSPEEDFACTOR)
 
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_CHANCE)
-
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT)
+	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE)
+	
 	//THE FORGOTTEN TIBIA /END
 
 	registerEnumIn("configKeys", ConfigManager::SQL_PORT)

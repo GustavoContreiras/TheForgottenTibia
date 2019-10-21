@@ -1,31 +1,32 @@
-<div class="well loginContainer widget" id="loginContainer">
-	<div class="header">
-		Login / Register
-	</div>
-	<div class="body">
-		<form class="loginForm" action="login.php" method="post">
-			<div class="well">
-				<label for="login_username">Userame:</label> <input type="text" name="username" id="login_username">
-			</div>
-			<div class="well">
-				<label for="login_password">Password:</label> <input type="password" name="password" id="login_password">
-			</div>
-			<?php if ($config['twoFactorAuthenticator']): ?>
-				<div class="well">
-					<label for="login_password">Token:</label> <input type="password" name="authcode">
-				</div>
-			<?php endif; ?>
-			<div class="well">
-				<input type="submit" value="Log in" class="submitButton">
-			</div>
+<div class="sidebar">
+	<h2>Login / Register</h2>
+	<div class="inner">
+		<form action="login.php" method="post">
+		<ul id="login">
+			<li>
+				Username: <br>
+				<input type="text" name="username">
+			</li>
+			<li>
+				Password: <br>
+				<input type="password" name="password">
+			</li><?php if ($config['twoFactorAuthenticator'] == true) { ?>
+			<li>
+				Token: <br>
+				<input type="password" name="authcode">
+			</li><?php } ?>
+			<li>
+				<input type="submit" value="Log in">
+			</li>
 			<?php
-				/* Form file */
-				Token::create();
+				if ($config['use_token'] == true) {
+					/* Form file */
+					Token::create();
+				}
 			?>
-			<center>
-				<h3><a href="register.php">New account</a></h3>
-				<p>Lost <a href="recovery.php?mode=username">username</a> or <a href="recovery.php?mode=password">password</a>?</p>
-			</center>
+		<center>	<h3><a href="register.php">New account</a></h3>
+		<font size="1">- <a href="recovery.php">Account Recovery</a></font></center>
+		</ul>
 		</form>
 	</div>
 </div>

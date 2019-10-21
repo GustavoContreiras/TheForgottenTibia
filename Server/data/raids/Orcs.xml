@@ -26,7 +26,7 @@
 	<singlespawn delay="30000" name="Orc Leader" x="33076" y="31305" z="7" />
 	<singlespawn delay="30000" name="Orc Leader" x="33078" y="31305" z="7" />
 	<singlespawn delay="30000" name="Orc Leader" x="33075" y="31309" z="7" />
-	<!--<singlespawn delay="30000" name="Bibby Bloodbath" x="33076" y="31308" z="7" />-->
+	<singlespawn delay="30000" name="Bibby Bloodbath" x="33076" y="31308" z="7" />
 	<singlespawn delay="30000" name="Orc Warlord" x="33072" y="31307" z="7" />
 	<singlespawn delay="30000" name="Orc Warlord" x="33077" y="31307" z="7" />
 </raid>

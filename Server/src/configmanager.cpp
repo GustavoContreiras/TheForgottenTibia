@@ -182,8 +182,16 @@ bool ConfigManager::load()
 	//integer[DEXTERITY_ATTACKSPEEDFACTOR] = getGlobalNumber(L, "attackSpeedFactor", 10);
 
 	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
-	integer[CRITICAL_AMOUNT] = getGlobalNumber(L, "criticalAmount", 100);
-	integer[CRITICAL_CHANCE] = getGlobalNumber(L, "criticalChance", 25);
+	integer[CRITICAL_ON_ALL_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnAllWeaponsAmount", 100);
+	integer[CRITICAL_ON_ALL_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnAllWeaponsChance", 25);
+
+	boolean[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnTwoHandedDistWeapons", false); //default tibia
+	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsAmount", 50);
+	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsChance", 10);
+
+	boolean[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnOneHandedDistWeapons", false); //default tibia
+	integer[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnOneHandedDistWeaponsAmount", 25);
+	integer[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnOneHandedDistWeaponsChance", 5);
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);

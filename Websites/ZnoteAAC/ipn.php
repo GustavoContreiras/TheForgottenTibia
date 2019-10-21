@@ -25,8 +25,10 @@
 		$IPN['cmd'] = '_notify-validate';
 		$PaypalHost = (empty($IPN['test_ipn']) ? 'www' : 'www.sandbox').'.paypal.com';
 		$cURL = curl_init();
-		curl_setopt($cURL, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($cURL, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($cURL, CURLOPT_SSL_VERIFYPEER, 1);
+		curl_setopt($cURL, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($cURL, CURLOPT_SSLVERSION, 6);
+		curl_setopt($cURL, CURLOPT_CAINFO, __DIR__ . '/engine/cert/cacert.pem');
 		curl_setopt($cURL, CURLOPT_URL, "https://{$PaypalHost}/cgi-bin/webscr");
 		curl_setopt($cURL, CURLOPT_ENCODING, 'gzip');
 		curl_setopt($cURL, CURLOPT_BINARYTRANSFER, true);
@@ -59,17 +61,14 @@
 	$paypal = $config['paypal'];
 	$prices = $config['paypal_prices'];
 	
-	// Send an empty HTTP 200 OK response to acknowledge receipt of the notification 
-	header('HTTP/1.1 200 OK'); 
+	// Send an empty HTTP 204 OK response to acknowledge receipt of the notification 
+	http_response_code(204);
 
 	// Build the required acknowledgement message out of the notification just received
-	$req = 'cmd=_notify-validate';
-	foreach ($_POST as $key => $value) {
-		$value = urlencode(stripslashes($value));
-		$req  .= "&$key=$value";
+	$postdata = 'cmd=_notify-validate';
+	if(!empty($_POST)){
+		$postdata.="&".http_build_query($_POST);
 	}
-	$postdata = $req;
-	
 	// Assign payment notification values to local variables
 	$item_name        = $_POST['item_name'];
 	$item_number      = $_POST['item_number'];

@@ -18,7 +18,7 @@
 	// As far as I know, OTX is based on TFS_03, so make sure TFS version is configured TFS_03
 	$config['CustomVersion'] = false;
 
-	$config['site_title'] = 'The Forgotten Tibia';
+	$config['site_title'] = 'Znote AAC';
 	$config['site_title_context'] = 'Because open communities are good communities. :3';
 	$config['site_url'] = "http://demo.znote.eu";
 
@@ -29,15 +29,14 @@
 	// MYSQL CONNECTION DETAILS \\
 	// ------------------------ \\
 
-	// TFS DATABASE CONFIGS (SAME AS CONFIG.LUA)
 	// phpmyadmin username for OT server: (DONT USE "root" if ur hosting to public.).
-	$config['sqlUser'] = 'EDIT ON CONFIG.PHP MUST BE THE SAME AS CONFIG.LUA';
+	$config['sqlUser'] = 'tfs13';
 
 	// phpmyadmin password for OT server:
-	$config['sqlPassword'] = '';
+	$config['sqlPassword'] = 'tfs13';
 
 	// The database name to connect to. (This is usually same as username).
-	$config['sqlDatabase'] = '';
+	$config['sqlDatabase'] = 'tfs13';
 
 	// Hostname is usually localhost or 127.0.0.1.
 	$config['sqlHost'] = '127.0.0.1';
@@ -392,6 +391,19 @@
 		'housesPerPlayer' => 1,
 		'requirePremium' => false,
 		'levelToBuyHouse' => 8,
+		// Instant buy with shop points
+		'shopPoints' => array(
+			'enabled' => true,
+			// SQM => points cost
+			'cost' => array(
+				1 => 10,
+				25 => 15,
+				60 => 25,
+				100 => 30,
+				200 => 40,
+				300 => 50,
+			),
+		),
 	);
 
 	// Leave on black square in map and player should get teleported to their selected town.
@@ -450,57 +462,57 @@
 				// No vocation
 				0 => array(
 					'magic' => 0,
-					'fist' => 8,
-					'club' => 8,
-					'axe' => 8,
-					'sword' => 8,
-					'dist' => 8,
-					'shield' => 8,
-					'fishing' => 8,
+					'fist' => 10,
+					'club' => 10,
+					'axe' => 10,
+					'sword' => 10,
+					'dist' => 10,
+					'shield' => 10,
+					'fishing' => 10,
 				),
 				// Sorcerer
 				1 => array(
 					'magic' => 0,
-					'fist' => 8,
-					'club' => 8,
-					'axe' => 8,
-					'sword' => 8,
-					'dist' => 8,
-					'shield' => 8,
-					'fishing' => 8,
+					'fist' => 10,
+					'club' => 10,
+					'axe' => 10,
+					'sword' => 10,
+					'dist' => 10,
+					'shield' => 10,
+					'fishing' => 10,
 				),
 				// Druid
 				2 => array(
 					'magic' => 0,
-					'fist' => 8,
-					'club' => 8,
-					'axe' => 8,
-					'sword' => 8,
-					'dist' => 8,
-					'shield' => 8,
-					'fishing' => 8,
+					'fist' => 10,
+					'club' => 10,
+					'axe' => 10,
+					'sword' => 10,
+					'dist' => 10,
+					'shield' => 10,
+					'fishing' => 10,
 				),
 				// Paladin
 				3 => array(
 					'magic' => 0,
-					'fist' => 8,
-					'club' => 8,
-					'axe' => 8,
-					'sword' => 8,
-					'dist' => 8,
-					'shield' => 8,
-					'fishing' => 8,
+					'fist' => 10,
+					'club' => 10,
+					'axe' => 10,
+					'sword' => 10,
+					'dist' => 10,
+					'shield' => 10,
+					'fishing' => 10,
 				),
 				// Knight
 				4 => array(
 					'magic' => 0,
-					'fist' => 8,
-					'club' => 8,
-					'axe' => 8,
-					'sword' => 8,
-					'dist' => 8,
-					'shield' => 8,
-					'fishing' => 8,
+					'fist' => 10,
+					'club' => 10,
+					'axe' => 10,
+					'sword' => 10,
+					'dist' => 10,
+					'shield' => 10,
+					'fishing' => 10,
 				),
 			),
 			'male_outfit' => array(
@@ -619,7 +631,7 @@
 	$config['gameserver'] = array(
 		'ip' => '127.0.0.1',
 		'port' => 7172,
-		'name' => 'The Forgotten Tibia' // Must be identical to config.lua (OT config file) server name.
+		'name' => 'OTXServer-Global' // Must be identical to config.lua (OT config file) server name.
 	);
 
 	// How often do you want highscores to update?
@@ -627,8 +639,8 @@
 
 	// WARNING! Account names written here will have admin access to web page!
 	$config['page_admin_access'] = array(
-		'1',
-		//'secondaccountName',
+		'firstaccountName',
+		'secondaccountName',
 	);
 
 	// Built-in FORUM
@@ -920,7 +932,7 @@
 		'characterAuction' => false, // Enable/disable this system
 		// Account ID of the account that stores players in the auction.
 		// Make sure storage account has a very secure password!
-		'storage_account_id' => 5, // Separate secure account ID, not your GM.
+		'storage_account_id' => 500000, // Separate secure account ID, not your GM.
 		'step' => 5, // Minimum amount someone can raise a bid by
 		'step_duration' => 1 * 60 * 60, // When bidding over someone else, extend bid period by 1 hour.
 		'lowestLevel' => 20, // Minimum level of sold character
@@ -937,7 +949,8 @@
 		type 5 = Buy outfit (put outfit id as itemid), 
 		(put addon id as count [0 = nothing, 1 = first addon, 2 = second addon, 3 = both addons])
 		type 6 = Buy mount (put mount id as itemid)
-		type 7+ = custom coded stuff
+		type 7 = buy house (hardcoded in the house system, type used for data log)
+		type 8+ = custom coded stuff
 	*/
 	$config['shop_offers'] = array(
 		1 => array(
