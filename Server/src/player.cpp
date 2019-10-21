@@ -275,6 +275,7 @@ Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 			item = ammoItem;
 		}
 	}
+	
 	return item;
 }
 

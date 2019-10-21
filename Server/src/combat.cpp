@@ -524,12 +524,28 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
 			if (weapon != nullptr) {
 				WeaponType_t weaponType = weapon->getWeaponType();
+				const ItemType& it = Item::items[weapon->getID()];
+				bool isTwoHandedDistanceWeapon = weaponType == WEAPON_DISTANCE && it.ammoType != AMMO_NONE;
 				if (weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || 
-					weaponType == WEAPON_CLUB || weaponType == WEAPON_DISTANCE) {
+					weaponType == WEAPON_CLUB || isTwoHandedDistanceWeapon) {
 					chance = g_config.getNumber(ConfigManager::CRITICAL_CHANCE);
+					
+					if (isTwoHandedDistanceWeapon) {
+						chance = std::round(chance / 2);
+					}
+
 					if (chance != 0 && uniform_random(1, 100) <= chance) {
-						damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
-						damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+
+						int32_t bonusPrimaryDamage = std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+						int32_t bonusSecondaryDamage = std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_AMOUNT) / 100.));
+						
+						if (isTwoHandedDistanceWeapon) {
+							bonusPrimaryDamage = std::round(bonusPrimaryDamage / 2);
+							bonusSecondaryDamage = std::round(bonusSecondaryDamage / 2);
+						}
+
+						damage.primary.value += bonusPrimaryDamage;
+						damage.secondary.value += bonusSecondaryDamage;
 						g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 					}
 				}
