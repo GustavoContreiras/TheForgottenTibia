@@ -25,8 +25,21 @@ $subpages = array(
 		// false means don't run this file instead of the regular file at website.com/blank.php
 		'override' => false
 	),
+	// This layout has a custom index file, so override the default one with this
+	'index' => array(
+		'file' => 'index.php',
+		'override' => true
+	),
 	'houses' => array(
 		'file' => 'houses.php',
+		'override' => false
+	),
+	'tasks' => array(
+		'file' => 'tasks.php',
+		'override' => false
+	),
+	'login' => array(
+		'file' => 'login.php',
 		'override' => false
 	),
 	'downloads' => array(

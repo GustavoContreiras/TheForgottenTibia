@@ -264,25 +264,22 @@ if ($items) {
 							echo '<br>';
 						break;
 						case 'skillFist':
-							echo 'Fist Fighting: '.$extra.$value.'<br>';
+							echo 'Vitality: '.$extra.$value.'<br>';
 						break;
 						case 'skillAxe':
-							echo 'Axe Fighting: '.$extra.$value.'<br>';
+							echo 'Intelligence: '.$extra.$value.'<br>';
 						break;
 						case 'skillSword':
-							echo 'Sword Fighting: '.$extra.$value.'<br>';
+							echo 'Faith: '.$extra.$value.'<br>';
 						break;
 						case 'skillClub':
-							echo 'Club Fighting: '.$extra.$value.'<br>';
-						break;
-						case 'skillAxe':
-							echo 'Axe Fighting: '.$extra.$value.'<br>';
+							echo 'Strenght: '.$extra.$value.'<br>';
 						break;
 						case 'skillDist':
-							echo 'Distance Fighting: '.$extra.$value.'<br>';
+							echo 'Dexterity: '.$extra.$value.'<br>';
 						break;
 						case 'skillShield':
-							echo 'Shielding: '.$extra.$value.'<br>';
+							echo 'Defence: '.$extra.$value.'<br>';
 						break;
 						case 'range':
 							echo ucwords($array).': '.$value.'<br>';

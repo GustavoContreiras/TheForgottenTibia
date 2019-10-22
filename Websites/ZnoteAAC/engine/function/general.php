@@ -354,13 +354,13 @@ function gender_exist($gender) {
 
 function skillid_to_name($skillid) {
 	$skillname = array(
-		0 => 'fist fighting',
-		1 => 'club fighting',
-		2 => 'sword fighting',
-		3 => 'axe fighting',
-		4 => 'distance fighting',
-		5 => 'shielding',
-		6 => 'fishing',
+		0 => 'vitality',
+		1 => 'strenght',
+		2 => 'faith',
+		3 => 'intelligence',
+		4 => 'dexterity',
+		5 => 'defence',
+		6 => 'endurance',
 		7 => 'experience', // Hardcoded, does not actually exist in database as a skillid.
 		8 => 'magic level' // Hardcoded, does not actually exist in database as a skillid.
 	);

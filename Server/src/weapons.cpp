@@ -368,25 +368,61 @@ bool Weapon::useFist(Player* player, Creature* target)
 
 void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int32_t damageModifier) const
 {
-	if (scripted) {
+	/*if (scripted) {
 		LuaVariant var;
 		var.type = VARIANT_NUMBER;
 		var.number = target->getID();
 		executeUseWeapon(player, var);
-	} else {
+	} else {*/
+
 		CombatDamage damage;
 		WeaponType_t weaponType = item->getWeaponType();
-		if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
-			damage.origin = ORIGIN_RANGED;
-		} else {
-			damage.origin = ORIGIN_MELEE;
-		}
+		uint16_t chance = 0;
+		uint16_t skill = 0;
+
 		damage.primary.type = params.combatType;
 		damage.primary.value = (getWeaponDamage(player, target, item) * damageModifier) / 100;
 		damage.secondary.type = getElementType();
 		damage.secondary.value = getElementDamage(player, target, item);
+
+		if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
+			damage.origin = ORIGIN_RANGED;
+			if (weaponType == WEAPON_AMMO) {
+				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)) {
+					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE);
+					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT);
+				}			
+			} else {
+				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS)) {
+					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE);
+					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT);
+				}
+			}
+		} 
+		
+		else {
+			damage.origin = ORIGIN_MELEE;
+
+			if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
+				chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
+				skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT);
+
+				if (player->isDualWielding()) {
+					chance /= 2;
+					skill /= 2;
+				}
+			}
+				
+		}
+
+		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -50) {
+			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
+			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
+			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+		}
+
 		Combat::doCombatHealth(player, target, damage, params);
-	}
+	//}
 
 	onUsedWeapon(player, item, target->getTile());
 }

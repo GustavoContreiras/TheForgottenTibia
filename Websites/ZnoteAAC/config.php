@@ -18,25 +18,25 @@
 	// As far as I know, OTX is based on TFS_03, so make sure TFS version is configured TFS_03
 	$config['CustomVersion'] = false;
 
-	$config['site_title'] = 'Znote AAC';
-	$config['site_title_context'] = 'Because open communities are good communities. :3';
+	$config['site_title'] = 'The Forgotten Tibia';
+	$config['site_title_context'] = 'Cause everyone forgot Tibia could be this way';
 	$config['site_url'] = "http://demo.znote.eu";
 
 	// Path to server folder without / Example: C:\Users\Alvaro\Documents\GitHub\forgottenserver
-	$config['server_path'] = ''; 
+	$config['server_path'] = '/home/gustavocontreiras/TheForgottenTibia/Server/'; 
 
 	// ------------------------ \\
 	// MYSQL CONNECTION DETAILS \\
 	// ------------------------ \\
 
 	// phpmyadmin username for OT server: (DONT USE "root" if ur hosting to public.).
-	$config['sqlUser'] = 'tfs13';
+	$config['sqlUser'] = '***REMOVED***';
 
 	// phpmyadmin password for OT server:
-	$config['sqlPassword'] = 'tfs13';
+	$config['sqlPassword'] = '***REMOVED***';
 
 	// The database name to connect to. (This is usually same as username).
-	$config['sqlDatabase'] = 'tfs13';
+	$config['sqlDatabase'] = '***REMOVED***';
 
 	// Hostname is usually localhost or 127.0.0.1.
 	$config['sqlHost'] = '127.0.0.1';
@@ -444,11 +444,11 @@
 
 	$config['player'] = array(
 		'base' => array(
-			'level' => 8,
-			'health' => 185,
-			'mana' => 40,
-			'cap' => 470,
-			'soul' => 100
+			'level' => 1,
+			'health' => 120,
+			'mana' => 0,
+			'cap' => 120,
+			'soul' => 200
 		),
 		// health, mana cap etc are calculated with $config['vocations_gain'] and 'base' values of $config['player']
 		'create' => array(
@@ -559,8 +559,8 @@
 
 	// ONLY FOR TFS 0.2 (TFS 0.3/4 users don't need to care about this, as its fully loaded from db)
 	$config['house'] = array(
-		'house_file' => 'C:\test\Mystic Spirit_0.2.5\data\world\forgotten-house.xml',
-		'price_sqm' => '50', // price per house sqm
+		'house_file' => '/home/gustavocontreiras/TheForgottenTibia/Server/data/world/forgottenworld1098oldglobal-house.xml',
+		'price_sqm' => '1000', // price per house sqm
 	);
 
 	$config['delete_character_interval'] = '3 DAY'; // Delay after user character delete request is executed eg. 1 DAY, 2 HOUR, 3 MONTH etc. 
@@ -616,8 +616,8 @@
 	$config['client'] = 1098; // 954 = client 9.54
 
 	 // Download link to client.
-	$config['client_download'] = 'http://clients.halfaway.net/windows.php?tibia='. $config['client'] .'';
-	$config['client_download_linux'] = 'http://clients.halfaway.net/linux.php?tibia='. $config['client'] .'';
+	$config['client_download'] = 'http://www.mediafire.com/file/vqxbr4ngyc8i62i/TheForgottenTibia_17-10-19.zip/file';
+	$config['client_download_linux'] = 'http://www.mediafire.com/file/vqxbr4ngyc8i62i/TheForgottenTibia_17-10-19.zip/file';
 
 	$config['port'] = 7171; // Port number to connect to your OT.
 	
@@ -631,7 +631,7 @@
 	$config['gameserver'] = array(
 		'ip' => '127.0.0.1',
 		'port' => 7172,
-		'name' => 'OTXServer-Global' // Must be identical to config.lua (OT config file) server name.
+		'name' => 'The Forgotten Tibia' // Must be identical to config.lua (OT config file) server name.
 	);
 
 	// How often do you want highscores to update?
@@ -639,8 +639,8 @@
 
 	// WARNING! Account names written here will have admin access to web page!
 	$config['page_admin_access'] = array(
-		'firstaccountName',
-		'secondaccountName',
+		'0',
+		'1',
 	);
 
 	// Built-in FORUM

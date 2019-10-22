@@ -135,33 +135,33 @@ if ($name !== false) {
 					?>
 				</select>
 				<br><br>
-				Fist fighting:<br>
+				Vitality:<br>
 				<input name="fist" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 0); ?>">
 				<br><br>
-				Club fighting:<br>
+				Strenght:<br>
 				<input name="club" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 1); ?>">
 				<br><br>
-				Sword fighting:<br>
+				Faith:<br>
 				<input name="sword" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 2); ?>">
 				<br><br>
-				Axe fighting:<br>
+				Intelligence:<br>
 				<input name="axe" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 3); ?>">
 				<br><br>
 			</td>
 			<td>
-				Dist fighting:<br>
+				Dexterity:<br>
 				<input name="dist" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 4); ?>">
 				<br><br>
-				Shield fighting:<br>
+				Defence:<br>
 				<input name="shield" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 5); ?>">
 				<br><br>
-				Fish fighting:<br>
+				Endurance:<br>
 				<input name="fish" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 6); ?>">
 				<br><br>
 				Level:<br>
 				<input name="level" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 8); ?>">
 				<br><br>
-				Magic level:<br>
+				Magic:<br>
 				<input name="magic" type="text" <?php if (!$name) echo "disabled";?> value="<?php echo playerSkill($skills, 7); ?>">
 				<br><br>
 			</td>

@@ -190,7 +190,7 @@ if (empty($_POST) === false && $config['ServerEngine'] === 'TFS_03') {
 				</tr>
 				<tr>
 					<td colspan="3">
-						<input type="submit" value="Fetch houses"/>
+						<input type="submit" value="Submit"/>
 					</td>
 				</tr>
 			</table>

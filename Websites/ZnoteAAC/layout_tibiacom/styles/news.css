@@ -1,0 +1,512 @@
+.Content .BoxContent .Odd {
+
+  background-color: #D4C0A1;
+
+  padding: 2px;
+
+}
+
+.Content .BoxContent .Even {
+
+  background-color: #F1E0C6;
+
+  padding: 2px;
+
+}
+
+
+
+.Content .NewsCategoryIconSmall {
+
+  position: absolute;
+
+  top: 1px;
+
+  left: 1px;
+
+  height: 16px;
+
+  width: 16px;
+
+  background-repeat: no-repeat;
+
+}
+
+
+
+/* News Ticker */
+
+
+
+.Content #NewsTicker .BoxContent {
+
+  padding: 5px;
+
+  min-height: 90px;
+
+  height: auto !important;
+
+  height: 100px;
+
+}
+
+
+
+.Content #NewsTicker .BoxContent .Row {
+
+  position: relative;
+
+  width: 100%;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerIcon {
+
+  position: absolute;
+
+  top: 1px;
+
+  left: 1px;
+
+  height: 16px;
+
+  width: 16px;
+
+  background-repeat: no-repeat;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerText {
+
+  font-size: 9pt;
+
+  position: relative;
+
+  margin-left: 20px;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerDate {
+
+  font-size: 7pt;
+
+  position: absolute;
+
+  top: 0px;
+
+  float: left;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerShortText {
+
+  margin-left: 85px;
+
+  height: 14px;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerFullText {
+
+  margin-left: 85px;
+
+  margin-right: 20px;
+
+  display: none;
+
+}
+
+
+
+.Content #NewsTicker .NewsTickerExtend {
+
+  position: relative;
+
+  right: 0px;
+
+  top: 1px;
+
+  right: 1px;
+
+  height: 12px;
+
+  width: 12px;
+
+  background-repeat: no-repeat;
+
+  float: right;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+}
+
+
+
+/* Featured Article */
+
+
+
+.Content #FeaturedArticle .BoxContent {
+
+  position:relative;
+
+  height: 100px;
+
+  padding: 5px;
+
+  padding-left: 10px;
+
+  min-height: 100px;
+
+  height: auto !important;
+
+  height: 110px;
+
+  line-height: 10.5pt;
+
+}
+
+.Content #FeaturedArticle .NewsHeadline {
+
+  margin-top: 5px;
+
+}
+
+
+
+.Content #FeaturedArticle #TeaserThumbnail {
+
+  position: relative;
+
+  top: 0px;
+
+  right: 0px;
+
+  height: 100px;
+
+  width: 150px;
+
+  margin-left: 10px;
+
+  background-color: black;
+
+  z-index: 90;
+
+  float: right;
+
+}
+
+
+
+#ContentHelper #FeaturedArticle:first-child .BoxContent {
+
+  padding: 10px;
+
+}
+
+
+
+.Content #FeaturedArticle #TeaserText {
+
+  height: 100px;
+
+  overflow: hidden;
+
+  z-index: 0;
+
+}
+
+
+
+.Content #FeaturedArticle #Link {
+
+  position: absolute;
+
+  top: 0px;
+
+  right: 0px;
+
+  margin: 89 165 0 0;
+
+  z-index: 99;
+
+}
+
+
+
+.Content #FeaturedArticle .NewsHeadlineBackground {
+
+  position: relative;
+
+  height: 28px;
+
+  margin-bottom: 5px;
+
+  background-repeat: repeat-x;
+
+  border-left: 1px solid #000000;
+
+  border-right: 1px solid #000000;
+
+}
+
+
+
+.Content #FeaturedArticle .NewsHeadlineIcon {
+
+  position: absolute;
+
+  top: -1px;
+
+  left: 0px;
+
+  margin-left: 5px;
+
+  margin-right: 5px;
+
+  float:left;
+
+}
+
+
+
+.Content #FeaturedArticle .NewsHeadlineDate {
+
+  font-size: 7pt;
+
+  position: absolute;
+
+  top: 9px;
+
+  left: 50px;
+
+  width: 85px;
+
+  color: white;
+
+}
+
+
+
+.Content #FeaturedArticle .NewsHeadlineText {
+
+  position: relative;
+
+  top: 8px;
+
+  left: 135px;
+
+  font-size: 10pt;
+
+  font-weight: bold;
+
+  color: white;
+
+}
+
+
+
+/* News */
+
+
+
+.Content #News .BoxContent {
+
+  min-height: 100px;
+
+  height: auto !important;
+
+  height: 110px;
+
+}
+
+
+
+.Content #News .NewsHeadlineBackground {
+
+  position: relative;
+
+  height: 28px;
+
+  margin-bottom: 5px;
+
+  background-repeat: repeat-x;
+
+  border-left: 1px solid #000000;
+
+  border-right: 1px solid #000000;
+
+}
+
+
+
+.Content #News .NewsHeadlineIcon {
+
+  position: absolute;
+
+  top: -1px;
+
+  left: 0px;
+
+  margin-left: 5px;
+
+  margin-right: 5px;
+
+}
+
+
+
+.Content #News .NewsHeadlineDate {
+
+  font-size: 7pt;
+
+  position: absolute;
+
+  top: 10px;
+
+  left: 50px;
+
+  width: 85px;
+
+  color: white;
+
+}
+
+
+
+.Content #News .NewsHeadlineText {
+
+  position: relative;
+
+  top: 7px;
+
+  left: 135px;
+
+  font-size: 10pt;
+
+  font-weight: bold;
+
+  color: white;
+
+}
+
+
+
+/* News Archive */
+
+
+
+.Content #NewsArchive .NewsHeadlineBackground {
+
+  position: relative;
+
+  height: 28px;
+
+  margin-bottom: 5px;
+
+  background-repeat: repeat-x;
+
+  border-left: 1px solid #000000;
+
+  border-right: 1px solid #000000;
+
+}
+
+
+
+.Content #NewsArchive .NewsHeadlineIcon {
+
+  position: absolute;
+
+  top: -1px;
+
+  left: 0px;
+
+  margin-left: 5px;
+
+  margin-right: 5px;
+
+}
+
+
+
+.Content #NewsArchive .NewsHeadlineDate {
+
+  font-size: 7pt;
+
+  position: absolute;
+
+  top: 9px;
+
+  left: 50px;
+
+  width: 85px;
+
+  color: white;
+
+}
+
+
+
+.Content #NewsArchive .NewsHeadlineText {
+
+  position: relative;
+
+  top: 7px;
+
+  left: 135px;
+
+  font-size: 10pt;
+
+  font-weight: bold;
+
+  color: white;
+
+}
+/* EDITED */
+
+.BoxContent .message .title {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  background-image: url(images/newsheadline_background.gif);
+color: #ffffff;
+}
+.latestnews {
+
+  min-height: 100px;
+
+  height: auto !important;
+  margin: auto;
+  position: relative:
+  top: 25px;
+
+}
+#Menu .ui-widget-content {
+background: none;
+background-color: transparent;
+border:none;
+}
+
+.BoxContent table tbody tr{
+	font-style: normal;
+	font-weight: normal;
+	background-color: #D4C0A1;
+
+
+}
+
+
+

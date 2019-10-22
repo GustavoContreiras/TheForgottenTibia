@@ -375,13 +375,13 @@ if ($auction['characterAuction']) {
 				<table class="auction_skills">
 					<tr class="yellow"><td colspan="4">Character skills:</td></tr>
 					<tr><td>magic</td><td><?php echo $character['magic']; ?></td></tr>
-					<tr><td>fist</td><td><?php echo $character['fist']; ?></td></tr>
-					<tr><td>club</td><td><?php echo $character['club']; ?></td></tr>
-					<tr><td>sword</td><td><?php echo $character['sword']; ?></td></tr>
-					<tr><td>axe</td><td><?php echo $character['axe']; ?></td></tr>
-					<tr><td>dist</td><td><?php echo $character['dist']; ?></td></tr>
-					<tr><td>shielding</td><td><?php echo $character['shielding']; ?></td></tr>
-					<tr><td>fishing</td><td><?php echo $character['fishing']; ?></td></tr>
+					<tr><td>vitality</td><td><?php echo $character['fist']; ?></td></tr>
+					<tr><td>strenght</td><td><?php echo $character['club']; ?></td></tr>
+					<tr><td>faith</td><td><?php echo $character['sword']; ?></td></tr>
+					<tr><td>intelligence</td><td><?php echo $character['axe']; ?></td></tr>
+					<tr><td>dexterity</td><td><?php echo $character['dist']; ?></td></tr>
+					<tr><td>defence</td><td><?php echo $character['shielding']; ?></td></tr>
+					<tr><td>endurance</td><td><?php echo $character['fishing']; ?></td></tr>
 				</table>
 				<?php
 				$server = $config['shop']['imageServer'];

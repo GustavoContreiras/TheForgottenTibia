@@ -498,6 +498,7 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 	Player* targetPlayer = target ? target->getPlayer() : nullptr;
 
 	if ((attackerPlayer && damage.primary.value < 0) || damage.secondary.value < 0) {
+		
 		uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHCHANCE);
 		uint16_t skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT);
 		if (chance != 0 && uniform_random(1, 100) <= chance) {
@@ -518,76 +519,10 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 
 		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
 		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
-
-		Item* weapon = attackerPlayer->getWeapon(true);
-		bool isMeleeWeapon;
-		bool isOneHandedDistWeapon;
-		bool isTwoHandedDistWeapon;
-
-		// Is holding a weapon
-		if (weapon != nullptr) {
-			const WeaponType_t weaponType = weapon->getWeaponType();
-			const ItemType& it = Item::items[weapon->getID()];
-			isMeleeWeapon = weaponType == WEAPON_SWORD || weaponType == WEAPON_AXE || weaponType == WEAPON_CLUB;
-			isOneHandedDistWeapon = weaponType == WEAPON_DISTANCE && it.ammoType == AMMO_NONE;
-			isTwoHandedDistWeapon = weaponType == WEAPON_DISTANCE && it.ammoType != AMMO_NONE;
-		}
-
-		// Attacker player weapon is melee and critical is activated
-		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS) && isMeleeWeapon) {
-
-			chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
-			bool isDualWielding = attackerPlayer->isDualWielding();
-
-			// Attacker player is dual wielding
-			if (isDualWielding) {
-				chance /= 2;
-			}
-
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-
-				int32_t bonusPrimaryDmg = std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT) / 200.));
-				int32_t bonusSecondaryDmg = std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT) / 200.));
-
-				// Attacker player is dual wielding
-				if (isDualWielding) {
-					bonusPrimaryDmg /= 2;
-					bonusSecondaryDmg /= 2;
-				}
-
-				damage.primary.value += bonusPrimaryDmg;
-				damage.secondary.value += bonusSecondaryDmg;
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
-		}
-
-		// Attacker player weapon is one handed distance and critical is activated
-		else if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS) && isOneHandedDistWeapon) {
-			chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE);
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT) / 100.));;
-				damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT) / 100.));;
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
-		}
-
-		// Attacker player weapon is two handed distance and critical is activated
-		else if (g_config.getBoolean(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS) && isTwoHandedDistWeapon) {
-			chance = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE);
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				damage.primary.value += std::round(damage.primary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT) / 100.));;
-				damage.secondary.value += std::round(damage.secondary.value * (g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT) / 100.));;
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
-		}
-
-		// Attacker player weapon is wand, rod, fist, spell, trap item, field...
-		else { 
-			if (chance != 0 && uniform_random(1, 100) <= chance) {
-				damage.primary.value += std::round(damage.primary.value * (skill / 100.));
-				damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
-				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-			}
+		if (chance != 0 && uniform_random(1, 100) <= chance) {
+			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
+			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
+			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 		}
 
 		if (targetPlayer && caster->getPlayer() && targetPlayer->getSkull() != SKULL_BLACK) {
