@@ -27,3 +27,14 @@ Server/TheForgottenTibiaServer-x64.pdb
 
 Websites/GesiorAAC/
 Client/theforgottentibia.log
+Websites/ZnoteAAC/engine/cache/news.cache.php
+Websites/ZnoteAAC/engine/cache/houses.cache.php
+Websites/ZnoteAAC/engine/cache/deaths.cache.php
+Websites/ZnoteAAC/engine/cache/topPlayer.cache.php
+Websites/ZnoteAAC/engine/cache/killers.cache.php
+Websites/ZnoteAAC/engine/cache/houses/sqldata.cache.php
+Websites/ZnoteAAC/engine/cache/support.cache.php
+Websites/ZnoteAAC/engine/cache/highscores.cache.php
+Websites/ZnoteAAC/engine/cache/gallery.cache.php
+Websites/ZnoteAAC/engine/cache/victims.cache.php
+Websites/ZnoteAAC/engine/cache/lastkillers.cache.php
