@@ -405,7 +405,7 @@ function setSkillsTooltips()
 	skillDexterity:setTooltip(SkillDescription.Dexterity)
 
 	local skillResistance = skillsWindow:recursiveGetChildById('skillId5')
-	skillResistance:setTooltip(SkillDescription.Resistance)
+	skillResistance:setTooltip(SkillDescription.Defence)
 
 	local skillEndurance = skillsWindow:recursiveGetChildById('skillId6')
 	skillEndurance:setTooltip(SkillDescription.Endurance)

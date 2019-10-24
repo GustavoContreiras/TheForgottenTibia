@@ -185,9 +185,12 @@ function updateSpelllist()
     local tmpLabel = spellList:getChildById(spell)
 
     local localPlayer = g_game.getLocalPlayer()
-    if (not(filters.canUse) or (info.intelligence <= localPlayer:getSkillLevel(Skill.Intelligence) and info.faith <= localPlayer:getSkillLevel(Skill.Faith) and info.strenght <= localPlayer:getSkillLevel(Skill.Strenght) and info.dexterity <= localPlayer:getSkillLevel(Skill.Dexterity))) and 
-	   (filters.groupId == FILTER_GROUP_ANY or info.group[filters.groupId]) and 
-	   (filters.premium == FILTER_PREMIUM_ANY or (info.premium and filters.premium == FILTER_PREMIUM_YES) or (not(info.premium) and filters.premium == FILTER_PREMIUM_NO)) then
+    if (not(filters.canUse) or (info.intelligence <= localPlayer:getSkillLevel(Skill.Intelligence) and 
+								info.faith <= localPlayer:getSkillLevel(Skill.Faith) and 
+								info.strenght <= localPlayer:getSkillLevel(Skill.Strenght) and 
+								info.dexterity <= localPlayer:getSkillLevel(Skill.Dexterity))) and 
+								(filters.groupId == FILTER_GROUP_ANY or info.group[filters.groupId]) and 
+								(filters.premium == FILTER_PREMIUM_ANY or (info.premium and filters.premium == FILTER_PREMIUM_YES) or (not(info.premium) and filters.premium == FILTER_PREMIUM_NO)) then
       tmpLabel:setVisible(true)
     else
       tmpLabel:setVisible(false)
@@ -204,7 +207,7 @@ function updateSpellInformation(widget)
   local type        = ''
   local cooldown    = ''
   local strenght    = ''
-  local dexterity    = ''
+  local dexterity   = ''
   local faith       = ''
   local intelligence = ''
   local mana        = ''

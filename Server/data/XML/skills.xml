@@ -9,7 +9,9 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="1" name="Strenght" cost="1" initial="8"
 		health="0"
@@ -19,7 +21,9 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="2" name="Faith" cost="1" initial="8"
 		health="0" 
@@ -29,7 +33,9 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="2"/>	
+		rodMaxDamage="2"
+		healthRegen="0"
+		manaRegen="0"/>	
 		
 	<skill id="3" name="Intelligence" cost="1" initial="8"
 		health="0" 
@@ -39,7 +45,9 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="1"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 
 	<skill id="4" name="Dexterity" cost="1" initial="8"
 		health="0" 
@@ -49,17 +57,21 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="5" name="Defence" cost="1" initial="8"
-		health="5" 
+		health="0" 
 		mana="0" 
 		soul="0"
 		cap="0" 
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 				
 	<skill id="6" name="Endurance" cost="1" initial="8"
 		health="5" 
@@ -69,7 +81,9 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="5"
+		manaRegen="5"/>
 		
 	<skill id="7" name="Magic" cost="3" initial="0"
 		health="0" 
@@ -79,6 +93,8 @@
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
-		rodMaxDamage="0"/>
+		rodMaxDamage="0"
+		healthRegen="0"
+		manaRegen="0"/>
 
 </skills>
