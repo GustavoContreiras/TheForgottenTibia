@@ -1,0 +1,238 @@
+/* (C) 2008 YOOtheme.com */
+
+a:focus { outline: none; }
+button::-moz-focus-inner { border: none; }
+
+div.yoo-search { 
+	position: relative;
+}
+
+div.yoo-search ul {
+	margin: 0px;
+	padding: 0px;
+}
+ 
+div.yoo-search li {
+	margin: 0px;
+	padding: 0px;
+	display: block;
+}/* (C) 2008 YOOtheme.com */
+
+div.default div.yoo-search {
+	width: 120px;
+	height: 18px;
+}
+
+/* searchbox */
+div.default div.yoo-search div.searchbox {
+	width: 120px;
+	height: 18px;
+	padding: 0px;
+	background: url(searchbox_bg.png) 0 0 no-repeat;
+}
+
+div.default div.yoo-search div.searchbox:hover  {
+	background: url(searchbox_bg.png) 0 -18px no-repeat;
+}
+
+div.default div.yoo-search div.searchbox:hover input {
+	color: #000000;
+}
+
+div.default div.yoo-search div.searchbox input:focus {
+	color: #000000;
+}
+
+div.default div.yoo-search div.searchbox input {
+	width: 84px;
+	height: 15px;
+	padding: 3px 0px 0px 0px;
+	border: none;
+	outline: none;
+	background: none;
+	float: left;
+	color: #646464;
+	font-size: 11px;
+}
+
+div.default div.yoo-search div.searchbox button {
+	width: 18px;
+	height: 18px;
+	padding: 0px;
+	border: none;
+	background: url(search_button.png.htm) 0 0 no-repeat;
+	float: left;
+	cursor: pointer;
+	line-height: 0px;
+}
+
+div.default div.yoo-search div.searchbox button.search-magnifier {
+	background: url(magnifier_icon.png) 0 0 no-repeat;
+}
+
+div.default div.yoo-search div.searchbox button.search-close {
+	background: url(close_icon.png) 0 0 no-repeat;
+}
+
+div.default div.yoo-search div.searchbox button.search-loader {
+	background: url(loader_icon.gif) 0 0 no-repeat;
+}
+
+/* resultbox */
+div.default div.yoo-search div.resultbox {
+	position: absolute;
+	right: 0px;
+	top: 18px;
+	z-index: 10;
+}
+
+div.default div.yoo-search div.resultbox-bg {
+	border-left: 1px solid #C8C8C8;
+	border-right: 1px solid #C8C8C8;
+	background: #FAFAFA;
+}
+
+div.default div.yoo-search div.resultbox-bl {
+	background: url(resultbox_bl-1.png) 0 100% no-repeat;
+}
+
+div.default div.yoo-search div.resultbox-br {
+	padding: 0px 10px 0px 10px;
+	background: url(resultbox_br-1.png) 100% 100% no-repeat;
+}
+
+div.default div.yoo-search div.resultbox-b {
+	height: 30px;
+	background: url(resultbox_b-1.png) 0 100% repeat-x;
+	text-align: right;
+	line-height: 28px;
+	font-weight: bold;
+}
+
+div.default div.yoo-search div.resultbox-b a:link,
+div.default div.yoo-search div.resultbox-b a:visited,
+div.default div.yoo-search div.resultbox-b a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+div.default div.yoo-search a.search-more {
+	cursor: pointer;
+	color: #ffffff;
+}
+
+div.default div.yoo-search span.search-more {
+	display: block;
+	width: 20px;
+	height: 30px;
+	background: url(more_icon-1.png) 0 0 no-repeat;
+	float: right;
+	cursor: pointer;
+}
+
+div.default div.yoo-search h3.search-header {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 5px;
+	height: 25px;
+	background: url(header_bg-1.png) 0 0 repeat-x;
+	line-height: 25px;
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 100%;
+}
+
+div.default div.yoo-search .resultbox-bg a {
+	padding: 5px 10px 5px 10px;
+	background: #FAFAFA;
+	display: block;
+	font-size: 90%;
+	line-height: 140%;
+	overflow: hidden;
+}
+
+div.default div.yoo-search .search-categories a {
+	min-height: 45px;
+}
+
+div.default div.yoo-search .search-results a {
+	min-height: 30px;
+}
+
+div.default div.yoo-search .resultbox-bg a:hover {
+	background: #E6E7E8;
+}
+
+div.default div.yoo-search .resultbox-bg a:link,
+div.default div.yoo-search .resultbox-bg a:visited,
+div.default div.yoo-search .resultbox-bg a:hover {
+	color: #646464;
+	text-decoration: none;
+}
+
+div.default div.yoo-search .resultbox-bg a h3 {
+	margin: 0px;
+	font-size: 100%;
+	color: #323232;
+	line-height: 140%;
+	font-weight: bold;
+}
+
+div.default div.yoo-search .resultbox-bg img {
+	margin-right: 10px;
+	float: left;
+}/* (C) 2008 YOOtheme.com */
+
+body.yootools-black div.default div.yoo-search div.resultbox-bg {
+	border-left: 1px solid #323232;
+	border-right: 1px solid #323232;
+	background: #1e1e1e;
+}
+
+body.yootools-black div.default div.yoo-search div.resultbox-bl {
+	background: url(resultbox_bl.png) 0 100% no-repeat;
+}
+
+body.yootools-black div.default div.yoo-search div.resultbox-br {
+	background: url(resultbox_br.png) 100% 100% no-repeat;
+}
+
+body.yootools-black div.default div.yoo-search div.resultbox-b {
+	background: url(resultbox_b.png) 0 100% repeat-x;
+}
+
+body.yootools-black div.default div.yoo-search div.resultbox-b a:link,
+body.yootools-black div.default div.yoo-search div.resultbox-b a:visited,
+body.yootools-black div.default div.yoo-search div.resultbox-b a:hover {
+	color: #C8C8C8;
+}
+
+body.yootools-black div.default div.yoo-search a.search-more {
+	color: #C8C8C8;
+}
+
+body.yootools-black div.default div.yoo-search span.search-more {
+	background: url(more_icon.png) 0 0 no-repeat;
+}
+
+body.yootools-black div.default div.yoo-search h3.search-header {
+	background: url(header_bg.png) 0 0 repeat-x;
+	color: #C8C8C8;
+}
+
+body.yootools-black div.default div.yoo-search .resultbox-bg a {
+	background: #1e1e1e;
+}
+
+body.yootools-black div.default div.yoo-search .resultbox-bg a:hover {
+	background: #282828;
+}
+
+body.yootools-black div.default div.yoo-search .resultbox-bg a:link,
+body.yootools-black div.default div.yoo-search .resultbox-bg a:visited,
+body.yootools-black div.default div.yoo-search .resultbox-bg a:hover {
+	color: #646464;
+}
+
+body.yootools-black div.default div.yoo-search .resultbox-bg a h3 {
+	color: #969696;
+}

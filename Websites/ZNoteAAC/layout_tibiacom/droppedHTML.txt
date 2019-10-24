@@ -1,0 +1,41 @@
+								<!-- <script type="text/javascript" src="layout/javascripts/newsticker.js"></script>
+								<div id="newsticker" class="Box">
+									<div class="Corner-tl" style="background-image:url(layout/images/global/content/corner-tl.gif);"></div>
+									<div class="Corner-tr" style="background-image:url(layout/images/global/content/corner-tr.gif);"></div>
+									<div class="Border_1" style="background-image:url(layout/images/global/content/border-1.gif);"></div>
+									<div class="BorderTitleText" style="background-image:url(layout/images/global/content/title-background-green.gif);"></div>
+									<img id="ContentBoxHeadline" class="Title" src="layout/images/global/strings/headline-newsticker.gif" alt="Contentbox headline" />
+									<div class="Border_2">
+										<div class="Border_3">
+											{include_php file="templates/tibia/newstickers.php"}
+										</div>
+									</div>
+									<div class="Border_1" style="background-image:url(layout/images/global/content/border-1.gif);"></div>
+									<div class="CornerWrapper-b">
+										<div class="Corner-bl" style="background-image:url(layout/images/global/content/corner-bl.gif);"></div>
+									</div>
+									<div class="CornerWrapper-b">
+										<div class="Corner-br" style="background-image:url(layout/images/global/content/corner-br.gif);"></div>
+									</div>
+								</div>
+								<div id="featuredarticle" class="Box">
+									<div class="Corner-tl" style="background-image:url(layout/images/global/content/corner-tl.gif);"></div>
+									<div class="Corner-tr" style="background-image:url(layout/images/global/content/corner-tr.gif);"></div>
+									<div class="Border_1" style="background-image:url(layout/images/global/content/border-1.gif);"></div>
+									<div class="BorderTitleText" style="background-image:url(layout/images/global/content/title-background-green.gif);"></div>
+									<img id="ContentBoxHeadline" class="Title" src="layout/images/global/strings/headline-featuredarticle.gif" alt="Contentbox headline" />
+									<div class="Border_2">
+										<div class="Border_3">
+											<div class="BoxContent" style="background-image:url(layout/images/global/content/scroll.gif);"> 
+												{include_php file="templates/tibia/featuredarticle.php"}
+											</div>
+										</div>
+									</div>
+									<div class="Border_1" style="background-image:url(layout/images/global/content/border-1.gif);"></div>
+									<div class="CornerWrapper-b">
+										<div class="Corner-bl" style="background-image:url(layout/images/global/content/corner-bl.gif);"></div>
+									</div>
+									<div class="CornerWrapper-b">
+										<div class="Corner-br" style="background-image:url(layout/images/global/content/corner-br.gif);"></div>
+									</div>
+								</div> -->
