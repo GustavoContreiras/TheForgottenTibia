@@ -404,15 +404,21 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			damage.origin = ORIGIN_MELEE;
 
 			if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
-				chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
-				skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT);
 
-				if (player->isDualWielding()) {
-					chance /= 2;
-					skill /= 2;
+				if (weaponType == WEAPON_AXE || weaponType == WEAPON_SWORD || weaponType == WEAPON_CLUB) {
+					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
+					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT);
+
+					if (player->isDualWielding()) {
+						chance /= 2;
+						skill /= 2;
+					}
 				}
+
+				/*if (weaponType == WEAPON_WAND) {
+
+				}*/
 			}
-				
 		}
 
 		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -50) {

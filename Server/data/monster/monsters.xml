@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monsters>
-	<monster name="Tester" file="tester.xml" />
+	<monster name="Trainer" file="trainer.xml" />
 	<monster name="Experience" file="experience.xml" />
 
 	<!-- Amazons -->

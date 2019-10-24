@@ -54,7 +54,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:addBlessing(1)
 				player:removeMoney(price)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-				npcHandler:say("Here you are, the first one! Do you want the next {bless}?", cid)
+				npcHandler:say("Here you are, the first one! Do you want the next {bless}? It is " .. price .. " gold coins", cid)
 				npcHandler.topic[cid] = 2
 			else
 				npcHandler:say("You already got this one!", cid)

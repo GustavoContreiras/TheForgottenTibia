@@ -4,8 +4,8 @@ combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_HOLYDAMAGE)
 combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, CONST_ANI_SMALLHOLY)
 
 function onGetFormulaValues(player, level, magicLevel)
-	local min = (level / 5) + (magicLevel * 1.9) + 8	-- lv 100 ml 60 = 142
-	local max = (level / 5) + (magicLevel * 2.7) + 18	-- lv 100 ml 60 = 200
+	local min = (level / 5) + (magicLevel * 1.9) + 8
+	local max = (level / 5) + (magicLevel * 2.6) + 18
 	return -min, -max
 end
 
