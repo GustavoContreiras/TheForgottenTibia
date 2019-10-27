@@ -3936,6 +3936,12 @@ void Player::changeMana(int32_t manaChange)
 	sendStats();
 }
 
+void Player::addResetsCount(int32_t value)
+{
+	resets += value;
+	sendStats();
+}
+
 void Player::changeSoul(int32_t soulChange)
 {
 	if (soulChange > 0) {

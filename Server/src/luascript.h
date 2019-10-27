@@ -888,6 +888,11 @@ class LuaScriptInterface
 		static int luaPlayerGetStamina(lua_State* L);
 		static int luaPlayerSetStamina(lua_State* L);
 
+		static int luaPlayerGetBlessingsCount(lua_State* L);
+
+		static int luaPlayerGetResetsCount(lua_State* L);
+		static int luaPlayerAddResetsCount(lua_State* L);
+
 		static int luaPlayerGetSoul(lua_State* L);
 		static int luaPlayerAddSoul(lua_State* L);
 		static int luaPlayerGetMaxSoul(lua_State* L);

@@ -2925,6 +2925,8 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint32_t>(std::min<int32_t>(player->getMaxHealth(), std::numeric_limits<uint16_t>::max())); //maxHealth
 	msg.add<uint32_t>(std::min<int32_t>(player->getMana(), std::numeric_limits<uint16_t>::max())); //mana
 	msg.add<uint32_t>(std::min<int32_t>(player->getMaxMana(), std::numeric_limits<uint16_t>::max())); //maxMana
+	msg.addByte(player->getBlessingsCount()); //blessings
+	msg.addByte(player->getResetsCount()); //resets
 	msg.addByte(player->getSoul()); //soul
 	msg.add<uint16_t>(player->getSkillPoints()); //skillPoints
 	msg.add<uint32_t>(player->getFreeCapacity()); //freeCap

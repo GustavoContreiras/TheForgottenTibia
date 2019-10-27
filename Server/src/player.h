@@ -385,6 +385,14 @@ class Player final : public Creature, public Cylinder
 		uint32_t getBaseMagicLevel() const {
 			return magLevel;
 		}
+		
+		uint8_t getBlessingsCount() const {
+			return std::bitset<5>(blessings).count(); 
+		}
+		uint8_t getResetsCount() const {
+			return resets;
+		}
+		void addResetsCount(int32_t value);
 		uint8_t getSoul() const {
 			return soul;
 		}
@@ -1325,6 +1333,7 @@ class Player final : public Creature, public Cylinder
 
 		uint8_t soul = 0;
 		uint8_t blessings = 0;
+		uint8_t resets = 0;
 		uint8_t levelPercent = 0;
 		uint8_t wandMaxDamageBonus = 0;
 		uint8_t rodMaxDamageBonus = 0;

@@ -2317,6 +2317,9 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getStamina", LuaScriptInterface::luaPlayerGetStamina);
 	registerMethod("Player", "setStamina", LuaScriptInterface::luaPlayerSetStamina);
 
+	registerMethod("Player", "getBlessingsCount", LuaScriptInterface::luaPlayerGetBlessingsCount);
+	registerMethod("Player", "getResetsCount", LuaScriptInterface::luaPlayerGetResetsCount);
+	registerMethod("Player", "addResetsCount", LuaScriptInterface::luaPlayerAddResetsCount);
 	registerMethod("Player", "getSoul", LuaScriptInterface::luaPlayerGetSoul);
 	registerMethod("Player", "addSoul", LuaScriptInterface::luaPlayerAddSoul);
 	registerMethod("Player", "getMaxSoul", LuaScriptInterface::luaPlayerGetMaxSoul);
@@ -8343,6 +8346,44 @@ int LuaScriptInterface::luaPlayerSetStamina(lua_State* L)
 	if (player) {
 		player->staminaMinutes = std::min<uint16_t>(2520, stamina);
 		player->sendStats();
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetBlessingsCount(lua_State* L)
+{
+	// player:getBlessingsCount()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getBlessingsCount());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetResetsCount(lua_State* L)
+{
+	// player:getResetsCount()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getResetsCount());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerAddResetsCount(lua_State* L)
+{
+	// player:addResetsCount(value)
+	int32_t value = getNumber<int32_t>(L, 2);
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		player->addResetsCount(value);
+		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
 	}
