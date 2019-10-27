@@ -33,75 +33,251 @@ KILLTASKS_STATUS_NOT_DOING = -1
 KILLTASKS_STATUS_DOING = 1
 KILLTASKS_STATUS_DONE = 2
 KILLTASKS_MONSTERS = {
-    ['troll']           	= {plural = "trolls", 		onlist = 1, amount = 25,     countstorage = 19000, statusstorage = 5010, startvalue = 1, exp = 5000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 10}}}, -- 20 xp
-    ['orc']             	= {plural = "orcs", 		onlist = 1, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}}, -- 25 xp
-    ['orc spearman']           	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc warrior']           	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc berserker']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc leader']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc rider']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc marauder']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc shaman']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['orc warlord']          	= {plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 15}}},
-    ['rotworm']         	= {plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19002, statusstorage = 5012, startvalue = 1, exp = 10000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 25}}}, -- 40 xp
-    ['minotaur']        	= {plural = "minotaurs", 	onlist = 1, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 25}}}, -- 50 xp
-    ['minotaur archer']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 25}}},
-    ['minotaur guard']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 25}}},
-    ['minotaur mage']        	= {plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 25}}},
-    ['amazon']          	= {plural = "amazons", 		onlist = 1, amount = 75,     countstorage = 19004, statusstorage = 5014, startvalue = 1, exp = 45000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 35}}}, -- 60 xp
-    ['ghoul']           	= {plural = "ghouls", 		onlist = 1, amount = 75,	 countstorage = 19005, statusstorage = 5015, startvalue = 1, exp = 63750, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 40}}}, -- 85 xp
-    ['cyclops']         	= {plural = "cyclops", 		onlist = 1, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 50}}}, -- 150 xp
-    ['cyclops drone']         	= {plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 50}}}, 
-    ['cyclops smith']         	= {plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 50}}},
-    ['vampire']         	= {plural = "vampires", 	onlist = 1, amount = 100,    countstorage = 19007, statusstorage = 5017, startvalue = 1, exp = 152500, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 50}}}, -- 305 xp
-    ['necromancer']     	= {plural = "necromancers", 	onlist = 1, amount = 100,    countstorage = 19008, statusstorage = 5018, startvalue = 1, exp = 290000, 	skillpoints = 0, 
-	 items = {{id = 2152, count = 50}}}, -- 580 xp
-    ['dragon']          	= {plural = "dragons", 		onlist = 0, amount = 100,    countstorage = 19009, statusstorage = 5019, startvalue = 1, exp = 0, 	skillpoints = 1, 
-	 items = {{id = 2152, count = 100}}}, -- 700 xp
-    ['bog raider']      	= {plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, startvalue = 1, exp = 0, 	skillpoints = 1, 
-	 items = {{id = 2152, count = 100}}}, -- 800 xp
-    ['giant spider']    	= {plural = "giant spiders", 	onlist = 1, amount = 150,    countstorage = 19010, statusstorage = 5020, startvalue = 1, exp = 0, 	skillpoints = 1, 
-	 items = {{id = 2152, count = 100}}}, -- 900 xp
-    ['quara predator']  	= {plural = "quara predators", 	onlist = 1, amount = 150,    countstorage = 19018, statusstorage = 5028, startvalue = 1, exp = 0, 	skillpoints = 1, 
-	 items = {{id = 2152, count = 100}}}, -- 1200 xp
-    ['hero']  			= {plural = "heroes", 		onlist = 1, amount = 150,    countstorage = 19021, statusstorage = 5031, startvalue = 1, exp = 0, 	skillpoints = 1, 
-	 items = {{id = 2152, count = 100}}}, -- 1200 xp
-    ['dragon lord']     	= {plural = "dragon lords", 	onlist = 1, amount = 200,    countstorage = 19011, statusstorage = 5021, startvalue = 1, exp = 0, 	skillpoints = 2, 
-	 items = {{id = 2160, count = 4}}}, -- 2100 xp
-    ['frost dragon']    	= {plural = "frost dragons", 	onlist = 1, amount = 200,    countstorage = 19012, statusstorage = 5022, startvalue = 1, exp = 0, 	skillpoints = 2, 
-	 items = {{id = 2160, count = 4}}}, -- 2100 xp
-    ['hydra']           	= {plural = "hydras", 		onlist = 1, amount = 250,    countstorage = 19013, statusstorage = 5023, startvalue = 1, exp = 0, 	skillpoints = 2, 
-	 items = {{id = 2160, count = 5}}}, -- 2100 xp
-    ['behemoth']           	= {plural = "behemoths", 	onlist = 1, amount = 250,    countstorage = 19022, statusstorage = 5032, startvalue = 1, exp = 0, 	skillpoints = 2, 
-	 items = {{id = 2160, count = 5}}}, -- 2500 xp
-    ['serpent spawn']   	= {plural = "serpent spawns", 	onlist = 1, amount = 200,    countstorage = 19017, statusstorage = 5027, startvalue = 1, exp = 0, 	skillpoints = 3, 
-	 items = {{id = 2160, count = 5}}}, -- 3050 xp
-    ['grim reaper']     	= {plural = "grim reapers", 	onlist = 1, amount = 200,    countstorage = 19015, statusstorage = 5025, startvalue = 1, exp = 0, 	skillpoints = 4, 
-	 items = {{id = 2160, count = 5}}}, -- 5500 xp
-    ['demon']           	= {plural = "demons", 		onlist = 1, amount = 250,    countstorage = 19014, statusstorage = 5024, startvalue = 1, exp = 0, 	skillpoints = 4, 
-	 items = {{id = 2160, count = 10}}}, -- 6000 xp
-    ['hellhound']       	= {plural = "hellhounds", 	onlist = 1, amount = 250,    countstorage = 19020, statusstorage = 5030, startvalue = 1, exp = 0, 	skillpoints = 4, items = {{id = 2160, count = 10}}} -- 6800 xp
+    ['troll'] = { -- 20 xp
+		plural = "trolls", 		onlist = 1, amount = 25,	countstorage = 19000, statusstorage = 5010, startvalue = 1, exp = 5000, 	skillpoints = 0,	mount = 0, 
+		items = {{id = 2152, count = 10}}
+	}, 
+    ['orc'] = { -- 25 xp
+		plural = "orcs", 		onlist = 1, amount = 25,    countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	}, 
+    ['orc spearman'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc warrior'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc berserker'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc leader'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc rider'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc marauder'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc shaman'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['orc warlord'] = {
+		plural = "orcs", 		onlist = 0, amount = 25,     countstorage = 19001, statusstorage = 5011, startvalue = 1, exp = 6250, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 15}}
+	},
+    ['rotworm'] = { -- 40 xp
+		plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19002, statusstorage = 5012, startvalue = 1, exp = 10000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 25}}
+	}, 
+    ['minotaur'] = { -- 50 xp
+		plural = "minotaurs", 	onlist = 1, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0,	mount = 'Undead Cavebear',  
+		items = {{id = 2152, count = 25}}
+	}, 
+    ['minotaur archer'] = {
+		plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0,	mount = 'Undead Cavebear',  
+		items = {{id = 2152, count = 25}}
+	},
+    ['minotaur guard'] = {
+		plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0,	mount = 'Undead Cavebear',  
+		items = {{id = 2152, count = 25}}
+	},
+    ['minotaur mage'] = {
+		plural = "minotaurs", 	onlist = 0, amount = 50,     countstorage = 19003, statusstorage = 5013, startvalue = 1, exp = 25000, 	skillpoints = 0,	mount = 'Undead Cavebear',  
+		items = {{id = 2152, count = 25}}
+	},
+    ['amazon'] = { -- 60 xp
+		plural = "amazons", 		onlist = 1, amount = 75,     countstorage = 19004, statusstorage = 5014, startvalue = 1, exp = 45000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 35}}
+	}, 
+    ['ghoul'] = { -- 85 xp
+		plural = "ghouls", 		onlist = 1, amount = 75,	 countstorage = 19005, statusstorage = 5015, startvalue = 1, exp = 63750, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 40}}
+	}, 
+    ['cyclops'] = { -- 150 xp
+		plural = "cyclops", 		onlist = 1, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 50}}
+	}, 
+    ['cyclops drone'] = {
+		plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 50}}
+	}, 
+    ['cyclops smith'] = {
+		plural = "cyclops", 		onlist = 0, amount = 100,    countstorage = 19006, statusstorage = 5016, startvalue = 1, exp = 150000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 50}}
+	},
+    ['vampire'] = { -- 305 xp
+		plural = "vampires", 	onlist = 1, amount = 100,    countstorage = 19007, statusstorage = 5017, startvalue = 1, exp = 152500, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 50}}
+	}, 
+    ['necromancer'] = { -- 580 xp
+		plural = "necromancers", 	onlist = 1, amount = 100,    countstorage = 19008, statusstorage = 5018, startvalue = 1, exp = 290000, 	skillpoints = 0,	mount = 0,  
+		items = {{id = 2152, count = 50}}
+	}, 
+    ['dragon'] = { -- 700 xp
+		plural = "dragons", 		onlist = 0, amount = 100,    countstorage = 19009, statusstorage = 5019, startvalue = 1, exp = 0, 	skillpoints = 1,	mount = 0,  
+		items = {{id = 2152, count = 100}}
+	}, 
+    ['bog raider']  = { -- 800 xp
+		plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, startvalue = 1, exp = 0, 	skillpoints = 1,	mount = 0,  
+		items = {{id = 2152, count = 100}}
+	}, 
+    ['giant spider'] = { -- 900 xp
+		plural = "giant spiders", 	onlist = 1, amount = 150,    countstorage = 19010, statusstorage = 5020, startvalue = 1, exp = 0, 	skillpoints = 1,	mount = 0,  
+		items = {{id = 2152, count = 100}}
+	}, 
+    ['quara predator'] = { -- 1200 xp
+		plural = "quara predators", 	onlist = 1, amount = 150,    countstorage = 19018, statusstorage = 5028, startvalue = 1, exp = 0, 	skillpoints = 1,	mount = 0,  
+		items = {{id = 2152, count = 100}}
+	}, 
+    ['hero'] = { -- 1200 xp
+		plural = "heroes", 		onlist = 1, amount = 150,    countstorage = 19021, statusstorage = 5031, startvalue = 1, exp = 0, 	skillpoints = 1,	mount = 0,  
+		items = {{id = 2152, count = 100}}
+	}, 
+    ['dragon lord'] = { -- 2100 xp
+		plural = "dragon lords", 	onlist = 1, amount = 200,    countstorage = 19011, statusstorage = 5021, startvalue = 1, exp = 0, 	skillpoints = 2,	mount = 0,  
+		items = {{id = 2160, count = 4}}
+	}, 
+    ['frost dragon'] = { -- 2100 xp
+		plural = "frost dragons", 	onlist = 1, amount = 200,    countstorage = 19012, statusstorage = 5022, startvalue = 1, exp = 0, 	skillpoints = 2,	mount = 0,  
+		items = {{id = 2160, count = 4}}
+	}, 
+    ['hydra'] = { -- 2100 xp
+		plural = "hydras", 		onlist = 1, amount = 250,    countstorage = 19013, statusstorage = 5023, startvalue = 1, exp = 0, 	skillpoints = 2,	mount = 0,  
+		items = {{id = 2160, count = 5}}
+	}, 
+    ['behemoth'] = { -- 2500 xp
+		plural = "behemoths", 	onlist = 1, amount = 250,    countstorage = 19022, statusstorage = 5032, startvalue = 1, exp = 0, 	skillpoints = 2,	mount = 0,  
+		items = {{id = 2160, count = 5}}
+	}, 
+    ['serpent spawn'] = { -- 3050 xp
+		plural = "serpent spawns", 	onlist = 1, amount = 200,    countstorage = 19017, statusstorage = 5027, startvalue = 1, exp = 0, 	skillpoints = 3,	mount = 0,  
+		items = {{id = 2160, count = 5}}
+	}, 
+    ['grim reaper'] = { -- 5500 xp
+		plural = "grim reapers", 	onlist = 1, amount = 200,    countstorage = 19015, statusstorage = 5025, startvalue = 1, exp = 0, 	skillpoints = 4,	mount = 0,  
+		items = {{id = 2160, count = 5}}
+	}, 
+    ['demon'] = { -- 6000 xp
+		plural = "demons", 		onlist = 1, amount = 250,    countstorage = 19014, statusstorage = 5024, startvalue = 1, exp = 0, 	skillpoints = 4,	mount = 0,  
+		items = {{id = 2160, count = 10}}
+	}, 
+    ['hellhound'] = { -- 6800 xp
+		plural = "hellhounds", 	onlist = 1, amount = 250,    countstorage = 19020, statusstorage = 5030, startvalue = 1, exp = 0, 	skillpoints = 4,	mount = 0,  
+		items = {{id = 2160, count = 10}}
+	} 
+}
+
+MOUNTS = {
+	['Widow Queen'] 		= {id = 1, clientId = 368, speed = 20, premium = "yes"},
+	['Racing Bird'] 		= {id = 2, clientId = 369, speed = 20, premium = "yes"},
+	['War Bear'] 			= {id = 3, clientId = 370, speed = 20, premium = "yes"},
+	['Blacksheep'] 			= {id = 4, clientId = 371, speed = 20, premium = "yes"},
+	['Midnight Panther'] 	= {id = 5, clientId = 372, speed = 20, premium = "yes"},
+	['Draptor'] 			= {id = 6, clientId = 373, speed = 20, premium = "yes"},
+	['Titanica'] 			= {id = 7, clientId = 374, speed = 20, premium = "yes"},
+	['Tin Lizzard'] 		= {id = 8, clientId = 375, speed = 20, premium = "yes"},
+	['Blazebringer'] 		= {id = 9, clientId = 376, speed = 20, premium = "yes"},
+	['Rapid Boar'] 			= {id = 10, clientId = 377, speed = 20, premium = "yes"},
+	['Stampor'] 			= {id = 11, clientId = 378, speed = 20, premium = "yes"},
+	['Undead Cavebear'] 	= {id = 12, clientId = 379, speed = 20, premium = "yes"},
+	['Donkey'] 				= {id = 13, clientId = 387, speed = 6, premium = "yes"},
+	['Tiger Slug'] 			= {id = 14, clientId = 388, speed = 20, premium = "yes"},
+	['Uniwheel'] 			= {id = 15, clientId = 389, speed = 20, premium = "yes"},
+	['Crystal Wolf'] 		= {id = 16, clientId = 390, speed = 20, premium = "yes"},
+	['War Horse'] 			= {id = 17, clientId = 392, speed = 20, premium = "yes"},
+	['Kingly Deer'] 		= {id = 18, clientId = 401, speed = 20, premium = "yes"},
+	['Tamed Panda'] 		= {id = 19, clientId = 402, speed = 20, premium = "yes"},
+	['Dromedary'] 			= {id = 20, clientId = 405, speed = 20, premium = "yes"},
+	['Scorpion King'] 		= {id = 21, clientId = 406, speed = 20, premium = "yes"},
+	['Rented Horse'] 		= {id = 22, clientId = 421, speed = 10, premium = "yes"},
+	['Armoured War Horse'] 	= {id = 23, clientId = 426, speed = 20, premium = "yes"},
+	['Shadow Draptor'] 		= {id = 24, clientId = 427, speed = 20, premium = "yes"},
+	['Rented Horse'] 		= {id = 25, clientId = 437, speed = 10, premium = "yes"},
+	['Rented Horse'] 		= {id = 26, clientId = 438, speed = 10, premium = "yes"},
+	['Lady Bug'] 			= {id = 27, clientId = 0, speed = 20, premium = "yes"},
+	['Manta Ray'] 			= {id = 28, clientId = 0, speed = 20, premium = "yes"},
+	['Ironblight'] 			= {id = 29, clientId = 0, speed = 20, premium = "yes"},
+	['Magma Crawler'] 		= {id = 30, clientId = 0, speed = 20, premium = "yes"},
+	['Dragonling'] 			= {id = 31, clientId = 0, speed = 20, premium = "yes"},
+	['Gnarlhound'] 			= {id = 32, clientId = 0, speed = 20, premium = "yes"},
+	['Crimsom Ray'] 		= {id = 33, clientId = 0, speed = 20, premium = "yes"},
+	['Steelbeak'] 			= {id = 34, clientId = 0, speed = 20, premium = "yes"},
+	['Water Buffalo'] 		= {id = 35, clientId = 0, speed = 20, premium = "yes"},
+	['Tombstinger'] 		= {id = 36, clientId = 0, speed = 20, premium = "yes"},
+	['Platesaurian'] 		= {id = 37, clientId = 0, speed = 20, premium = "yes"},
+	['Ursagrodon'] 			= {id = 38, clientId = 0, speed = 20, premium = "yes"},
+	['The Hellgrip'] 		= {id = 39, clientId = 0, speed = 20, premium = "yes"},
+	['Noble Lion'] 			= {id = 40, clientId = 0, speed = 20, premium = "yes"},
+	['Desert King'] 		= {id = 41, clientId = 0, speed = 20, premium = "yes"},
+	['Shock Head'] 			= {id = 42, clientId = 0, speed = 20, premium = "yes"},
+	['Walker'] 				= {id = 43, clientId = 0, speed = 20, premium = "yes"},
+	['Azudocus'] 			= {id = 44, clientId = 0, speed = 20, premium = "yes"},
+	['Carpacosaurus'] 		= {id = 45, clientId = 0, speed = 20, premium = "yes"},
+	['Death Crawler'] 		= {id = 46, clientId = 0, speed = 20, premium = "yes"},
+	['Flamesteed'] 			= {id = 47, clientId = 0, speed = 20, premium = "yes"},
+	['Jade Lion'] 			= {id = 48, clientId = 0, speed = 20, premium = "yes"},
+	['Jade Pincer'] 		= {id = 49, clientId = 0, speed = 20, premium = "yes"},
+	['Nethersteed'] 		= {id = 50, clientId = 0, speed = 20, premium = "yes"},
+	['Tempest'] 			= {id = 51, clientId = 0, speed = 20, premium = "yes"},
+	['Winter King'] 		= {id = 52, clientId = 0, speed = 20, premium = "yes"},
+	['Doombringer'] 		= {id = 53, clientId = 0, speed = 20, premium = "yes"},
+	['Woodland Prince'] 	= {id = 54, clientId = 0, speed = 20, premium = "yes"},
+	['Hailtorm Fury'] 		= {id = 55, clientId = 0, speed = 20, premium = "yes"},
+	['Siegebreaker'] 		= {id = 56, clientId = 0, speed = 20, premium = "yes"},
+	['Poisonbane'] 			= {id = 57, clientId = 0, speed = 20, premium = "yes"},
+	['Blackpelt'] 			= {id = 58, clientId = 0, speed = 20, premium = "yes"},
+	['Golden Dragonfly'] 	= {id = 59, clientId = 0, speed = 20, premium = "yes"},
+	['Steel Bee'] 			= {id = 60, clientId = 0, speed = 20, premium = "yes"},
+	['Copper Fly'] 			= {id = 61, clientId = 0, speed = 20, premium = "yes"},
+	['Tundra Rambler'] 		= {id = 62, clientId = 0, speed = 20, premium = "yes"},
+	['Highland Yak'] 		= {id = 63, clientId = 0, speed = 20, premium = "yes"},
+	['Glacier Vagabond'] 	= {id = 64, clientId = 0, speed = 20, premium = "yes"},
+	['Flying Divan'] 		= {id = 65, clientId = 0, speed = 20, premium = "yes"},
+	['Magic Carpet'] 		= {id = 66, clientId = 0, speed = 20, premium = "yes"},
+	['Floating Kashmir'] 	= {id = 67, clientId = 0, speed = 20, premium = "yes"},
+	['Ringtail Waccoon'] 	= {id = 68, clientId = 0, speed = 20, premium = "yes"},
+	['Night Waccoon'] 		= {id = 69, clientId = 0, speed = 20, premium = "yes"},
+	['Emerald Waccoon'] 	= {id = 70, clientId = 0, speed = 20, premium = "yes"},
+	['Glooth Glider'] 		= {id = 71, clientId = 0, speed = 20, premium = "yes"},
+	['Shadow Hart'] 		= {id = 72, clientId = 0, speed = 20, premium = "yes"},
+	['Black Stag'] 			= {id = 73, clientId = 0, speed = 20, premium = "yes"},
+	['Emperor Deer'] 		= {id = 74, clientId = 0, speed = 20, premium = "yes"},
+	['Flitterkatzen'] 		= {id = 75, clientId = 0, speed = 20, premium = "yes"},
+	['Venompaw'] 			= {id = 76, clientId = 0, speed = 20, premium = "yes"},
+	['Batcat'] 				= {id = 77, clientId = 0, speed = 20, premium = "yes"},
+	['Sea Devil'] 			= {id = 78, clientId = 0, speed = 20, premium = "yes"},
+	['Coralripper'] 		= {id = 79, clientId = 0, speed = 20, premium = "yes"},
+	['Plumfish'] 			= {id = 80, clientId = 0, speed = 20, premium = "yes"},
+	['Gorongra'] 			= {id = 81, clientId = 0, speed = 20, premium = "yes"},
+	['Noctungra'] 			= {id = 82, clientId = 0, speed = 20, premium = "yes"},
+	['Silverneck'] 			= {id = 83, clientId = 0, speed = 20, premium = "yes"},
+	['Slagsnare'] 			= {id = 84, clientId = 0, speed = 20, premium = "yes"},
+	['Nightstinger'] 		= {id = 85, clientId = 0, speed = 20, premium = "yes"},
+	['Razorcreep'] 			= {id = 86, clientId = 0, speed = 20, premium = "yes"},
+	['Rift Runner'] 		= {id = 87, clientId = 0, speed = 20, premium = "yes"},
+	['Nightdweller'] 		= {id = 88, clientId = 0, speed = 20, premium = "yes"},
+	['Frostflare'] 			= {id = 89, clientId = 0, speed = 20, premium = "yes"},
+	['Cinderhoof'] 			= {id = 90, clientId = 0, speed = 20, premium = "yes"},
+	['Mouldpincer'] 		= {id = 91, clientId = 0, speed = 20, premium = "yes"},
+	['Bloodcurl'] 			= {id = 92, clientId = 0, speed = 20, premium = "yes"},
+	['Leafscuttler'] 		= {id = 93, clientId = 0, speed = 20, premium = "yes"},
+	['Sparkion'] 			= {id = 94, clientId = 0, speed = 20, premium = "yes"},
+	['Swamp Snapper'] 		= {id = 95, clientId = 0, speed = 20, premium = "yes"},
+	['Mould Shell'] 		= {id = 96, clientId = 0, speed = 20, premium = "yes"},
+	['Reed Lurker'] 		= {id = 97, clientId = 0, speed = 20, premium = "yes"},
+	['Neon Sparkid'] 		= {id = 98, clientId = 0, speed = 20, premium = "yes"},
+	['Vortexion'] 			= {id = 99, clientId = 0, speed = 20, premium = "yes"},
+	['Ivory Fang'] 			= {id = 100, clientId = 0, speed = 20, premium = "yes"},
+	['Shadow Claw'] 		= {id = 101, clientId = 0, speed = 20, premium = "yes"},
+	['Snow Pelt'] 			= {id = 102, clientId = 0, speed = 20, premium = "yes"}
 }
 
 ropeSpots = {384, 418, 8278, 8592, 13189, 14435, 14436, 15635, 19518}

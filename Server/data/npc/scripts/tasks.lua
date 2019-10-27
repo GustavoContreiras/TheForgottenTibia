@@ -132,7 +132,18 @@ function creatureSayCallback(cid, type, msg)
         for k, x in pairs(monsters) do
 	    if x.onlist == 1 then
 		if player:getStorageValue(x.countstorage) < x.amount then
-		        text = text .. string.gsub(" "..k, "%W%l", string.upper):sub(2) .." ["..(player:getStorageValue(x.countstorage) + 1).."/"..x.amount.."]:\n  "..getItemsFromTable(x.items).."\n  "..x.exp.." experience \n  "..x.skillpoints.." skillpoints \n\n"
+		        text = text .. string.gsub(" " .. k, "%W%l", string.upper):sub(2) .. " [" .. (player:getStorageValue(x.countstorage) + 1) .. "/" .. x.amount .. "]:\n  "
+				text = text .. getItemsFromTable(x.items) .. "\n  "
+				if (x.exp ~= 0) then
+					text = text .. x.exp .. " experience\n  "
+				end
+				if (x.skillpoints ~= 0) then
+					text = text .. x.skillpoints .. " skillpoints\n  "
+				end
+				if (x.mount ~= 0) then
+					text = text .. x.mount .. " mount\n"
+				end
+				text = text .. "\n"
 		else
 			text = text .. string.gsub(" "..k, "%W%l", string.upper):sub(2) .." ["..x.amount.."/"..x.amount.."]: DONE\n\n"
 		end
