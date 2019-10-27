@@ -386,7 +386,9 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		damage.secondary.value = getElementDamage(player, target, item);
 
 		if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
+
 			damage.origin = ORIGIN_RANGED;
+
 			if (weaponType == WEAPON_AMMO) {
 				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)) {
 					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE);
@@ -401,23 +403,26 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		} 
 		
 		else {
+
 			damage.origin = ORIGIN_MELEE;
 
-			if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
-
-				if (weaponType == WEAPON_AXE || weaponType == WEAPON_SWORD || weaponType == WEAPON_CLUB) {
+			if (weaponType == WEAPON_AXE || weaponType == WEAPON_SWORD || weaponType == WEAPON_CLUB) {
+				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
 					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
 					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT);
 
 					if (player->isDualWielding()) {
-						chance /= 2;
-						skill /= 2;
+						chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_CHANCE);
+						skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_AMOUNT);
 					}
 				}
-
-				/*if (weaponType == WEAPON_WAND) {
-
-				}*/
+			}
+			
+			else if (weaponType == WEAPON_WAND) {
+				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_WANDS_AND_RODS)) {
+					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_WANDS_AND_RODS_CHANCE);
+					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_WANDS_AND_RODS_AMOUNT);
+				}
 			}
 		}
 

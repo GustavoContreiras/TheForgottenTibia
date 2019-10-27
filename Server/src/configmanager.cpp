@@ -185,6 +185,14 @@ bool ConfigManager::load()
 	integer[CRITICAL_ON_ALL_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnAllWeaponsAmount", 100);
 	integer[CRITICAL_ON_ALL_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnAllWeaponsChance", 25);
 
+	boolean[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING] = getGlobalBoolean(L, "criticalOnAllWeaponsDualWielding", false); //default tibia
+	integer[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_AMOUNT] = getGlobalNumber(L, "criticalOnAllWeaponsDualWieldingAmount", 100);
+	integer[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_CHANCE] = getGlobalNumber(L, "criticalOnAllWeaponsDualWieldingChance", 25);
+
+	boolean[CRITICAL_ON_WANDS_AND_RODS] = getGlobalBoolean(L, "criticalOnWandsAndRods", false); //default tibia
+	integer[CRITICAL_ON_WANDS_AND_RODS_AMOUNT] = getGlobalNumber(L, "criticalOnWandsAndRodsAmount", 100);
+	integer[CRITICAL_ON_WANDS_AND_RODS_CHANCE] = getGlobalNumber(L, "criticalOnWandsAndRodsChance", 25);
+
 	boolean[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnTwoHandedDistWeapons", false); //default tibia
 	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsAmount", 50);
 	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsChance", 10);
