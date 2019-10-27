@@ -193,22 +193,33 @@ MiniWindow
       SkillNewValueLabel
         margin-left: 5
         color: #b22222
-  
+
     SkillButton
-      id: soul
+      id: blessings
       height: 15
       SkillNameLabel
         text-align: topright
         anchors.right: parent.right
         margin-right: 85
-        !text: tr('Soul')
+        !text: tr('Blessings')
       SkillValueLabel
         text-align: topleft
         anchors.left: prev.right
         margin-left: 5
-      SkillArrowLabel
-      SkillNewValueLabel
-  
+
+    SkillButton
+      id: resets
+      height: 15
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
+        !text: tr('Resets')
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+
     SkillButton
       id: skillpoints
       height: 15
@@ -225,6 +236,21 @@ MiniWindow
       SkillNewValueLabel
         margin-left: 5
         color: #b22222
+
+    SkillButton
+      id: soul
+      height: 15
+      SkillNameLabel
+        text-align: topright
+        anchors.right: parent.right
+        margin-right: 85
+        !text: tr('Soul')
+      SkillValueLabel
+        text-align: topleft
+        anchors.left: prev.right
+        margin-left: 5
+      SkillArrowLabel
+      SkillNewValueLabel
 
     SkillButton
       id: capacity

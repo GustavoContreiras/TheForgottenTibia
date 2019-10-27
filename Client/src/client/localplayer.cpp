@@ -450,6 +450,26 @@ void LocalPlayer::setMana(double mana, double maxMana)
     }
 }
 
+void LocalPlayer::setBlessings(int blessings)
+{
+	if (m_blessings != blessings) {
+		double oldBlessings = m_blessings;
+		m_blessings = blessings;
+
+		callLuaField("onBlessingsChange", blessings, oldBlessings);
+	}
+}
+
+void LocalPlayer::setResets(int resets)
+{
+	if (m_resets != resets) {
+		double oldResets = m_resets;
+		m_resets = resets;
+
+		callLuaField("onResetsChange", resets, oldResets);
+	}
+}
+
 void LocalPlayer::setAttackSpeed(double attackSpeed)
 {
 	if (m_attackSpeed != attackSpeed) {
@@ -569,16 +589,6 @@ void LocalPlayer::setSpells(const std::vector<int>& spells)
         m_spells = spells;
 
         callLuaField("onSpellsChange", spells, oldSpells);
-    }
-}
-
-void LocalPlayer::setBlessings(int blessings)
-{
-    if(blessings != m_blessings) {
-        int oldBlessings = m_blessings;
-        m_blessings = blessings;
-
-        callLuaField("onBlessingsChange", blessings, oldBlessings);
     }
 }
 

@@ -12,6 +12,12 @@ manaValueLabel = nil
 newManaArrowLabel = nil
 newManaValueLabel = nil
 
+blessingsButton = nil
+blessingsValueLabel = nil
+
+resetsButton = nil
+resetsValueLabel = nil
+
 skillPointsButton = nil
 skillPointsValueLabel = nil
 newSkillPointsArrowLabel = nil
@@ -132,6 +138,12 @@ function init()
 	newManaArrowLabel = manaButton:recursiveGetChildById('arrow')
 	newManaValueLabel = manaButton:recursiveGetChildById('newValue')
 	
+	blessingsButton = skillsWindow:recursiveGetChildById('blessings')
+	blessingsValueLabel = blessingsButton:recursiveGetChildById('value')
+	
+	resetsButton = skillsWindow:recursiveGetChildById('resets')
+	resetsValueLabel = resetsButton:recursiveGetChildById('value')
+	
 	skillPointsButton = skillsWindow:recursiveGetChildById('skillpoints')
 	skillPointsValueLabel = skillPointsButton:recursiveGetChildById('value')
 	newSkillPointsArrowLabel = skillPointsButton:recursiveGetChildById('arrow')
@@ -230,6 +242,8 @@ function init()
 		onLevelChange = onLevelChange,
 		onHealthChange = onHealthChange,
 		onManaChange = onManaChange,
+		onBlessingsChange = onBlessingsChange,
+		onResetsChange = onResetsChange,
 		onSoulChange = onSoulChange,
 		onSkillPointsChange = onSkillPointsChange,
 		onFreeCapacityChange = onFreeCapacityChange,
@@ -260,6 +274,8 @@ function terminate()
 		onLevelChange = onLevelChange,
 		onHealthChange = onHealthChange,
 		onManaChange = onManaChange,
+		onBlessingsChange = onBlessingsChange,
+		onResetsChange = onResetsChange,
 		onSoulChange = onSoulChange,
 		onSkillPointsChange = onSkillPointsChange,
 		onFreeCapacityChange = onFreeCapacityChange,
@@ -293,6 +309,12 @@ function terminate()
 	manaValueLabel = nil
 	newManaArrowLabel = nil
 	newManaValueLabel = nil
+	
+	blessingsButton:destroy()
+	blessingsValueLabel = nil
+	
+	resetsButton:destroy()
+	resetsValueLabel = nil
 
 	skillPointsButton:destroy()
 	skillPointsValueLabel = nil
@@ -1751,6 +1773,14 @@ end
 function onManaChange(localPlayer, mana, maxMana)
   setSkillValue('mana', mana)
   checkAlert('mana', mana, maxMana, 30)
+end
+
+function onBlessingsChange(localPlayer, blessingsCount)
+  setSkillValue('blessings', blessingsCount)
+end
+
+function onResetsChange(localPlayer, resetsCount)
+  setSkillValue('resets', resetsCount)
 end
 
 function onSoulChange(localPlayer, soul)

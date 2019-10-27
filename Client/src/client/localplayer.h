@@ -65,7 +65,8 @@ public:
     void setPremium(bool premium);
     void setRegenerationTime(double regenerationTime);
     void setSpells(const std::vector<int>& spells);
-    void setBlessings(int blessings);
+	void setBlessings(int blessings);
+	void setResets(int resets);
 
 
     int getStates() { return m_states; }
@@ -92,7 +93,8 @@ public:
     double getRegenerationTime() { return m_regenerationTime; }
     std::vector<int> getSpells() { return m_spells; }
     ItemPtr getInventoryItem(Otc::InventorySlot inventory) { return m_inventoryItems[inventory]; }
-    int getBlessings() { return m_blessings; }
+	int getBlessings() { return m_blessings; }
+	int getResets() { return m_resets; }
 
     bool hasSight(const Position& pos);
     bool isKnown() { return m_known; }
@@ -150,6 +152,7 @@ private:
     int m_states;
     int m_vocation;
     int m_blessings;
+	int m_resets;
 
 	double m_experience;
 	double m_level;

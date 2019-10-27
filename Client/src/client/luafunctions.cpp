@@ -624,7 +624,9 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<LocalPlayer>("setFreeCapacity", &LocalPlayer::setFreeCapacity);
     g_lua.bindClassMemberFunction<LocalPlayer>("setExperience", &LocalPlayer::setExperience);
     g_lua.bindClassMemberFunction<LocalPlayer>("setLevel", &LocalPlayer::setLevel);
-    g_lua.bindClassMemberFunction<LocalPlayer>("setMana", &LocalPlayer::setMana);
+	g_lua.bindClassMemberFunction<LocalPlayer>("setMana", &LocalPlayer::setMana);
+	g_lua.bindClassMemberFunction<LocalPlayer>("setBlessings", &LocalPlayer::setBlessings);
+	g_lua.bindClassMemberFunction<LocalPlayer>("setResets", &LocalPlayer::setResets);
     g_lua.bindClassMemberFunction<LocalPlayer>("setMagicLevel", &LocalPlayer::setMagicLevel);
 	g_lua.bindClassMemberFunction<LocalPlayer>("setNewBaseMagicLevel", &LocalPlayer::setNewBaseMagicLevel);
 	g_lua.bindClassMemberFunction<LocalPlayer>("setSkillPoints", &LocalPlayer::setSkillPoints);
@@ -655,7 +657,8 @@ void Client::registerLuaFunctions()
     g_lua.bindClassMemberFunction<LocalPlayer>("getTotalCapacity", &LocalPlayer::getTotalCapacity);
     g_lua.bindClassMemberFunction<LocalPlayer>("getInventoryItem", &LocalPlayer::getInventoryItem);
     g_lua.bindClassMemberFunction<LocalPlayer>("getVocation", &LocalPlayer::getVocation);
-    g_lua.bindClassMemberFunction<LocalPlayer>("getBlessings", &LocalPlayer::getBlessings);
+	g_lua.bindClassMemberFunction<LocalPlayer>("getBlessings", &LocalPlayer::getBlessings);
+	g_lua.bindClassMemberFunction<LocalPlayer>("getResets", &LocalPlayer::getResets);
     g_lua.bindClassMemberFunction<LocalPlayer>("isPremium", &LocalPlayer::isPremium);
     g_lua.bindClassMemberFunction<LocalPlayer>("isKnown", &LocalPlayer::isKnown);
     g_lua.bindClassMemberFunction<LocalPlayer>("isPreWalking", &LocalPlayer::isPreWalking);

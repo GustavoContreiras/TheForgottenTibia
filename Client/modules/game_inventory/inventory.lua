@@ -19,7 +19,7 @@ purseButton = nil
 function init()
   connect(LocalPlayer, {
     onInventoryChange = onInventoryChange,
-    onBlessingsChange = onBlessingsChange
+    --onBlessingsChange = onBlessingsChange
   })
   connect(g_game, { onGameStart = refresh })
 
@@ -48,7 +48,7 @@ end
 function terminate()
   disconnect(LocalPlayer, {
     onInventoryChange = onInventoryChange,
-    onBlessingsChange = onBlessingsChange
+    --onBlessingsChange = onBlessingsChange
   })
   disconnect(g_game, { onGameStart = refresh })
 
@@ -116,9 +116,9 @@ function onInventoryChange(player, slot, item, oldItem)
   end
 end
 
-function onBlessingsChange(player, blessings, oldBlessings)
+--[[function onBlessingsChange(player, blessings, oldBlessings)
   local hasAdventurerBlessing = Bit.hasBit(blessings, Blessings.Adventurer)
   if hasAdventurerBlessing ~= Bit.hasBit(oldBlessings, Blessings.Adventurer) then
     toggleAdventurerStyle(hasAdventurerBlessing)
   end
-end
+end]]

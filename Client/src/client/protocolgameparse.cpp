@@ -1328,6 +1328,8 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
     double maxHealth = msg->getU32();
 	double mana = msg->getU32();
 	double maxMana = msg->getU32();
+	double blessings = msg->getU8();
+	double resets = msg->getU8();
 	double soul = msg->getU8();
 	double skillPoints = msg->getU16();
 	double freeCapacity = msg->getU32() / 100.0;
@@ -1352,6 +1354,8 @@ void ProtocolGame::parsePlayerStats(const InputMessagePtr& msg)
 
     m_localPlayer->setHealth(health, maxHealth);
 	m_localPlayer->setMana(mana, maxMana);
+	m_localPlayer->setBlessings(blessings);
+	m_localPlayer->setResets(resets);
 	m_localPlayer->setSoul(soul);
 	m_localPlayer->setSkillPoints(skillPoints);
     m_localPlayer->setFreeCapacity(freeCapacity);
