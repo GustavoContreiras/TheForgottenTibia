@@ -1201,6 +1201,7 @@ CREATE TABLE `players` (
   `maglevel` int(11) NOT NULL DEFAULT '0',
   `mana` int(11) NOT NULL DEFAULT '0',
   `manamax` int(11) NOT NULL DEFAULT '0',
+  `resets` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `soul` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `town_id` int(11) NOT NULL DEFAULT '1',
   `posx` int(11) NOT NULL DEFAULT '0',
@@ -1240,9 +1241,9 @@ CREATE TABLE `players` (
 -- Extraindo dados da tabela `players`
 --
 
-INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `max_level_reached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`) VALUES
-(1, 'God', 3, 1, 120, 120, 0, 1000, 1000, 0, 62, 39, 116, 1, 75, 3, 75, 1000, 1000, 100, 15, 33011, 31310, 7, '', 2000, 1, 0, 0, 1, 0, 0, 0, 31, 0, 0, 0, 2520, 100, 250, 50, 50, 50, 50, 50, 50, 50, 0, '', '', 0, 0, 0),
-(8, 'No Build', 1, 2, 1, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2520, 10, 10, 8, 8, 8, 8, 8, 8, 8, 0, '', '', 0, 0, 0);
+INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `max_level_reached`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `resets`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `stamina`, `skill_points`, `skill_points_total`, `skill_fist`, `skill_club`, `skill_sword`, `skill_axe`, `skill_dist`, `skill_shielding`, `skill_fishing`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`) VALUES
+(1, 'God', 3, 1, 120, 120, 0, 1000, 1000, 0, 62, 39, 116, 1, 75, 3, 75, 1000, 1000, 0, 100, 15, 33011, 31310, 7, '', 2000, 1, 0, 0, 1, 0, 0, 0, 31, 0, 0, 0, 2520, 100, 250, 50, 50, 50, 50, 50, 50, 50, 0, '', '', 0, 0, 0),
+(8, 'No Build', 1, 2, 1, 1, 0, 120, 120, 0, 76, 114, 115, 124, 128, 1, 0, 10, 10, 0, 100, 14, 31868, 32150, 8, '', 365, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2520, 10, 10, 8, 8, 8, 8, 8, 8, 8, 0, '', '', 0, 0, 0);
 
 --
 -- Acionadores `players`
