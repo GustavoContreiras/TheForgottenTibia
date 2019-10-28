@@ -87,19 +87,32 @@ function creatureSayCallback(cid, type, msg)
     elseif msgcontains(msg, "yes") and npcHandler.topic[cid] == 2 then
         local x = monsters[xmsg[cid]]
         if player:getStorageValue(x.countstorage) >= x.amount then
-            npcHandler:say("Good job, here is your reward, "..getItemsFromTable(x.items)..".", cid)
-            for g = 1, #x.items do
+
+	    local text = "Good job, here is your reward, "
+	    for g = 1, #x.items do
                 player:addItem(x.items[g].id, x.items[g].count)
             end
-            if x.exp ~= 0 then 
+	    text = text .. getItemsFromTable(x.items)
+	    if x.exp ~= 0 then
 		player:addExperience(x.exp)
+		text = text .. ", " .. x.exp .. " experience"
 	    end
-            if x.skillpoints ~= 0 then
+	    if x.skillpoints ~= 0 then
 		player:addSkillPoints(x.skillpoints)
 		player:addSkillPointsTotal(x.skillpoints)
+		text = text .. ", " .. x.skillpoints .. " skillpoints"
 	    end
-	    if x.resets ~= 0 then player:addResetsCount(x.resets) end
-	    if x.mount ~= 0 then player:addMount(MOUNTS[x.mount].id) end
+	    if x.resets ~= 0 then
+		player:addResetsCount(x.resets) 
+		text = text .. ", " .. x.resets .. " reset"
+	    end
+	    if x.mount ~= 0 and x.mount ~= "" then
+		player:addMount(MOUNTS[x.mount].id) 
+		text = text .. ", " .. x.mount:lower() .. " mount"
+	    end
+	    text = text .. "."
+            npcHandler:say(text, cid)
+
             player:setStorageValue(x.statusstorage, KILLTASKS_STATUS_DONE)
             player:setStorageValue(storage, -1)
             player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
@@ -146,8 +159,11 @@ function creatureSayCallback(cid, type, msg)
 				if (x.skillpoints ~= 0) then
 					text = text .. x.skillpoints .. " skillpoints\n  "
 				end
+				if (x.resets ~= 0) then
+					text = text .. x.resets .. " reset\n  "
+				end
 				if (x.mount ~= 0) then
-					text = text .. x.mount .. " mount\n"
+					text = text .. x.mount:lower():gsub("^%l", string.upper) .. " mount\n"
 				end
 				text = text .. "\n"
 		else

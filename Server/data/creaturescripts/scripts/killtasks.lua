@@ -1,10 +1,19 @@
 function onKill(player, target)
-     local monster = KILLTASKS_MONSTERS[target:getName():lower()]
+     local targetName = target:getName():lower()
+     local monster = KILLTASKS_MONSTERS[targetName]
      if target:isPlayer() or not monster or target:getMaster() then
-         return true
+	if not monster then
+	    targetName = targetName:match("(%w+)(.+)")
+	    monster = KILLTASKS_MONSTERS[targetName]
+	end
+	if not monster then
+            return true
+	end
      end
+
      local stor = player:getStorageValue(monster.countstorage)+1
-     if stor < monster.amount and player:getStorageValue(monster.statusstorage) >= monster.startvalue then
+     if stor < monster.amount and player:getStorageValue(monster.statusstorage) >= KILLTASKS_STATUS_DOING then
+	
          player:setStorageValue(monster.countstorage, stor)
          player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, 'Task message: '..(stor +1)..' of '..monster.amount..' '..monster.plural..' killed.')
      end
