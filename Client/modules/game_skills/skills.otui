@@ -100,7 +100,7 @@ MiniWindow
     id: help
     text-align: center
     phantom: false
-    !tooltip: tr('Click on \'apply\' to save changes')
+    !tooltip: tr('Click on \'apply\' to save changes.                    \n\nRod\'s Maximum Damage Formula: rodMaxDamage + (rodMaxDamage  * 2 * (FAITH - 8) / 100)              \nWand\'s Maximum Damage Formula: wandMaxDamage + (wandMaxDamage * (INTTELIGENCE - 8) / 100)\n\nOne Handed Distance Weapon\'s Attack Skill Value: DEXTERITY                                                             \nTwo Handed Distance Weapon\'s Attack Skill Value: STRENGHT * 0.75 + DEXTERITY * 0.5                       \n\nDefense with weapons (using axe, sword or club and not wearing shield) uses DEFENSE skill                  \n\nINTELLIGENCE and FAITH gives access to spells and runes                                                                   \nMAGIC and LEVEL gives power/damage with runes and spells                                                              ')
     anchors.top: minimizeButton.top
     anchors.right: minimizeButton.left
     margin-right: 3

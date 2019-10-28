@@ -110,8 +110,8 @@ shieldDexterityFactor = 0
 -- DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
 -- Spear formula: 	attackSkill = 	(STRENGHT * spearStrenghtFactor / 100) 	+ (DEXTERITY * spearDexterityFactor / 100); 
 -- Bow formula: 	attackSkill = 	(STRENGHT * bowStrenghtFactor   / 100) 	+ (DEXTERITY * bowDexterityFactor   / 100); 
-spearDexterityFactor = 50
-spearStrenghtFactor = 75
+spearDexterityFactor = 100
+spearStrenghtFactor = 0
 bowDexterityFactor = 75
 bowStrenghtFactor = 50
 
