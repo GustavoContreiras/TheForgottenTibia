@@ -91,9 +91,15 @@ function creatureSayCallback(cid, type, msg)
             for g = 1, #x.items do
                 player:addItem(x.items[g].id, x.items[g].count)
             end
-            player:addExperience(x.exp)
-            player:addSkillPoints(x.skillpoints)
-	    player:addSkillPointsTotal(x.skillpoints)
+            if x.exp ~= 0 then 
+		player:addExperience(x.exp)
+	    end
+            if x.skillpoints ~= 0 then
+		player:addSkillPoints(x.skillpoints)
+		player:addSkillPointsTotal(x.skillpoints)
+	    end
+	    if x.resets ~= 0 then player:addResetsCount(x.resets) end
+	    if x.mount ~= 0 then player:addMount(MOUNTS[x.mount].id) end
             player:setStorageValue(x.statusstorage, KILLTASKS_STATUS_DONE)
             player:setStorageValue(storage, -1)
             player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
