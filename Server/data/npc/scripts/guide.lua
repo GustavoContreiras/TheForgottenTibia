@@ -37,78 +37,68 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, "hi") or msgcontains(msg, "hello") then
 		npcHandler:addFocus(cid)
 
-    elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "save") then
+    elseif msgcontains(msg, "save") then
     	saveServer()
         cleanMap()
 
 	-- se falar 'help'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "help") then
-		npcHandler:say("I can {reset} your skills, {heal} you, or give you a little {guide} about places in this city, like where to buy {bless}. Also, I sell the rare {amulet of loss} and I can grant you a {title}.", cid)
+	elseif msgcontains(msg, "help") then
+		npcHandler:say("I can {reset} your skills, {heal} you, or give you a little {guide} about places in this city, like where to buy {bless} or {fight} for rewards. Also, I sell the rare {amulet of loss} and I can grant you a {title}.", cid)
 
-	-- se falar 'TESER'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "TESER") then
-		npcHandler:say("Do you want to {reset} for free?", cid)
-		npcHandler.topic[cid] = 10
+	-- se falar 'givemeresets'
+	elseif msgcontains(msg, "givemeresets") then
+		npcHandler:say("Here you are!", cid)
 		
 	-- se falar 'reset'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "reset") then
-		price = player:getLevel() * player:getLevel() * 5
-		if player:getStorageValue(skillPointsResetStorage) ~= 0 and player:getLevel() < 60 then
-			npcHandler:say("Since it is your first time asking me that, I'll make it for free! Are you sure?", cid)
+	elseif msgcontains(msg, "reset") then
+		local price = player:getLevel() * player:getLevel() * 5
+		if player:getResetsCount() > 0 then
+			if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
+				npcHandler:say("It looks like you don't need it.", cid)
+				npcHandler.topic[cid] = 0
+			else
+				player:setTitleDescription(0)
+				player:addResetsCount(-1)
+				npcHandler:say("And God said... REBORN!", cid)
+			end
 		else
 			npcHandler:say("It will cost you " .. price .. " gold coins. Are you sure?", cid)
 		end
 		npcHandler.topic[cid] = 1
 
-	-- se falar 'yes' depois de falar 'TESER'
-	elseif npcHandler.topic[cid] == 10 and msgcontains(msg, "yes") then
-		player:setTitleDescription(0)
-		if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
-			npcHandler:say("It looks like you don't need it.", cid)
-			npcHandler.topic[cid] = 0
-		end
-
 	-- se falar 'yes' depois de falar 'reset'
 	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "yes") then
-		if player:getStorageValue(skillPointsResetStorage) == 1 then
-			--if player:getLevel() < 60 then
-				player:setStorageValue(skillPointsResetStorage, 0)
+		local price = player:getLevel() * player:getLevel() * 5
+		if player:getMoney() >= price then
+			player:removeMoney(price)
+			player:setTitleDescription(0)
+			if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
+				npcHandler:say("It looks like you don't need it.", cid)
+				player:addMoney(price)
+				npcHandler.topic[cid] = 0
+			else 
 				player:setTitleDescription(0)
-				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
-					npcHandler:say("It looks like you don't need it.", cid)
-					player:setStorageValue(skillPointsResetStorage, 1)
-					npcHandler.topic[cid] = 0
-				end
-			--else
-				--npcHandler:say("Sorry, but you can't reset for free after reaching level 60.", cid)
-			--end
-		else
-			if player:getMoney() >= price then
-				player:removeMoney(price)
-				player:setTitleDescription(0)
-				if not player:setSkills(0, 8, 8, 8, 8, 8, 8, 8) then
-					npcHandler:say("It looks like you don't need it.", cid)
-					player:addMoney(price)
-					npcHandler.topic[cid] = 0
-				end
-			else
-				npcHandler:say("Sorry, but you don't have enough money.", cid)
+				player:addResetsCount(-1)
+				npcHandler:say("And God said... REBORN!", cid)
 			end
+		else
+			npcHandler:say("Sorry, but you don't have enough money.", cid)
 		end
+	end
 
 	-- se falar 'heal'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "heal") then
+	elseif msgcontains(msg, "heal") then
 		local player = Player(cid)
 		if player:getHealth() < player:getMaxHealth() then
 			player:setHealth(player:getMaxHealth())
 			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
-			npcHandler:say("Anything else?", cid)
+			npcHandler:say("May God bless you!", cid)
 		else
 			npcHandler:say("It doesn't look like you need healing.", cid)
 		end
 
 	-- se falar 'amulet of loss'
-	elseif npcHandler.topic[cid] == 0 and (msgcontains(msg, "amulet") or msgcontains(msg, "aol") or msgcontains(msg, "amulet of loss"))  then
+	elseif msgcontains(msg, "amulet") or msgcontains(msg, "aol") or msgcontains(msg, "amulet of loss") then
 		npcHandler:say("It costs 15000 gold coins, do you want it?", cid)
 		npcHandler.topic[cid] = 9
 
@@ -125,36 +115,44 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler.topic[cid] = 0
 
 	-- se falar 'guide'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "guide") then
+	elseif msgcontains(msg, "guide") then
 		npcHandler:say("The depot is northwest from here. The {fighting arena} is on the east gate of the city, after the {weapons} and {equipment} shop. There is a ship north from here that can take you to {Yalahar} and a boat south west. The cemetery is located outside the city, you can get there through the south gate.", cid)
-	-- se falar 'fighting arena'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "fighting arena") then
+	
+	-- se falar 'fight'
+	elseif msgcontains(msg, "fight") or msgcontains(msg, "fighting arena") then
 		npcHandler:say("There you can test you skills and spells without any death penalty.", cid)
 
 	-- se falar 'weapons'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "weapons") or msgcontains(msg, "equipments") then
+	elseif msgcontains(msg, "weapons") or msgcontains(msg, "equipments") then
 		npcHandler:say("You can sell and buy items there, but if you want to sell high valuated items, {William} will ask you to get some kind of special lamp in the {Djinn Tower}.", cid)
 
 	-- se falar 'bless'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "bless") or msgcontains(msg, "blessing") then
+	elseif msgcontains(msg, "bless") or msgcontains(msg, "blessing") then
 		npcHandler:say("All blesses can be acquired with {Alice} north from here.", cid)
 
 	-- se falar 'alice'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "alice") then
+	elseif msgcontains(msg, "alice") then
 		npcHandler:say("She is a good priestess.", cid)
 
 	-- se falar 'william'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "william") then
+	elseif msgcontains(msg, "william") then
 		npcHandler:say("He is a good man.", cid)
 
 	-- se falar 'djinn tower' ou 'djinn'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "djinn tower") or msgcontains(msg, "djinn") then
+	elseif msgcontains(msg, "djinn tower") or msgcontains(msg, "djinn") then
 		npcHandler:say("It's south from here, I don't know much more to tell you.", cid)
 
 	-- se falar 'title'
-	elseif npcHandler.topic[cid] == 0 and msgcontains(msg, "title") then
+	elseif msgcontains(msg, "title") then
 		npcHandler:say("I can nominate you as a {mage}, a {supporter}, a {ranger} or a {knight}. Also, I can {remove} it.", cid)
 		npcHandler.topic[cid] = 9
+		
+	-- se falar 'remove title'
+	elseif msgcontains(msg, "remove title") then
+		player:setTitleDescription(0)
+		npcHandler:say("Done!", cid)
+		npcHandler.topic[cid] = 0
+		npcHandler:releaseFocus(cid)
 
 	-- se falar 'remove'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "remove") then

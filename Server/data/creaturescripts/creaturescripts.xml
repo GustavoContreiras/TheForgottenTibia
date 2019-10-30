@@ -29,8 +29,8 @@
 	<event type="kill" name="Tasks" script="killtasks.lua"/>
 
 	<!-- Capture the Flag -->
-	<event type="login" name="CTF-Login" script="ctf.lua"/>
-	<event type="logout" name="CTF-Logout" script="ctf.lua"/>
-	<event type="preparedeath" name="CTF-Death" script="ctf.lua"/>
+	<event type="login" name="CTF-Login" script="capturetheflag.lua"/>
+	<event type="logout" name="CTF-Logout" script="capturetheflag.lua"/>
+	<event type="preparedeath" name="CTF-Death" script="capturetheflag.lua"/>
 	
 </creaturescripts>

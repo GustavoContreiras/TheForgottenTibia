@@ -1,5 +1,5 @@
-local modalId = 4869						-- id of the modal window
-local TextModalId = 4870 					-- so player may return to skill window
+--local modalId = 4869						-- id of the modal window
+--local TextModalId = 4870 					-- so player may return to skill window
 
 -- level 8 = 24
 -- level 40 = 152 (315 gp, 205 mana, 755 cap)
@@ -12,7 +12,7 @@ local TextModalId = 4870 					-- so player may return to skill window
 -- level 140 = 292 (815 hp, 705 mana, 1755 cap)
 -- level 150 = 297 (865 hp, 755 mana, 1855 cap)
 
-function Player:sendSkillPointsTutorialWelcomeWindow()
+--[[function Player:sendSkillPointsTutorialWelcomeWindow()
 	self:registerEvent("skillPoints_tutorialWelcome")
  	local title = "Fibula Server Tutorial"
  	local message = "Welcome to the beginner tutorial.\n\nHere you will find all informations needed to play in this server and make your build.\n"
@@ -96,4 +96,4 @@ function Player:sendSkillPointsTutorialNotesWindow()
     window:setDefaultEscapeButton(1)
     window:sendToPlayer(self)
 	return true
-end
+end]]
