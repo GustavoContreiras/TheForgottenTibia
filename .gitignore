@@ -7,6 +7,11 @@ Client/vc14/.vs/
 Client/vc14/Win32/
 Client/vc14/x64/
 Client/vc14/Release/
+Client/TheForgottenTibia.exp
+Client/TheForgottenTibia.lib
+Client/TheForgottenTibia.pdb
+Client/theforgottentibia.log
+
 Server/etc/
 Server/build/
 Server/config.lua
@@ -19,12 +24,6 @@ Server/vc14/.vs/
 Server/vc14/Win32/
 Server/vc14/x64/
 Server/vc14/Release/
-
-Client/TheForgottenTibia.exp
-Client/TheForgottenTibia.lib
-Client/TheForgottenTibia.pdb
 Server/TheForgottenTibiaServer-x64.pdb
-.vscode/
 
-Client/theforgottentibia.log
 sensitivedata.txt
