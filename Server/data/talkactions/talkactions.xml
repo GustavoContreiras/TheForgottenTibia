@@ -27,7 +27,7 @@
 	<talkaction words="/down" script="down.lua" />
 	<talkaction words="/c" separator=" " script="teleport_creature_here.lua" />
 	<talkaction words="/goto" separator=" " script="teleport_to_creature.lua" />
-	<talkaction words="/gotopos" separator=" " script="teleport_to_pos.lua" />
+	<!--<talkaction words="/gotopos" separator=" " script="teleport_to_pos.lua" />-->
 	<talkaction words="/t" script="teleport_home.lua" />
 	<talkaction words="/town" separator=" " script="teleport_to_town.lua" />
 	<talkaction words="/a" separator=" " script="teleport_ntiles.lua" />
@@ -62,8 +62,8 @@
 	
 	<!-- the forgotten tibia server -->
 	<talkaction words="/startCTF" script="capturetheflag.lua" />
-	<talkaction words="!joinCTF" script="ctf.lua" />
-	<talkaction words="!leaveCTF" script="ctf.lua" />
+	<talkaction words="!joinCTF" script="capturetheflag.lua" />
+	<talkaction words="!leaveCTF" script="capturetheflag.lua" />
 	
 	<!-- triggered by the forgotten tibia client -->
 	<talkaction words="!lootlist" script="lootlist.lua" />
