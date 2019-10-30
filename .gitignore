@@ -1,3 +1,6 @@
+.vscode
+sensitivedata.txt
+
 Client/data/things/1098/Tibia.spr
 Client/data/things/1098/Tibia.dat
 Client/otclient/
@@ -11,6 +14,7 @@ Client/TheForgottenTibia.exp
 Client/TheForgottenTibia.lib
 Client/TheForgottenTibia.pdb
 Client/theforgottentibia.log
+Client/src/.vscode
 
 Server/etc/
 Server/build/
@@ -25,5 +29,4 @@ Server/vc14/Win32/
 Server/vc14/x64/
 Server/vc14/Release/
 Server/TheForgottenTibiaServer-x64.pdb
-
-sensitivedata.txt
+Server/src/.vscode

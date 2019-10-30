@@ -26,15 +26,6 @@ local function creatureSayCallback(cid, type, msg)
 		player:teleportTo(destination)
 		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 		destination:sendMagicEffect(CONST_ME_TELEPORT)
-		
-	elseif msgcontains(msg, "arena") then
-		destination[cid] = Position(32765, 31061, 7)
-		local player = Player(cid)
-		local destination = destination[cid]
-		npcHandler:releaseFocus(cid)
-		player:teleportTo(destination)
-		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-		destination:sendMagicEffect(CONST_ME_TELEPORT)
 	end
 	return true
 end

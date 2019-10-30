@@ -5,6 +5,7 @@ local storages = {
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+
 	-- Cannot use opened door
 	if item.itemid == 5133 then
 		return false
