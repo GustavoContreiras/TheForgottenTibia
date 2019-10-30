@@ -8,9 +8,9 @@
 	<event type="extendedopcode" name="ExtendedOpcode" script="extendedopcode.lua" />
 
 	<!-- Skill Points -->
-	<event type="modalwindow" name="skillPoints_modal" script="skillpoints.lua"/>
+	<!-- <event type="modalwindow" name="skillPoints_modal" script="skillpoints.lua"/> -->
     	<event type="advance" name="skillPoints_advance" script="skillpoints.lua"/>
-    	<event type="login" name="skillPoints_register" script="skillpoints.lua"/>
+    	<!-- <event type="login" name="skillPoints_register" script="skillpoints.lua"/> -->
 		
 	<!-- Svargrond Arena: Killing a boss -->
 	<event type="kill" name="SvargrondArenaKill" script="svargrond_arena_kill.lua" />

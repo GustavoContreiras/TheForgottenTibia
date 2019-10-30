@@ -37,19 +37,18 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, "hi") or msgcontains(msg, "hello") then
 		npcHandler:addFocus(cid)
 
-    elseif msgcontains(msg, "save") then
-    	saveServer()
-        cleanMap()
+    	elseif msgcontains(msg, "save") then
+    		saveServer()
 
-	-- se falar 'help'
+	elseif msgcontains(msg, "clean") then
+        	cleanMap()
+
 	elseif msgcontains(msg, "help") then
 		npcHandler:say("I can {reset} your skills, {heal} you, or give you a little {guide} about places in this city, like where to buy {bless} or {fight} for rewards. Also, I sell the rare {amulet of loss} and I can grant you a {title}.", cid)
 
-	-- se falar 'givemeresets'
 	elseif msgcontains(msg, "givemeresets") then
 		npcHandler:say("Here you are!", cid)
 		
-	-- se falar 'reset'
 	elseif msgcontains(msg, "reset") then
 		local price = player:getLevel() * player:getLevel() * 5
 		if player:getResetsCount() > 0 then
@@ -66,7 +65,6 @@ local function creatureSayCallback(cid, type, msg)
 		end
 		npcHandler.topic[cid] = 1
 
-	-- se falar 'yes' depois de falar 'reset'
 	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "yes") then
 		local price = player:getLevel() * player:getLevel() * 5
 		if player:getMoney() >= price then
@@ -84,9 +82,7 @@ local function creatureSayCallback(cid, type, msg)
 		else
 			npcHandler:say("Sorry, but you don't have enough money.", cid)
 		end
-	end
 
-	-- se falar 'heal'
 	elseif msgcontains(msg, "heal") then
 		local player = Player(cid)
 		if player:getHealth() < player:getMaxHealth() then
@@ -97,7 +93,6 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("It doesn't look like you need healing.", cid)
 		end
 
-	-- se falar 'amulet of loss'
 	elseif msgcontains(msg, "amulet") or msgcontains(msg, "aol") or msgcontains(msg, "amulet of loss") then
 		npcHandler:say("It costs 15000 gold coins, do you want it?", cid)
 		npcHandler.topic[cid] = 9
@@ -114,54 +109,43 @@ local function creatureSayCallback(cid, type, msg)
 		end
 		npcHandler.topic[cid] = 0
 
-	-- se falar 'guide'
 	elseif msgcontains(msg, "guide") then
 		npcHandler:say("The depot is northwest from here. The {fighting arena} is on the east gate of the city, after the {weapons} and {equipment} shop. There is a ship north from here that can take you to {Yalahar} and a boat south west. The cemetery is located outside the city, you can get there through the south gate.", cid)
 	
-	-- se falar 'fight'
 	elseif msgcontains(msg, "fight") or msgcontains(msg, "fighting arena") then
 		npcHandler:say("There you can test you skills and spells without any death penalty.", cid)
 
-	-- se falar 'weapons'
 	elseif msgcontains(msg, "weapons") or msgcontains(msg, "equipments") then
 		npcHandler:say("You can sell and buy items there, but if you want to sell high valuated items, {William} will ask you to get some kind of special lamp in the {Djinn Tower}.", cid)
 
-	-- se falar 'bless'
 	elseif msgcontains(msg, "bless") or msgcontains(msg, "blessing") then
 		npcHandler:say("All blesses can be acquired with {Alice} north from here.", cid)
 
-	-- se falar 'alice'
 	elseif msgcontains(msg, "alice") then
 		npcHandler:say("She is a good priestess.", cid)
 
-	-- se falar 'william'
 	elseif msgcontains(msg, "william") then
 		npcHandler:say("He is a good man.", cid)
 
-	-- se falar 'djinn tower' ou 'djinn'
 	elseif msgcontains(msg, "djinn tower") or msgcontains(msg, "djinn") then
 		npcHandler:say("It's south from here, I don't know much more to tell you.", cid)
 
-	-- se falar 'title'
 	elseif msgcontains(msg, "title") then
 		npcHandler:say("I can nominate you as a {mage}, a {supporter}, a {ranger} or a {knight}. Also, I can {remove} it.", cid)
 		npcHandler.topic[cid] = 9
 		
-	-- se falar 'remove title'
 	elseif msgcontains(msg, "remove title") then
 		player:setTitleDescription(0)
 		npcHandler:say("Done!", cid)
 		npcHandler.topic[cid] = 0
 		npcHandler:releaseFocus(cid)
 
-	-- se falar 'remove'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "remove") then
 		player:setTitleDescription(0)
 		npcHandler:say("Done!", cid)
 		npcHandler.topic[cid] = 0
 		npcHandler:releaseFocus(cid)
 
-	-- se falar 'mage'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "mage") then
 		if player:getSkillLevel(SKILL_INTELLIGENCE) >= 60 then
 			player:setTitleDescription(1)
@@ -174,7 +158,6 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:releaseFocus(cid)
 		end
 
-	-- se falar 'supporter'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "supporter") then
 		if player:getSkillLevel(SKILL_FAITH) >= 40 or player:getSkillLevel(SKILL_DEFENCE) >= 90 then
 			player:setTitleDescription(2)
@@ -195,7 +178,6 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:releaseFocus(cid)
 		end
 
-	-- se falar 'ranger'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "ranger") then
 		if player:getSkillLevel(SKILL_DEXTERITY) >= 90 then
 			player:setTitleDescription(3)
@@ -208,7 +190,6 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:releaseFocus(cid)
 		end
 
-	-- se falar 'knight'
 	elseif npcHandler.topic[cid] == 9 and msgcontains(msg, "knight") then
 		if player:getSkillLevel(SKILL_STRENGHT) >= 90 then
 			player:setTitleDescription(4)
