@@ -57,7 +57,9 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler.topic[cid] = 0
 			else
 				player:setTitleDescription(0)
-				player:addResetsCount(-1)
+				if player:getResetsCount() > 0 then
+					player:addResetsCount(-1)
+				end
 				npcHandler:say("And God said... REBORN!", cid)
 			end
 		else
@@ -76,7 +78,9 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler.topic[cid] = 0
 			else 
 				player:setTitleDescription(0)
-				player:addResetsCount(-1)
+				if player:getResetsCount() > 0 then
+					player:addResetsCount(-1)
+				end
 				npcHandler:say("And God said... REBORN!", cid)
 			end
 		else
