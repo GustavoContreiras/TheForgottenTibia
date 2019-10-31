@@ -46,11 +46,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		presentBoxAnnihi = 1081,
 		annihiDoor = 1083,
 
-		parchmentRoomQuest = 1082
+		parchmentRoomQuest = 1082,
 		
 		dragonLanceRahemos = 1084,
 		warHammerRahemos = 1085,
-		giantSwordRahemos = 1086,
+		giantSwordRahemos = 1086
 		
 
 	}
