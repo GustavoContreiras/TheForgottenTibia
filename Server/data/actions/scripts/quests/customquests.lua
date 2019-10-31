@@ -47,6 +47,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		annihiDoor = 1083,
 
 		parchmentRoomQuest = 1082
+		
+		dragonLanceRahemos = 1084,
+		warHammerRahemos = 1085,
+		giantSwordRahemos = 1086,
+		
 
 	}
 
@@ -95,6 +100,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 
 	elseif item.actionid == 2001 then
+	
 		-- Wooden Sword Rook
 		if item.uid == config.woodenSwordUniqueId then
 			if player:getStorageValue(config.woodenSwordUniqueId) ~= 1 then
@@ -533,6 +539,36 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				bag:addItem(1953, 1)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a bag.')
 				player:setStorageValue(config.parchmentRoomQuest, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Dragon Lance Rahemos
+		elseif item.uid == config.dragonLanceRahemos then
+			if player:getStorageValue(config.dragonLanceRahemos) ~= 1 then
+				player:addItem(2414,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a dragon lance.')
+				player:setStorageValue(config.dragonLanceRahemos, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- War Hammer Rahemos
+		elseif item.uid == config.warHammerRahemos then
+			if player:getStorageValue(config.dragonLanceRahemos) ~= 1 then
+				player:addItem(2391,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a war hammer.')
+				player:setStorageValue(config.dragonLanceRahemos, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Giant Sword Rahemos
+		elseif item.uid == config.giantSwordRahemos then
+			if player:getStorageValue(config.dragonLanceRahemos) ~= 1 then
+				player:addItem(2393,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a giant sword.')
+				player:setStorageValue(config.dragonLanceRahemos, 1)
 			else
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
 			end
