@@ -45,7 +45,7 @@ function onLogin(player)
 		player:addBlessing(5)
 
 		-- Skill Points
-		player:sendSkillPointsTutorialWelcomeWindow()
+		--player:sendSkillPointsTutorialWelcomeWindow()
 		if player:getLastLoginSaved() <= 0 then
 			player:setStorageValue(62492, 1) -- storage to check free first reset in npc
 			-- player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Click on your character holding 'ctrl' to access character's mastery.")
