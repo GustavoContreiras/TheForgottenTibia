@@ -65,10 +65,11 @@ local function creatureSayCallback(cid, type, msg)
 	local mountId = 0
 
 	if msgcontains(msg, "mounts") then
-		npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {tombstinger}, {platesaurian}, {ursagrodon}, {the hellgrip}, {noble lion}, {desert king} and {shock head}. The {donkey} is for free!", cid)
+		--[[npcHandler:say("I have {horses}, {widow queen}, {racing bird}, {war bear}, {black sheep}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {undead cavebear}, {tiger slug}, {uniwheel}, {crystal wolf}, {kingly deer}, {tamed panda}, {dromedary}, {king scorpion}, {shadow draptor}, {ladybug}, {manta}, {ironblight}, {magma}, {dragonling}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {tombstinger}, {platesaurian}, {ursagrodon}, {the hellgrip}, {noble lion}, {desert king} and {shock head}. The {donkey} is for free!", cid)]]
+		npcHandler:say("I have {horses}, {racing bird}, {war bear}, {midnight panther}, {draptor}, {titanica}, {tin lizzard}, {blazebringer}, {rapid boar}, {stampor}, {tiger slug}, {uniwheel}, {kingly deer}, {dromedary}, {king scorpion}, {shadow draptor}, {ironblight}, {magma}, {gnarlhound}, {crimsom ray}, {steelbeak}, {water buffalo}, {tombstinger}, {ursagrodon}, {desert king} and {shock head}. The {donkey} is for free!", cid)
 
 	-- WIDOW QUEEN --
-	elseif msgcontains(msg, "widow queen") then
+	--[[elseif msgcontains(msg, "widow queen") then
 		mountId = 1
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -91,7 +92,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 1 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 		
 	-- RACING BIRD --
 	elseif msgcontains(msg, "racing bird") then
@@ -146,7 +147,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 		
 	-- BLACK SHEEP --
-	elseif msgcontains(msg, "black sheep") then
+	--[[elseif msgcontains(msg, "black sheep") then
 		mountId = 4
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -169,7 +170,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 4 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 		
 	-- MIDNIGHT PANTHER --
 	elseif msgcontains(msg, "midnight panther") then
@@ -354,7 +355,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 		
 	-- UNDEAD CAVEBEAR --
-	elseif msgcontains(msg, "undead cavebear") then
+	--[[elseif msgcontains(msg, "undead cavebear") then
 		mountId = 12
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -377,7 +378,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 12 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 		
 	-- DONKEY --
 	elseif msgcontains(msg, "donkey") then
@@ -457,7 +458,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 		
 	-- CRYSTAL WOLF --
-	elseif msgcontains(msg, "crystal wolf") then
+	--[[elseif msgcontains(msg, "crystal wolf") then
 		mountId = 16
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -480,7 +481,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 16 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 		
 	-- KINGLY DEER --
 	elseif msgcontains(msg, "kingly deer") then
@@ -509,7 +510,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- TAMED PANDA --
-	elseif msgcontains(msg, "tamed panda") then
+	--[[elseif msgcontains(msg, "tamed panda") then
 		mountId = 19
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -532,7 +533,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 19 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- DROMEDARY --
 	elseif msgcontains(msg, "dromedary") then
@@ -613,7 +614,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- LADY BUG --
-	elseif msgcontains(msg, "ladybug") then
+	--[[elseif msgcontains(msg, "ladybug") then
 		mountId = 27
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -636,10 +637,10 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 27 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- MANTA --
-	elseif msgcontains(msg, "manta") then
+	--[[elseif msgcontains(msg, "manta") then
 		mountId = 28
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -662,7 +663,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 28 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- IRONBLIGHT --
 	elseif msgcontains(msg, "ironblight") then
@@ -717,7 +718,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- DRAGONLING --
-	elseif msgcontains(msg, "dragonling") then
+	--[[elseif msgcontains(msg, "dragonling") then
 		mountId = 31
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -740,7 +741,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 31 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- Gnarlhound --
 	elseif msgcontains(msg, "gnarlhound") then
@@ -846,7 +847,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:say("Maybe later!", cid)
 		npcHandler:releaseFocus(cid)
 	
-	-- ARMOURED SCORPION --
+	-- TOMBSTINGER --
 	elseif msgcontains(msg, "tombstinger") then
 		mountId = 36
 		if player:hasMount(mountId) then
@@ -872,8 +873,8 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:say("Maybe later!", cid)
 		npcHandler:releaseFocus(cid)
 	
-	-- ARMOURED DRAGONLING --
-	elseif msgcontains(msg, "platesaurian") then
+	-- PLATESAURIAN --
+	--[[elseif msgcontains(msg, "platesaurian") then
 		mountId = 37
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -896,9 +897,9 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 37 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 
-	-- ARMORED CAVEBEAR --
+	-- URSAGRODON --
 	elseif msgcontains(msg, "ursagrodon") then
 		mountId = 38
 		if player:hasMount(mountId) then
@@ -925,7 +926,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:releaseFocus(cid)
 	
 	-- THE HELLGRIP --
-	elseif msgcontains(msg, "the hellgrip") then
+	--[[elseif msgcontains(msg, "the hellgrip") then
 		mountId = 39
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -948,10 +949,10 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 39 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- LION --
-	elseif msgcontains(msg, "noble lion") then
+	--[[elseif msgcontains(msg, "noble lion") then
 		mountId = 40
 		if player:hasMount(mountId) then
 			npcHandler:say("Well... It looks like you already have it!", cid)
@@ -974,7 +975,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 40 and msgcontains(msg, "no") then
 		npcHandler:say("Maybe later!", cid)
-		npcHandler:releaseFocus(cid)
+		npcHandler:releaseFocus(cid)]]
 	
 	-- GOLDEN LION --
 	elseif msgcontains(msg, "desert king") or msgcontains(msg, "desert") then
