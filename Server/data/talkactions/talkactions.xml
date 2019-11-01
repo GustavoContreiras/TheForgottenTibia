@@ -64,6 +64,7 @@
 	<talkaction words="/startCTF" script="capturetheflag.lua" />
 	<talkaction words="!joinCTF" script="capturetheflag.lua" />
 	<talkaction words="!leaveCTF" script="capturetheflag.lua" />
+	<!-- <talkaction words="!completetask" script="completetask.lua" /> -->
 	
 	<!-- triggered by the forgotten tibia client -->
 	<talkaction words="!lootlist" script="lootlist.lua" />
