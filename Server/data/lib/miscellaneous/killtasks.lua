@@ -5,7 +5,7 @@ KILLTASKS_STATUS_DONE = 2
 KILLTASKS_MONSTERS = {
     ['troll'] = { -- 20 xp
 		plural = "trolls", 		onlist = 1, amount = 25,	countstorage = 19000, statusstorage = 5010, exp = 5000, 	skillpoints = 0,	mount = 0, resets = 0, 
-		items = {{id = 2152, count = 10}}
+		items = {{id = 2152, count = 10}, {id = 2490, count = 1}}
 	}, 
     ['orc'] = { -- 25 xp
 		plural = "orcs", 		onlist = 1, amount = 25,    countstorage = 19001, statusstorage = 5011, exp = 6250, 	skillpoints = 0,	mount = 0, resets = 0,  
@@ -28,31 +28,31 @@ KILLTASKS_MONSTERS = {
 		items = {{id = 2152, count = 40}}
 	}, 
     ['cyclops'] = { -- 150 xp
-		plural = "cyclops", 		onlist = 1, amount = 100,    countstorage = 19006, statusstorage = 5016, exp = 150000, 	skillpoints = 0,	mount = 0, resets = 0,  
+		plural = "cyclops", 		onlist = 1, amount = 100,    countstorage = 19006, statusstorage = 5016, exp = 150000, 	skillpoints = 0,	mount = 'Blacksheep', resets = 0,  
 		items = {{id = 2152, count = 50}}
 	}, 
     ['vampire'] = { -- 305 xp
 		plural = "vampires", 	onlist = 1, amount = 100,    countstorage = 19007, statusstorage = 5017, exp = 152500, 	skillpoints = 0,	mount = 0, resets = 0,  
-		items = {{id = 2152, count = 50}}
+		items = {{id = 2152, count = 50}, {id = 8903, count = 1}}
 	}, 
     ['necromancer'] = { -- 580 xp
 		plural = "necromancers", 	onlist = 1, amount = 100,    countstorage = 19008, statusstorage = 5018, exp = 290000, 	skillpoints = 0,	mount = 'Floating Kashmir', resets = 0,  
 		items = {{id = 2152, count = 50}}
 	}, 
     ['dragon'] = { -- 700 xp
-		plural = "dragons", 		onlist = 1, amount = 100,    countstorage = 19009, statusstorage = 5019, exp = 0, 	skillpoints = 1,	mount = 0, resets = 0,  
-		items = {{id = 2152, count = 100}}
+		plural = "dragons", 		onlist = 1, amount = 100,    countstorage = 19009, statusstorage = 5019, exp = 0, 	skillpoints = 1,	mount = 0, resets = 1,  
+		items = {{id = 2152, count = 100}, {id = 2183, count = 1}}
 	}, 
     ['bog raider']  = { -- 800 xp
-		plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, exp = 0, 	skillpoints = 1,	mount = 0, resets = 0,  
-		items = {{id = 2152, count = 100}}
+		plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, exp = 0, 	skillpoints = 1,	mount = 'Ladybug', resets = 0,  
+		items = {{id = 2152, count = 100}, {id = 8891, count = 1}}
 	}, 
     ['giant spider'] = { -- 900 xp
-		plural = "giant spiders", 	onlist = 1, amount = 150,    countstorage = 19010, statusstorage = 5020, exp = 0, 	skillpoints = 1,	mount = 0, resets = 0,  
-		items = {{id = 2152, count = 100}}
+		plural = "giant spiders", 	onlist = 1, amount = 150,    countstorage = 19010, statusstorage = 5020, exp = 0, 	skillpoints = 1,	mount = 'Widow Queen', resets = 0,  
+		items = {{id = 2152, count = 100}, {id = 15644, count = 1}}
 	}, 
     ['quara predator'] = { -- 1200 xp
-		plural = "quara predators", 	onlist = 1, amount = 150,    countstorage = 19018, statusstorage = 5028, exp = 0, 	skillpoints = 1,	mount = 0, resets = 0,  
+		plural = "quara predators", 	onlist = 1, amount = 150,    countstorage = 19018, statusstorage = 5028, exp = 0, 	skillpoints = 1,	mount = 'Manta Ray', resets = 0,  
 		items = {{id = 2152, count = 100}}
 	}, 
     ['hero'] = { -- 1200 xp
@@ -61,34 +61,34 @@ KILLTASKS_MONSTERS = {
 	}, 
     ['dragon lord'] = { -- 2100 xp
 		plural = "dragon lords", 	onlist = 1, amount = 200,    countstorage = 19011, statusstorage = 5021, exp = 0, 	skillpoints = 2,	mount = 'Crystal Wolf', resets = 0,  
-		items = {{id = 2160, count = 4}}
+		items = {{id = 2160, count = 4}, {id = 2539, count = 1}}
 	}, 
     ['frost dragon'] = { -- 2100 xp
 		plural = "frost dragons", 	onlist = 1, amount = 200,    countstorage = 19012, statusstorage = 5022, exp = 0, 	skillpoints = 2,	mount = 'Dragonling', resets = 0,  
 		items = {{id = 2160, count = 4}}
 	}, 
     ['hydra'] = { -- 2100 xp
-		plural = "hydras", 		onlist = 1, amount = 250,    countstorage = 19013, statusstorage = 5023, exp = 0, 	skillpoints = 2,	mount = 'Plateusaurian', resets = 1,  
-		items = {{id = 2160, count = 5}}
+		plural = "hydras", 		onlist = 1, amount = 250,    countstorage = 19013, statusstorage = 5023, exp = 0, 	skillpoints = 2,	mount = 'Platesaurian', resets = 1,  
+		items = {{id = 2160, count = 5}, {id = 2195, count = 1}}
 	}, 
     ['behemoth'] = { -- 2500 xp
 		plural = "behemoths", 	onlist = 1, amount = 250,    countstorage = 19022, statusstorage = 5032, exp = 0, 	skillpoints = 2,	mount = 0, resets = 0,  
-		items = {{id = 2160, count = 5}}
+		items = {{id = 2160, count = 5}, {id = 18390, count = 1}}
 	}, 
     ['serpent spawn'] = { -- 3050 xp
-		plural = "serpent spawns", 	onlist = 1, amount = 200,    countstorage = 19017, statusstorage = 5027, exp = 0, 	skillpoints = 3,	mount = 0, resets = 0,  
+		plural = "serpent spawns", 	onlist = 1, amount = 200,    countstorage = 19017, statusstorage = 5027, exp = 0, 	skillpoints = 3,	mount = 'Tamed Panda', resets = 0,  
 		items = {{id = 2160, count = 5}}
 	}, 
     ['grim reaper'] = { -- 5500 xp
 		plural = "grim reapers", 	onlist = 1, amount = 200,    countstorage = 19015, statusstorage = 5025, exp = 0, 	skillpoints = 4,	mount = 'Nethersteed', resets = 0,  
 		items = {{id = 2160, count = 5}}
-	}, 
+	},
+	['hellhound'] = { -- 6800 xp
+		plural = "hellhounds", 	onlist = 1, amount = 200,    countstorage = 19020, statusstorage = 5030, exp = 0, 	skillpoints = 4,	mount = 0, resets = 0,  
+		items = {{id = 2160, count = 10}}
+	},
     ['demon'] = { -- 6000 xp
-		plural = "demons", 		onlist = 1, amount = 250,    countstorage = 19014, statusstorage = 5024, exp = 0, 	skillpoints = 4,	mount = 0, resets = 1,  
+		plural = "demons", 		onlist = 1, amount = 250,    countstorage = 19014, statusstorage = 5024, exp = 0, 	skillpoints = 4,	mount = 'Hellgrip', resets = 1,  
 		items = {{id = 2160, count = 10}}
-	}, 
-    ['hellhound'] = { -- 6800 xp
-		plural = "hellhounds", 	onlist = 1, amount = 250,    countstorage = 19020, statusstorage = 5030, exp = 0, 	skillpoints = 4,	mount = 0, resets = 0,  
-		items = {{id = 2160, count = 10}}
-	} 
+	}
 }
