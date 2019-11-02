@@ -368,12 +368,12 @@ bool Weapon::useFist(Player* player, Creature* target)
 
 void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int32_t damageModifier) const
 {
-	/*if (scripted) {
+	if (scripted) {
 		LuaVariant var;
 		var.type = VARIANT_NUMBER;
 		var.number = target->getID();
 		executeUseWeapon(player, var);
-	} else {*/
+	} //else {
 
 		CombatDamage damage;
 		WeaponType_t weaponType = item->getWeaponType();
@@ -426,7 +426,7 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			}
 		}
 
-		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -50) {
+		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -20) {
 			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
 			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
 			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
@@ -459,9 +459,9 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 	if (!player->hasFlag(PlayerFlag_NotGainSkill)) {
 		skills_t skillType;
 		uint32_t skillPoint;
-		if (getSkillType(player, item, skillType, skillPoint)) {
+		//if (getSkillType(player, item, skillType, skillPoint)) {
 			//player->addSkillAdvance(skillType, skillPoint);
-		}
+		//}
 	}
 
 	uint32_t manaCost = getManaCost(player);

@@ -115,10 +115,10 @@ end
 
 local addManaSpentFunc = Player.addManaSpent
 function Player.addManaSpent(...)
-	APPLY_SKILL_MULTIPLIER = false
+	--[[APPLY_SKILL_MULTIPLIER = false
 	local ret = addManaSpentFunc(...)
 	APPLY_SKILL_MULTIPLIER = true
-	return ret
+	return ret]]
 end
 
 function Player.depositMoney(self, amount)

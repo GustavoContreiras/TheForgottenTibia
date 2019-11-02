@@ -14,9 +14,9 @@ function onStepIn(creature, item, position, fromPosition)
 		rewardPosition.y = rewardPosition.y - 1
 
 		local rewardItem = Game.createItem(ARENA[arenaId].reward.trophy, 1, rewardPosition)
-		if rewardItem then
-			rewardItem:setDescription(string.format(ARENA[arenaId].reward.desc, creature:getName()))
-		end
+		--if rewardItem then
+			--rewardItem:setDescription(string.format(ARENA[arenaId].reward.desc, creature:getName()))
+		--end
 
 		creature:setStorageValue(cStorage, 1)
 		creature:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)

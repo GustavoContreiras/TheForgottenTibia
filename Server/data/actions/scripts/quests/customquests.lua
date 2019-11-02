@@ -3,10 +3,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	-- unique ids (same values as on mapeditor)
 	local config = {
 		woodenSwordUniqueId = 1060,
-		spearsRookUniqueId 	= 1061,
-		theChillerUniqueId 	= 1062,
+		spearsRookUniqueId = 1061,
+		theChillerUniqueId = 1062,
 		theScorcherUniqueId = 1063,
-		bowUniqueId 		= 1064,
+		bowUniqueId = 1064,
 
 		battleAxe = 1046,
 		orcishAxe = 1047,
@@ -52,8 +52,22 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		warHammerRahemos = 1085,
 		giantSwordRahemos = 1086
 		
+		greenhornArenaSword = 1087,
+		greenhornArenaAxe = 1088,
+		greenhornArenaClub = 1089,
+		
+		scrapperArenaSword = 1090,
+		scrapperArenaAxe = 1091,
+		scrapperArenaClub = 1092,
 
+		warlordArenaSword = 1093,
+		warlordArenaAxe = 1094,
+		warlordArenaClub = 1095
 	}
+
+	local itemType = ItemType(item.uid)
+	local itemWeight = itemType:getWeight()
+	local playerCap = player:getFreeCapacity()
 
 	-- Annihi Door (remove demons)
 	if item.actionid == 1099 and item.uid == config.annihiDoor then
@@ -422,18 +436,22 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		-- Dwarven Armor Quest
 		elseif item.uid == config.dwarvenArmorQuest then
 			if player:getStorageValue(config.dwarvenArmorQuest) ~= 1 then
-				local position = player:getPosition()
-				local monster1 = Game.createMonster("Giant Spider", Position(33153,31333,12))
-				local monster2 = Game.createMonster("Giant Spider", Position(33155,31333,12))
-				if monster1 then
-					monster1:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+				if playerCap >= itemWeight then 
+					local position = player:getPosition()
+					local monster1 = Game.createMonster("Giant Spider", Position(33153,31333,12))
+					local monster2 = Game.createMonster("Giant Spider", Position(33155,31333,12))
+					if monster1 then
+						monster1:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+					end
+					if monster2 then
+						monster2:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+					end
+					player:addItem(2503,1)
+					player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a dwarven armor.')
+					player:setStorageValue(config.dwarvenArmorQuest, 1)
+				else
+					player:sendTextMessage(MESSAGE_INFO_DESCR, 'You have found a ' .. itemType:getName() .. ' weighing ' .. itemWeight .. ' oz it\'s too heavy.')
 				end
-				if monster2 then
-					monster2:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-				end
-				player:addItem(2503,1)
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a dwarven armor.')
-				player:setStorageValue(config.dwarvenArmorQuest, 1)
 			else
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
 			end
@@ -568,10 +586,101 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			if player:getStorageValue(config.dragonLanceRahemos) ~= 1 then
 				player:addItem(2393,1)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a giant sword.')
-				player:setStorageValue(config.dragonLanceRahemos, 1)
+				player:setStorageValue(config.greenhornArenaSword, 1)
 			else
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
 			end
+
+		-- Greenhorn Arena Sword
+		elseif item.uid == config.greenhornArenaSword then
+			if player:getStorageValue(config.greenhornArenaSword) ~= 1 then
+				player:addItem(7406,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a blacksteel sword')
+				player:setStorageValue(config.greenhornArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Greenhorn Arena Axe
+		elseif item.uid == config.greenhornArenaAxe then
+			if player:getStorageValue(config.greenhornArenaSword) ~= 1 then
+				player:addItem(7380,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a headchopper.')
+				player:setStorageValue(config.greenhornArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Greenhorn Arena Club
+		elseif item.uid == config.grenhornArenaClub then
+			if player:getStorageValue(config.greenhornArenaSword) ~= 1 then
+				player:addItem(7392,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a orcish maul.')
+				player:setStorageValue(config.greenhornArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+
+		-- Scrapper Arena Sword
+		elseif item.uid == config.scrapperArenaSword then
+			if player:getStorageValue(config.scrapperArenaSword) ~= 1 then
+				player:addItem(7384,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a mystic blade.')
+				player:setStorageValue(config.scrapperArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Scrapper Arena Axe
+		elseif item.uid == config.scrapperArenaAxe then
+			if player:getStorageValue(config.scrapperArenaSword) ~= 1 then
+				player:addItem(7389,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a heroic axe.')
+				player:setStorageValue(config.scrapperArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Scrapper Arena Club
+		elseif item.uid == config.scrapperArenaClub then
+			if player:getStorageValue(config.scrapperArenaSword) ~= 1 then
+				player:addItem(7415,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a cranial basher.')
+				player:setStorageValue(config.scrapperArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+
+		-- Warlord Arena Sword
+		elseif item.uid == config.warlordArenaSword then
+			if player:getStorageValue(config.warlordArenaSword) ~= 1 then
+				player:addItem(7390,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found the justice seeker.')
+				player:setStorageValue(config.warlordArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Warlord Arena Axe
+		elseif item.uid == config.warlordArenaAxe then
+			if player:getStorageValue(config.warlordArenaSword) ~= 1 then
+				player:addItem(7434,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a royal axe.')
+				player:setStorageValue(config.warlordArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+			
+		-- Warlord Arena Club
+		elseif item.uid == config.warlordArenaClub then
+			if player:getStorageValue(config.warlordArenaSword) ~= 1 then
+				player:addItem(7429,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a bleesed sceptre.')
+				player:setStorageValue(config.warlordArenaSword, 1)
+			else
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
+			end
+
 
 		else
 			return false

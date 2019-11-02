@@ -295,7 +295,7 @@ function Player:addPartyCondition(combat, variant, condition, baseMana)
 	end
 
 	self:addMana(-mana)
-	self:addManaSpent(mana)
+	--self:addManaSpent(mana)
 
 	for _, member in ipairs(affectedMembers) do
 		member:addCondition(condition)

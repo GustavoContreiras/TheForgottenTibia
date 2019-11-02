@@ -192,7 +192,7 @@
 	<!--Clubs -->
 	<melee id="2423" level="20" unproperly="1" />
 	<melee id="7381" level="20" unproperly="1" />
-	<melee id="7425" level="20" unproperly="1" script="bleeding_effect.lua" />
+	<melee id="7425" level="20" unproperly="0" script="bleeding_effect.lua" />
 	<melee id="7432" level="20" unproperly="1" />
 	<melee id="2434" level="25" unproperly="1" />
 	<melee id="7387" level="25" unproperly="1" />

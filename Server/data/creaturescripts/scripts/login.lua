@@ -44,6 +44,8 @@ function onLogin(player)
 		player:addBlessing(4)
 		player:addBlessing(5)
 
+		player:addResetsCount(2)
+
 		-- Skill Points
 		--player:sendSkillPointsTutorialWelcomeWindow()
 		if player:getLastLoginSaved() <= 0 then
