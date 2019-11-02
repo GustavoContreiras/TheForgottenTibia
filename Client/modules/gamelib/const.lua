@@ -62,11 +62,11 @@ Skill = {
 }
 
 SkillDescription = {
-	Magic = '+ spell damage\n+ rune damage\n+ 15 mana       ',
+	Magic = '+ spell damage\n+ rune damage\n+ runes           \n+ 15 mana       ',
 	Vitality = '+ 15 health', 
 	Strenght = '+ melee damage   \n+ distance damage\n+ 5 capacity         ', 
-	Faith = '+ 2% of maximum damage for rod\n+ support spells                             \n+ healing spells                              \n+ 10 mana                                     ', 
-	Intelligence = '+ 1% of maximum damage for wand\n+ attack spells                                 \n+ 10 mana                                       ', 
+	Faith = '+ 2% of maximum damage for rod\n+ support spells and runes             \n+ healing spells and runes              \n+ 10 mana                                     ', 
+	Intelligence = '+ 1% of maximum damage for wand\n+ attack spells and runes                  \n+ 10 mana                                       ', 
 	Dexterity = '+ distance damage     \n+ 0.25 walk speed      \n+ 0.25% attack speed', 
 	Defence = '+ defence with shield   \n+ defence with weapon', 
 	--Endurance = '+ 15 capacity             \n+ 5 health                 \n+ health regeneration\n+ mana regeneration ',
