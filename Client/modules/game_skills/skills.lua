@@ -823,7 +823,8 @@ function onClickAdd(id)
 				newDefenceValueLabel:setVisible(true)
 				defenceMinusButton:setVisible(true)
 				
-				local initialHealth = 120
+				-- CONFIGURATION NEEDED ONLY IF DEFENCE GROWS HEALTH
+				--[[local initialHealth = 120
 				local levelsHealth = 5 * (player:getLevel() - 1)
 				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
 				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
@@ -833,7 +834,7 @@ function onClickAdd(id)
 				newHealthArrowLabel:setVisible(true)
 				newHealthValueLabel:setText(newMaxHealth)
 				newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-				newHealthValueLabel:setVisible(true)
+				newHealthValueLabel:setVisible(true)]]
 				
 			elseif id == 'skillId6' then
 			
