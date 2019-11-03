@@ -2372,7 +2372,7 @@
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2166" article="a" name="power ring">
+	<item id="2166" article="a" name="vitality ring">
 		<attribute key="weight" value="80" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="transformEquipTo" value="2203" />
@@ -2595,7 +2595,7 @@
 		<attribute key="invisible" value="1" />
 		<attribute key="showattributes" value="1" />
 	</item>
-	<item id="2203" article="a" name="power ring (vitality +4)">
+	<item id="2203" article="a" name="vitality ring">
 		<attribute key="weight" value="80" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="decayTo" value="0" />
@@ -2637,28 +2637,28 @@
 		<attribute key="speed" value="60" />
 		<attribute key="showattributes" value="1" />
 	</item>
-	<item id="2207" article="a" name="sword ring">
+	<item id="2207" article="a" name="faith ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="transformEquipTo" value="2210" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2208" article="an" name="axe ring">
+	<item id="2208" article="an" name="intelligence ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="transformEquipTo" value="2211" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2209" article="a" name="club ring">
+	<item id="2209" article="a" name="faith ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="transformEquipTo" value="2212" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2210" article="a" name="sword ring (faith +4)">
+	<item id="2210" article="a" name="faith ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="decayTo" value="0" />
@@ -2667,7 +2667,7 @@
 		<attribute key="duration" value="1800" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2211" article="an" name="axe ring (intelligence +4)">
+	<item id="2211" article="an" name="intelligence ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="decayTo" value="0" />
@@ -2676,7 +2676,7 @@
 		<attribute key="duration" value="1800" />
 		<attribute key="showduration" value="1" />
 	</item>
-	<item id="2212" article="a" name="club ring (strenght +4)">
+	<item id="2212" article="a" name="strenght ring">
 		<attribute key="weight" value="90" />
 		<attribute key="slotType" value="ring" />
 		<attribute key="decayTo" value="0" />

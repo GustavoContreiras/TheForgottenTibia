@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Juan" script="default.lua" walkinterval="2000">
+	<health now="100" max="100" />
+	<look type="153" head="19" body="41" legs="60" feet="41" addons="3" />
+	<parameters>
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_buyable" value="
+			faith ring, 2207, 1000;
+			strenght ring, 2212, 1000;
+			intelligence ring, 2211, 1000;
+			ring of healing, 2214, 1500;
+			time ring, 2206, 1000;
+			life ring, 2205, 1000;
+			enery ring, 2204, 500;
+			stealth ring, 2202, 1000;
+			vitality ring, 2203, 400;" />
+	</parameters>
+</npc>
