@@ -585,68 +585,95 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	std::unordered_map<std::string, uint32_t> faithInfo = g_game.getSkillInfo(SKILL_FAITH);
 	std::unordered_map<std::string, uint32_t> enduranceInfo = g_game.getSkillInfo(SKILL_ENDURANCE);
 
-	double maxMagic = 10;
-	double maxVitality = 20;
-	double maxStrenght = 20;
-	double maxDefence = 20;
-	double maxIntelligence = 20;
-	double maxFaith = 20;
-	double maxDexterity = 20;
-	double maxEndurance = 20;
+	double maxMagic 		= 10;
+	double maxVitality 		= ceil( std::max( this->level * 0.8 + 3.2 + 8, this->level * 1.0) );
+	double maxStrenght 		= maxVitality;
+	double maxIntelligence 	= maxVitality;
+	double maxFaith 		= maxVitality;
+	double maxDexterity 	= maxVitality;
+	double maxDefence 		= maxVitality;
+	double maxEndurance 	= maxVitality;
 
-	if (this->level >= 8) {
+	/*to implement non-magic
+
+	1<=lvl<=8:
+	max = round(0.8*lvl + 3.2 + base_skill)
+
+	9<=lvl<=40:
+	max = round(1.6*lvl - 3.2 + base_skill)
+
+	41<=lvl<=60:
+	max = round(1.2*lvl + 12.8 + base_skill)
+
+	61<=lvl<=80:
+	max = round(0.8*lvl + 36.8 + base_skill)
+
+	81<=lvl:
+	max = round(0.4*lvl + 68.8 + base_skill)
+
+	to make better magic
+
+	Magic:
+	base_skill = 0
+
+	1<=lvl<=8:
+	max = round(0.4*lvl + 1.6 + base_skill)
+
+	9<=lvl<=40:
+	max = round(0.8*lvl - 1.6 + base_skill)
+
+	41<=lvl<=60:
+	max = round(0.6*lvl + 6.4 + base_skill)
+
+	61<=lvl<=80:
+	max = round(0.4*lvl + 18.4 + base_skill)
+
+	81<=lvl:
+	max = round(0.2*lvl + 34.4 + base_skill)
+	*/
+
+	if (this->level >= 9) {
 		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
-		maxVitality 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxStrenght 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxIntelligence = ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxFaith 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxDexterity 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxDefence 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
-		maxEndurance 	= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ), this->level * 1.0) );
+		maxVitality 	= ceil( std::max( this->level * 1.6 - 3.2 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
 	}
 
-	if (this->level >= 72) {
+	if (this->level >= 41) {
+		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
+		maxVitality 	= ceil( std::max( this->level * 1.2 + 12.8 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
+	}
+
+	if (this->level >= 61) {
         maxMagic 		= 72;
-		maxVitality 	= 90;
-		maxStrenght 	= 90;
-		maxIntelligence = 90;
-		maxFaith 		= 90;
-		maxDexterity 	= 90;
-		maxDefence 		= 90;
-		maxEndurance 	= 90;
+		maxVitality 	= ceil( std::max( this->level * 0.8 + 36.8 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
 	}
 
-	if (this->level > 90) {
+	if (this->level >= 81) {
         maxMagic 		= 72 + this->level - 90;
-		maxVitality 	= this->level;
-		maxStrenght 	= this->level;
-		maxIntelligence = this->level;
-		maxFaith 		= this->level;
-		maxDexterity 	= this->level;
-		maxDefence 		= this->level;
-		maxEndurance 	= this->level;
-	}
-
-	if (this->level > 100) {
-        maxMagic 		= ceil(82 + (this->level - 100) / 2);
-		maxVitality 	= this->level;
-		maxStrenght 	= this->level;
-		maxIntelligence = this->level;
-		maxFaith 		= this->level;
-		maxDexterity 	= this->level;
-		maxDefence 		= this->level;
-		maxEndurance 	= this->level;
-	}
-
-	if (this->level > 130) {
-		maxMagic 		= ceil(92 + (this->level - 100) / 2);
-		maxVitality 	= 130;
-		maxStrenght 	= 130;
-		maxIntelligence = 130;
-		maxFaith 		= 130;
-		maxDexterity 	= 130;
-		maxDefence 		= 130;
-		maxEndurance 	= 130;
+		maxVitality 	= ceil( std::max( this->level * 0.4 + 68.8 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
 	}
 
 	bool checks = true;

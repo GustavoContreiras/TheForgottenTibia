@@ -13,7 +13,7 @@ function onThink()  npcHandler:onThink()  end
  
 local storage = KILLTASKS_STARTSTORAGE
 local monsters = KILLTASKS_MONSTERS
-local tasksString = "I have {tasks} to kill {trolls}, {orcs}, {rotworms}, {minotaurs}, {amazons}, {ghouls}, {cyclops}, {vampires}, {necromancers}, {dragons}, {bog raiders}, {giant spiders}, {quara predators}, {heroes}, {dragon lords}, {frost dragons}, {hydras}, {behemoths}, {serpent spawns}, {grim reapers}, {demons} and {hellhounds}."
+local tasksString = "I have {tasks} to kill {trolls}, {orcs}, {rotworms}, {elves}, {minotaurs}, {amazons}, {ghouls}, {cyclops}, {vampires}, {necromancers}, {dragons}, {bog raiders}, {giant spiders}, {quara predators}, {heroes}, {dragon lords}, {frost dragons}, {hydras}, {behemoths}, {serpent spawns}, {grim reapers}, {demons} and {hellhounds}."
  
  
 local function getItemsFromTable(itemtable)

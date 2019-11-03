@@ -14,6 +14,10 @@ KILLTASKS_MONSTERS = {
     ['rotworm'] = { -- 40 xp
 		plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19002, statusstorage = 5012, exp = 10000, 	skillpoints = 0,	mount = 0, resets = 0,  
 		items = {{id = 2152, count = 25}}
+	},
+    ['elf'] = { -- 42 xp
+		plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19023, statusstorage = 5033, exp = 15000, 	skillpoints = 0,	mount = 'Ladybug', resets = 0,  
+		items = {{id = 2152, count = 25}}
 	}, 
     ['minotaur'] = { -- 50 xp
 		plural = "minotaurs", 	onlist = 1, amount = 50,     countstorage = 19003, statusstorage = 5013, exp = 25000, 	skillpoints = 0,	mount = 'Undead Cavebear', resets = 0, 
@@ -44,7 +48,7 @@ KILLTASKS_MONSTERS = {
 		items = {{id = 2152, count = 100}, {id = 2183, count = 1}}
 	}, 
     ['bog raider']  = { -- 800 xp
-		plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, exp = 0, 	skillpoints = 1,	mount = 'Ladybug', resets = 0,  
+		plural = "bog raiders", 	onlist = 1, amount = 100,    countstorage = 19016, statusstorage = 5026, exp = 0, 	skillpoints = 1,	mount = 0, resets = 0,  
 		items = {{id = 2152, count = 100}, {id = 8891, count = 1}}
 	}, 
     ['giant spider'] = { -- 900 xp
