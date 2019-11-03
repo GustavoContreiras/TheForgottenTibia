@@ -368,12 +368,12 @@ bool Weapon::useFist(Player* player, Creature* target)
 
 void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int32_t damageModifier) const
 {
-	if (scripted) {
-		LuaVariant var;
-		var.type = VARIANT_NUMBER;
-		var.number = target->getID();
-		executeUseWeapon(player, var);
-	} //else {
+	//if (scripted) {
+		//LuaVariant var;
+		//var.type = VARIANT_NUMBER;
+		//var.number = target->getID();
+		//executeUseWeapon(player, var);
+	//} else {
 
 		CombatDamage damage;
 		WeaponType_t weaponType = item->getWeaponType();
@@ -430,6 +430,10 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
 			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
 			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+
+			// Bleeding condition
+			//Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_BLEEDING, 5000, 0, false, 0U);
+			//target->addCondition(condition);
 		}
 
 		Combat::doCombatHealth(player, target, damage, params);

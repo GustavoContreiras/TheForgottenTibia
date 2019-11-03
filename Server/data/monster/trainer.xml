@@ -22,7 +22,7 @@
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="0" />
 	</attacks>
-	<defenses armor="30" defense="30">
+	<defenses armor="0" defense="0">
 		<defense name="healing" interval="2000" chance="15" min="30000" max="30000">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
@@ -37,6 +37,7 @@
 	</immunities>
 	<voices interval="5000" chance="10">
 		<voice sentence="Hit me!" />
+		<voice sentence="Critical attacks need at least 50 damage!" />
 	</voices>
 	<loot>
 	</loot>

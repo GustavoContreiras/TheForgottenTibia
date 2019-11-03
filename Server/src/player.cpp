@@ -666,7 +666,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	}
 
 	if (this->level >= 81) {
-        maxMagic 		= 72 + this->level - 90;
+        maxMagic 		= this->level - 18;
 		maxVitality 	= ceil( std::max( this->level * 0.4 + 68.8 + 8, this->level * 1.0) );
 		maxStrenght 	= maxVitality;
 		maxIntelligence = maxVitality;
