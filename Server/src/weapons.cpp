@@ -368,17 +368,19 @@ bool Weapon::useFist(Player* player, Creature* target)
 
 void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int32_t damageModifier) const
 {
-	//if (scripted) {
-		//LuaVariant var;
-		//var.type = VARIANT_NUMBER;
-		//var.number = target->getID();
-		//executeUseWeapon(player, var);
-	//} else {
+	if (scripted) {
+		LuaVariant var;
+		var.type = VARIANT_NUMBER;
+		var.number = target->getID();
+		executeUseWeapon(player, var);
+	}
 
+	// else {
 		CombatDamage damage;
 		WeaponType_t weaponType = item->getWeaponType();
 		uint16_t chance = 0;
 		uint16_t skill = 0;
+		uint16_t minimumDamage = 0;
 
 		damage.primary.type = params.combatType;
 		damage.primary.value = (getWeaponDamage(player, target, item) * damageModifier) / 100;
@@ -388,6 +390,8 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
 
 			damage.origin = ORIGIN_RANGED;
+
+			minimumDamage = player->getSkillLevel(SKILL_DEXTERITY) / 2;
 
 			if (weaponType == WEAPON_AMMO) {
 				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)) {
@@ -405,6 +409,8 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		else {
 
 			damage.origin = ORIGIN_MELEE;
+
+			minimumDamage = player->getSkillLevel(SKILL_STRENGHT) / 2;
 
 			if (weaponType == WEAPON_AXE || weaponType == WEAPON_SWORD || weaponType == WEAPON_CLUB) {
 				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
@@ -426,14 +432,10 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			}
 		}
 
-		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -20) {
+		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -minimumDamage) {
 			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
 			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
 			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-
-			// Bleeding condition
-			//Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_BLEEDING, 5000, 0, false, 0U);
-			//target->addCondition(condition);
 		}
 
 		Combat::doCombatHealth(player, target, damage, params);
@@ -460,13 +462,14 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Tile* tile) const
 //CHANGED! DUAL WIELD SYSTEM
 void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 {
+	/* skillpoints system dont advance skill this way
 	if (!player->hasFlag(PlayerFlag_NotGainSkill)) {
 		skills_t skillType;
 		uint32_t skillPoint;
-		//if (getSkillType(player, item, skillType, skillPoint)) {
-			//player->addSkillAdvance(skillType, skillPoint);
-		//}
-	}
+		if (getSkillType(player, item, skillType, skillPoint)) {
+			player->addSkillAdvance(skillType, skillPoint);
+		}
+	}*/
 
 	uint32_t manaCost = getManaCost(player);
 	if (manaCost != 0) {

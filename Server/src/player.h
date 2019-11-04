@@ -20,6 +20,8 @@
 #ifndef FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
 #define FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
 
+#include <bitset>
+
 #include "creature.h"
 #include "container.h"
 #include "cylinder.h"

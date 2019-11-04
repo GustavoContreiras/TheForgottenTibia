@@ -9,7 +9,7 @@ function onUseWeapon(player, variant)
 		return false
 	end
 
-	if math.random(1, 100) <= 25 then
+	if math.random(1, 100) <= 75 then
 		return false
 	end
 
@@ -20,5 +20,8 @@ function onUseWeapon(player, variant)
 		local damage = math.floor((player:getEffectiveSkillLevel(SKILL_STRENGHT) * 0.02) + 1)
 		player:addDamageCondition(Creature(variant:getNumber()), CONDITION_BLEEDING, DAMAGELIST_CONSTANT_PERIOD, damage, 2, 4)
 	end
+	
+	-- Effect on target
+	--Creature(variant:getNumber()):getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)
 	return true
 end
