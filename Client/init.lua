@@ -56,4 +56,8 @@ end
 
 g_things.loadOtb('data/things/1098/items.otb')
 -- g_things.loadXml('modules/game_skills/skills.xml')
+
+-- setup directory for saving configurations
+g_resources.setWriteDir(g_resources.getWorkDir())
+
 print 'Startup done :]'
