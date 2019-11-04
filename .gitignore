@@ -26,6 +26,9 @@ Server/data/world/forgottenworld1098oldglobal-spawn.xml
 Server/data/world/forgottenworld1098oldglobal-house.xml
 Server/TheForgottenTibiaServerRestarter.bat
 Server/TheForgottenTibiaServer-x64-Restarter.exe
+Server/theforgottenserver-x64.exe
+Server/vc14
+Server/vc14/*
 Server/vc14/.vs/
 Server/vc14/Win32/
 Server/vc14/x64/
