@@ -9,7 +9,7 @@ function onUseWeapon(player, variant)
 		return false
 	end
 
-	if math.random(1, 100) <= 25 then
+	if math.random(1, 100) <= 75 then
 		return false
 	end
 
