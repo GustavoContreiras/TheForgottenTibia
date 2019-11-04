@@ -12,7 +12,7 @@ Module
     dofile 'characterlist'
     EnterGame.init()
     CharacterList.init()
-    EnterGame.setUniqueServer("189.122.73.38", 7171, 1098)
+    EnterGame.setUniqueServer("127.0.0.1", 7171, 1098)
 
   @onUnload: |
     EnterGame.terminate()
