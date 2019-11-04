@@ -1377,7 +1377,7 @@ CREATE TABLE `player_inboxitems` (
   `itemtype` smallint(6) NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
   `attributes` blob NOT NULL,
-  `abilities` blob NOT NULL
+  `abilities` blob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
