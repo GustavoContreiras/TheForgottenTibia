@@ -63,7 +63,7 @@
 		<item id="1949" chance="10000" /><!-- scroll -->
 		<item id="2044" chance="6666" /><!-- lamp -->
 		<item name="gold coin" countmax="20" chance="100000" />
-		<item name="power ring" chance="1428" />
+		<item name="vitality ring" chance="1428" />
 		<item id="2401" chance="3333" /><!-- staff -->
 		<item name="leather armor" chance="10000" />
 		<item name="sandals" chance="6666" />

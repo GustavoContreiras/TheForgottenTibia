@@ -45,7 +45,7 @@
 	<loot>
 		<item name="gold coin" countmax="30" chance="100000" />
 		<item name="gold coin" countmax="1" chance="2857" />
-		<item name="sword ring" chance="2000" />
+		<item name="faith ring" chance="2000" />
 		<item name="dagger" chance="6666" />
 		<item name="longsword" chance="10000" />
 		<item name="throwing knife" countmax="2" chance="50000" />

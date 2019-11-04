@@ -36,7 +36,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="80" chance="80000" />
-		<item name="club ring" chance="100" />
+		<item name="strenght ring" chance="100" />
 		<item name="ripper lance" chance="850" />
 		<item name="health potion" chance="280" />
 	</loot>

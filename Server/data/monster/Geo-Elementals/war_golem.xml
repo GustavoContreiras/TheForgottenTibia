@@ -61,7 +61,7 @@
 		<item name="gold coin" countmax="90" chance="37500" />
 		<item name="gold coin" countmax="80" chance="375000" />
 		<item name="life crystal" chance="1000" />
-		<item name="club ring" chance="810" />
+		<item name="strenght ring" chance="810" />
 		<item name="dwarven ring" chance="1210" />
 		<item name="two handed sword" chance="5500" />
 		<item name="morning star" chance="7000" />

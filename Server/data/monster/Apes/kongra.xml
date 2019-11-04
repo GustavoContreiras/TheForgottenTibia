@@ -41,9 +41,9 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="40" chance="69000" />
-		<item name="power ring" chance="300" />
+		<item name="vitality ring" chance="300" />
 		<item name="protection amulet" chance="990" />
-		<item name="club ring" chance="230" />
+		<item name="strenght ring" chance="230" />
 		<item name="plate armor" chance="950" />
 		<item name="banana" countmax="12" chance="30000" />
 		<item name="ape fur" chance="980" />

@@ -62,6 +62,7 @@ local function creatureSayCallback(cid, type, msg)
 				end
 				npcHandler:say("And God said... REBORN!", cid)
 				player:setHealth(player:getMaxHealth())
+				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 			end
 		else
 			npcHandler:say("It will cost you " .. price .. " gold coins. Are you sure?", cid)
@@ -84,6 +85,7 @@ local function creatureSayCallback(cid, type, msg)
 				end
 				npcHandler:say("And God said... REBORN!", cid)
 				player:setHealth(player:getMaxHealth())
+				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 			end
 		else
 			npcHandler:say("Sorry, but you don't have enough money.", cid)

@@ -38,7 +38,7 @@
 	<loot>
 		<item name="gold coin" countmax="30" chance="40000" />
 		<item name="small amethyst" chance="140" />
-		<item name="axe ring" chance="190" />
+		<item name="intelligence ring" chance="190" />
 		<item name="double axe" chance="600" />
 		<item name="battle hammer" chance="4000" />
 		<item name="steel helmet" chance="1600" />

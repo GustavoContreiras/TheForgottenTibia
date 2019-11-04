@@ -50,7 +50,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		
 		dragonLanceRahemos = 1084,
 		warHammerRahemos = 1085,
-		giantSwordRahemos = 1086
+		giantSwordRahemos = 1086,
 		
 		greenhornArenaSword = 1087,
 		greenhornArenaAxe = 1088,
