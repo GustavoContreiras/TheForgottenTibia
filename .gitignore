@@ -15,7 +15,9 @@ Client/TheForgottenTibia.lib
 Client/TheForgottenTibia.pdb
 Client/theforgottentibia.log
 Client/src/.vscode
+Client/config.otml
 
+Server/*.dll
 Server/etc/
 Server/build/
 Server/config.lua
