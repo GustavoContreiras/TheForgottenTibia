@@ -36,7 +36,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="12" chance="28000" />
-		<item name="axe ring" chance="120" />
+		<item name="intelligence ring" chance="120" />
 		<item name="battle axe" chance="2500" />
 		<item name="crossbow" chance="3000" />
 		<item name="chain armor" chance="8000" />

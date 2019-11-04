@@ -43,7 +43,7 @@
 	<loot>
 		<item name="gold coin" countmax="100" chance="100000" />
 		<item name="gold coin" countmax="90" chance="50000" />
-		<item name="sword ring" chance="10000" />
+		<item name="faith ring" chance="10000" />
 		<item name="broadsword" chance="4000" />
 		<item name="magic plate armor" chance="2000" />
 		<item name="spectral stone" chance="800" />

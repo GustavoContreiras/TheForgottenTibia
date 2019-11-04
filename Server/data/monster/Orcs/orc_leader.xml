@@ -40,7 +40,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="35" chance="28000" />
-		<item name="sword ring" chance="3920" />
+		<item name="faith ring" chance="3920" />
 		<item name="longsword" chance="2800" />
 		<item name="throwing knife" countmax="4" chance="9950" />
 		<item name="broadsword" chance="610" />

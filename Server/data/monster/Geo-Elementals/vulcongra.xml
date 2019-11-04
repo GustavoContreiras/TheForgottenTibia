@@ -48,7 +48,7 @@
 		<item name="gold coin" countmax="7" chance="50000" />
 		<item name="platinum coin" chance="14780" />
 		<item name="wand of inferno" chance="1000" />
-		<item name="sword ring" chance="2920" />
+		<item name="faith ring" chance="2920" />
 		<item name="fire sword" chance="260" />
 		<item name="banana" countmax="10" chance="10420" />
 		<item name="strong health potion" chance="7100" />

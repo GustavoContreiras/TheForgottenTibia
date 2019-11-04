@@ -42,7 +42,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" chance="50000" countmax="60" />
-		<item name="power ring" chance="7500" />
+		<item name="vitality ring" chance="7500" />
 		<item name="protection amulet" chance="3000" />
 		<item name="plate armor" chance="5000" />
 		<item name="banana" chance="7500" countmax="2" />

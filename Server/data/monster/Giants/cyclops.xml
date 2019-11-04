@@ -39,7 +39,7 @@
 	<loot>
 		<item name="wolf tooth chain" chance="190" />
 		<item name="gold coin" countmax="47" chance="82000" />
-		<item name="club ring" chance="90" />
+		<item name="strenght ring" chance="90" />
 		<item name="halberd" chance="1003" />
 		<item name="short sword" chance="8000" />
 		<item name="dark helmet" chance="220" />

@@ -50,7 +50,7 @@
 	<loot>
 		<item name="gold coin" chance="100000" countmax="93" />
 		<item name="platinum coin" chance="50000" countmax="5" />
-		<item name="sword ring" chance="1400" />
+		<item name="faith ring" chance="1400" />
 		<item name="ring of healing (faster regeneration)" chance="17111" />
 		<item id="2229" chance="15000" />
 		<item name="vampire shield" chance="6300" />

@@ -396,11 +396,11 @@
             spike sword, 2383, 1000;
             thaian sword, 7391, 16000;
             war hammer, 2391, 1200;
-            axe ring, 2208, 100;
-            club ring, 2209, 100;
-            power ring, 2166, 50;
+            intelligence ring, 2208, 100;
+            strenght ring, 2209, 100;
+            vitality ring, 2166, 50;
             stealth ring, 2165, 200;
-            sword ring, 2207, 100;
+            faith ring, 2207, 100;
             bronze amulet, 2172, 50;
             garlic necklace, 2199, 50;
             elven amulet, 2198, 100;

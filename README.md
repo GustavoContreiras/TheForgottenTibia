@@ -2,7 +2,7 @@ The Forgotten Tibia
 ===============
 
 The Forgotten Tibia is a free and open-source MMORPG written in C++ and LUA.  
-It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/) ([3b63f65](https://github.com/otland/forgottenserver/commit/3b63f65)), [OTClient](https://github.com/edubart/otclient/) ([07b4b78](https://github.com/edubart/otclient/commit/07b4b78)) and [ZnoteAAC](https://github.com/Znote/ZnoteAAC) ([effe5d2](https://github.com/Znote/ZnoteAAC/commit/effe5d2)) projects.
+It is a fork from the [The Forgotten Server 1.3](https://github.com/otland/forgottenserver/) ([3b63f65](https://github.com/otland/forgottenserver/commit/3b63f65)), [OTClient](https://github.com/edubart/otclient/) ([07b4b78](https://github.com/edubart/otclient/commit/07b4b78)) projects.
 
 ## What makes it different from Tibia / The Forgotten Server 1.3?
 
@@ -19,7 +19,7 @@ Attack speed will increase and each weapon damage will decrease.
 
 - ### Distance weapons damage are based on Strenght and/or Dexterity
 
-- ### Two-handed melee weapons can do critical hit and bleeding effect
+- ### Melee weapons and distance weapons can do critical damage and bleeding effect
 
 - ### You don't need to open monsters to pickup loots while hunting  
 Just need to select the item you want to loot and add to / remove from your loot list.
@@ -49,7 +49,7 @@ Gives more health.
 - ### Strenght
 Gives more physical damage.
 - ### Defence
-Gives more resistance to physical attacks and more health.
+Gives more resistance to physical attacks (with shield or with only weapon).
 - ### Dexterity
 Gives more attack speed, walk speed and damage with distance weapons.
 - ### Intelligence
@@ -64,18 +64,11 @@ Gives more capacity and health.
 - ### Running the server and testing with client
 https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Running-the-server-to-test
 
-- ### Compiling the server
+- ### Compiling the server on Windows
 https://github.com/otland/forgottenserver/wiki/Compiling-on-Windows-(vcpkg)
 
-- ### Compiling the client
+- ### Compiling the client on Windows
 https://github.com/GustavoContreiras/TheForgottenTibia/wiki
-
-- ### Configuring ZNote AAC Website
-https://github.com/GustavoContreiras/TheForgottenTibia/wiki/Configuring-ZNote-AAC-Website
-
-- ### Anything else
-If you want to customize the server or the client, see our [wiki](https://github.com/GustavoContreiras/TheForgottenTibia/wiki).  
-There you can find tutorials to change spells, skills, damages, titles, names, texts and etc.
 
 ## Issues
 

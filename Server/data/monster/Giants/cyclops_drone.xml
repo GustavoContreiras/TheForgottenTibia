@@ -40,7 +40,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="30" chance="82000" />
-		<item name="club ring" chance="90" />
+		<item name="strenght ring" chance="90" />
 		<item name="halberd" chance="680" />
 		<item name="short sword" chance="8000" />
 		<item name="dark helmet" chance="190" />

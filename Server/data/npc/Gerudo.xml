@@ -180,11 +180,11 @@
             Broadsword, 2413, 500;
             Noble Armor, 2486, 900;
             Obsidian Lance, 2425, 500;
-            Axe Ring, 2208, 100;
-            Club Ring, 2209, 100;
-            Power Ring, 2166, 50;
+            intelligence ring, 2208, 100;
+            strenght ring, 2209, 100;
+            vitality ring, 2166, 50;
             Stealth Ring, 2165, 200;
-            Sword Ring, 2207, 100;
+            faith ring, 2207, 100;
             Bronze Amulet, 2172, 50;
             Garlic Necklace, 2199, 50;
             Elven Amulet, 2198, 100;

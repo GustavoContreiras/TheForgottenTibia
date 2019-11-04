@@ -16,7 +16,7 @@ KILLTASKS_MONSTERS = {
 		items = {{id = 2152, count = 25}}
 	},
     ['elf'] = { -- 42 xp
-		plural = "rotworms", 	onlist = 1, amount = 50,     countstorage = 19023, statusstorage = 5033, exp = 15000, 	skillpoints = 0,	mount = 'Ladybug', resets = 0,  
+		plural = "elves", 	onlist = 1, amount = 50,     countstorage = 19023, statusstorage = 5033, exp = 15000, 	skillpoints = 0,	mount = 'Ladybug', resets = 0,  
 		items = {{id = 2152, count = 25}}
 	}, 
     ['minotaur'] = { -- 50 xp
