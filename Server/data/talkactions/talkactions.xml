@@ -37,8 +37,9 @@
 	<talkaction words="/kick" separator=" " script="kick.lua" />
 	<talkaction words="/B" separator=" " script="broadcast.lua" />
 	<talkaction words="/looktype" separator=" " script="looktype.lua" />
-	<talkaction words="/mounts" separator=" " script="allmounts.lua" />
-	<talkaction words="/addons" separator=" " script="alladdons.lua" />
+	<talkaction words="/allmounts" separator=" " script="allmounts.lua" />
+	<talkaction words="/alladdons" separator=" " script="alladdons.lua" />
+	<talkaction words="/alloutfits" separator=" " script="alloutfits.lua" />
 	
 	<!-- Senior Tutors -->
 	<talkaction words="/addtutor" separator=" " script="add_tutor.lua" />

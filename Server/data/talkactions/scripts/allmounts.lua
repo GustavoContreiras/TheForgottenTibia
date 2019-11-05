@@ -7,7 +7,7 @@ function onSay(player, words, param)
 	if param == '' then
 		target = player:getTarget()
 		if not target then
-			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, 'Unlocks all mounts for certain player. Usage: /mounts <player name>')
+			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, 'Unlocks all mounts for certain player. Usage: /allmounts <player name>')
 			return false
 		end
 	else

@@ -15,7 +15,7 @@ function onSay(player, words, param)
 	if param == '' then
 		target = player:getTarget()
 		if not target then
-			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, 'Gives players the ability to wear all addons. Usage: /addons <player name>')
+			player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, 'Gives players the ability to wear all addons. Usage: /alladdons <player name>')
 			return false
 		end
 	else
