@@ -594,44 +594,6 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	double maxDefence 		= maxVitality;
 	double maxEndurance 	= maxVitality;
 
-	/*to implement non-magic
-
-	1<=lvl<=8:
-	max = round(0.8*lvl + 3.2 + base_skill)
-
-	9<=lvl<=40:
-	max = round(1.6*lvl - 3.2 + base_skill)
-
-	41<=lvl<=60:
-	max = round(1.2*lvl + 12.8 + base_skill)
-
-	61<=lvl<=80:
-	max = round(0.8*lvl + 36.8 + base_skill)
-
-	81<=lvl:
-	max = round(0.4*lvl + 68.8 + base_skill)
-
-	to make better magic
-
-	Magic:
-	base_skill = 0
-
-	1<=lvl<=8:
-	max = round(0.4*lvl + 1.6 + base_skill)
-
-	9<=lvl<=40:
-	max = round(0.8*lvl - 1.6 + base_skill)
-
-	41<=lvl<=60:
-	max = round(0.6*lvl + 6.4 + base_skill)
-
-	61<=lvl<=80:
-	max = round(0.4*lvl + 18.4 + base_skill)
-
-	81<=lvl:
-	max = round(0.2*lvl + 34.4 + base_skill)
-	*/
-
 	if (this->level >= 9) {
 		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
 		maxVitality 	= ceil( std::max( this->level * 1.6 - 3.2 + 8, this->level * 1.0) );
