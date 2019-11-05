@@ -7,7 +7,7 @@ combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 1, 0)
 function onUseWeapon(player, variant, variantTwo, variantThree, variantFour)
 
 	local weaponType = variantTwo:getString()
-	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType)
+	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType)
 	local isDualWielding = variantThree:getNumber() == 1
 	local damage = variantFour:getNumber()
 	local critical = CRITICAL[weaponType]
@@ -17,8 +17,8 @@ function onUseWeapon(player, variant, variantTwo, variantThree, variantFour)
 		return false
 	end
 	
-	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType .. " / damage: " .. damage)
-	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, string.format(variantThree:getNumber()))
+	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType .. " / damage: " .. damage)
+	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, string.format(variantThree:getNumber()))
 	
 	if not combat:execute(player, variant) then
 		return false
