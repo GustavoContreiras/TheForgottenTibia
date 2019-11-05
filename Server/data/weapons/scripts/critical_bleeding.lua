@@ -7,18 +7,20 @@ combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 1, 0)
 function onUseWeapon(player, variant, variantTwo, variantThree, variantFour)
 
 	local weaponType = variantTwo:getString()
-	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType)
 	local isDualWielding = variantThree:getNumber() == 1
 	local damage = variantFour:getNumber()
 	local critical = CRITICAL[weaponType]
 	local target = Creature(variant:getNumber())
+
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType)
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "isDualWielding: " .. weaponType)
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "damage: " .. weaponType)
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "critical chance: " .. critical.chance .. " | critical amount: " .. critical.amount)
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "target name: " .. target:getName())
 	
 	if not critical then
 		return false
 	end
-	
-	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "weaponType: " .. weaponType .. " / damage: " .. damage)
-	--player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, string.format(variantThree:getNumber()))
 	
 	if not combat:execute(player, variant) then
 		return false
@@ -40,6 +42,8 @@ function onUseWeapon(player, variant, variantTwo, variantThree, variantFour)
 		criticalDamage = damage * critical.amount
 		player:addDamageCondition(target, CONDITION_BLEEDING, DAMAGELIST_CONSTANT_PERIOD, bleedingDamage, 2, 4)
 	end
+
+	player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "criticalDamage: " .. criticalDamage)
 
 	target:setHealth(target:getHealth() - criticalDamage)
 	target:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)
