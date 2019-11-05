@@ -408,7 +408,7 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		varThree.type = VARIANT_NUMBER;
 		varFour.type = VARIANT_NUMBER;
 		varOne.number = target->getID();
-		varFour.number = (getWeaponDamage(player, target, item) * damageModifier) / 100;
+		varFour.number = std::abs((getWeaponDamage(player, target, item) * damageModifier) / 100);
 		
 		executeUseWeapon(player, varOne, varTwo, varThree, varFour);
 	}
