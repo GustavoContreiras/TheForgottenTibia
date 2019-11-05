@@ -462,67 +462,56 @@ function onClickApply()
 	local playerLevel = player:getLevel()
 	
 	local maxMagic 		= 10
-	local maxVitality 	= 20
-	local maxStrenght 	= 20
-	local maxIntelligence = 20
-	local maxFaith 		= 20
-	local maxDexterity 	= 20
-	local maxDefence 	= 20
-	local maxEndurance 	= 20
+	local maxVitality 	= math.ceil( math.max( playerLevel * 0.8 + 3.2 + 8, playerLevel))
+	local maxStrenght 	= maxVitality
+	local maxIntelligence = maxVitality
+	local maxFaith 		= maxVitality
+	local maxDexterity 	= maxVitality
+	local maxDefence 	= maxVitality
+	local maxEndurance 	= maxVitality
 	
-	if (playerLevel >= 8) then
+	if (playerLevel >= 9) then
 		maxMagic 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ) * 0.5, playerLevel * 1.0 ) )
-		maxVitality 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxStrenght 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxIntelligence = math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxFaith 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxDexterity 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxDefence 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
-		maxEndurance 	= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ), playerLevel * 1.0) )
+		maxVitality 	= math.ceil( math.max(playerLevel * 1.6 - 3.2 + 8, playerLevel))
+		maxStrenght 	= maxVitality
+		maxIntelligence = maxVitality
+		maxFaith 		= maxVitality
+		maxDexterity 	= maxVitality
+		maxDefence 		= maxVitality
+		maxEndurance 	= maxVitality
 	end
 
-	if (playerLevel >= 72) then
-        maxMagic 		= 72
-		maxVitality 	= 90
-		maxStrenght 	= 90
-		maxIntelligence = 90
-		maxFaith 		= 90
-		maxDexterity 	= 90
-		maxDefence 		= 90
-		maxEndurance 	= 90
+	if (playerLevel >= 41) then
+        maxMagic 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ) * 0.5, playerLevel * 1.0 ) )
+		maxVitality 	= math.ceil( math.max(playerLevel * 1.2 + 12.8 + 8, playerLevel))
+		maxStrenght 	= maxVitality
+		maxIntelligence = maxVitality
+		maxFaith 		= maxVitality
+		maxDexterity 	= maxVitality
+		maxDefence 		= maxVitality
+		maxEndurance 	= maxVitality
 	end
 
-	if (playerLevel > 90) then
-        maxMagic 		= 72 + playerLevel - 90
-		maxVitality 	= playerLevel
-		maxStrenght 	= playerLevel
-		maxIntelligence = playerLevel
-		maxFaith 		= playerLevel
-		maxDexterity 	= playerLevel
-		maxDefence 		= playerLevel
-		maxEndurance 	= playerLevel
+	if (playerLevel >= 61) then
+        maxMagic 		= math.ceil( 60 + (playerLevel - 60) / 2 )
+		maxVitality 	= math.ceil( math.max(playerLevel * 0.8 + 36.8 + 8, playerLevel))
+		maxStrenght 	= maxVitality
+		maxIntelligence = maxVitality
+		maxFaith 		= maxVitality
+		maxDexterity 	= maxVitality
+		maxDefence 		= maxVitality
+		maxEndurance 	= maxVitality
 	end
 
-	if (playerLevel > 100) then
-        maxMagic 		= math.ceil(82 + (playerLevel - 100) / 2)
-		maxVitality 	= playerLevel
-		maxStrenght 	= playerLevel
-		maxIntelligence = playerLevel
-		maxFaith 		= playerLevel
-		maxDexterity 	= playerLevel
-		maxDefence 		= playerLevel
-		maxEndurance 	= playerLevel
-	end
-
-	if (playerLevel > 130) then
-		maxMagic 		= math.ceil(92 + (playerLevel - 100) / 2)
-		maxVitality 	= 130
-		maxStrenght 	= 130
-		maxIntelligence = 130
-		maxFaith 		= 130
-		maxDexterity 	= 130
-		maxDefence 		= 130
-		maxEndurance 	= 130
+	if (playerLevel > 81) then
+        maxMagic 		= math.ceil( 70 + (playerLevel - 80) / 2 )
+		maxVitality 	= math.ceil( math.max(playerLevel * 0.4 + 68.8 + 8, playerLevel))
+		maxStrenght 	= maxVitality
+		maxIntelligence = maxVitality
+		maxFaith 		= maxVitality
+		maxDexterity 	= maxVitality
+		maxDefence 		= maxVitality
+		maxEndurance 	= maxVitality
 	end
 	
 	local checks = true
