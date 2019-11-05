@@ -40,6 +40,9 @@
 	<talkaction words="/allmounts" separator=" " script="allmounts.lua" />
 	<talkaction words="/alladdons" separator=" " script="alladdons.lua" />
 	<talkaction words="/alloutfits" separator=" " script="alloutfits.lua" />
+	<talkaction words="/addskillpoints" separator=" " script="addskillpoints.lua" /> 	<!-- /addskillpoints Player, 1 -->
+	<talkaction words="/addresets" separator=" " script="addresets.lua" />				<!-- /addresets 	 Player, 1 -->
+	<talkaction words="/completetask" separator=" " script="completetask.lua" />		<!-- /completetask 	 Player, Elf -->
 	
 	<!-- Senior Tutors -->
 	<talkaction words="/addtutor" separator=" " script="add_tutor.lua" />
