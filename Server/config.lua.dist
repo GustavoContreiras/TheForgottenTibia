@@ -78,24 +78,10 @@ classicAttackSpeed = false
 refillHealthAndManaOnLevelUp = false
 
 criticalOnAllWeapons = false
-criticalOnAllWeaponsAmount = 80
-criticalOnAllWeaponsChance = 25
-
 criticalOnAllWeaponsDualWielding = false
-criticalOnAllWeaponsDualWieldingAmount = 40
-criticalOnAllWeaponsDualWieldingChance = 15
-
 criticalOnWandsAndRods = false
-criticalOnWandsAndRodsAmount = 0
-criticalOnWandsAndRodsChance = 0
-
 criticalOnTwoHandedDistWeapons = false
-criticalOnTwoHandedDistWeaponsAmount = 40
-criticalOnTwoHandedDistWeaponsChance = 10
-
 criticalOnOneHandedDistWeapons = false	
-criticalOnOneHandedDistWeaponsAmount = 20
-criticalOnOneHandedDistWeaponsChance = 5
 
 -- DUAL WIELDING (90 = 90% of single weapon damage)
 allowDualWielding = true
