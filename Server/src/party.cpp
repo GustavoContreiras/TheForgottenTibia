@@ -386,7 +386,7 @@ bool Party::setSharedExperience(Player* player, bool sharedExpActive)
 
 void Party::shareExperience(uint64_t experience, Creature* source/* = nullptr*/)
 {
-	uint64_t shareExperience = experience;
+	uint64_t shareExperience = experience * 1.25;
 	g_events->eventPartyOnShareExperience(this, shareExperience);
 
 	for (Player* member : memberList) {

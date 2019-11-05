@@ -359,87 +359,66 @@ bool Weapon::useFist(Player* player, Creature* target)
 	damage.primary.value = -normal_random(0, maxDamage);
 
 	Combat::doCombatHealth(player, target, damage, params);
-	if (!player->hasFlag(PlayerFlag_NotGainSkill) && player->getAddAttackSkill()) {
+	//if (!player->hasFlag(PlayerFlag_NotGainSkill) && player->getAddAttackSkill()) {
 		//player->addSkillAdvance(SKILL_VITALITY, 1);
-	}
+	//}
 
 	return true;
 }
 
 void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int32_t damageModifier) const
 {
-	if (scripted) {
-		LuaVariant var;
-		var.type = VARIANT_NUMBER;
-		var.number = target->getID();
-		executeUseWeapon(player, var);
+	LuaVariant varOne, varTwo, varThree, varFour;
+	CombatDamage damage;
+	WeaponType_t weaponType = item->getWeaponType();
+
+	if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
+
+		damage.origin = ORIGIN_RANGED;
+		varTwo.text = "one handed distance";
+
+		if (weaponType == WEAPON_AMMO) {
+			varTwo.text = "two handed distance";
+		}
+
+	} else {
+		damage.origin = ORIGIN_MELEE;
+
+		if (weaponType == WEAPON_AXE) {
+			varTwo.text = "axe";
+		} else if (weaponType == WEAPON_SWORD) {
+			varTwo.text = "sword";
+		} else if (weaponType == WEAPON_CLUB) {
+			varTwo.text = "club";
+		} else if (weaponType == WEAPON_WAND) {
+			varTwo.text = "wand";
+		}
 	}
 
-	// else {
-		CombatDamage damage;
-		WeaponType_t weaponType = item->getWeaponType();
-		uint16_t chance = 0;
-		uint16_t skill = 0;
-		uint16_t minimumDamage = 0;
+	if (scripted) {
 
+		varThree.number = 0;
+
+		if (player->isDualWielding()) {
+			varThree.number = 1;
+		}
+
+		varOne.type = VARIANT_NUMBER;
+		varTwo.type = VARIANT_STRING;
+		varThree.type = VARIANT_NUMBER;
+		varFour.type = VARIANT_NUMBER;
+		varOne.number = target->getID();
+		varFour.number = (getWeaponDamage(player, target, item) * damageModifier) / 100;
+		
+		executeUseWeapon(player, varOne, varTwo, varThree, varFour);
+	}
+	else {
 		damage.primary.type = params.combatType;
 		damage.primary.value = (getWeaponDamage(player, target, item) * damageModifier) / 100;
 		damage.secondary.type = getElementType();
 		damage.secondary.value = getElementDamage(player, target, item);
-
-		if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
-
-			damage.origin = ORIGIN_RANGED;
-
-			minimumDamage = player->getSkillLevel(SKILL_DEXTERITY) / 2;
-
-			if (weaponType == WEAPON_AMMO) {
-				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)) {
-					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE);
-					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT);
-				}			
-			} else {
-				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS)) {
-					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE);
-					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT);
-				}
-			}
-		} 
-		
-		else {
-
-			damage.origin = ORIGIN_MELEE;
-
-			minimumDamage = player->getSkillLevel(SKILL_STRENGHT) / 2;
-
-			if (weaponType == WEAPON_AXE || weaponType == WEAPON_SWORD || weaponType == WEAPON_CLUB) {
-				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
-					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE);
-					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT);
-
-					if (player->isDualWielding()) {
-						chance = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_CHANCE);
-						skill = g_config.getNumber(ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_AMOUNT);
-					}
-				}
-			}
-			
-			else if (weaponType == WEAPON_WAND) {
-				if (g_config.getBoolean(ConfigManager::CRITICAL_ON_WANDS_AND_RODS)) {
-					chance = g_config.getNumber(ConfigManager::CRITICAL_ON_WANDS_AND_RODS_CHANCE);
-					skill = g_config.getNumber(ConfigManager::CRITICAL_ON_WANDS_AND_RODS_AMOUNT);
-				}
-			}
-		}
-
-		if (chance != 0 && uniform_random(1, 100) <= chance && skill != 0 && damage.primary.value < -minimumDamage) {
-			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
-			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
-			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-		}
-
 		Combat::doCombatHealth(player, target, damage, params);
-	//}
+	}
 
 	onUsedWeapon(player, item, target->getTile());
 }
@@ -447,10 +426,10 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 void Weapon::internalUseWeapon(Player* player, Item* item, Tile* tile) const
 {
 	if (scripted) {
-		LuaVariant var;
+		LuaVariant var, varTwo, varThree, varFour;
 		var.type = VARIANT_TARGETPOSITION;
 		var.pos = tile->getPosition();
-		executeUseWeapon(player, var);
+		executeUseWeapon(player, var, varTwo, varThree, varFour);
 	} else {
 		Combat::postCombatEffects(player, tile->getPosition(), params);
 		g_game.addMagicEffect(tile->getPosition(), CONST_ME_POFF);
@@ -523,9 +502,9 @@ uint32_t Weapon::getManaCost(const Player* player) const
 	return (player->getMaxMana() * manaPercent) / 100;
 }
 
-bool Weapon::executeUseWeapon(Player* player, const LuaVariant& var) const
+bool Weapon::executeUseWeapon(Player* player, const LuaVariant& varOne, const LuaVariant& varTwo, const LuaVariant& varThree, const LuaVariant& varFour) const
 {
-	//onUseWeapon(player, var)
+	//onUseWeapon(player, varOne, varTwo, varThree)
 	if (!scriptInterface->reserveScriptEnv()) {
 		std::cout << "[Error - Weapon::executeUseWeapon] Call stack overflow" << std::endl;
 		return false;
@@ -539,9 +518,12 @@ bool Weapon::executeUseWeapon(Player* player, const LuaVariant& var) const
 	scriptInterface->pushFunction(scriptId);
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
-	scriptInterface->pushVariant(L, var);
+	scriptInterface->pushVariant(L, varOne);
+	scriptInterface->pushVariant(L, varTwo);
+	scriptInterface->pushVariant(L, varThree);
+	scriptInterface->pushVariant(L, varFour);
 
-	return scriptInterface->callFunction(2);
+	return scriptInterface->callFunction(5);
 }
 
 void Weapon::decrementItemCount(Item* item)
