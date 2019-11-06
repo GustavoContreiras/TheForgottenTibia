@@ -18,6 +18,10 @@ Client/src/.vscode
 Client/config.otml
 
 Server/*.dll
+Server/theforgottenserver-x64.exe
+Server/theforgottenserver-x64.pch
+Server/theforgottenserver-x64.pdb
+Server/*.rej
 Server/etc/
 Server/build/
 Server/config.lua
@@ -35,3 +39,6 @@ Server/vc14/x64/
 Server/vc14/Release/
 Server/TheForgottenTibiaServer-x64.pdb
 Server/src/.vscode
+Client/TheForgottenTibia_05-11-19.zip
+Client/data/things/1098/tibia_1098_dat_and_spr.zip
+Server/TheForgottenTibiaServer-x64.pch
