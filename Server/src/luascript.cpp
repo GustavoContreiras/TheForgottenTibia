@@ -1845,18 +1845,8 @@ void LuaScriptInterface::registerFunctions()
 
 	//THE FORGOTTEN TIBIA! \/
 
+	registerEnumIn("configKeys", ConfigManager::PARTY_EXP_SHARE_FACTOR)
 	registerEnumIn("configKeys", ConfigManager::REFILL_HEALTHMANA_LEVELUP)
-
-	registerEnumIn("configKeys", ConfigManager::MAGIC_MANAGAIN)
-	registerEnumIn("configKeys", ConfigManager::VITALITY_HEALTHGAIN)
-	registerEnumIn("configKeys", ConfigManager::STRENGHT_HEALTHGAIN)
-	registerEnumIn("configKeys", ConfigManager::STRENGHT_CAPGAIN)
-	registerEnumIn("configKeys", ConfigManager::INTELLIGENCE_MANAGAIN)
-	registerEnumIn("configKeys", ConfigManager::FAITH_MANAGAIN)
-	registerEnumIn("configKeys", ConfigManager::DEFENCE_CAPGAIN)
-	registerEnumIn("configKeys", ConfigManager::DEFENCE_HEALTHGAIN)
-	registerEnumIn("configKeys", ConfigManager::ENDURANCE_CAPGAIN)
-	registerEnumIn("configKeys", ConfigManager::ENDURANCE_HEALTHGAIN)
 
 	registerEnumIn("configKeys", ConfigManager::ALLOW_DUAL_WIELDING)
 	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_SPEED_RATE)
