@@ -505,7 +505,7 @@ function onClickApply()
 
 	if (playerLevel > 81) then
         maxMagic 		= math.ceil( 70 + (playerLevel - 80) / 2 )
-		maxVitality 	= math.ceil( math.max(playerLevel * 0.4 + 68.8 + 8, playerLevel))
+		maxVitality 	= math.ceil(playerLevel * 0.4 + 68.8 + 8)
 		maxStrenght 	= maxVitality
 		maxIntelligence = maxVitality
 		maxFaith 		= maxVitality

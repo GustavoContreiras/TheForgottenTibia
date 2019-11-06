@@ -627,7 +627,7 @@ struct CombatDamage
 	CombatDamage()
 	{
 		origin = ORIGIN_NONE;
-		isCritical = FALSE;
+		isCritical = false;
 		primary.type = secondary.type = COMBAT_NONE;
 		primary.value = secondary.value = 0;
 	}

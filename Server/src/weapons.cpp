@@ -431,7 +431,7 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 		if (damage.primary.value < -minimumDamage) {
 			if (uniform_random(1, 100) <= chance) {
 
-				criticalDamage.isCritical = TRUE;
+				criticalDamage.isCritical = true;
 				criticalDamage.primary.type = params.combatType;
 				criticalDamage.primary.value = std::round(damage.primary.value * (amount / 100.));
 				criticalDamage.secondary.type = getElementType();
