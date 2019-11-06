@@ -702,14 +702,14 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	uint16_t oldFaith = skills[SKILL_FAITH].level;
 	uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
 
-	uint16_t magicDiff = magic - magLevel;
-	uint16_t vitalityDiff = vitality - skills[SKILL_VITALITY].level;
+	//uint16_t magicDiff = magic - magLevel;
+	//uint16_t vitalityDiff = vitality - skills[SKILL_VITALITY].level;
 	//uint16_t strenghtDiff = strenght - skills[SKILL_STRENGHT].level;
-	uint16_t defenceDiff = defence - skills[SKILL_DEFENCE].level;
+	//uint16_t defenceDiff = defence - skills[SKILL_DEFENCE].level;
 	//uint16_t dexterityDiff = dexterity - skills[SKILL_DEXTERITY].level;
-	uint16_t intelligenceDiff = intelligence - skills[SKILL_INTELLIGENCE].level;
-	uint16_t faithDiff = faith - skills[SKILL_FAITH].level;
-	uint16_t enduranceDiff = endurance - skills[SKILL_ENDURANCE].level;
+	//uint16_t intelligenceDiff = intelligence - skills[SKILL_INTELLIGENCE].level;
+	//uint16_t faithDiff = faith - skills[SKILL_FAITH].level;
+	//uint16_t enduranceDiff = endurance - skills[SKILL_ENDURANCE].level;
 
 	skillPoints = skillPointsTotal;
 	skillPoints -= (magicInfo["cost"] * magic) - 0;
