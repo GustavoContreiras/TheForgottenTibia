@@ -119,6 +119,7 @@ function EnterGame.init()
   local stayLogged = g_settings.getBoolean('staylogged')
   local autologin = g_settings.getBoolean('autologin')
   local clientVersion = g_settings.getInteger('client-version')
+  
   if clientVersion == 0 then clientVersion = 1074 end
 
   if port == nil or port == 0 then port = 7171 end
@@ -130,6 +131,7 @@ function EnterGame.init()
   enterGame:getChildById('serverPortTextEdit'):setText(port)
   enterGame:getChildById('autoLoginBox'):setChecked(autologin)
   enterGame:getChildById('stayLoggedBox'):setChecked(stayLogged)
+  enterGame:getChildById('connectToLocalhostBox'):setChecked(false)
 
   clientBox = enterGame:getChildById('clientComboBox')
   for _, proto in pairs(g_game.getSupportedClients()) do
@@ -302,6 +304,10 @@ function EnterGame.doLogin()
   G.port = tonumber(enterGame:getChildById('serverPortTextEdit'):getText())
   local clientVersion = tonumber(clientBox:getText())
   EnterGame.hide()
+  
+  if enterGame:getChildById('connectToLocalhostBox'):isChecked() then 
+	G.host = "127.0.0.1"
+  end
 
   if g_game.isOnline() then
     local errorBox = displayErrorBox(tr('Login Error'), tr('Cannot login while already in game.'))
@@ -409,7 +415,7 @@ function EnterGame.setUniqueServer(host, port, protocol, windowWidth, windowHeig
 
   if not windowWidth then windowWidth = 236 end
   enterGame:setWidth(windowWidth)
-  if not windowHeight then windowHeight = 210 end
+  if not windowHeight then windowHeight = 230 end
   enterGame:setHeight(windowHeight)
 end
 
