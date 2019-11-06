@@ -4,7 +4,7 @@
 	
 	
 	<!-- Gods -->
-	<talkaction words="/addskill" separator=" " script="add_skill.lua" />
+	<talkaction words="/addlevel" separator=" " script="add_level.lua" />
 	<talkaction words="/chameleon" separator=" " script="chameleon.lua" />
 	<talkaction words="/clean" script="clean.lua" />
 	<talkaction words="/closeserver" separator=" " script="closeserver.lua" />
@@ -27,7 +27,6 @@
 	<talkaction words="/down" script="down.lua" />
 	<talkaction words="/c" separator=" " script="teleport_creature_here.lua" />
 	<talkaction words="/goto" separator=" " script="teleport_to_creature.lua" />
-	<!--<talkaction words="/gotopos" separator=" " script="teleport_to_pos.lua" />-->
 	<talkaction words="/t" script="teleport_home.lua" />
 	<talkaction words="/town" separator=" " script="teleport_to_town.lua" />
 	<talkaction words="/a" separator=" " script="teleport_ntiles.lua" />
@@ -40,8 +39,8 @@
 	<talkaction words="/allmounts" separator=" " script="allmounts.lua" />
 	<talkaction words="/alladdons" separator=" " script="alladdons.lua" />
 	<talkaction words="/alloutfits" separator=" " script="alloutfits.lua" />
-	<talkaction words="/addskillpoints" separator=" " script="addskillpoints.lua" /> 	<!-- /addskillpoints Player, 1 -->
-	<talkaction words="/addresets" separator=" " script="addresets.lua" />				<!-- /addresets 	 Player, 1 -->
+	<talkaction words="/addskillpoints" separator=" " script="add_skillpoints.lua" /> 	<!-- /addskillpoints Player, 1 -->
+	<talkaction words="/addresets" separator=" " script="add_resets.lua" />				<!-- /addresets 	 Player, 1 -->
 	<talkaction words="/completetask" separator=" " script="completetask.lua" />		<!-- /completetask 	 Player, Elf -->
 	
 	<!-- Senior Tutors -->
