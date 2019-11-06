@@ -288,6 +288,18 @@ enum skills_t : uint8_t {
 	SKILL_LAST = SKILL_ENDURANCE
 };
 
+enum criticals_t : uint8_t {
+	CRITICAL_SWORD = 0,
+	CRITICAL_AXE = 1,
+	CRITICAL_CLUB = 2,
+	CRITICAL_ONE_HANDED_DISTANCE = 3,
+	CRITICAL_TWO_HANDED_DISTANCE = 4,
+	CRITICAL_WAND = 5,
+
+	CRITICAL_FIRST = CRITICAL_SWORD,
+	CRITICAL_LAST = CRITICAL_WAND
+};
+
 enum stats_t {
 	STAT_MAXHITPOINTS,
 	STAT_MAXMANAPOINTS,
@@ -610,10 +622,12 @@ struct CombatDamage
 		int32_t value;
 	} primary, secondary;
 
+	bool isCritical;
 	CombatOrigin origin;
 	CombatDamage()
 	{
 		origin = ORIGIN_NONE;
+		isCritical = FALSE;
 		primary.type = secondary.type = COMBAT_NONE;
 		primary.value = secondary.value = 0;
 	}
