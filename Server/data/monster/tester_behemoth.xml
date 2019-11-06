@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<monster name="Tester Behemoth" nameDescription="a tester behemoth" race="blood" experience="0" speed="0">
+	<health now="25000" max="25000" />
+	<look type="55" corpse="5999" />
+	<targetchange interval="4000" chance="10" />
+	<flags>
+		<flag summonable="0" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="0" />
+		<flag convinceable="0" />
+		<flag pushable="0" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="1" />
+		<flag targetdistance="1" />
+		<flag staticattack="70" />
+		<flag runonhealth="0" />
+		<flag canwalkonenergy="0" />
+	</flags>
+	<attacks>
+	</attacks>
+	<defenses armor="45" defense="45">
+		<defense name="healing" interval="2000" chance="15" min="4000" max="7000">
+			<attribute key="areaEffect" value="blueshimmer" />
+		</defense>
+	</defenses>
+	<elements>
+		<element earthPercent="80" />
+		<element holyPercent="30" />
+		<element firePercent="30" />
+		<element energyPercent="10" />
+		<element physicalPercent="10" />
+		<element icePercent="-10" />
+		<element deathPercent="-5" />
+	</elements>
+	<immunities>
+		<immunity paralyze="1" />
+		<immunity invisible="1" />
+	</immunities>
+	<voices interval="5000" chance="10">
+		<voice sentence="You're so little!" />
+		<voice sentence="Human flesh - delicious!" />
+		<voice sentence="Crush the intruders!" />
+	</voices>
+	<loot>
+	</loot>
+</monster>

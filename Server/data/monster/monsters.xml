@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monsters>
 	<monster name="Trainer" file="trainer.xml" />
-	<monster name="Experience" file="experience.xml" />
+	<monster name="Tester Dragon" file="tester_dragon.xml" />
+	<monster name="Tester Grim Reaper" file="tester_grim_reaper.xml" />
+	<monster name="Tester Behemoth" file="tester_behemoth.xml" />
 
 	<!-- Amazons -->
 	<monster name="Amazon" file="Amazons/amazon.xml" />
