@@ -485,13 +485,18 @@ CallBack* Combat::getCallback(CallBackParam_t key)
 	return nullptr;
 }
 
-//CHANGED! BUG FIX SPECIAL CRITIC SKILLS
+//CHANGED! BUG FIX SPECIAL CRITICAL SPECIAL SKILLS && CRITICAL HIT
 void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data)
 {
 	assert(data);
 	CombatDamage damage = *data;
-	if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
-		return;
+
+	if (!damage.isCritical) {
+		if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
+			return;
+		}
+	} else {
+		g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
 	}
 
 	Player* attackerPlayer = caster ? caster->getPlayer() : nullptr;
@@ -852,6 +857,7 @@ void Combat::doCombatHealth(Creature* caster, Creature* target, CombatDamage& da
 		}
 
 		CombatHealthFunc(caster, target, params, &damage);
+
 		if (params.targetCallback) {
 			params.targetCallback->onTargetCombat(caster, target);
 		}

@@ -459,11 +459,14 @@ class Game
 			return lightHour;
 		}
 
-		bool loadExperienceAndPointsStages();
+		bool loadStagesXml();
+		bool loadCriticalsXml();
 		uint64_t getExperienceStage(uint32_t level);
 		uint64_t getPointsPerLevel(uint32_t level);
-		bool loadSkillsGain();
+		bool loadSkillsXml();
 		std::unordered_map<std::string, uint32_t> getSkillInfo(uint32_t id);
+
+		std::unordered_map<std::string, uint32_t> getCriticalInfo(uint32_t id);
 
 		void loadMotdNum();
 		void saveMotdNum() const;
@@ -524,8 +527,10 @@ class Game
 		std::unordered_map<std::string, Player*> mappedPlayerNames;
 		std::unordered_map<uint32_t, Guild*> guilds;
 		std::unordered_map<uint16_t, Item*> uniqueItems;
+
 		std::map<uint32_t, uint32_t> stages;
 		std::map<uint32_t, uint32_t> points;
+
 		std::unordered_map<std::string, uint32_t> skillVitalityInfo;
 		std::unordered_map<std::string, uint32_t> skillStrenghtInfo;
 		std::unordered_map<std::string, uint32_t> skillDefenceInfo;
@@ -535,6 +540,12 @@ class Game
 		std::unordered_map<std::string, uint32_t> skillEnduranceInfo;
 		std::unordered_map<std::string, uint32_t> skillMagicInfo;
 
+		std::unordered_map<std::string, uint32_t> criticalSwordInfo;
+		std::unordered_map<std::string, uint32_t> criticalAxeInfo;
+		std::unordered_map<std::string, uint32_t> criticalClubInfo;
+		std::unordered_map<std::string, uint32_t> criticalOneHandedDistanceInfo;
+		std::unordered_map<std::string, uint32_t> criticalTwoHandedDistanceInfo;
+		std::unordered_map<std::string, uint32_t> criticalWandInfo;
 
 		std::list<Item*> decayItems[EVENT_DECAY_BUCKETS];
 		std::list<Creature*> checkCreatureLists[EVENT_CREATURECOUNT];

@@ -1878,25 +1878,14 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::WAND_INTELLIGENCEFACTOR)
 	registerEnumIn("configKeys", ConfigManager::MAGIC_WANDRODFACTOR)
 
-	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_INITIALDEXTERITY)
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_WALKSPEEDFACTOR)
 	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_ATTACKSPEEDFACTOR)
 
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_CHANCE)
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_CHANCE)
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_WANDS_AND_RODS)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_WANDS_AND_RODS_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_WANDS_AND_RODS_CHANCE)
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE)
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT)
-	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE)
 	
 	//THE FORGOTTEN TIBIA /END
 

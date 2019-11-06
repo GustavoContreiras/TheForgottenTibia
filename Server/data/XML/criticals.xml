@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<criticals>
+	<config enabled="1" />
+	<critical id="0" amount="30" chance="55"/> <!-- sword -->
+	<critical id="1" amount="25" chance="60"/> <!-- axe -->
+	<critical id="2" amount="20" chance="65"/> <!-- club -->
+	<critical id="3" amount="10" chance="40"/> <!-- one handed dist -->
+	<critical id="4" amount="5" chance="20"/> <!-- two handed dist -->
+	<critical id="5" amount="0" chance="0"/> <!-- wand -->
+</criticals>

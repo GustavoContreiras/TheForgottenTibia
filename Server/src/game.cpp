@@ -108,8 +108,9 @@ void Game::setGameState(GameState_t newState)
 	gameState = newState;
 	switch (newState) {
 		case GAME_STATE_INIT: {
-			loadExperienceAndPointsStages();
-			loadSkillsGain();
+			loadStagesXml();
+			loadSkillsXml();
+			loadCriticalsXml();
 
 			groups.load();
 			g_chat->load();
@@ -4838,14 +4839,14 @@ uint64_t Game::getPointsPerLevel(uint32_t level)
 std::unordered_map<std::string, uint32_t> Game::getSkillInfo(uint32_t id)
 {
 	switch (id) {
-		case SKILL_VITALITY: return skillVitalityInfo;
-		case SKILL_STRENGHT: return skillStrenghtInfo;
-		case SKILL_DEFENCE: return skillDefenceInfo;
-		case SKILL_DEXTERITY: return skillDexterityInfo;
-		case SKILL_INTELLIGENCE: return skillIntelligenceInfo;
-		case SKILL_FAITH: return skillFaithInfo;
-		case SKILL_ENDURANCE: return skillEnduranceInfo;
-		case SKILL_MAGLEVEL: return skillMagicInfo;
+	case SKILL_VITALITY: return skillVitalityInfo;
+	case SKILL_STRENGHT: return skillStrenghtInfo;
+	case SKILL_DEFENCE: return skillDefenceInfo;
+	case SKILL_DEXTERITY: return skillDexterityInfo;
+	case SKILL_INTELLIGENCE: return skillIntelligenceInfo;
+	case SKILL_FAITH: return skillFaithInfo;
+	case SKILL_ENDURANCE: return skillEnduranceInfo;
+	case SKILL_MAGLEVEL: return skillMagicInfo;
 	}
 
 	std::unordered_map<std::string, uint32_t> nullMap;
@@ -4853,12 +4854,28 @@ std::unordered_map<std::string, uint32_t> Game::getSkillInfo(uint32_t id)
 	return nullMap;
 }
 
-bool Game::loadExperienceAndPointsStages()
+std::unordered_map<std::string, uint32_t> Game::getCriticalInfo(uint32_t id)
+{
+	switch (id) {
+	case CRITICAL_SWORD: return criticalSwordInfo;
+	case CRITICAL_AXE: return criticalAxeInfo;
+	case CRITICAL_CLUB: return criticalClubInfo;
+	case CRITICAL_ONE_HANDED_DISTANCE: return criticalOneHandedDistanceInfo;
+	case CRITICAL_TWO_HANDED_DISTANCE: return criticalTwoHandedDistanceInfo;
+	case CRITICAL_WAND: return criticalWandInfo;
+	}
+
+	std::unordered_map<std::string, uint32_t> nullMap;
+
+	return nullMap;
+}
+
+bool Game::loadStagesXml()
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/XML/stages.xml");
 	if (!result) {
-		printXMLError("Error - Game::loadExperienceAndPointsStages", "data/XML/stages.xml", result);
+		printXMLError("Error - Game::loadStagesXml", "data/XML/stages.xml", result);
 		return false;
 	}
 
@@ -4913,19 +4930,95 @@ bool Game::loadExperienceAndPointsStages()
 	return true;
 }
 
-bool Game::loadSkillsGain()
+// NEW! CRITICAL SYSTEM
+bool Game::loadCriticalsXml()
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("data/XML/criticals.xml");
+	if (!result) {
+		printXMLError("Error - Game::loadCriticalsXml", "data/XML/criticals.xml", result);
+		return false;
+	}
+
+	for (auto stageNode : doc.child("criticals").children()) {
+
+		int id;
+		uint32_t amount, chance;
+
+		pugi::xml_attribute idAttribute = stageNode.attribute("id");
+		if (idAttribute) {
+			id = pugi::cast<int>(idAttribute.value());
+		}
+		else {
+			id = -1;
+		}
+
+		pugi::xml_attribute amountAttribute = stageNode.attribute("amount");
+		if (amountAttribute) {
+			amount = pugi::cast<uint32_t>(amountAttribute.value());
+		}
+		else {
+			amount = 1;
+		}
+
+		pugi::xml_attribute chanceAttribute = stageNode.attribute("chance");
+		if (chanceAttribute) {
+			chance = pugi::cast<uint32_t>(chanceAttribute.value());
+		}
+		else {
+			chance = 0;
+		}
+
+		switch (id) {
+		case CRITICAL_SWORD:
+			criticalSwordInfo["amount"] = amount;
+			criticalSwordInfo["chance"] = chance;
+			break;
+
+		case CRITICAL_AXE:
+			criticalAxeInfo["amount"] = amount;
+			criticalAxeInfo["chance"] = chance;
+			break;
+
+		case CRITICAL_CLUB:
+			criticalClubInfo["amount"] = amount;
+			criticalClubInfo["chance"] = chance;
+			break;
+
+		case CRITICAL_ONE_HANDED_DISTANCE:
+			criticalOneHandedDistanceInfo["amount"] = amount;
+			criticalOneHandedDistanceInfo["chance"] = chance;
+			break;
+
+		case CRITICAL_TWO_HANDED_DISTANCE:
+			criticalTwoHandedDistanceInfo["amount"] = amount;
+			criticalTwoHandedDistanceInfo["chance"] = chance;
+			break;
+
+		case CRITICAL_WAND:
+			criticalWandInfo["amount"] = amount;
+			criticalWandInfo["chance"] = chance;
+			break;
+		}
+	}
+	return true;
+}
+
+// NEW! SKILL POINTS SYSTEM
+bool Game::loadSkillsXml()
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/XML/skills.xml");
 	if (!result) {
-		printXMLError("Error - Game::loadSkillsGain", "data/XML/skills.xml", result);
+		printXMLError("Error - Game::loadSkillsXml", "data/XML/skills.xml", result);
 		return false;
 	}
 
 	for (auto stageNode : doc.child("skills").children()) {
 
 		int id;
-		uint32_t cost, health, mana, soul, cap, attackSpeed, walkSpeed, rodMaxDamage, wandMaxDamage;
+		uint32_t cost, initial, health, mana, soul, cap, attackSpeed, walkSpeed, 
+				 rodMaxDamage, wandMaxDamage, healthRegen, manaRegen;
 
 		pugi::xml_attribute idAttribute = stageNode.attribute("id");
 		if (idAttribute) {
@@ -4938,8 +5031,17 @@ bool Game::loadSkillsGain()
 		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
 		if (costAttribute) {
 			cost = pugi::cast<uint32_t>(costAttribute.value());
-		} else {
+		}
+		else {
 			cost = 1;
+		}
+
+		pugi::xml_attribute initialAttribute = stageNode.attribute("initial");
+		if (initialAttribute) {
+			initial = pugi::cast<uint32_t>(initialAttribute.value());
+		}
+		else {
+			initial = 8;
 		}
 
 		pugi::xml_attribute healthAttribute = stageNode.attribute("health");
@@ -5004,9 +5106,26 @@ bool Game::loadSkillsGain()
 			rodMaxDamage = 0;
 		}
 
+		pugi::xml_attribute healthRegenAttribute = stageNode.attribute("healthRegen");
+		if (healthRegenAttribute) {
+			healthRegen = pugi::cast<uint32_t>(healthRegenAttribute.value());
+		}
+		else {
+			healthRegen = 0;
+		}
+
+		pugi::xml_attribute manaRegenAttribute = stageNode.attribute("manaRegen");
+		if (manaRegenAttribute) {
+			manaRegen = pugi::cast<uint32_t>(manaRegenAttribute.value());
+		}
+		else {
+			manaRegen = 0;
+		}
+
 		switch (id) {
 			case SKILL_VITALITY:
 				skillVitalityInfo["cost"] = cost;
+				skillVitalityInfo["initial"] = initial;
 				skillVitalityInfo["health"] = health;
 				skillVitalityInfo["mana"] = mana;
 				skillVitalityInfo["soul"] = soul;
@@ -5015,10 +5134,13 @@ bool Game::loadSkillsGain()
 				skillVitalityInfo["attackSpeed"] = attackSpeed;
 				skillVitalityInfo["wand"] = wandMaxDamage;
 				skillVitalityInfo["rod"] = rodMaxDamage;
+				skillVitalityInfo["healthRegen"] = healthRegen;
+				skillVitalityInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_STRENGHT:
 				skillStrenghtInfo["cost"] = cost;
+				skillStrenghtInfo["initial"] = initial;
 				skillStrenghtInfo["health"] = health;
 				skillStrenghtInfo["mana"] = mana;
 				skillStrenghtInfo["soul"] = soul;
@@ -5027,10 +5149,13 @@ bool Game::loadSkillsGain()
 				skillStrenghtInfo["attackSpeed"] = attackSpeed;
 				skillStrenghtInfo["wand"] = wandMaxDamage;
 				skillStrenghtInfo["rod"] = rodMaxDamage;
+				skillStrenghtInfo["healthRegen"] = healthRegen;
+				skillStrenghtInfo["manaRegen"] = manaRegen;
 				break;	
 
 			case SKILL_DEFENCE:
 				skillDefenceInfo["cost"] = cost;
+				skillDefenceInfo["initial"] = initial;
 				skillDefenceInfo["health"] = health;
 				skillDefenceInfo["mana"] = mana;
 				skillDefenceInfo["soul"] = soul;
@@ -5039,10 +5164,13 @@ bool Game::loadSkillsGain()
 				skillDefenceInfo["attackSpeed"] = attackSpeed;
 				skillDefenceInfo["wand"] = wandMaxDamage;
 				skillDefenceInfo["rod"] = rodMaxDamage;
+				skillDefenceInfo["healthRegen"] = healthRegen;
+				skillDefenceInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_DEXTERITY:
 				skillDexterityInfo["cost"] = cost;
+				skillDexterityInfo["initial"] = initial;
 				skillDexterityInfo["health"] = health;
 				skillDexterityInfo["mana"] = mana;
 				skillDexterityInfo["soul"] = soul;
@@ -5051,10 +5179,13 @@ bool Game::loadSkillsGain()
 				skillDexterityInfo["attackSpeed"] = attackSpeed;
 				skillDexterityInfo["wand"] = wandMaxDamage;
 				skillDexterityInfo["rod"] = rodMaxDamage;
+				skillDexterityInfo["healthRegen"] = healthRegen;
+				skillDexterityInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_INTELLIGENCE:
 				skillIntelligenceInfo["cost"] = cost;
+				skillIntelligenceInfo["initial"] = initial;
 				skillIntelligenceInfo["health"] = health;
 				skillIntelligenceInfo["mana"] = mana;
 				skillIntelligenceInfo["soul"] = soul;
@@ -5063,10 +5194,13 @@ bool Game::loadSkillsGain()
 				skillIntelligenceInfo["attackSpeed"] = attackSpeed;
 				skillIntelligenceInfo["wand"] = wandMaxDamage;
 				skillIntelligenceInfo["rod"] = rodMaxDamage;
+				skillIntelligenceInfo["healthRegen"] = healthRegen;
+				skillIntelligenceInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_FAITH:
 				skillFaithInfo["cost"] = cost;
+				skillFaithInfo["initial"] = initial;
 				skillFaithInfo["health"] = health;
 				skillFaithInfo["mana"] = mana;
 				skillFaithInfo["soul"] = soul;
@@ -5075,10 +5209,13 @@ bool Game::loadSkillsGain()
 				skillFaithInfo["attackSpeed"] = attackSpeed;
 				skillFaithInfo["wand"] = wandMaxDamage;
 				skillFaithInfo["rod"] = rodMaxDamage;
+				skillVitalityInfo["healthRegen"] = healthRegen;
+				skillVitalityInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_ENDURANCE:
 				skillEnduranceInfo["cost"] = cost;
+				skillEnduranceInfo["initial"] = initial;
 				skillEnduranceInfo["health"] = health;
 				skillEnduranceInfo["mana"] = mana;
 				skillEnduranceInfo["soul"] = soul;
@@ -5087,10 +5224,13 @@ bool Game::loadSkillsGain()
 				skillEnduranceInfo["attackSpeed"] = attackSpeed;
 				skillEnduranceInfo["wand"] = wandMaxDamage;
 				skillEnduranceInfo["rod"] = rodMaxDamage;
+				skillEnduranceInfo["healthRegen"] = healthRegen;
+				skillEnduranceInfo["manaRegen"] = manaRegen;
 				break;
 
 			case 7:
 				skillMagicInfo["cost"] = cost;
+				skillMagicInfo["initial"] = initial;
 				skillMagicInfo["health"] = health;
 				skillMagicInfo["mana"] = mana;
 				skillMagicInfo["soul"] = soul;
@@ -5099,6 +5239,8 @@ bool Game::loadSkillsGain()
 				skillMagicInfo["attackSpeed"] = attackSpeed;
 				skillMagicInfo["wand"] = wandMaxDamage;
 				skillMagicInfo["rod"] = rodMaxDamage;
+				skillMagicInfo["healthRegen"] = healthRegen;
+				skillMagicInfo["manaRegen"] = manaRegen;
 				break;
 		}
 	}
