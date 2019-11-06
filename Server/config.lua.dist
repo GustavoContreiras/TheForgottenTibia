@@ -76,6 +76,7 @@ emoteSpells = true
 classicEquipmentSlots = true
 classicAttackSpeed = false
 refillHealthAndManaOnLevelUp = false
+partyExpShareFactor = 1.0
 
 criticalOnAllWeapons = false
 criticalOnAllWeaponsDualWielding = false
@@ -88,16 +89,18 @@ allowDualWielding = true
 dualWieldingDamageRate = 90
 
 -- SHIELDS (default: 100 defence, 0 dexterity)
--- Shield formula:	defenseSkill = (DEFENCE * shieldDefenceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
+-- Formula:	defenseSkill = (DEFENCE * shieldDefenceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
 -- Defence is also used with weapons def value (when you are not wearing a shield)
 shieldDefenceFactor = 100
 shieldDexterityFactor = 0
 
--- DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
--- Spear formula: 	attackSkill = 	(STRENGHT * spearStrenghtFactor / 100) 	+ (DEXTERITY * spearDexterityFactor / 100); 
--- Bow formula: 	attackSkill = 	(STRENGHT * bowStrenghtFactor   / 100) 	+ (DEXTERITY * bowDexterityFactor   / 100); 
+-- ONDE HANDED DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
+-- Formula: 	attackSkill = 	(STRENGHT * spearStrenghtFactor / 100) 	+ (DEXTERITY * spearDexterityFactor / 100); 
 spearDexterityFactor = 100
 spearStrenghtFactor = 0
+
+-- TWO HANDED DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
+-- Formula: 	attackSkill = 	(STRENGHT * bowStrenghtFactor   / 100) 	+ (DEXTERITY * bowDexterityFactor   / 100); 
 bowDexterityFactor = 75
 bowStrenghtFactor = 50
 

@@ -386,7 +386,7 @@ bool Party::setSharedExperience(Player* player, bool sharedExpActive)
 
 void Party::shareExperience(uint64_t experience, Creature* source/* = nullptr*/)
 {
-	uint64_t shareExperience = experience * 1.25;
+	uint64_t shareExperience = experience * g_config.getNumber(ConfigManager::PARTY_EXP_SHARE_FACTOR);
 	g_events->eventPartyOnShareExperience(this, shareExperience);
 
 	for (Player* member : memberList) {

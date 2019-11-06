@@ -151,16 +151,7 @@ bool ConfigManager::load()
 
 	boolean[REFILL_HEALTHMANA_LEVELUP] = getGlobalBoolean(L, "refillHealthAndManaOnLevelUp", false);
 
-	integer[MAGIC_MANAGAIN] = getGlobalNumber(L, "magicManaGain", 15);
-	integer[VITALITY_HEALTHGAIN] = getGlobalNumber(L, "vitalityHealthGain", 15);
-	integer[STRENGHT_HEALTHGAIN] = getGlobalNumber(L, "strenghtHealthGain", 0);
-	integer[STRENGHT_CAPGAIN] = getGlobalNumber(L, "strenghtCapGain", 5);
-	integer[INTELLIGENCE_MANAGAIN] = getGlobalNumber(L, "intelligenceManaGain", 10);
-	integer[FAITH_MANAGAIN] = getGlobalNumber(L, "faithManaGain", 10);
-	integer[DEFENCE_CAPGAIN] = getGlobalNumber(L, "defenceCapGain", 0);
-	integer[DEFENCE_HEALTHGAIN] = getGlobalNumber(L, "defenceHealthGain", 5);
-	integer[ENDURANCE_CAPGAIN] = getGlobalNumber(L, "enduranceCapGain", 15);
-	integer[ENDURANCE_HEALTHGAIN] = getGlobalNumber(L, "enduranceHealthGain", 5);
+	integer[PARTY_EXP_SHARE_FACTOR] = getGlobalNumber(L, "partyExpShareFactor", 1); //default tibia
 
 	integer[SHIELD_DEFENCEFACTOR] = getGlobalNumber(L, "shieldDefenceFactor", 100); //default tibia
 	integer[SHIELD_DEXTERITYFACTOR] = getGlobalNumber(L, "shieldDexterityFactor", 0); //default tibia
@@ -179,31 +170,16 @@ bool ConfigManager::load()
 	integer[MAGIC_WANDRODFACTOR] = getGlobalNumber(L, "magicWandRodFactor", 0); //default tibia
 
 	boolean[ALLOW_DUAL_WIELDING] = getGlobalBoolean(L, "allowDualWielding", false); //default tibia
-	integer[DUAL_WIELDING_DAMAGE_RATE] = getGlobalNumber(L, "dualWieldingDamageRate", 75);
+	integer[DUAL_WIELDING_DAMAGE_RATE] = getGlobalNumber(L, "dualWieldingDamageRate", 90);
 
-	//integer[DEXTERITY_INITIALDEXTERITY] = getGlobalNumber(L, "initialDexterity", 8);
 	//integer[DEXTERITY_WALKSPEEDFACTOR] = getGlobalNumber(L, "walkSpeedFactor", 2);
 	//integer[DEXTERITY_ATTACKSPEEDFACTOR] = getGlobalNumber(L, "attackSpeedFactor", 10);
 
 	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
-	integer[CRITICAL_ON_ALL_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnAllWeaponsAmount", 100);
-	integer[CRITICAL_ON_ALL_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnAllWeaponsChance", 25);
-
 	boolean[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING] = getGlobalBoolean(L, "criticalOnAllWeaponsDualWielding", false); //default tibia
-	integer[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_AMOUNT] = getGlobalNumber(L, "criticalOnAllWeaponsDualWieldingAmount", 100);
-	integer[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING_CHANCE] = getGlobalNumber(L, "criticalOnAllWeaponsDualWieldingChance", 25);
-
 	boolean[CRITICAL_ON_WANDS_AND_RODS] = getGlobalBoolean(L, "criticalOnWandsAndRods", false); //default tibia
-	integer[CRITICAL_ON_WANDS_AND_RODS_AMOUNT] = getGlobalNumber(L, "criticalOnWandsAndRodsAmount", 100);
-	integer[CRITICAL_ON_WANDS_AND_RODS_CHANCE] = getGlobalNumber(L, "criticalOnWandsAndRodsChance", 25);
-
 	boolean[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnTwoHandedDistWeapons", false); //default tibia
-	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsAmount", 50);
-	integer[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnTwoHandedDistWeaponsChance", 10);
-
 	boolean[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnOneHandedDistWeapons", false); //default tibia
-	integer[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_AMOUNT] = getGlobalNumber(L, "criticalOnOneHandedDistWeaponsAmount", 25);
-	integer[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS_CHANCE] = getGlobalNumber(L, "criticalOnOneHandedDistWeaponsChance", 5);
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);
