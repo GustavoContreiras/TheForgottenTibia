@@ -1,5 +1,12 @@
 local storage = 7000
 
+allowedClones = {
+	"Knight Level 60", "Knight Level 120", 
+	"Mage Level 60", "Mage Level 120",
+	"Ranger Level 60", "Ranger Level 120",
+	"Empty Level 60", "Empty Level 120"
+}
+
 function onStepIn(creature, item, position, fromPosition)	
 	if not creature:isPlayer() then
 		return false
@@ -11,7 +18,14 @@ function onStepIn(creature, item, position, fromPosition)
 		creature:registerEvent("Arena-Death")
 
 	elseif item.actionid == 2036 then
-		if creature:getName() == "Knight Level 120" then
+		if creature:getName() == allowedClones[0] or
+		   creature:getName() == allowedClones[1] or
+		   creature:getName() == allowedClones[2] or
+		   creature:getName() == allowedClones[3] or
+		   creature:getName() == allowedClones[4] or
+		   creature:getName() == allowedClones[5] or
+		   creature:getName() == allowedClones[6] or
+		   creature:getName() == allowedClones[7] then
 			local pos = Position(33059, 31334, 10)
 			creature:sendTextMessage(MESSAGE_INFO_DESCR, "You can not leave the arena!")
 			creature:teleportTo(pos)
