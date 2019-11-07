@@ -6,7 +6,7 @@
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
-		<flag hostile="1" />
+		<flag hostile="0" />
 		<flag illusionable="0" />
 		<flag convinceable="0" />
 		<flag pushable="0" />
@@ -18,8 +18,6 @@
 		<flag canwalkonenergy="0" />
 		<flag canwalkonfire="0" />
 	</flags>
-	<attacks>
-	</attacks>
 	<defenses armor="35" defense="35">
 		<defense name="healing" interval="2000" chance="15" min="4300" max="6050">
 			<attribute key="areaEffect" value="redspark" />

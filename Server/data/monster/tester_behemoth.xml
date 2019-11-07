@@ -6,7 +6,7 @@
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
-		<flag hostile="1" />
+		<flag hostile="0" />
 		<flag illusionable="0" />
 		<flag convinceable="0" />
 		<flag pushable="0" />
@@ -17,8 +17,6 @@
 		<flag runonhealth="0" />
 		<flag canwalkonenergy="0" />
 	</flags>
-	<attacks>
-	</attacks>
 	<defenses armor="45" defense="45">
 		<defense name="healing" interval="2000" chance="15" min="4000" max="7000">
 			<attribute key="areaEffect" value="blueshimmer" />
