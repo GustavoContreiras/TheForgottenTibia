@@ -25,6 +25,7 @@
 
 extern ConfigManager g_config;
 extern Game g_game;
+extern std::vector<std::string> g_allowedClones;
 
 Account IOLoginData::loadAccount(uint32_t accno)
 {
@@ -180,7 +181,10 @@ void IOLoginData::setAccountType(uint32_t accountId, AccountType_t accountType)
 
 void IOLoginData::updateOnlineStatus(uint32_t guid, bool login)
 {
-	if (g_config.getBoolean(ConfigManager::ALLOW_CLONES)) {
+	Player* player = g_game.getPlayerByGUID(guid);
+
+	if (g_config.getBoolean(ConfigManager::ALLOW_CLONES) ||
+		std::find(g_allowedClones.begin(), g_allowedClones.end(), player->getName()) != g_allowedClones.end()) {
 		return;
 	}
 

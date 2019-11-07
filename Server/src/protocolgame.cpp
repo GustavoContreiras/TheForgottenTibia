@@ -40,6 +40,7 @@ extern ConfigManager g_config;
 extern Actions actions;
 extern CreatureEvents* g_creatureEvents;
 extern Chat* g_chat;
+extern std::vector<std::string> g_allowedClones;
 
 void ProtocolGame::release()
 {
@@ -58,7 +59,10 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 {
 	//dispatcher thread
 	Player* foundPlayer = g_game.getPlayerByName(name);
-	if (!foundPlayer || g_config.getBoolean(ConfigManager::ALLOW_CLONES)) {
+
+	if (!foundPlayer || g_config.getBoolean(ConfigManager::ALLOW_CLONES) || 
+		std::find(g_allowedClones.begin(), g_allowedClones.end(), name) != g_allowedClones.end()) {
+
 		player = new Player(getThis());
 		player->setName(name);
 
@@ -85,7 +89,8 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 			return;
 		}
 
-		if (g_config.getBoolean(ConfigManager::ONE_PLAYER_ON_ACCOUNT) && player->getAccountType() < ACCOUNT_TYPE_GAMEMASTER && g_game.getPlayerByAccount(player->getAccount())) {
+		if ((g_config.getBoolean(ConfigManager::ONE_PLAYER_ON_ACCOUNT) && player->getAccountType() < ACCOUNT_TYPE_GAMEMASTER &&
+			g_game.getPlayerByAccount(player->getAccount())) && std::find(g_allowedClones.begin(), g_allowedClones.end(), name) == g_allowedClones.end()) {
 			disconnectClient("You may only login with one character\nof your account at the same time.");
 			return;
 		}

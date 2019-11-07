@@ -45,6 +45,11 @@ ConfigManager g_config;
 Monsters g_monsters;
 Vocations g_vocations;
 RSA g_RSA;
+std::vector<std::string> g_allowedClones = {
+	"Knight Level 60", "Knight Level 120",
+	"Mage Level 60",	"Mage Level 120",
+	"Ranger Level 60", "Ranger Level 120",
+	"Empty Level 60", "Empty Level 120" };
 
 std::mutex g_loaderLock;
 std::condition_variable g_loaderSignal;
