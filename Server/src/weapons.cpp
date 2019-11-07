@@ -429,7 +429,7 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 
 	if (amount != 0) {
 		if (damage.primary.value < -minimumDamage) {
-			if (uniform_random(1, 100) <= chance) {
+			if ((uint32_t)uniform_random(1, 100) <= chance) {
 
 				criticalDamage.isCritical = true;
 				criticalDamage.primary.type = params.combatType;

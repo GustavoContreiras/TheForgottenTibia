@@ -443,7 +443,7 @@ bool Player::setTitleDescription(PlayerTitle_t titleId)
 //CHANGED TO MAKE DEFENCE SKILL WORK WITH WEAPON
 int32_t Player::getDefense() const
 {
-	int32_t defenseSkill;
+	int32_t defenseSkill = 0;
 	int32_t defenseValue = 7;
 	const Item* weapon;
 	const Item* shield;
