@@ -1187,6 +1187,12 @@ void ProtocolGame::parseSetSkillsRequest(NetworkMessage& msg)
 	addGameTask(&Game::playerSetSkillsRequest, player->getID(), magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 }
 
+void ProtocolGame::parseVersionToPlay(NetworkMessage& msg)
+{
+	uint16_t versionToPlay = msg.get<uint16_t>();
+	addGameTask(&Game::playerVersionToPlay, player->getID(), versionToPlay);
+}
+
 // Send methods
 void ProtocolGame::sendOpenPrivateChannel(const std::string& receiver)
 {

@@ -1,5 +1,7 @@
 -- @docconsts @{
 
+clientVersionToPlay = 0
+
 FloorHigher = 0
 FloorLower = 15
 

@@ -70,11 +70,13 @@ class ConfigManager
 			MYSQL_SOCK,
 			DEFAULT_PRIORITY,
 			MAP_AUTHOR,
+			CLIENT_VERSION_TO_PLAY_TEXT,
 
 			LAST_STRING_CONFIG /* this must be the last one */
 		};
 
 		enum integer_config_t {
+			CLIENT_VERSION_TO_PLAY,
 			ATTACKSPEED_DEXTERITY_FACTOR,
 			WALKSPEED_DEXTERITY_FACTOR,
 			PARTY_EXP_SHARE_FACTOR,

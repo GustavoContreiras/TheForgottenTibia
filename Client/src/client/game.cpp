@@ -1717,6 +1717,11 @@ void Game::applyNewSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, 
 	m_protocolGame->sendSetNewSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 }
 
+void Game::checkVersionToPlay(uint16_t versionToPlay)
+{
+	m_protocolGame->sendVersionToPlay(versionToPlay);
+}
+
 std::string Game::formatCreatureName(const std::string& name)
 {
     std::string formatedName = name;

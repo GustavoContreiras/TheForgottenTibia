@@ -963,6 +963,14 @@ void ProtocolGame::sendSetNewSkills(uint16_t magic, uint16_t vitality, uint16_t 
 	send(msg);
 }
 
+void ProtocolGame::sendVersionToPlay(uint16_t versionToPlay)
+{
+	OutputMessagePtr msg(new OutputMessage);
+	msg->addU8(Proto::ClientSendVersionToPlay);
+	msg->addU16(versionToPlay);
+	send(msg);
+}
+
 void ProtocolGame::addPosition(const OutputMessagePtr& msg, const Position& position)
 {
     msg->addU16(position.x);

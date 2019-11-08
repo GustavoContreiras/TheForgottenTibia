@@ -443,6 +443,8 @@ end
 function onClickApply()
 	print('game_skills: on click apply')
 
+	g_game.checkVersionToPlay(clientVersionToPlay)
+
 	if not player then 
 		player = g_game.getLocalPlayer()
 		resetChanges()

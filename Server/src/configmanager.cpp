@@ -153,6 +153,9 @@ bool ConfigManager::load()
 
 	integer[PARTY_EXP_SHARE_FACTOR] = getGlobalNumber(L, "partyExpShareFactor", 1); //default tibia
 
+	integer[CLIENT_VERSION_TO_PLAY] = getGlobalNumber(L, "clientVersionToPlay", 1); //default tibia
+	string[CLIENT_VERSION_TO_PLAY_TEXT] = getGlobalString(L, "clientVersionToPlayText", ""); //default tibia
+
 	integer[SHIELD_DEFENCEFACTOR] = getGlobalNumber(L, "shieldDefenceFactor", 100); //default tibia
 	integer[SHIELD_DEXTERITYFACTOR] = getGlobalNumber(L, "shieldDexterityFactor", 0); //default tibia
 

@@ -127,6 +127,8 @@ public:
 	void sendSetNewSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
 						  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
 
+	void sendVersionToPlay(uint16_t versionToPlay);
+
 protected:
     void onConnect();
     void onRecv(const InputMessagePtr& inputMessage);

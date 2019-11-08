@@ -1,3 +1,7 @@
+-- CLIENT VERSION (should match version on client/modules/gamelib/const.h)	
+clientVersionToPlay = 0
+clientVersionToPlayText = "YOUR CLIENT IS OUTDATED\nACCESS WEBSITE TO DOWNLOAD THE LATEST VERSION"
+
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 worldType = "pvp"

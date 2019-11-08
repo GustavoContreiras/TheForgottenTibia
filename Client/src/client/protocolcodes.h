@@ -183,7 +183,8 @@ namespace Proto {
 
         // NOTE: add any custom opcodes in this range
         // 51 - 99
-		ClientSendSetNewSkills					= 52,
+		ClientSendSetNewSkills				= 52,
+		ClientSendVersionToPlay				= 53,
 
         // original tibia ONLY
         ClientAutoWalk                      = 100,

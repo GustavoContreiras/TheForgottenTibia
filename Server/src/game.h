@@ -357,6 +357,7 @@ class Game
 		void playerWriteItem(uint32_t playerId, uint32_t windowTextId, const std::string& text);
 		void playerBrowseField(uint32_t playerId, const Position& pos);
 		void playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_t index);
+		void playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay);
 		void playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 								uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
 		uint32_t calculateTotalSkillPoints(uint32_t playerId);

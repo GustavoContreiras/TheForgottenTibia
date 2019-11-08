@@ -2455,6 +2455,20 @@ void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_
 	player->sendContainer(containerId, container, container->hasParent(), index);
 }
 
+void Game::playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay) 
+{
+	Player* player = getPlayerByID(playerId);
+	if (!player) {
+		return;
+	}
+
+	if (versionToPlay < g_config.getNumber(ConfigManager::CLIENT_VERSION_TO_PLAY)) {
+		std::cout << "Player " << player->getName() << " is using an old client!" << std::endl;
+		player->sendTextMessage(MESSAGE_STATUS_WARNING, g_config.getString(ConfigManager::CLIENT_VERSION_TO_PLAY_TEXT));
+	}
+		
+}
+
 void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
 							  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {

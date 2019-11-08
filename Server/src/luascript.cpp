@@ -1845,6 +1845,9 @@ void LuaScriptInterface::registerFunctions()
 
 	//THE FORGOTTEN TIBIA! \/
 
+	registerEnumIn("configKeys", ConfigManager::CLIENT_VERSION_TO_PLAY)
+	registerEnumIn("configKeys", ConfigManager::CLIENT_VERSION_TO_PLAY_TEXT)
+
 	registerEnumIn("configKeys", ConfigManager::PARTY_EXP_SHARE_FACTOR)
 	registerEnumIn("configKeys", ConfigManager::REFILL_HEALTHMANA_LEVELUP)
 
