@@ -85,7 +85,7 @@
 		healthRegen="5"
 		manaRegen="5"/>
 		
-	<skill id="7" name="Magic" cost="3" initial="0"
+	<skill id="7" name="Magic" cost="2" initial="0"
 		health="0" 
 		mana="15" 
 		cap="0" 

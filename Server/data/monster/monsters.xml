@@ -4,6 +4,7 @@
 	<monster name="Tester Dragon" file="tester_dragon.xml" />
 	<monster name="Tester Grim Reaper" file="tester_grim_reaper.xml" />
 	<monster name="Tester Behemoth" file="tester_behemoth.xml" />
+	<monster name="Tester Hellhound" file="tester_hellhound.xml" />
 
 	<!-- Amazons -->
 	<monster name="Amazon" file="Amazons/amazon.xml" />
