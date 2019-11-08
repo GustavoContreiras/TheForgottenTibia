@@ -401,7 +401,7 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 	uint8_t recvbyte = msg.getByte();
 
 	if (!player) {
-		if (recvbyte == 0x0F) { //ClientEnterGame
+		if (recvbyte == ClientEnterGame) {
 			disconnect();
 		}
 
@@ -410,100 +410,102 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 
 	//a dead player can not performs actions
 	if (player->isRemoved() || player->getHealth() <= 0) {
-		if (recvbyte == 0x0F) { //ClientEnterGame
+		if (recvbyte == ClientEnterGame) {
 			disconnect();
 			return;
 		}
 
-		if (recvbyte != 0x14) { //ClientLeaveGame
+		if (recvbyte != ClientLeaveGame) {
 			return;
 		}
 	}
 
 	switch (recvbyte) {
-		case 0x0F: /* logged in */ break;																						//ClientEnterGame
-		case 0x14: g_dispatcher.addTask(createTask(std::bind(&ProtocolGame::logout, getThis(), true, false))); break;			//ClientLeaveGame
-		case 0x1D: addGameTask(&Game::playerReceivePingBack, player->getID()); break;											//ClientPingBack
-		case 0x1E: addGameTask(&Game::playerReceivePing, player->getID()); break;												//ClientPing
-		case 0x32: parseExtendedOpcode(msg); break;																				//ClientExtendedOpcode
-		case 0x34: parseSetSkillsRequest(msg); break;																				//ClientSendSetNewSkills
-		case 0x64: parseAutoWalk(msg); break;																					//ClientAutoWalk
-		case 0x65: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTH); break;										//ClientWalkNorth
-		case 0x66: addGameTask(&Game::playerMove, player->getID(), DIRECTION_EAST); break;										//ClientWalkEast
-		case 0x67: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTH); break;										//ClientWalkSouth
-		case 0x68: addGameTask(&Game::playerMove, player->getID(), DIRECTION_WEST); break;										//ClientWalkWest
-		case 0x69: addGameTask(&Game::playerStopAutoWalk, player->getID()); break;												//ClientStop
-		case 0x6A: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTHEAST); break;									//ClientWalkNorthEast
-		case 0x6B: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTHEAST); break;									//ClientWalkSouthEast
-		case 0x6C: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTHWEST); break;									//ClientWalkSouthWest
-		case 0x6D: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTHWEST); break;									//ClientWalkNorthWest
-		case 0x6F: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_NORTH); break;	//ClientTurnNorth
-		case 0x70: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_EAST); break;		//ClientTurnEast
-		case 0x71: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_SOUTH); break;	//ClientTurnSouth
-		case 0x72: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_WEST); break;		//ClientTurnWest
-		case 0x77: parseEquipObject(msg); break;																				//ClientEquipItem
-		case 0x78: parseThrow(msg); break;																						//ClientMove
-		case 0x79: parseLookInShop(msg); break;																					//ClientInspectNpcTrade
-		case 0x7A: parsePlayerPurchase(msg); break;																				//ClientBuyItem																				//ClientMove
-		case 0x7B: parsePlayerSale(msg); break;																					//ClientSellItem
-		case 0x7C: addGameTask(&Game::playerCloseShop, player->getID()); break;													//ClientCloseNpcTrade
-		case 0x7D: parseRequestTrade(msg); break;																				//ClientRequestTrade
-		case 0x7E: parseLookInTrade(msg); break;																				//ClientInspectTrade
-		case 0x7F: addGameTask(&Game::playerAcceptTrade, player->getID()); break;												//ClientAcceptTrade
-		case 0x80: addGameTask(&Game::playerCloseTrade, player->getID()); break;												//ClientRejectTrade
-		case 0x82: parseUseItem(msg); break;																					//ClientUseItem
-		case 0x83: parseUseItemEx(msg); break;																					//ClientUseItemWith
-		case 0x84: parseUseWithCreature(msg); break;																			//ClientUseOnCreature
-		case 0x85: parseRotateItem(msg); break;																					//ClientRotateItem
-		case 0x87: parseCloseContainer(msg); break;																				//ClientCloseContainer
-		case 0x88: parseUpArrowContainer(msg); break;																			//ClientUpContainer
-		case 0x89: parseTextWindow(msg); break;																					//ClientEditText
-		case 0x8A: parseHouseWindow(msg); break;																				//ClientEditList
-		case 0x8C: parseLookAt(msg); break;																						//ClientLook
-		case 0x8D: parseLookInBattleList(msg); break;																			//ClientLookCreature
-		case 0x8E: /* join aggression */ break;																					//142 empty
-		case 0x96: parseSay(msg); break;																						//ClientTalk
-		case 0x97: addGameTask(&Game::playerRequestChannels, player->getID()); break;											//ClientRequestChannels
-		case 0x98: parseOpenChannel(msg); break;																				//ClientJoinChannel																		//ClientUseItem
-		case 0x99: parseCloseChannel(msg); break;																				//ClientLeaveChannel
-		case 0x9A: parseOpenPrivateChannel(msg); break;																			//ClientOpenPrivateChannel
-		case 0x9E: addGameTask(&Game::playerCloseNpcChannel, player->getID()); break;											//ClientCloseNpcChannel
-		case 0xA0: parseFightModes(msg); break;																					//ClientChangeFightModes
-		case 0xA1: parseAttack(msg); break;																						//ClientAttack
-		case 0xA2: parseFollow(msg); break;																						//ClientFollow
-		case 0xA3: parseInviteToParty(msg); break;																				//ClientInviteToParty
-		case 0xA4: parseJoinParty(msg); break;																					//ClientJoinParty
-		case 0xA5: parseRevokePartyInvite(msg); break;																			//ClientRevokeInvitation
-		case 0xA6: parsePassPartyLeadership(msg); break;																		//ClientPassLeadership																				//ClientUseItem
-		case 0xA7: addGameTask(&Game::playerLeaveParty, player->getID()); break;												//ClientLeaveParty
-		case 0xA8: parseEnableSharedPartyExperience(msg); break;																//ClientShareExperience
-		case 0xAA: addGameTask(&Game::playerCreatePrivateChannel, player->getID()); break;										//ClientOpenOwnChannel
-		case 0xAB: parseChannelInvite(msg); break;																				//ClientInviteToOwnChannel
-		case 0xAC: parseChannelExclude(msg); break;																				//ClientExcludeFromOwnChannel
-		case 0xBE: addGameTask(&Game::playerCancelAttackAndFollow, player->getID()); break;										//ClientCancelAttackAndFollow
-		case 0xC9: /* update tile */ break;																						//ClientUpdateTile
-		case 0xCA: parseUpdateContainer(msg); break;																			//ClientRefreshContainer
-		case 0xCB: parseBrowseField(msg); break;																				//ClientBrowseField
-		case 0xCC: parseSeekInContainer(msg); break;																			//ClientSeekInContainer
-		case 0xD2: addGameTask(&Game::playerRequestOutfit, player->getID()); break;												//ClientRequestOutfit
-		case 0xD3: parseSetOutfit(msg); break;																					//ClientChangeOutfit
-		case 0xD4: parseToggleMount(msg); break;																				//ClientMount
-		case 0xDC: parseAddVip(msg); break;																						//ClientAddVip
-		case 0xDD: parseRemoveVip(msg); break;																					//ClientRemoveVip
-		case 0xDE: parseEditVip(msg); break;																					//ClientEditVip
-		case 0xE6: parseBugReport(msg); break;																					//ClientBugReport
-		case 0xE7: /* thank you */ break;																						//ClientRuleViolation
-		case 0xE8: parseDebugAssert(msg); break;																				//ClientDebugReport
-		case 0xF0: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerShowQuestLog, player->getID()); break;				//ClientRequestQuestLog
-		case 0xF1: parseQuestLine(msg); break;																					//ClientRequestQuestLine
-		case 0xF2: parseRuleViolationReport(msg); break;																		//ClientNewRuleViolation
-		case 0xF3: /* get object info */ break;																					//ClientRequestItemInfo
-		case 0xF4: parseMarketLeave(); break;																					//ClientClientMarketLeaveUseItem
-		case 0xF5: parseMarketBrowse(msg); break;																				//ClientMarketBrowse
-		case 0xF6: parseMarketCreateOffer(msg); break;																			//ClientMarketCreate
-		case 0xF7: parseMarketCancelOffer(msg); break;																			//ClientMarketCancel
-		case 0xF8: parseMarketAcceptOffer(msg); break;																			//ClientMarketAccept
-		case 0xF9: parseModalWindowAnswer(msg); break;																			//ClientAnswerModalDialog
+		case ClientEnterGame: /* logged in */ break;																					//ClientEnterGame
+		case ClientLeaveGame: g_dispatcher.addTask(createTask(std::bind(&ProtocolGame::logout, getThis(), true, false))); break;		//ClientLeaveGame
+		case ClientPing: addGameTask(&Game::playerReceivePingBack, player->getID()); break;												//ClientPing
+		case ClientPingBack: addGameTask(&Game::playerReceivePing, player->getID()); break;												//ClientPingBack
+		case ClientExtendedOpcode: parseExtendedOpcode(msg); break;																		//ClientExtendedOpcode
+		case ClientSendSetNewSkills: parseSetSkillsRequest(msg); break;																	//ClientSendSetNewSkills
+		case ClientSendVersionToPlay: parseVersionToPlay(msg); break;																	//ClientSendVersionToPlay
+		case ClientAutoWalk: parseAutoWalk(msg); break;																					//ClientAutoWalk
+		case ClientWalkNorth: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTH); break;									//ClientWalkNorth
+		case ClientWalkEast: addGameTask(&Game::playerMove, player->getID(), DIRECTION_EAST); break;									//ClientWalkEast
+		case ClientWalkSouth: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTH); break;									//ClientWalkSouth
+		case ClientWalkWest: addGameTask(&Game::playerMove, player->getID(), DIRECTION_WEST); break;									//ClientWalkWest
+		case ClientStop: addGameTask(&Game::playerStopAutoWalk, player->getID()); break;												//ClientStop
+		case ClientWalkNorthEast: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTHEAST); break;							//ClientWalkNorthEast
+		case ClientWalkSouthEast: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTHEAST); break;							//ClientWalkSouthEast
+		case ClientWalkSouthWest: addGameTask(&Game::playerMove, player->getID(), DIRECTION_SOUTHWEST); break;							//ClientWalkSouthWest
+		case ClientWalkNorthWest: addGameTask(&Game::playerMove, player->getID(), DIRECTION_NORTHWEST); break;							//ClientWalkNorthWest
+		case ClientTurnNorth: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_NORTH); break;	//ClientTurnNorth
+		case ClientTurnEast: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_EAST); break;	//ClientTurnEast
+		case ClientTurnSouth: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_SOUTH); break;	//ClientTurnSouth
+		case ClientTurnWest: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerTurn, player->getID(), DIRECTION_WEST); break;	//ClientTurnWest
+		case ClientEquipItem: parseEquipObject(msg); break;																				//ClientEquipItem
+		case ClientMove: parseThrow(msg); break;																						//ClientMove
+		case ClientInspectNpcTrade: parseLookInShop(msg); break;																		//ClientInspectNpcTrade
+		case ClientBuyItem: parsePlayerPurchase(msg); break;																			//ClientBuyItem	
+		case ClientSellItem: parsePlayerSale(msg); break;																				//ClientSellItem
+		case ClientCloseNpcTrade: addGameTask(&Game::playerCloseShop, player->getID()); break;											//ClientCloseNpcTrade
+		case ClientRequestTrade: parseRequestTrade(msg); break;																			//ClientRequestTrade
+		case ClientInspectTrade: parseLookInTrade(msg); break;																			//ClientInspectTrade
+		case ClientAcceptTrade: addGameTask(&Game::playerAcceptTrade, player->getID()); break;											//ClientAcceptTrade
+		case ClientRejectTrade: addGameTask(&Game::playerCloseTrade, player->getID()); break;											//ClientRejectTrade
+		// empty ? = 129
+		case ClientUseItem: parseUseItem(msg); break;																					//ClientUseItem
+		case ClientUseItemWith: parseUseItemEx(msg); break;																				//ClientUseItemWith
+		case ClientUseOnCreature: parseUseWithCreature(msg); break;																		//ClientUseOnCreature
+		case ClientRotateItem: parseRotateItem(msg); break;																				//ClientRotateItem
+		case ClientCloseContainer: parseCloseContainer(msg); break;																		//ClientCloseContainer
+		case ClientUpContainer: parseUpArrowContainer(msg); break;																		//ClientUpContainer
+		case ClientEditText: parseTextWindow(msg); break;																				//ClientEditText
+		case ClientEditList: parseHouseWindow(msg); break;																				//ClientEditList
+		case ClientLook: parseLookAt(msg); break;																						//ClientLook
+		case ClientLookCreature: parseLookInBattleList(msg); break;																		//ClientLookCreature
+		case 0x8E: /* 82 join aggression */ break;																						//142 empty
+		case ClientTalk: parseSay(msg); break;																							//ClientTalk
+		case ClientRequestChannels: addGameTask(&Game::playerRequestChannels, player->getID()); break;									//ClientRequestChannels
+		case ClientJoinChannel: parseOpenChannel(msg); break;																			//ClientJoinChannel
+		case ClientLeaveChannel: parseCloseChannel(msg); break;																			//ClientLeaveChannel
+		case ClientOpenPrivateChannel: parseOpenPrivateChannel(msg); break;																//ClientOpenPrivateChannel
+		case ClientCloseNpcChannel: addGameTask(&Game::playerCloseNpcChannel, player->getID()); break;									//ClientCloseNpcChannel
+		case ClientChangeFightModes: parseFightModes(msg); break;																		//ClientChangeFightModes
+		case ClientAttack: parseAttack(msg); break;																						//ClientAttack
+		case ClientFollow: parseFollow(msg); break;																						//ClientFollow
+		case ClientInviteToParty: parseInviteToParty(msg); break;																		//ClientInviteToParty
+		case ClientJoinParty: parseJoinParty(msg); break;																				//ClientJoinParty
+		case ClientRevokeInvitation: parseRevokePartyInvite(msg); break;																//ClientRevokeInvitation
+		case ClientPassLeadership: parsePassPartyLeadership(msg); break;																//ClientPassLeadership
+		case ClientLeaveParty: addGameTask(&Game::playerLeaveParty, player->getID()); break;											//ClientLeaveParty
+		case ClientShareExperience: parseEnableSharedPartyExperience(msg); break;														//ClientShareExperience
+		case ClientOpenOwnChannel: addGameTask(&Game::playerCreatePrivateChannel, player->getID()); break;								//ClientOpenOwnChannel
+		case ClientInviteToOwnChannel: parseChannelInvite(msg); break;																	//ClientInviteToOwnChannel
+		case ClientExcludeFromOwnChannel: parseChannelExclude(msg); break;																//ClientExcludeFromOwnChannel
+		case ClientCancelAttackAndFollow: addGameTask(&Game::playerCancelAttackAndFollow, player->getID()); break;						//ClientCancelAttackAndFollow
+		case ClientUpdateTile: /* update tile */ break;																					//ClientUpdateTile
+		case ClientRefreshContainer: parseUpdateContainer(msg); break;																	//ClientRefreshContainer
+		case ClientBrowseField: parseBrowseField(msg); break;																			//ClientBrowseField
+		case ClientSeekInContainer: parseSeekInContainer(msg); break;																	//ClientSeekInContainer
+		case ClientRequestOutfit: addGameTask(&Game::playerRequestOutfit, player->getID()); break;										//ClientRequestOutfit
+		case ClientChangeOutfit: parseSetOutfit(msg); break;																			//ClientChangeOutfit
+		case ClientMount: parseToggleMount(msg); break;																					//ClientMount
+		case ClientAddVip: parseAddVip(msg); break;																						//ClientAddVip
+		case ClientRemoveVip: parseRemoveVip(msg); break;																				//ClientRemoveVip
+		case ClientEditVip: parseEditVip(msg); break;																					//ClientEditVip
+		case ClientBugReport: parseBugReport(msg); break;																				//ClientBugReport
+		case ClientRuleViolation: /* rule violation */ break;																			//ClientRuleViolation
+		case ClientDebugReport: parseDebugAssert(msg); break;																			//ClientDebugReport
+		case ClientRequestQuestLog: addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerShowQuestLog, player->getID()); break;	//ClientRequestQuestLog
+		case ClientRequestQuestLine: parseQuestLine(msg); break;																		//ClientRequestQuestLine
+		case ClientNewRuleViolation: parseRuleViolationReport(msg); break;																//ClientNewRuleViolation
+		case ClientRequestItemInfo: /* get object info */ break;																		//ClientRequestItemInfo
+		case ClientMarketLeave: parseMarketLeave(); break;																				//ClientClientMarketLeaveUseItem
+		case ClientMarketBrowse: parseMarketBrowse(msg); break;																			//ClientMarketBrowse
+		case ClientMarketCreate: parseMarketCreateOffer(msg); break;																	//ClientMarketCreate
+		case ClientMarketCancel: parseMarketCancelOffer(msg); break;																	//ClientMarketCancel
+		case ClientMarketAccept: parseMarketAcceptOffer(msg); break;																	//ClientMarketAccept
+		case ClientAnswerModalDialog: parseModalWindowAnswer(msg); break;																//ClientAnswerModalDialog
 
 		default:
 			std::cout << "Player: " << player->getName() << " sent an unknown packet header: 0x" << std::hex << static_cast<uint16_t>(recvbyte) << std::dec << "!" << std::endl;
