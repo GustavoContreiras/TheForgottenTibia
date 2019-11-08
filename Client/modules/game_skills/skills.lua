@@ -777,7 +777,7 @@ function onClickAdd(id)
 				dexterityMinusButton:setVisible(true)
 				
 				local initialWalkSpeed = player:getBaseSpeed()
-				local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
+				local dexterityWalkSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 				
 				local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
 				newWalkSpeedArrowLabel:setVisible(true)
@@ -787,15 +787,15 @@ function onClickAdd(id)
 				
 				local initialAttackSpeed = player:getAttackSpeed()
 				
-				if initialAttackSpeed == 1000 then --isDualWielding
-					initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Dexterity) * 2.5)
+				if initialAttackSpeed == 1500 then --isDualWielding
+					initialAttackSpeed = 2040 - (player:getBaseSkillLevel(Skill.Dexterity) * 5.0)
 				end
 				
-				local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
+				local dexterityAttackSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 				
 				local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
 				newAttackSpeedArrowLabel:setVisible(true)
-				newAttackSpeedValueLabel:setText(newWalkSpeed)
+				newAttackSpeedValueLabel:setText(newAttackSpeed - 1900)
 				newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
 				newAttackSpeedValueLabel:setVisible(true)
 				
@@ -1136,7 +1136,7 @@ function onClickRemove(id)
 			newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
 			
 			local initialWalkSpeed = player:getBaseSpeed()
-			local dexterityWalkSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
+			local dexterityWalkSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 			
 			local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
 			
@@ -1154,10 +1154,10 @@ function onClickRemove(id)
 			local initialAttackSpeed = player:getAttackSpeed()
 				
 			if initialAttackSpeed == 1000 then --isDualWielding
-				initialAttackSpeed = 2020 - (player:getBaseSkillLevel(Skill.Dexterity) * 2.5)
+				initialAttackSpeed = 2040 - (player:getBaseSkillLevel(Skill.Dexterity) * 5.0)
 			end
 			
-			local dexterityAttackSpeed = 0.25 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
+			local dexterityAttackSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
 			
 			local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
 			
@@ -1169,7 +1169,7 @@ function onClickRemove(id)
 				newAttackSpeedValueLabel:setVisible(true)
 			end
 			
-			newAttackSpeedValueLabel:setText(newWalkSpeed)
+			newAttackSpeedValueLabel:setText(newAttackSpeed - 1900)
 			newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
 			
 		elseif id == 'skillId5' then
