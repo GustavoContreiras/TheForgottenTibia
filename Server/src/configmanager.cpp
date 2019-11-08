@@ -171,9 +171,10 @@ bool ConfigManager::load()
 
 	boolean[ALLOW_DUAL_WIELDING] = getGlobalBoolean(L, "allowDualWielding", false); //default tibia
 	integer[DUAL_WIELDING_DAMAGE_RATE] = getGlobalNumber(L, "dualWieldingDamageRate", 90);
+	integer[DUAL_WIELDING_ATTACK_SPEED] = getGlobalNumber(L, "dualWieldingAttackSpeed", 1000);
 
-	//integer[DEXTERITY_WALKSPEEDFACTOR] = getGlobalNumber(L, "walkSpeedFactor", 2);
-	//integer[DEXTERITY_ATTACKSPEEDFACTOR] = getGlobalNumber(L, "attackSpeedFactor", 10);
+	integer[ATTACKSPEED_DEXTERITY_FACTOR] = getGlobalNumber(L, "attackSpeedDexterityFactor", 2.5); 
+	integer[WALKSPEED_DEXTERITY_FACTOR] = getGlobalNumber(L, "walkSpeedDexterityFactor", 1.0);
 
 	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
 	boolean[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING] = getGlobalBoolean(L, "criticalOnAllWeaponsDualWielding", false); //default tibia

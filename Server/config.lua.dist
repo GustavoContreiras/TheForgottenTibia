@@ -78,15 +78,25 @@ classicAttackSpeed = false
 refillHealthAndManaOnLevelUp = false
 partyExpShareFactor = 1.0
 
+-- CRITICAL HIT
 criticalOnAllWeapons = false
 criticalOnAllWeaponsDualWielding = false
 criticalOnWandsAndRods = false
 criticalOnTwoHandedDistWeapons = false
 criticalOnOneHandedDistWeapons = false	
 
--- DUAL WIELDING (90 = 90% of single weapon damage)
+-- DUAL WIELDING (90 = 90% of single weapon damage, 1000 = 1 sec)
 allowDualWielding = true
 dualWieldingDamageRate = 90
+dualWieldingAttackSpeed = 1500
+
+-- ATTACK SPEED
+-- attackSpeed = 2000 - (initialDexterity * attackSpeedDexterityFactor)
+attackSpeedDexterityFactor = 2.5
+
+-- WALK SPEED
+-- baseSpeed = 2 * (level - 1) + vocationInitialSpeed + (DEXTERITY - initialDexterity) / walkSpeedDexterityFactor);
+walkSpeedDexterityFactor = 1.0
 
 -- SHIELDS (default: 100 defence, 0 dexterity)
 -- Formula:	defenseSkill = (DEFENCE * shieldDefenceFactor / 100) + (DEXTERITY * shieldDexterityFactor / 100);
@@ -110,7 +120,6 @@ bowStrenghtFactor = 50
 rodFaithFactor = 200
 wandIntelligenceFactor = 100
 magicWandRodFactor = 0
-
 
 -- Rates
 -- NOTE: rateExp and skillPointsPerLevel is not used if you have enabled stages in data/XML/stages.xml

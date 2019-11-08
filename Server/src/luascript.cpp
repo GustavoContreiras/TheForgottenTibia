@@ -1849,8 +1849,11 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::REFILL_HEALTHMANA_LEVELUP)
 
 	registerEnumIn("configKeys", ConfigManager::ALLOW_DUAL_WIELDING)
-	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_SPEED_RATE)
+	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_ATTACK_SPEED)
 	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_DAMAGE_RATE)
+
+	registerEnumIn("configKeys", ConfigManager::ATTACKSPEED_DEXTERITY_FACTOR)
+	registerEnumIn("configKeys", ConfigManager::WALKSPEED_DEXTERITY_FACTOR)
 
 	registerEnumIn("configKeys", ConfigManager::SHIELD_DEFENCEFACTOR)
 	registerEnumIn("configKeys", ConfigManager::SHIELD_DEXTERITYFACTOR)
@@ -1867,9 +1870,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::ROD_FAITHFACTOR)
 	registerEnumIn("configKeys", ConfigManager::WAND_INTELLIGENCEFACTOR)
 	registerEnumIn("configKeys", ConfigManager::MAGIC_WANDRODFACTOR)
-
-	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_WALKSPEEDFACTOR)
-	//registerEnumIn("configKeys", ConfigManager::DEXTERITY_ATTACKSPEEDFACTOR)
 
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS)
 	registerEnumIn("configKeys", ConfigManager::CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING)

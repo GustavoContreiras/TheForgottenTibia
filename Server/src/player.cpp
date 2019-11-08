@@ -426,10 +426,11 @@ bool Player::isDualWielding() const
 uint32_t Player::getAttackSpeed() const
 {
 	if (isDualWielding()) {
-		return 1000;
+		return g_config.getNumber(ConfigManager::DUAL_WIELDING_ATTACK_SPEED);
 	}
 	else {
-		return 2000 - (skills[SKILL_DEXTERITY].level - 8) * 2.5;
+		//return 2000 - (skills[SKILL_DEXTERITY].level - 8) * 2.5;
+		return 2000 - (skills[SKILL_DEXTERITY].level - g_game.getSkillInfo(SKILL_DEXTERITY)["initial"]) * g_config.getNumber(ConfigManager::ATTACKSPEED_DEXTERITY_FACTOR);
 	}
 }
 
@@ -904,7 +905,8 @@ void Player::refreshStats() {
 	//to increase walk speed (clients interface) in 1 you have to increase baseSpeed in 2
 	baseSpeed = 2 * (level - 1) + 
 		vocation->getBaseSpeed() +
-		(skills[SKILL_DEXTERITY].level - 8) / 2.0f; //increases 0.25 on 
+		//(skills[SKILL_DEXTERITY].level - 8) / 2.0f; //increases 0.25 
+		(skills[SKILL_DEXTERITY].level - g_game.getSkillInfo(SKILL_DEXTERITY)["initial"]) / g_config.getNumber(ConfigManager::WALKSPEED_DEXTERITY_FACTOR); //increases 0.5 if divided by 1
 	
 	if (hasFlag(PlayerFlag_SetMaxSpeed)) { baseSpeed = PLAYER_MAX_SPEED; }
 
