@@ -48,6 +48,11 @@ Directions = {
   NorthWest = 7
 }
 
+magicInfo = {
+  ['cost'] = 2,
+  ['initial'] = 0
+}
+
 Skill = {
   Vitality = 0,
   Strenght = 1,

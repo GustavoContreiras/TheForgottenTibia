@@ -617,7 +617,7 @@ function onClickAdd(id)
 	end		
 	
 	if id == 'magiclevel' then
-		if newSkillPoints - 3 >= 0 then
+		if newSkillPoints - magicInfo['cost'] >= 0 then
 		
 			print('[+] magic')
 		
@@ -625,7 +625,7 @@ function onClickAdd(id)
 			
 			if newSkillPoints == -1 or newSkillPoints == nil then newSkillPoints = player:getSkillPoints() end
 			
-			newSkillPoints = newSkillPoints - 3
+			newSkillPoints = newSkillPoints - magicInfo['cost']
 			newSkillPointsArrowLabel:setVisible(true)
 			newSkillPointsValueLabel:setText(newSkillPoints)
 			newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
@@ -866,7 +866,7 @@ function onClickAdd(id)
 		end		
 	end
 	
-	if newSkillPoints >= 3 then
+	if newSkillPoints >= magicInfo['cost'] then
 		magicPlusButton:setVisible(true)
 	else
 		magicPlusButton:setVisible(false)
@@ -907,7 +907,7 @@ function onClickRemove(id)
 		
 		print('[-] magic')
 		
-		newSkillPoints = newSkillPoints + 3
+		newSkillPoints = newSkillPoints + magicInfo['cost']
 		newSkillPointsValueLabel:setText(newSkillPoints)
 		newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
 			
@@ -1639,7 +1639,7 @@ end
 
 function checkPlusAndMinusButtons(localPlayer, skillPoints)
 
-	if skillPoints >= 3 then
+	if skillPoints >= magicInfo['cost'] then
 		magicPlusButton:setVisible(true)
 	else
 		magicPlusButton:setVisible(false)
