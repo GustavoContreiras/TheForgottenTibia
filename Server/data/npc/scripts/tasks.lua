@@ -13,8 +13,23 @@ function onThink()  npcHandler:onThink()  end
  
 local storage = KILLTASKS_STARTSTORAGE
 local monsters = KILLTASKS_MONSTERS
-local tasksString = "I have {tasks} to kill {trolls}, {orcs}, {rotworms}, {elves}, {minotaurs}, {amazons}, {ghouls}, {cyclops}, {vampires}, {necromancers}, {dragons}, {bog raiders}, {giant spiders}, {quara predators}, {heroes}, {dragon lords}, {frost dragons}, {hydras}, {behemoths}, {serpent spawns}, {grim reapers}, {demons} and {hellhounds}."
+local tasksString = "I have {tasks} to kill "
+--{trolls}, {orcs}, {rotworms}, {elves}, {minotaurs}, {amazons}, {ghouls}, {cyclops}, {demon skeletons}, {vampires}, {necromancers}, {dragons}, {bog raiders}, {giant spiders}, {quara predators}, {heroes}, {dragon lords}, {frost dragons}, {hydras}, {behemoths}, {serpent spawns}, {grim reapers}, {demons} and {hellhounds}."
  
+local n = 0
+local keyset = {}
+
+for k, v in pairs(KILLTASKS_MONSTERS) do
+  n = n + 1
+  keyset[v.order] = k
+end
+
+for i = 1, table.getn(keyset), 1 do
+  tasksString = tasksString .. "{" .. keyset[i] .. "}, "
+end
+
+tasksString = tasksString .. "\\."
+tasksString = tasksString.gsub(tasksString, ", \\.", ".")
  
 local function getItemsFromTable(itemtable)
      local text = ""
@@ -24,7 +39,7 @@ local function getItemsFromTable(itemtable)
          if v == 1 then
              ret = ""
          elseif v == #itemtable then
-             ret = " and "
+             ret = "\n  "
          end
          text = text .. ret
          text = text .. (count > 1 and count or info:getArticle()).." "..(count > 1 and info:getPluralName() or info:getName())
@@ -147,33 +162,53 @@ function creatureSayCallback(cid, type, msg)
 		
     elseif msgcontains(msg, "tasks") or msgcontains(msg, "task") or msgcontains(msg, "list") or msgcontains(msg, "monsters") then
         local text = ""
-	local read = ""
-        for k, x in pairs(monsters) do
-	    if x.onlist == 1 then
-		if player:getStorageValue(x.countstorage) < x.amount then
-		        text = text .. string.gsub(" " .. k, "%W%l", string.upper):sub(2) .. " [" .. (player:getStorageValue(x.countstorage) + 1) .. "/" .. x.amount .. "]:\n  "
-				text = text .. getItemsFromTable(x.items) .. "\n  "
-				if (x.exp ~= 0) then
-					text = text .. x.exp .. " experience\n  "
-				end
-				if (x.skillpoints ~= 0) then
-					text = text .. x.skillpoints .. " skillpoints\n  "
-				end
-				if (x.resets ~= 0) then
-					text = text .. x.resets .. " reset\n  "
-				end
-				if (x.mount ~= 0) then
-					text = text .. x.mount:lower():gsub("^%l", string.upper) .. " mount\n"
-				end
-				text = text .. "\n"
-		else
-			text = text .. string.gsub(" "..k, "%W%l", string.upper):sub(2) .." ["..x.amount.."/"..x.amount.."]: DONE\n\n"
-		end
-	    end
-	    read = read .. x.plural .. " "
+		local read = ""
+		for i = 1, table.getn(keyset), 1 do
+			if player:getStorageValue(monsters[keyset[i]].countstorage) < monsters[keyset[i]].amount then
+					text = text .. string.gsub(" " .. keyset[i], "%W%l", string.upper):sub(2) .. " [" .. (player:getStorageValue(monsters[keyset[i]].countstorage) + 1) .. "/" .. monsters[keyset[i]].amount .. "]:\n  "
+					text = text .. getItemsFromTable(monsters[keyset[i]].items) .. "\n  "
+					if (monsters[keyset[i]].exp ~= 0) then
+						text = text .. monsters[keyset[i]].exp .. " experience\n  "
+					end
+					if (monsters[keyset[i]].skillpoints ~= 0) then
+						text = text .. monsters[keyset[i]].skillpoints .. " skillpoints\n  "
+					end
+					if (monsters[keyset[i]].resets ~= 0) then
+						text = text .. monsters[keyset[i]].resets .. " reset\n  "
+					end
+					if (monsters[keyset[i]].mount ~= 0) then
+						text = text .. monsters[keyset[i]].mount:lower():gsub("^%l", string.upper) .. " mount\n"
+					end
+					text = text .. "\n"
+			else
+				text = text .. string.gsub(" "..keyset[i], "%W%l", string.upper):sub(2) .." ["..monsters[keyset[i]].amount.."/"..monsters[keyset[i]].amount.."]: DONE\n\n"
+			end
+			read = read .. monsters[keyset[i]].plural .. " "
         end
+		--[[for k, x in pairs(monsters) do
+			if player:getStorageValue(x.countstorage) < x.amount then
+					text = text .. string.gsub(" " .. k, "%W%l", string.upper):sub(2) .. " [" .. (player:getStorageValue(x.countstorage) + 1) .. "/" .. x.amount .. "]:\n  "
+					text = text .. getItemsFromTable(x.items) .. "\n  "
+					if (x.exp ~= 0) then
+						text = text .. x.exp .. " experience\n  "
+					end
+					if (x.skillpoints ~= 0) then
+						text = text .. x.skillpoints .. " skillpoints\n  "
+					end
+					if (x.resets ~= 0) then
+						text = text .. x.resets .. " reset\n  "
+					end
+					if (x.mount ~= 0) then
+						text = text .. x.mount:lower():gsub("^%l", string.upper) .. " mount\n"
+					end
+					text = text .. "\n"
+			else
+				text = text .. string.gsub(" "..k, "%W%l", string.upper):sub(2) .." ["..x.amount.."/"..x.amount.."]: DONE\n\n"
+			end
+			read = read .. x.plural .. " "
+        end]]
         player:showTextDialog(1949, "" .. text)
-	npcHandler:say(tasksString, cid)
+		npcHandler:say(tasksString, cid)
 
     elseif msgcontains(msg, "bye") then
         npcHandler:say("Bye.", cid)
