@@ -107,7 +107,7 @@ function EnterGame.init()
   motdButton = modules.client_topmenu.addLeftButton('motdButton', tr('Message of the day'), '/images/topbuttons/motd', EnterGame.displayMotd)
   motdButton:hide()
   g_keyboard.bindKeyDown('Ctrl+G', EnterGame.openWindow)
-  downloadButton = modules.client_topmenu.addLeftButton('downloadButton', tr('http://189.122.73.38:8080/download.php?file=/TheForgottenTibia.zip'), '/images/topbuttons/download', function() os.execute("start " .. clientDownloadLink .. " exit") end)
+  downloadButton = modules.client_topmenu.addLeftButton('downloadButton', tr(clientDownloadLink), '/images/topbuttons/download', function() os.execute("start " .. clientDownloadLink .. " exit") end)
 
   if motdEnabled and G.motdNumber then
     motdButton:show()
