@@ -331,9 +331,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('magiclevel')
+        @onClick: onClickAddMagic()
       SkillMinusButton
-        @onClick: onClickRemove('magiclevel')
+        @onClick: onClickRemoveMagic()
 
 
     SmallSkillButton
@@ -350,9 +350,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId0')
+        @onClick: onClickAddVitality()
       SkillMinusButton
-        @onClick: onClickRemove('skillId0')
+        @onClick: onClickRemoveVitality()
 
     SmallSkillButton
       id: skillId1
@@ -368,9 +368,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId1')
+        @onClick: onClickAddStrenght()
       SkillMinusButton
-        @onClick: onClickRemove('skillId1')
+        @onClick: onClickRemoveStrenght()
   
     SmallSkillButton
       id: skillId5
@@ -386,9 +386,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId5')
+        @onClick: onClickAddDefence()
       SkillMinusButton
-        @onClick: onClickRemove('skillId5')
+        @onClick: onClickRemoveDefence()
 
     SmallSkillButton
       id: skillId4
@@ -404,9 +404,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId4')
+        @onClick: onClickAddDexterity()
       SkillMinusButton
-        @onClick: onClickRemove('skillId4')
+        @onClick: onClickRemoveDexterity()
 
     SmallSkillButton
       id: skillId3
@@ -422,9 +422,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId3')
+        @onClick: onClickAddIntelligence()
       SkillMinusButton
-        @onClick: onClickRemove('skillId3')
+        @onClick: onClickRemoveIntelligence()
 
     SmallSkillButton
       id: skillId2
@@ -440,9 +440,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId2')
+        @onClick: onClickAddFaith()
       SkillMinusButton
-        @onClick: onClickRemove('skillId2')
+        @onClick: onClickRemoveFaith()
 
     SmallSkillButton
       id: skillId6
@@ -458,9 +458,9 @@ MiniWindow
       SkillArrowLabel
       SkillNewValueLabel
       SkillPlusButton
-        @onClick: onClickAdd('skillId6')
+        @onClick: onClickAddEndurance()
       SkillMinusButton
-        @onClick: onClickRemove('skillId6')
+        @onClick: onClickRemoveEndurance()
 
     SmallSkillButton
       id: wanddamage

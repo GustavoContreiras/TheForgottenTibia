@@ -50,9 +50,76 @@ Directions = {
   NorthWest = 7
 }
 
+initial = {
+	mana = 10,
+	health = 120,
+	cap = 36500,
+  soul = 200,
+  attackSpeed = 2000,
+}
+
+levelGain = {
+	health = 5,
+	mana = 5,
+	capacity = 1000,  -- 1000 here == 10 in vocations.xml capGain == 10 cap per level
+	speed = 1
+}
+
 magicInfo = {
   ['cost'] = 2,
-  ['initial'] = 0
+  ['initial'] = 0,
+  ['max'] = 120,
+  ['mana'] = 15
+}
+
+vitalityInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['health'] = 15
+}
+
+strenghtInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['cap'] = 5
+}
+
+defenceInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150
+}
+
+dexterityInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['attackSpeed'] = 10, --ms per level
+  ['walkSpeed'] = 0.5,
+}
+
+faithInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['mana'] = 10
+}
+
+intelligenceInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['mana'] = 10
+}
+
+enduranceInfo = {
+  ['cost'] = 1,
+  ['initial'] = 8,
+  ['max'] = 150,
+  ['health'] = 5,
+  ['cap'] = 15
 }
 
 Skill = {

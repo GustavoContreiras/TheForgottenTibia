@@ -120,8 +120,6 @@ newEndurance = nil
 
 function init()
 
-	print('game_skills: initianting')
-
 	skillsButton = modules.client_topmenu.addRightGameToggleButton('skillsButton', tr('Skills') .. ' (Ctrl+S)', '/images/topbuttons/skills', toggle)
 	
 	skillsWindow = g_ui.loadUI('skills', modules.game_interface.getRightPanel())
@@ -171,49 +169,49 @@ function init()
 	magicPlusButton = magicButton:recursiveGetChildById('plusbutton')
 	magicMinusButton = magicButton:recursiveGetChildById('minusbutton')
 
-	vitalityButton = skillsWindow:recursiveGetChildById('skillId0')
+	vitalityButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Vitality)
 	vitalityValueLabel = vitalityButton:recursiveGetChildById('value')
 	newVitalityArrowLabel = vitalityButton:recursiveGetChildById('arrow')
 	newVitalityValueLabel = vitalityButton:recursiveGetChildById('newValue')
 	vitalityPlusButton = vitalityButton:recursiveGetChildById('plusbutton')
 	vitalityMinusButton = vitalityButton:recursiveGetChildById('minusbutton')
 
-	strenghtButton = skillsWindow:recursiveGetChildById('skillId1')
+	strenghtButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Strenght)
 	strenghtValueLabel = strenghtButton:recursiveGetChildById('value')
 	newStrenghtArrowLabel = strenghtButton:recursiveGetChildById('arrow')
 	newStrenghtValueLabel = strenghtButton:recursiveGetChildById('newValue')
 	strenghtPlusButton = strenghtButton:recursiveGetChildById('plusbutton')
 	strenghtMinusButton = strenghtButton:recursiveGetChildById('minusbutton')
 
-	defenceButton = skillsWindow:recursiveGetChildById('skillId5')
+	defenceButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Defence)
 	defenceValueLabel = defenceButton:recursiveGetChildById('value')
 	newDefenceArrowLabel = defenceButton:recursiveGetChildById('arrow')
 	newDefenceValueLabel = defenceButton:recursiveGetChildById('newValue')
 	defencePlusButton = defenceButton:recursiveGetChildById('plusbutton')
 	defenceMinusButton = defenceButton:recursiveGetChildById('minusbutton')
 
-	dexterityButton = skillsWindow:recursiveGetChildById('skillId4')
+	dexterityButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Dexterity)
 	dexterityValueLabel = dexterityButton:recursiveGetChildById('value')
 	newDexterityArrowLabel = dexterityButton:recursiveGetChildById('arrow')
 	newDexterityValueLabel = dexterityButton:recursiveGetChildById('newValue')
 	dexterityPlusButton = dexterityButton:recursiveGetChildById('plusbutton')
 	dexterityMinusButton = dexterityButton:recursiveGetChildById('minusbutton')
 
-	intelligenceButton = skillsWindow:recursiveGetChildById('skillId3')
+	intelligenceButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Intelligence)
 	intelligenceValueLabel = intelligenceButton:recursiveGetChildById('value')
 	newIntelligenceArrowLabel = intelligenceButton:recursiveGetChildById('arrow')
 	newIntelligenceValueLabel = intelligenceButton:recursiveGetChildById('newValue')
 	intelligencePlusButton = intelligenceButton:recursiveGetChildById('plusbutton')
 	intelligenceMinusButton = intelligenceButton:recursiveGetChildById('minusbutton')
 
-	faithButton = skillsWindow:recursiveGetChildById('skillId2')
+	faithButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Faith)
 	faithValueLabel = faithButton:recursiveGetChildById('value')
 	newFaithArrowLabel = faithButton:recursiveGetChildById('arrow')
 	newFaithValueLabel = faithButton:recursiveGetChildById('newValue')
 	faithPlusButton = faithButton:recursiveGetChildById('plusbutton')
 	faithMinusButton = faithButton:recursiveGetChildById('minusbutton')
 
-	enduranceButton = skillsWindow:recursiveGetChildById('skillId6')
+	enduranceButton = skillsWindow:recursiveGetChildById('skillId'..Skill.Endurance)
 	enduranceValueLabel = enduranceButton:recursiveGetChildById('value')
 	newEnduranceArrowLabel = enduranceButton:recursiveGetChildById('arrow')
 	newEnduranceValueLabel = enduranceButton:recursiveGetChildById('newValue')
@@ -248,8 +246,6 @@ function init()
 		onSkillPointsChange = onSkillPointsChange,
 		onFreeCapacityChange = onFreeCapacityChange,
 		onTotalCapacityChange = onTotalCapacityChange,
-		onSpeedChange = onSpeedChange,
-		onBaseSpeedChange = onBaseSpeedChange,
 		onAttackSpeedChange = onAttackSpeedChange,
 		onStaminaChange = onStaminaChange,
 		onRegenerationChange = onRegenerationChange,
@@ -259,6 +255,8 @@ function init()
 		onBaseSkillChange = onBaseSkillChange,
 		onSkillChange = onSkillChange,
 		onNewBaseSkillChange = onNewBaseSkillChange,
+		onBaseSpeedChange = onBaseSpeedChange,
+		onSpeedChange = onSpeedChange,
 	})
 	
 	connect(g_game, {
@@ -267,7 +265,6 @@ function init()
 end
 
 function terminate()
-	print('game_skills: terminating')
 
 	disconnect(LocalPlayer, {
 		onExperienceChange = onExperienceChange,
@@ -405,31 +402,29 @@ function terminate()
 	skillsButton:destroy()
 end
 
-function setSkillsTooltips()
-	print('game_skills: setting skill tooltips')
-	
+function setSkillsTooltips()	
 	local skillMagic = skillsWindow:recursiveGetChildById('magiclevel')
 	skillMagic:setTooltip(SkillDescription.Magic)
 
-	local skillVitality = skillsWindow:recursiveGetChildById('skillId0')
+	local skillVitality = skillsWindow:recursiveGetChildById('skillId'..Skill.Vitality)
 	skillVitality:setTooltip(SkillDescription.Vitality)
 
-	local skillStrenght = skillsWindow:recursiveGetChildById('skillId1')
+	local skillStrenght = skillsWindow:recursiveGetChildById('skillId'..Skill.Strenght)
 	skillStrenght:setTooltip(SkillDescription.Strenght)
 
-	local skillFaith = skillsWindow:recursiveGetChildById('skillId2')
+	local skillFaith = skillsWindow:recursiveGetChildById('skillId'..Skill.Faith)
 	skillFaith:setTooltip(SkillDescription.Faith)
 
-	local skillIntelligence = skillsWindow:recursiveGetChildById('skillId3')
+	local skillIntelligence = skillsWindow:recursiveGetChildById('skillId'..Skill.Intelligence)
 	skillIntelligence:setTooltip(SkillDescription.Intelligence)
 
-	local skillDexterity = skillsWindow:recursiveGetChildById('skillId4')
+	local skillDexterity = skillsWindow:recursiveGetChildById('skillId'..Skill.Dexterity)
 	skillDexterity:setTooltip(SkillDescription.Dexterity)
 
-	local skillResistance = skillsWindow:recursiveGetChildById('skillId5')
-	skillResistance:setTooltip(SkillDescription.Defence)
+	local skilDefence = skillsWindow:recursiveGetChildById('skillId'..Skill.Defence)
+	skilDefence:setTooltip(SkillDescription.Defence)
 
-	local skillEndurance = skillsWindow:recursiveGetChildById('skillId6')
+	local skillEndurance = skillsWindow:recursiveGetChildById('skillId'..Skill.Endurance)
 	skillEndurance:setTooltip(SkillDescription.Endurance)
 	
 	local skillWand = skillsWindow:recursiveGetChildById('wanddamage')
@@ -441,25 +436,23 @@ function setSkillsTooltips()
 end
 
 function onClickApply()
-	print('game_skills: on click apply')
-
+	
 	g_game.checkVersionToPlay(clientVersionToPlay)
 
 	if not player then 
-		player = g_game.getLocalPlayer()
-		resetChanges()
-		print('[onClickApply] player == nil') 
+		toggle() 
+		toggle()
 		return 
 	end
 
-	if newMagic == -1 then newMagic = player:getBaseMagicLevel() end
-	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
-	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
-	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Defence) end
-	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
-	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
-	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
-	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
+	if newMagic < 0 then newMagic = player:getBaseMagicLevel() toggle() toggle() return end
+	if newVitality < 0 then newVitality = player:getBaseSkillLevel(Skill.Vitality) toggle() toggle() return end
+	if newStrenght < 0 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) toggle() toggle() return end
+	if newDefence < 0 then newDefence = player:getBaseSkillLevel(Skill.Defence) toggle() toggle() return end
+	if newDexterity < 0 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) toggle() toggle() return end
+	if newIntelligence < 0 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) toggle() toggle() return end
+	if newFaith < 0 then newFaith = player:getBaseSkillLevel(Skill.Faith) toggle() toggle() return end
+	if newEndurance < 0 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) toggle() toggle() return end
 	
 	local playerLevel = player:getLevel()
 	
@@ -516,82 +509,30 @@ function onClickApply()
 		maxEndurance 	= maxVitality
 	end
 	
+	if maxMagic > magicInfo['max'] then maxMagic = magicInfo['max'] end
+	if maxVitality > vitalityInfo['max'] then maxVitality = vitalityInfo['max'] end
+	if maxStrenght > strenghtInfo['max'] then maxStrenght = strenghtInfo['max'] end
+	if maxIntelligence > intelligenceInfo['max'] then maxIntelligence = intelligenceInfo['max'] end
+	if maxFaith > faithInfo['max'] then maxFaith = faithInfo['max'] end
+	if maxDexterity > dexterityInfo['max'] then maxDexterity = dexterityInfo['max'] end
+	if maxDefence > defenceInfo['max'] then maxDefence = defenceInfo['max'] end
+	if maxEndurance > enduranceInfo['max'] then maxEndurance = enduranceInfo['max'] end	   
+	   
 	local checks = true
-	local message = ""
-	
-	if (newMagic > maxMagic) then
-		message = "The maximum magic at your level is " .. maxMagic .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end
-	
-	if (newVitality > maxVitality) then
-		message = "The maximum vitality at your level is " .. maxVitality .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end 
-	
-	if (newStrenght > maxStrenght) then
-		message = "The maximum strenght at your level is " .. maxStrenght .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end 
+	local message = "The maximum magic at your level is "
 
-	if (newDefence > maxDefence) then
-		message = "The maximum defence at your level is " .. maxDefence .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end 
-	
-	if (newIntelligence > maxIntelligence) then
-		message = "The maximum intelligence at your level is " .. maxIntelligence .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end
-	
-	if (newFaith > maxFaith) then
-		message = "The maximum faith at your level is " .. maxFaith .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end
-	
-	if (newDexterity > maxDexterity) then
-		message = "The maximum dexterity at your level is " .. maxDexterity .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end
-	
-	if (newEndurance > maxEndurance) then
-		message = "The maximum endurance at your level is " .. maxEndurance .. ".";
-		print(message);
-		modules.game_textmessage.displayBroadcastMessage(message)
-		checks = false;
-	end
-
-	if (checks == false) then
-		return false;
-	end
+	if (newMagic > maxMagic) then modules.game_textmessage.displayBroadcastMessage(message..maxMagic..".") checks = false; end
+	if (newVitality > maxVitality) then dules.game_textmessage.displayBroadcastMessage(message..maxVitality..".") checks = false;	end 
+	if (newStrenght > maxStrenght) then modules.game_textmessage.displayBroadcastMessage(message..maxStrenght..".") checks = false; end
+	if (newDefence > maxDefence) then modules.game_textmessage.displayBroadcastMessage(message..maxDefence..".")checks = false; end
+	if (newIntelligence > maxIntelligence) then modules.game_textmessage.displayBroadcastMessage(message..maxIntelligence..".")checks = false; end
+	if (newFaith > maxFaith) then modules.game_textmessage.displayBroadcastMessage(message..maxFaith..".")checks = false; end
+	if (newDexterity > maxDexterity) then modules.game_textmessage.displayBroadcastMessage(message..maxDexterity..".")checks = false; end
+	if (newEndurance > maxEndurance) then modules.game_textmessage.displayBroadcastMessage(message..maxEndurance..".")checks = false; end
+	if (checks == false) then return false; end
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
-	
-	print('game_skills: applied skills')
-	
-	magicMinusButton:setVisible(false)
-	vitalityMinusButton:setVisible(false)
-	strenghtMinusButton:setVisible(false)
-	defenceMinusButton:setVisible(false)
-	dexterityMinusButton:setVisible(false)
-	intelligenceMinusButton:setVisible(false)
-	faithMinusButton:setVisible(false)
-	enduranceMinusButton:setVisible(false)
-	
+		
 	newMagic = player:getBaseMagicLevel()
 	newVitality = player:getBaseSkillLevel(Skill.Vitality)
 	newStrenght = player:getBaseSkillLevel(Skill.Strenght)
@@ -604,694 +545,534 @@ function onClickApply()
 	setExtraLabelsInvisible()
 end
 
-function onClickAdd(id)
+function setSkillPointsValueAndVisibility(arrowLabel, valueLabel, value, currentValue)
+	local boolean = value <= currentValue
+	arrowLabel:setVisible(boolean)
+	valueLabel:setText(value)
+	valueLabel:setWidth(valueLabel:getTextSize().width)
+	valueLabel:setVisible(boolean)
+end
 
-	if not player then 
-		player = g_game.getLocalPlayer()
-		resetChanges()
-	end
-	
-	if not player then
-		print('[onClickAdd] player == nil') 
-		return 
-	end		
-	
-	if id == 'magiclevel' then
-		if newSkillPoints - magicInfo['cost'] >= 0 then
-		
-			print('[+] magic')
-		
-			applyButton:setVisible(true)
-			
-			if newSkillPoints == -1 or newSkillPoints == nil then newSkillPoints = player:getSkillPoints() end
-			
-			newSkillPoints = newSkillPoints - magicInfo['cost']
-			newSkillPointsArrowLabel:setVisible(true)
-			newSkillPointsValueLabel:setText(newSkillPoints)
-			newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
-			newSkillPointsValueLabel:setVisible(true)
+function setValueAndVisibility(arrowLabel, valueLabel, value, currentValue)
+	local boolean = value > currentValue
+	arrowLabel:setVisible(boolean)
+	valueLabel:setText(value)
+	valueLabel:setWidth(valueLabel:getTextSize().width)
+	valueLabel:setVisible(boolean)
+end
 
-			if newMagic == -1 or newMagic == nil then newMagic = player:getBaseMagicLevel() end
+function setNewValueAndVisibility(arrowLabel, newValueLabel, value, visibility)
+	arrowLabel:setVisible(visibility)
+	valueLabel:setText(value)
+	valueLabel:setWidth(valueLabel:getTextSize().width)
+	valueLabel:setVisible(visibility)
+end
 
-			newMagic = newMagic + 1
-			newMagicArrowLabel:setVisible(true)
-			newMagicValueLabel:setText(newMagic)
-			newMagicValueLabel:setWidth(newMagicValueLabel:getTextSize().width)
-			newMagicValueLabel:setVisible(true)
-			magicMinusButton:setVisible(true)
-			
-			local initialMana = 10
-			local levelsMana = 5 * (player:getLevel() - 1)
-			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-			
-			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-			newManaArrowLabel:setVisible(true)
-			newManaValueLabel:setText(newMaxMana)
-			newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-			newManaValueLabel:setVisible(true)
-
-		else 
-			print('not enough skill points:' .. newSkillPoints)
-		end
-	else
-		if newSkillPoints - 1 >= 0 then
-		
-			applyButton:setVisible(true)
-				
-			newSkillPoints = newSkillPoints - 1
-			newSkillPointsArrowLabel:setVisible(true)
-			newSkillPointsValueLabel:setText(newSkillPoints)
-			newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
-			newSkillPointsValueLabel:setVisible(true)
-		
-			if id == 'skillId0' then
-			
-				print('[+] vitality')
-			
-				if newVitality < 8 or newVitality == nil then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
-				
-				newVitality = newVitality + 1
-				newVitalityArrowLabel:setVisible(true)
-				newVitalityValueLabel:setText(newVitality)
-				newVitalityValueLabel:setWidth(newVitalityValueLabel:getTextSize().width)
-				newVitalityValueLabel:setVisible(true)
-				vitalityMinusButton:setVisible(true)
-				
-				local initialHealth = 120
-				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-				
-				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setText(newMaxHealth)
-				newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-				newHealthValueLabel:setVisible(true)
-						
-			elseif id == 'skillId1' then
-			
-				print('[+] strenght')
-			
-				if newStrenght < 8 or newStrenght == nil then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
-				
-				newStrenght = newStrenght + 1
-				newStrenghtArrowLabel:setVisible(true)
-				newStrenghtValueLabel:setText(newStrenght)
-				newStrenghtValueLabel:setWidth(newStrenghtValueLabel:getTextSize().width)
-				newStrenghtValueLabel:setVisible(true)
-				strenghtMinusButton:setVisible(true)
-				
-				local initialCapacity = 36500
-				local levelsCapacity = 500 * (player:getLevel() - 1)
-				local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
-				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-				
-				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
-				newCapacityArrowLabel:setVisible(true)
-				newCapacityValueLabel:setText(newMaxCapacity / 100.0)
-				newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
-				newCapacityValueLabel:setVisible(true)
-			
-			elseif id == 'skillId2' then
-			
-				print('[+] faith')
-			
-				if newFaith < 8 or newFaith == nil then newFaith = player:getBaseSkillLevel(Skill.Faith) end
-				
-				newFaith = newFaith + 1
-				newFaithArrowLabel:setVisible(true)
-				newFaithValueLabel:setText(newFaith)
-				newFaithValueLabel:setWidth(newFaithValueLabel:getTextSize().width)
-				newFaithValueLabel:setVisible(true)
-				faithMinusButton:setVisible(true)
-				
-				local initialMana = 10
-				local levelsMana = 5 * (player:getLevel() - 1)
-				local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-				
-				local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-				newManaArrowLabel:setVisible(true)
-				newManaValueLabel:setText(newMaxMana)
-				newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-				newManaValueLabel:setVisible(true)
-				
-			elseif id == 'skillId3' then
-			
-				print('[+] intelligence')
-			
-				if newIntelligence < 8 or newIntelligence == nil then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
-				
-				newIntelligence = newIntelligence + 1
-				newIntelligenceArrowLabel:setVisible(true)
-				newIntelligenceValueLabel:setText(newIntelligence)
-				newIntelligenceValueLabel:setWidth(newIntelligenceValueLabel:getTextSize().width)
-				newIntelligenceValueLabel:setVisible(true)
-				intelligenceMinusButton:setVisible(true)
-				
-				local initialMana = 10
-				local levelsMana = 5 * (player:getLevel() - 1)
-				local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-				local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-				local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-				
-				local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-				newManaArrowLabel:setVisible(true)
-				newManaValueLabel:setText(newMaxMana)
-				newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-				newManaValueLabel:setVisible(true)
-				
-			elseif id == 'skillId4' then
-			
-				print('[+] dexterity')
-			
-				if newDexterity < 8 or newDexterity == nil then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
-				
-				newDexterity = newDexterity + 1
-				newDexterityArrowLabel:setVisible(true)
-				newDexterityValueLabel:setText(newDexterity)
-				newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
-				newDexterityValueLabel:setVisible(true)
-				dexterityMinusButton:setVisible(true)
-				
-				local initialWalkSpeed = player:getBaseSpeed()
-				local dexterityWalkSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
-				
-				local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
-				newWalkSpeedArrowLabel:setVisible(true)
-				newWalkSpeedValueLabel:setText(newWalkSpeed)
-				newWalkSpeedValueLabel:setWidth(newWalkSpeedValueLabel:getTextSize().width)
-				newWalkSpeedValueLabel:setVisible(true)
-				
-				local initialAttackSpeed = player:getAttackSpeed()
-				
-				if initialAttackSpeed == 1500 then --isDualWielding
-					initialAttackSpeed = 2040 - (player:getBaseSkillLevel(Skill.Dexterity) * 5.0)
-				end
-				
-				local dexterityAttackSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
-				
-				local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
-				newAttackSpeedArrowLabel:setVisible(true)
-				newAttackSpeedValueLabel:setText(newAttackSpeed - 1900)
-				newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
-				newAttackSpeedValueLabel:setVisible(true)
-				
-			elseif id == 'skillId5' then
-			
-				print('[+] defence')
-			
-				if newDefence < 8 or newDefence == nil then newDefence = player:getBaseSkillLevel(Skill.Defence) end
-				
-				newDefence = newDefence + 1
-				newDefenceArrowLabel:setVisible(true)
-				newDefenceValueLabel:setText(newDefence)
-				newDefenceValueLabel:setWidth(newDefenceValueLabel:getTextSize().width)
-				newDefenceValueLabel:setVisible(true)
-				defenceMinusButton:setVisible(true)
-				
-				-- CONFIGURATION NEEDED ONLY IF DEFENCE GROWS HEALTH
-				--[[local initialHealth = 120
-				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-				
-				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setText(newMaxHealth)
-				newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-				newHealthValueLabel:setVisible(true)]]
-				
-			elseif id == 'skillId6' then
-			
-				print('[+] endurance')
-			
-				if newEndurance < 8 or newEndurance == nil then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
-				
-				newEndurance = newEndurance + 1
-				newEnduranceArrowLabel:setVisible(true)
-				newEnduranceValueLabel:setText(newEndurance)
-				newEnduranceValueLabel:setWidth(newEnduranceValueLabel:getTextSize().width)
-				newEnduranceValueLabel:setVisible(true)
-				enduranceMinusButton:setVisible(true)
-				
-				local initialHealth = 120
-				local levelsHealth = 5 * (player:getLevel() - 1)
-				local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-				local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-				local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-				
-				local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setText(newMaxHealth)
-				newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-				newHealthValueLabel:setVisible(true)
-				
-				local initialCapacity = 36500
-				local levelsCapacity = 500 * (player:getLevel() - 1)
-				local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
-				local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-				
-				local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
-				newCapacityArrowLabel:setVisible(true)
-				newCapacityValueLabel:setText(newMaxCapacity / 100.0)
-				newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
-				newCapacityValueLabel:setVisible(true)
-			end
-		end		
-	end
-	
-	if newSkillPoints >= magicInfo['cost'] then
-		magicPlusButton:setVisible(true)
-	else
-		magicPlusButton:setVisible(false)
-	end
-	
-	if newSkillPoints >= 1 then
-		vitalityPlusButton:setVisible(true)
-		strenghtPlusButton:setVisible(true)
-		defencePlusButton:setVisible(true)
-		dexterityPlusButton:setVisible(true)
-		intelligencePlusButton:setVisible(true)
-		faithPlusButton:setVisible(true)
-		endurancePlusButton:setVisible(true)
-	else
-		vitalityPlusButton:setVisible(false)
-		strenghtPlusButton:setVisible(false)
-		defencePlusButton:setVisible(false)
-		dexterityPlusButton:setVisible(false)
-		intelligencePlusButton:setVisible(false)
-		faithPlusButton:setVisible(false)
-		endurancePlusButton:setVisible(false)
+function setApplyButtonVisibility()
+	if newSkillPoints < player:getSkillPoints() then 
+		applyButton:setVisible(true) 
+	else 
+		applyButton:setVisible(false) 
 	end
 end
 
-function onClickRemove(id)
+function setPlusButtonVisibility(button, cost)
+	if player:getSkillPoints() >= cost then
+		button:setVisible(true)
+	else
+		button:setVisible(false)
+	end
+end
 
-	if not player then 
-		player = g_game.getLocalPlayer()
-		resetChanges()
+function setMinusButtonVisibility(button, skillValue, newSkillValue)
+	if newSkillValue > skillValue then
+		button:setVisible(true)
+	else
+		button:setVisible(false)
+	end
+end
+
+function getNewAttackSpeedInPercent()
+	local bonusAttackSpeed = dexterityInfo["attackSpeed"] * (math.max(newDexterity, dexterityInfo["initial"]) - dexterityInfo["initial"])
+	return ((initial.attackSpeed + bonusAttackSpeed) / initial.attackSpeed) * 100
+end
+
+function getNewMaxMana()
+	local initialMana = initial.mana
+	local levelsMana = levelGain.mana * (player:getLevel() - 1)
+	local magicMana = magicInfo['mana'] * math.max(newMagic, player:getBaseMagicLevel())
+	local intelligenceMana = intelligenceInfo['mana'] * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - intelligenceInfo['initial'])
+	local faithMana = faithInfo['mana'] * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - faithInfo['initial'])
+	return initialMana + levelsMana + magicMana + intelligenceMana + faithMana
+end
+
+function getNewMaxHealth()
+	local initialHealth = initial.health
+	local levelsHealth = levelGain.health * (player:getLevel() - 1)
+	local vitalityHealth = vitalityInfo['health'] * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality))  - vitalityInfo['initial'])
+	local enduranceHealth = enduranceInfo['health'] * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance))  - enduranceInfo['initial'])
+	return initialHealth + levelsHealth + vitalityHealth + enduranceHealth
+end
+
+function getNewWalkSpeed()
+	local baseSpeed = player:getBaseSpeed()
+	print(baseSpeed)
+	local dexterityWalkSpeed = dexterityInfo['walkSpeed'] * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - math.max(dexterityInfo['initial'], player:getBaseSkillLevel(Skill.Dexterity)))
+	print(dexterityWalkSpeed)
+	return baseSpeed + dexterityWalkSpeed
+end
+
+function getNewAttackSpeed()
+	local initialAttackSpeed = 2000 -- 2 seconds
+	local dexterityAttackSpeed = dexterityInfo['attackSpeed'] * 10 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity))  - dexterityInfo['initial'])
+	return initialAttackSpeed - dexterityAttackSpeed
+end
+
+function getNewMaxCapacity()
+	local initialCapacity = 365 * 100.0 -- starts level 1 with 365 cap
+	local levelsCapacity = levelGain.capacity * (player:getLevel() - 1)
+	local strenghtCapacity = strenghtInfo['cap'] * 100.0 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - strenghtInfo['initial']) 
+	local enduranceCapacity = enduranceInfo['cap'] * 100.0 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - enduranceInfo['initial'])
+	return (initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity) / 100.0
+end
+
+--[[function getNewFreeCapacity()
+	local freeCapacity = player:getFreeCapacity()
+	local levelsCapacity = levelGain.capacity * (player:getLevel() - 1)
+	local strenghtCapacity = strenghtInfo['cap'] * 100.0 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - strenghtInfo['initial']) 
+	local enduranceCapacity = enduranceInfo['cap'] * 100.0 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - enduranceInfo['initial'])
+	return (freeCapacity + strenghtCapacity + enduranceCapacity) / 100.0
+end]]
+
+function onClickAddMagic()
+
+	if newSkillPoints - magicInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - magicInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newMagic = newMagic + 1
+		setValueAndVisibility(newMagicArrowLabel, newMagicValueLabel, newMagic, player:getBaseMagicLevel())
+		magicMinusButton:setVisible(true)
+		
+		setValueAndVisibility(newManaArrowLabel, newManaValueLabel, getNewMaxMana(), player:getMaxMana())
 	end
 	
-	if not player then
-		print('[onClickRemove] player == nil') 
-		return 
-	end	
-			
-	if id == 'magiclevel' then
-		
-		print('[-] magic')
-		
-		newSkillPoints = newSkillPoints + magicInfo['cost']
-		newSkillPointsValueLabel:setText(newSkillPoints)
-		newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
-			
-		if newSkillPoints >= player:getSkillPoints() then
-			applyButton:setVisible(false)
-			newSkillPointsArrowLabel:setVisible(false)
-			newSkillPointsValueLabel:setVisible(false)
-		else
-			applyButton:setVisible(true)
-			newSkillPointsArrowLabel:setVisible(true)
-			newSkillPointsValueLabel:setVisible(true)
-		end
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(magicPlusButton, magicInfo['cost'])
+end
 
-		newMagic = newMagic - 1
+function onClickAddVitality()
+
+	if newSkillPoints - vitalityInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - vitalityInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newVitality = newVitality + 1
+		setValueAndVisibility(newVitalityArrowLabel, newVitalityValueLabel, newVitality, player:getBaseSkillLevel(Skill.Vitality))
+		vitalityMinusButton:setVisible(true)
+			
+		setValueAndVisibility(newHealthArrowLabel, newHealthValueLabel, getNewMaxHealth(), player:getMaxHealth())
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(vitalityPlusButton, vitalityInfo['cost'])
+end
+
+function onClickAddStrenght()
+
+	if newSkillPoints - strenghtInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - strenghtInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newStrenght = newStrenght + 1
+		setValueAndVisibility(newStrenghtArrowLabel, newStrenghtValueLabel, newStrenght, player:getBaseSkillLevel(Skill.Strenght))
+		strenghtMinusButton:setVisible(true)
+	end
+	
+	setValueAndVisibility(newCapacityArrowLabel, newCapacityValueLabel, getNewMaxCapacity(), player:getTotalCapacity())
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(strenghtPlusButton, strenghtInfo['cost'])
+end
+
+function onClickAddDefence()
+
+	if newSkillPoints - defenceInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - defenceInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newDefence = newDefence + 1
+		setValueAndVisibility(newDefenceArrowLabel, newDefenceValueLabel, newDefence, player:getBaseSkillLevel(Skill.Defence))
+		defenceMinusButton:setVisible(true)
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(defencePlusButton, defenceInfo['cost'])
+end
+
+function onClickAddDexterity()
+
+	if newSkillPoints - dexterityInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - dexterityInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newDexterity = newDexterity + 1
+		setValueAndVisibility(newDexterityArrowLabel, newDexterityValueLabel, newDexterity, player:getBaseSkillLevel(Skill.Dexterity))
+		dexterityMinusButton:setVisible(true)
+
+		newAttackSpeedArrowLabel:setVisible(true)
+		newAttackSpeedValueLabel:setText(getNewAttackSpeedInPercent())
+		newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
+		newAttackSpeedValueLabel:setVisible(true)
+
+		newWalkSpeedArrowLabel:setVisible(true)
+		newWalkSpeedValueLabel:setText(getNewWalkSpeed())
+		newWalkSpeedValueLabel:setWidth(newWalkSpeedValueLabel:getTextSize().width)
+		newWalkSpeedValueLabel:setVisible(true)
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(dexterityPlusButton, dexterityInfo['cost'])
+end
+
+function onClickAddIntelligence()
+
+	if newSkillPoints - intelligenceInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - intelligenceInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newIntelligence = newIntelligence + 1
+		setValueAndVisibility(newIntelligenceArrowLabel, newIntelligenceValueLabel, newIntelligence, player:getBaseSkillLevel(Skill.Intelligence))
+		intelligenceMinusButton:setVisible(true)
+
+		setValueAndVisibility(newManaArrowLabel, newManaValueLabel, getNewMaxMana(), player:getMaxMana())
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(intelligencePlusButton, intelligenceInfo['cost'])
+end
+
+function onClickAddFaith()
+
+	if newSkillPoints - faithInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - faithInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newFaith = newFaith + 1
+		setValueAndVisibility(newFaithArrowLabel, newFaithValueLabel, newFaith, player:getBaseSkillLevel(Skill.Faith))
+		faithMinusButton:setVisible(true)
+
+		setValueAndVisibility(newManaArrowLabel, newManaValueLabel, getNewMaxMana(), player:getMaxMana())
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(faithPlusButton, faithInfo['cost'])
+end
+
+function onClickAddEndurance()
+
+	if newSkillPoints - enduranceInfo['cost'] >= 0 then
+			
+		applyButton:setVisible(true)
+		newSkillPoints = newSkillPoints - enduranceInfo['cost']
+		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		newEndurance = newEndurance + 1
+		setValueAndVisibility(newEnduranceArrowLabel, newEnduranceValueLabel, newEndurance, player:getBaseSkillLevel(Skill.Endurance))
+		enduranceMinusButton:setVisible(true)
+
+		setValueAndVisibility(newCapacityArrowLabel, newCapacityValueLabel, getNewMaxCapacity(), player:getTotalCapacity())
+		setValueAndVisibility(newHealthArrowLabel, newHealthValueLabel, getNewMaxHealth(), player:getMaxHealth())
+	end
+	
+	setApplyButtonVisibility()
+	setPlusButtonVisibility(endurancePlusButton, enduranceInfo['cost'])
+end
+
+function setNewSkillPointsAndApplyButtonVisibility()
+	if newSkillPoints >= player:getSkillPoints() then
+		applyButton:setVisible(false)
+		newSkillPointsArrowLabel:setVisible(false)
+		newSkillPointsValueLabel:setVisible(false)
+	else
+		applyButton:setVisible(true)
+		newSkillPointsArrowLabel:setVisible(true)
+		newSkillPointsValueLabel:setVisible(true)
+	end
+end
+
+function setNewManaValueAndVisibility()
+	local newMaxMana = getNewMaxMana()
+	newManaValueLabel:setText(newMaxMana)
+	newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
+	
+	if newMaxMana <= player:getMaxMana() then
+		newManaArrowLabel:setVisible(false)
+		newManaValueLabel:setVisible(false)
+	else
+		newManaArrowLabel:setVisible(true)
+		newManaValueLabel:setVisible(true)
+	end
+end
+
+function setNewSkillPointsValueOnRemove(cost)
+	newSkillPoints = newSkillPoints + cost
+	newSkillPointsValueLabel:setText(newSkillPoints)
+	newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
+end
+
+function setNewSkillPointsValueOnAdd(cost)
+	newSkillPoints = newSkillPoints - cost
+	newSkillPointsValueLabel:setText(newSkillPoints)
+	newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
+end
+
+function onClickRemoveMagic()
+
+	setNewSkillPointsValueOnRemove(magicInfo['cost'])
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newMagic = newMagic - 1
+	newMagicValueLabel:setText(newMagic)
+	newMagicValueLabel:setWidth(newMagicValueLabel:getTextSize().width)
+	
+	if newMagic <= player:getBaseMagicLevel() then
+		newMagicArrowLabel:setVisible(false)
+		newMagicValueLabel:setVisible(false)
+		magicMinusButton:setVisible(false)
+	else
+		newMagicArrowLabel:setVisible(true)
 		newMagicValueLabel:setText(newMagic)
 		newMagicValueLabel:setWidth(newMagicValueLabel:getTextSize().width)
-		
-		if newMagic <= player:getBaseMagicLevel() then
-			newMagicArrowLabel:setVisible(false)
-			newMagicValueLabel:setVisible(false)
-			magicMinusButton:setVisible(false)
-		else
-			newMagicArrowLabel:setVisible(true)
-			newMagicValueLabel:setText(newMagic)
-			newMagicValueLabel:setWidth(newMagicValueLabel:getTextSize().width)
-			newMagicValueLabel:setVisible(true)
-			magicMinusButton:setVisible(true)
-		end
-		
-		local initialMana = 10
-		local levelsMana = 5 * (player:getLevel() - 1)
-		local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-		local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-		local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-		
-		local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-		newManaValueLabel:setText(newMaxMana)
-		newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-		
-		if newMaxMana <= player:getMaxMana() then
-			newManaArrowLabel:setVisible(false)
-			newManaValueLabel:setVisible(false)
-		else
-			newManaArrowLabel:setVisible(true)
-			newManaValueLabel:setVisible(true)
-		end
-
-	else
-	
-		newSkillPoints = newSkillPoints + 1
-		newSkillPointsValueLabel:setText(newSkillPoints)
-		newSkillPointsValueLabel:setWidth(newSkillPointsValueLabel:getTextSize().width)
-		
-		if newSkillPoints >= player:getSkillPoints() then
-			applyButton:setVisible(false)
-			newSkillPointsArrowLabel:setVisible(false)
-			newSkillPointsValueLabel:setVisible(false)
-		else
-			applyButton:setVisible(true)
-			newSkillPointsArrowLabel:setVisible(true)
-			newSkillPointsValueLabel:setVisible(true)
-		end
-		
-		
-						
-		if id == 'skillId0' then
-		
-			print('[-] vitality')
-					
-			newVitality = newVitality - 1
-			newVitalityValueLabel:setText(newVitality)
-			newVitalityValueLabel:setWidth(newVitalityValueLabel:getTextSize().width)
-			
-			if newVitality <= player:getBaseSkillLevel(Skill.Vitality) then
-				newVitalityArrowLabel:setVisible(false)
-				newVitalityValueLabel:setVisible(false)
-				vitalityMinusButton:setVisible(false)
-			else
-				newVitalityArrowLabel:setVisible(true)
-				newVitalityValueLabel:setVisible(true)
-				vitalityMinusButton:setVisible(true)
-			end	
-			
-			local initialHealth = 120
-			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-			
-			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-			newHealthValueLabel:setText(newMaxHealth)
-			newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-			
-			if newMaxHealth <= player:getMaxHealth() then
-				newHealthArrowLabel:setVisible(false)
-				newHealthValueLabel:setVisible(false)
-			else
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setVisible(true)
-			end
-					
-		elseif id == 'skillId1' then
-		
-			print('[-] strenght')
-				
-			newStrenght = newStrenght - 1
-			newStrenghtValueLabel:setText(newStrenght)
-			newStrenghtValueLabel:setWidth(newStrenghtValueLabel:getTextSize().width)
-			
-			if newStrenght <= player:getBaseSkillLevel(Skill.Strenght) then
-				newStrenghtArrowLabel:setVisible(false)
-				newStrenghtValueLabel:setVisible(false)
-				strenghtMinusButton:setVisible(false)
-			else
-				newStrenghtArrowLabel:setVisible(true)
-				newStrenghtValueLabel:setVisible(true)
-				strenghtMinusButton:setVisible(true)
-			end
-
-			local initialCapacity = 36500
-			local levelsCapacity = 500 * (player:getLevel() - 1)
-			local strenghtCapacity= 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
-			local enduranceCapacity = 1500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-			
-			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
-			newCapacityValueLabel:setText(newMaxCapacity / 100.0)
-			newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
-						
-			if newMaxCapacity <= player:getTotalCapacity() * 100 then
-				newCapacityArrowLabel:setVisible(false)
-				newCapacityValueLabel:setVisible(false)
-			else
-				newCapacityArrowLabel:setVisible(true)
-				newCapacityValueLabel:setVisible(true)
-			end
-			
-			
-		
-		elseif id == 'skillId2' then
-		
-			print('[-] faith')
-					
-			newFaith = newFaith - 1
-			newFaithValueLabel:setText(newFaith)
-			newFaithValueLabel:setWidth(newFaithValueLabel:getTextSize().width)
-			
-			if newFaith <= player:getBaseSkillLevel(Skill.Faith) then
-				newFaithArrowLabel:setVisible(false)
-				newFaithValueLabel:setVisible(false)
-				faithMinusButton:setVisible(false)
-			else
-				newFaithArrowLabel:setVisible(true)
-				newFaithValueLabel:setVisible(true)
-				faithMinusButton:setVisible(true)
-			end
-
-			local initialMana = 10
-			local levelsMana = 5 * (player:getLevel() - 1)
-			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-			
-			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-			
-			if newMaxMana <= player:getMaxMana() then
-				newManaArrowLabel:setVisible(false)
-				newManaValueLabel:setVisible(false)
-			end
-			
-			newManaValueLabel:setText(newMaxMana)
-			newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-			
-		elseif id == 'skillId3' then
-		
-			print('[-] intelligence')
-					
-			newIntelligence = newIntelligence - 1
-			
-			if newIntelligence <= player:getBaseSkillLevel(Skill.Intelligence) then
-				newIntelligenceArrowLabel:setVisible(false)
-				newIntelligenceValueLabel:setVisible(false)
-				intelligenceMinusButton:setVisible(false)
-			else 
-				newIntelligenceArrowLabel:setVisible(true)
-				newIntelligenceValueLabel:setVisible(true)
-				intelligenceMinusButton:setVisible(true)
-			end
-			
-			newIntelligenceValueLabel:setText(newIntelligence)
-			newIntelligenceValueLabel:setWidth(newIntelligenceValueLabel:getTextSize().width)
-			
-			local initialMana = 10
-			local levelsMana = 5 * (player:getLevel() - 1)
-			local magicMana = 15 * math.max(newMagic, player:getBaseMagicLevel())
-			local intelligenceMana = 10 * (math.max(newIntelligence, player:getBaseSkillLevel(Skill.Intelligence)) - 8)
-			local faithMana = 10 * (math.max(newFaith, player:getBaseSkillLevel(Skill.Faith)) - 8)
-			
-			local newMaxMana = initialMana + levelsMana + magicMana + intelligenceMana + faithMana
-			
-			if newMaxMana <= player:getMaxMana() then
-				newManaArrowLabel:setVisible(false)
-				newManaValueLabel:setVisible(false)
-			else
-				newManaArrowLabel:setVisible(true)
-				newManaValueLabel:setVisible(true)
-			end
-			
-			newManaValueLabel:setText(newMaxMana)
-			newManaValueLabel:setWidth(newManaValueLabel:getTextSize().width)
-			
-		elseif id == 'skillId4' then
-		
-			print('[-] dexterity')
-					
-			newDexterity = newDexterity - 1
-			
-			if newDexterity <= player:getBaseSkillLevel(Skill.Dexterity) then
-				newDexterityArrowLabel:setVisible(false)
-				newDexterityValueLabel:setVisible(false)
-				dexterityMinusButton:setVisible(false)
-			else
-				newDexterityArrowLabel:setVisible(true)
-				newDexterityValueLabel:setVisible(true)
-				dexterityMinusButton:setVisible(true)
-			end
-			
-			newDexterityValueLabel:setText(newDexterity)
-			newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
-			
-			local initialWalkSpeed = player:getBaseSpeed()
-			local dexterityWalkSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
-			
-			local newWalkSpeed = initialWalkSpeed + dexterityWalkSpeed
-			
-			if newWalkSpeed <= player:getBaseSpeed() then
-				newWalkSpeedArrowLabel:setVisible(false)
-				newWalkSpeedValueLabel:setVisible(false)
-			else
-				newWalkSpeedArrowLabel:setVisible(true)
-				newWalkSpeedValueLabel:setVisible(true)
-			end
-			
-			newWalkSpeedValueLabel:setText(newWalkSpeed)
-			newWalkSpeedValueLabel:setWidth(newWalkSpeedValueLabel:getTextSize().width)
-		
-			local initialAttackSpeed = player:getAttackSpeed()
-				
-			if initialAttackSpeed == 1000 then --isDualWielding
-				initialAttackSpeed = 2040 - (player:getBaseSkillLevel(Skill.Dexterity) * 5.0)
-			end
-			
-			local dexterityAttackSpeed = 0.5 * (math.max(newDexterity, player:getBaseSkillLevel(Skill.Dexterity)) - player:getBaseSkillLevel(Skill.Dexterity))
-			
-			local newAttackSpeed = initialAttackSpeed + dexterityAttackSpeed
-			
-			if newWalkSpeed <= player:getBaseSpeed() then
-				newAttackSpeedArrowLabel:setVisible(false)
-				newAttackSpeedValueLabel:setVisible(false)
-			else
-				newAttackSpeedArrowLabel:setVisible(true)
-				newAttackSpeedValueLabel:setVisible(true)
-			end
-			
-			newAttackSpeedValueLabel:setText(newAttackSpeed - 1900)
-			newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
-			
-		elseif id == 'skillId5' then
-		
-			print('[-] defence')
-				
-			newDefence = newDefence - 1
-			
-			if newDefence <= player:getBaseSkillLevel(Skill.Defence) then
-				newDefenceArrowLabel:setVisible(false)
-				newDefenceValueLabel:setVisible(false)
-				defenceMinusButton:setVisible(false)
-			else
-				newDefenceArrowLabel:setVisible(true)
-				newDefenceValueLabel:setVisible(true)
-				defenceMinusButton:setVisible(true)
-			end
-			
-			newDefenceValueLabel:setText(newDefence)
-			newDefenceValueLabel:setWidth(newDefenceValueLabel:getTextSize().width)
-			
-			local initialHealth = 120
-			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-			
-			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-			
-			if newMaxHealth <= player:getMaxHealth() then
-				newHealthArrowLabel:setVisible(false)
-				newHealthValueLabel:setVisible(false)
-			else
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setVisible(true)
-			end
-			
-			newHealthValueLabel:setText(newMaxHealth)
-			newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-			
-		elseif id == 'skillId6' then
-		
-			print('[-] endurance')
-				
-			newEndurance = newEndurance - 1
-			
-			if newEndurance <= player:getBaseSkillLevel(Skill.Endurance) then
-				newEnduranceArrowLabel:setVisible(false)
-				newEnduranceValueLabel:setVisible(false)
-				enduranceMinusButton:setVisible(false)
-			else
-				newEnduranceArrowLabel:setVisible(true)
-				newEnduranceValueLabel:setVisible(true)
-				enduranceMinusButton:setVisible(true)
-			end
-			
-			newEnduranceValueLabel:setText(newEndurance)
-			newEnduranceValueLabel:setWidth(newEnduranceValueLabel:getTextSize().width)
-			
-			local initialHealth = 120
-			local levelsHealth = 5 * (player:getLevel() - 1)
-			local vitalityHealth = 15 * (math.max(newVitality, player:getBaseSkillLevel(Skill.Vitality)) - 8)
-			local defenceHealth = 5 * (math.max(newDefence, player:getBaseSkillLevel(Skill.Defence)) - 8)
-			local enduranceHealth = 5 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-			
-			local newMaxHealth = initialHealth + levelsHealth + vitalityHealth + defenceHealth + enduranceHealth
-			
-			if newMaxHealth <= player:getMaxHealth() then
-				newHealthArrowLabel:setVisible(false)
-				newHealthValueLabel:setVisible(false)
-			else
-				newHealthArrowLabel:setVisible(true)
-				newHealthValueLabel:setVisible(true)
-			end
-			newHealthValueLabel:setText(newMaxHealth)
-			newHealthValueLabel:setWidth(newHealthValueLabel:getTextSize().width)
-			
-			local initialCapacity = 36500
-			local levelsCapacity = 500 * (player:getLevel() - 1)
-			local strenghtCapacity = 500 * (math.max(newStrenght, player:getBaseSkillLevel(Skill.Strenght)) - 8)
-			local enduranceCapacity = 500 * (math.max(newEndurance, player:getBaseSkillLevel(Skill.Endurance)) - 8)
-			
-			local newMaxCapacity = initialCapacity + levelsCapacity + strenghtCapacity + enduranceCapacity
-			
-			if newMaxCapacity <= player:getTotalCapacity() * 100 then
-				newCapacityArrowLabel:setVisible(false)
-				newCapacityValueLabel:setVisible(false)
-			else
-				newCapacityArrowLabel:setVisible(true)
-				newCapacityValueLabel:setVisible(true)
-			end
-			newCapacityValueLabel:setText(newMaxCapacity / 100.0)
-			newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
-		end			
+		newMagicValueLabel:setVisible(true)
+		magicMinusButton:setVisible(true)
 	end
 	
-	if newSkillPoints >= 3 then
-		magicPlusButton:setVisible(true)
-	else
-		magicPlusButton:setVisible(false)
-	end
-	
-	if newSkillPoints >= 1 then
-		vitalityPlusButton:setVisible(true)
-		strenghtPlusButton:setVisible(true)
-		defencePlusButton:setVisible(true)
-		dexterityPlusButton:setVisible(true)
-		intelligencePlusButton:setVisible(true)
-		faithPlusButton:setVisible(true)
-		endurancePlusButton:setVisible(true)
-	else
-		vitalityPlusButton:setVisible(false)
-		strenghtPlusButton:setVisible(false)
-		defencePlusButton:setVisible(false)
-		dexterityPlusButton:setVisible(false)
-		intelligencePlusButton:setVisible(false)
-		faithPlusButton:setVisible(false)
-		endurancePlusButton:setVisible(false)
-	end
+	setNewManaValueAndVisibility()
 end
+
+function onClickRemoveVitality()
+
+	setNewSkillPointsValueOnRemove(vitalityInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newVitality = newVitality - 1
+	newVitalityValueLabel:setText(newVitality)
+	newVitalityValueLabel:setWidth(newVitalityValueLabel:getTextSize().width)
+	
+	if newVitality <= player:getBaseSkillLevel(Skill.Vitality) then
+		newVitalityArrowLabel:setVisible(false)
+		newVitalityValueLabel:setVisible(false)
+		vitalityMinusButton:setVisible(false)
+	else
+		newVitalityArrowLabel:setVisible(true)
+		newVitalityValueLabel:setText(newVitality)
+		newVitalityValueLabel:setWidth(newVitalityValueLabel:getTextSize().width)
+		newVitalityValueLabel:setVisible(true)
+		vitalityMinusButton:setVisible(true)
+	end
+	
+	setApplyButtonVisibility()
+	setValueAndVisibility(newHealthArrowLabel, newHealthValueLabel, getNewMaxHealth(), player:getMaxHealth())
+	setMinusButtonVisibility(vitalityMinusButton, player:getBaseSkillLevel(Skill.Vitality), newVitality)
+end
+
+function onClickRemoveStrenght()
+
+	setNewSkillPointsValueOnRemove(strenghtInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newStrenght = newStrenght - 1
+	newStrenghtValueLabel:setText(newStrenght)
+	newStrenghtValueLabel:setWidth(newStrenghtValueLabel:getTextSize().width)
+	
+	if newStrenght <= player:getBaseSkillLevel(Skill.Strenght) then
+		newStrenghtArrowLabel:setVisible(false)
+		newStrenghtValueLabel:setVisible(false)
+		strenghtMinusButton:setVisible(false)
+	else
+		newStrenghtArrowLabel:setVisible(true)
+		newStrenghtValueLabel:setText(newStrenght)
+		newStrenghtValueLabel:setWidth(newStrenghtValueLabel:getTextSize().width)
+		newStrenghtValueLabel:setVisible(true)
+		strenghtMinusButton:setVisible(true)
+	end
+
+	local newMaxCapacity = getNewMaxCapacity()
+	newCapacityValueLabel:setText(newMaxCapacity / 100.0)
+	newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
+	
+	if newMaxCapacity <= player:getTotalCapacity() then
+		newCapacityArrowLabel:setVisible(false)
+		newCapacityValueLabel:setVisible(false)
+	else
+		newCapacityArrowLabel:setVisible(true)
+		newCapacityValueLabel:setVisible(true)
+	end
+	
+	setValueAndVisibility(newCapacityArrowLabel, newCapacityValueLabel, getNewMaxCapacity(), player:getTotalCapacity())
+	setMinusButtonVisibility(strenghtMinusButton, player:getBaseSkillLevel(Skill.Strenght), newStrenght)
+end
+
+function onClickRemoveDefence()
+
+	setNewSkillPointsValueOnRemove(defenceInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newDefence = newDefence - 1
+	newDefenceValueLabel:setText(newDefence)
+	newDefenceValueLabel:setWidth(newDefenceValueLabel:getTextSize().width)
+	
+	if newDefence <= player:getBaseSkillLevel(Skill.Defence) then
+		newDefenceArrowLabel:setVisible(false)
+		newDefenceValueLabel:setVisible(false)
+		defenceMinusButton:setVisible(false)
+	else
+		newDefenceArrowLabel:setVisible(true)
+		newDefenceValueLabel:setText(newDefence)
+		newDefenceValueLabel:setWidth(newDefenceValueLabel:getTextSize().width)
+		newDefenceValueLabel:setVisible(true)
+		defenceMinusButton:setVisible(true)
+	end
+	
+	setMinusButtonVisibility(defenceMinusButton, player:getBaseSkillLevel(Skill.Defence), newDefence)
+end
+
+function onClickRemoveDexterity()
+
+	setNewSkillPointsValueOnRemove(dexterityInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newDexterity = newDexterity - 1
+	newDexterityValueLabel:setText(newDexterity)
+	newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
+	
+	if newDexterity <= player:getBaseSkillLevel(Skill.Dexterity) then
+		newDexterityArrowLabel:setVisible(false)
+		newDexterityValueLabel:setVisible(false)
+		newAttackSpeedArrowLabel:setVisible(false)
+		newAttackSpeedValueLabel:setVisible(false)
+		newWalkSpeedArrowLabel:setVisible(false)
+		newWalkSpeedValueLabel:setVisible(false)
+		dexterityMinusButton:setVisible(false)
+	else
+		newDexterityArrowLabel:setVisible(true)
+		newDexterityValueLabel:setText(newDexterity)
+		newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
+		newDexterityValueLabel:setVisible(true)
+		newAttackSpeedArrowLabel:setVisible(true)
+		newAttackSpeedValueLabel:setVisible(true)
+		newAttackSpeedValueLabel:setText(getNewAttackSpeedInPercent())
+		newAttackSpeedValueLabel:setWidth(newAttackSpeedValueLabel:getTextSize().width)
+		newWalkSpeedArrowLabel:setVisible(true)
+		newWalkSpeedValueLabel:setVisible(true)
+		newWalkSpeedValueLabel:setText(getNewWalkSpeed())
+		newWalkSpeedValueLabel:setWidth(newWalkSpeedValueLabel:getTextSize().width)
+		dexterityMinusButton:setVisible(true)
+	end
+
+	--setValueAndVisibility(newAttackSpeedArrowLabel, newAttackSpeedValueLabel, getNewAttackSpeed(), true)
+	--setValueAndVisibility(newWalkSpeedArrowLabel, newWalkSpeedValueLabel, getNewWalkSpeed(), true)
+end
+
+function onClickRemoveIntelligence()
+
+	setNewSkillPointsValueOnRemove(intelligenceInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newIntelligence = newIntelligence - 1
+	newIntelligenceValueLabel:setText(newIntelligence)
+	newIntelligenceValueLabel:setWidth(newIntelligenceValueLabel:getTextSize().width)
+	
+	if newIntelligence <= player:getBaseSkillLevel(Skill.Intelligence) then
+		newIntelligenceArrowLabel:setVisible(false)
+		newIntelligenceValueLabel:setVisible(false)
+		intelligenceMinusButton:setVisible(false)
+	else
+		newIntelligenceArrowLabel:setVisible(true)
+		newIntelligenceValueLabel:setText(newIntelligence)
+		newIntelligenceValueLabel:setWidth(newIntelligenceValueLabel:getTextSize().width)
+		newIntelligenceValueLabel:setVisible(true)
+		intelligenceMinusButton:setVisible(true)
+	end
+
+	setValueAndVisibility(newManaArrowLabel, newManaValueLabel, getNewMaxMana(), player:getMaxMana())
+end
+
+function onClickRemoveFaith()
+
+	setNewSkillPointsValueOnRemove(faithInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newFaith = newFaith - 1
+	newFaithValueLabel:setText(newFaith)
+	newFaithValueLabel:setWidth(newFaithValueLabel:getTextSize().width)
+	
+	if newFaith <= player:getBaseSkillLevel(Skill.Faith) then
+		newFaithArrowLabel:setVisible(false)
+		newFaithValueLabel:setVisible(false)
+		faithMinusButton:setVisible(false)
+	else
+		newFaithArrowLabel:setVisible(true)
+		newFaithValueLabel:setText(newFaith)
+		newFaithValueLabel:setWidth(newFaithValueLabel:getTextSize().width)
+		newFaithValueLabel:setVisible(true)
+		faithMinusButton:setVisible(true)
+	end
+
+	setValueAndVisibility(newManaArrowLabel, newManaValueLabel, getNewMaxMana(), player:getMaxMana())
+end
+
+function onClickRemoveEndurance()
+
+	setNewSkillPointsValueOnRemove(enduranceInfo['cost'])		
+	setNewSkillPointsAndApplyButtonVisibility()
+
+	newEndurance = newEndurance - 1
+	newEnduranceValueLabel:setText(newEndurance)
+	newEnduranceValueLabel:setWidth(newEnduranceValueLabel:getTextSize().width)
+	
+	if newEndurance <= player:getBaseSkillLevel(Skill.Endurance) then
+		newEnduranceArrowLabel:setVisible(false)
+		newEnduranceValueLabel:setVisible(false)
+		enduranceMinusButton:setVisible(false)
+	else
+		newEnduranceArrowLabel:setVisible(true)
+		newEnduranceValueLabel:setText(newEndurance)
+		newEnduranceValueLabel:setWidth(newEnduranceValueLabel:getTextSize().width)
+		newEnduranceValueLabel:setVisible(true)
+		enduranceMinusButton:setVisible(true)
+	end
+	
+	local newMaxCapacity = getNewMaxCapacity()
+	newCapacityValueLabel:setText(newMaxCapacity)
+	newCapacityValueLabel:setWidth(newCapacityValueLabel:getTextSize().width)
+	
+	if newMaxCapacity <= player:getTotalCapacity() then
+		newCapacityArrowLabel:setVisible(false)
+		newCapacityValueLabel:setVisible(false)
+	else
+		newCapacityArrowLabel:setVisible(true)
+		newCapacityValueLabel:setVisible(true)
+	end
+	
+	setApplyButtonVisibility()
+	setValueAndVisibility(newHealthArrowLabel, newHealthValueLabel, getNewMaxHealth(), player:getMaxHealth())
+	setMinusButtonVisibility(enduranceMinusButton, player:getBaseSkillLevel(Skill.Endurance), newEndurance)
+end	
 
 function expForLevel(level)
   return math.floor((50*level*level*level)/3 - 100*level*level + (850*level)/3 - 200)
@@ -1308,13 +1089,11 @@ function resetSkillColor(id)
 end
 
 function toggleSkill(id, state)
-	print('game_skills: toggling skill')
 	local skill = skillsWindow:recursiveGetChildById(id)
 	skill:setVisible(state)
 end
 
 function setSkillBase(id, value, baseValue)
-	print('game_skills: setting skill base')
 	if baseValue <= 0 or value < 0 then
 		return
 	end
@@ -1433,7 +1212,6 @@ function checkAlert(id, value, maxValue, threshold, greaterThan)
 end
 
 function refresh()
-	print('game_skills: refreshing')
 
 	local player = g_game.getLocalPlayer()
 	if not player then return end
@@ -1516,7 +1294,6 @@ function checkExpSpeed()
 end
 
 function setExtraLabelsInvisible()
-	print('game_skills: set extra labels invisible')
 
 	applyButton:setVisible(false)
 	
@@ -1554,83 +1331,88 @@ function setExtraLabelsInvisible()
 	newMagicValueLabel:setText('')
 	newMagicValueLabel:setWidth(newMagicValueLabel:getTextSize().width)
 	newMagicValueLabel:setVisible(false)
+	magicMinusButton:setVisible(false)
 	magicPlusButton:setVisible(false)
-	
 	
 	newVitalityArrowLabel:setVisible(false)
 	newVitalityValueLabel:setText('')
 	newVitalityValueLabel:setWidth(newVitalityValueLabel:getTextSize().width)
 	newVitalityValueLabel:setVisible(false)
+	vitalityMinusButton:setVisible(false)
 	vitalityPlusButton:setVisible(false)
 	
 	newStrenghtArrowLabel:setVisible(false)
 	newStrenghtValueLabel:setText('')
 	newStrenghtValueLabel:setWidth(newStrenghtValueLabel:getTextSize().width)
 	newStrenghtValueLabel:setVisible(false)
+	strenghtMinusButton:setVisible(false)
 	strenghtPlusButton:setVisible(false)
 	
 	newDefenceArrowLabel:setVisible(false)
 	newDefenceValueLabel:setText('')
 	newDefenceValueLabel:setWidth(newDefenceValueLabel:getTextSize().width)
 	newDefenceValueLabel:setVisible(false)
+	defenceMinusButton:setVisible(false)
 	defencePlusButton:setVisible(false)
 	
 	newDexterityArrowLabel:setVisible(false)
 	newDexterityValueLabel:setText('')
 	newDexterityValueLabel:setWidth(newDexterityValueLabel:getTextSize().width)
 	newDexterityValueLabel:setVisible(false)
+	dexterityMinusButton:setVisible(false)
 	dexterityPlusButton:setVisible(false)
 	
 	newIntelligenceArrowLabel:setVisible(false)
 	newIntelligenceValueLabel:setText('')
 	newIntelligenceValueLabel:setWidth(newIntelligenceValueLabel:getTextSize().width)
 	newIntelligenceValueLabel:setVisible(false)
+	intelligenceMinusButton:setVisible(false)
 	intelligencePlusButton:setVisible(false)
 	
 	newFaithArrowLabel:setVisible(false)
 	newFaithValueLabel:setText('')
 	newFaithValueLabel:setWidth(newFaithValueLabel:getTextSize().width)
 	newFaithValueLabel:setVisible(false)
+	faithMinusButton:setVisible(false)
 	faithPlusButton:setVisible(false)
 	
 	newEnduranceArrowLabel:setVisible(false)
 	newEnduranceValueLabel:setText('')
 	newEnduranceValueLabel:setWidth(newEnduranceValueLabel:getTextSize().width)
 	newEnduranceValueLabel:setVisible(false)
+	enduranceMinusButton:setVisible(false)
 	endurancePlusButton:setVisible(false)
 end
 
 function resetChanges()
-	print('game_skills: reset changes')
 
 	if not player then 
 		player = g_game.getLocalPlayer()
 	end
 	
 	if not player then
-		print('[resetChanges] player == nil') 
 		return 
 	end
 
 	newSkillPoints = player:getSkillPoints()
-	newMagic = player:getMagicLevel()
-	newVitality = player:getSkillLevel(Skill.Vitality)
-	newStrenght = player:getSkillLevel(Skill.Strenght)
-	newDefence = player:getSkillLevel(Skill.Defence)
-	newDexterity = player:getSkillLevel(Skill.Dexterity)
-	newIntelligence = player:getSkillLevel(Skill.Intelligence)
-	newFaith = player:getSkillLevel(Skill.Faith)
-	newEndurance = player:getSkillLevel(Skill.Endurance)
+	newMagic = player:getBaseMagicLevel()
+	newVitality = player:getBaseSkillLevel(Skill.Vitality)
+	newStrenght = player:getBaseSkillLevel(Skill.Strenght)
+	newDefence = player:getBaseSkillLevel(Skill.Defence)
+	newDexterity = player:getBaseSkillLevel(Skill.Dexterity)
+	newIntelligence = player:getBaseSkillLevel(Skill.Intelligence)
+	newFaith = player:getBaseSkillLevel(Skill.Faith)
+	newEndurance = player:getBaseSkillLevel(Skill.Endurance)
 
 	newSkillPointsValueLabel:setText(newSkillPoints)
-	magicValueLabel:setText(newMagic)
-	vitalityValueLabel:setText(newVitality)
-	strenghtValueLabel:setText(newStrenght)
-	defenceValueLabel:setText(newDefence)
-	dexterityValueLabel:setText(newDexterity)
-	intelligenceValueLabel:setText(newIntelligence)
-	faithValueLabel:setText(newFaith)
-	enduranceValueLabel:setText(newEndurance)
+	magicValueLabel:setText(player:getMagicLevel())
+	vitalityValueLabel:setText(player:getSkillLevel(Skill.Vitality))
+	strenghtValueLabel:setText(player:getSkillLevel(Skill.Strenght))
+	defenceValueLabel:setText(player:getSkillLevel(Skill.Defence))
+	dexterityValueLabel:setText(player:getSkillLevel(Skill.Dexterity))
+	intelligenceValueLabel:setText(player:getSkillLevel(Skill.Intelligence))
+	faithValueLabel:setText(player:getSkillLevel(Skill.Faith))
+	enduranceValueLabel:setText(player:getSkillLevel(Skill.Endurance))
 	
 	setExtraLabelsInvisible()
 	checkPlusAndMinusButtons(player, newSkillPoints)
@@ -1728,8 +1510,6 @@ function onMiniWindowOpen()
 	faithMinusButton:setVisible(false)
 	enduranceMinusButton:setVisible(false)
 	
-	
-	
 end
 
 function onExperienceChange(localPlayer, value)
@@ -1737,7 +1517,6 @@ function onExperienceChange(localPlayer, value)
 end
 
 function onLevelChange(localPlayer, value, percent)
-	print('game_skills: on level change')
 	setSkillValue('level', value)
 	local text = tr('You have %s percent to go', 100 - percent) .. '\n' ..
 		tr('%s of experience left', expToAdvance(localPlayer:getLevel(), localPlayer:getExperience()))
@@ -1780,7 +1559,6 @@ function onSoulChange(localPlayer, soul)
 end
 
 function onSkillPointsChange(localPlayer, skillPoints)
-	print('game_skills: on skill points change')
 
 	if not player then 
 		player = g_game.getLocalPlayer()
@@ -1788,24 +1566,23 @@ function onSkillPointsChange(localPlayer, skillPoints)
 	end
 	
 	if not player then
-		print('[onSkillPointsChange] player == nil') 
 		return 
 	end
 
-	if newSkillPoints == -1 then newSkillPoints = skillPoints end
-	if newMagic == -1 then newMagic = player:getBaseMagicLevel() end
-	if newVitality == -1 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
-	if newStrenght == -1 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
-	if newDefence == -1 then newDefence = player:getBaseSkillLevel(Skill.Defence) end
-	if newDexterity == -1 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
-	if newIntelligence == -1 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
-	if newFaith == -1 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
-	if newEndurance == -1 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
+	if newSkillPoints < 0 then newSkillPoints = skillPoints end
+	if newMagic < 0 then newMagic = player:getBaseMagicLevel() end
+	if newVitality < 0 then newVitality = player:getBaseSkillLevel(Skill.Vitality) end
+	if newStrenght < 0 then newStrenght = player:getBaseSkillLevel(Skill.Strenght) end
+	if newDefence < 0 then newDefence = player:getBaseSkillLevel(Skill.Defence) end
+	if newDexterity < 0 then newDexterity = player:getBaseSkillLevel(Skill.Dexterity) end
+	if newIntelligence < 0 then newIntelligence = player:getBaseSkillLevel(Skill.Intelligence) end
+	if newFaith < 0 then newFaith = player:getBaseSkillLevel(Skill.Faith) end
+	if newEndurance < 0 then newEndurance = player:getBaseSkillLevel(Skill.Endurance) end
 
 	skillPointsValueLabel:setText(skillPoints)
 	skillPointsValueLabel:setWidth(skillPointsValueLabel:getTextSize().width)
 		
-	if skillPoints >= 3 then
+	if skillPoints >= magicInfo['cost'] then
 		magicPlusButton:setVisible(true)
 	else
 		magicPlusButton:setVisible(false)
@@ -1835,7 +1612,12 @@ function onSkillPointsChange(localPlayer, skillPoints)
 end
 
 function onFreeCapacityChange(localPlayer, freeCapacity)
-  setSkillValue('capacity', freeCapacity)
+
+  local decimals = 0
+  local mult = 10^(decimals)
+  local value = math.modf(freeCapacity * mult) / mult
+
+  setSkillValue('capacity', value)
   checkAlert('capacity', freeCapacity, localPlayer:getTotalCapacity(), 20)
 end
 
@@ -1894,7 +1676,6 @@ function onRegenerationChange(localPlayer, regenerationTime)
 end
 
 function onBaseSpeedChange(localPlayer, baseSpeed)
-	print('game_skills: on base speed change')
 
 	walkSpeedValueLabel:setText(baseSpeed)
 	walkSpeedValueLabel:setWidth(walkSpeedValueLabel:getTextSize().width)
@@ -1914,7 +1695,6 @@ function onBaseSpeedChange(localPlayer, baseSpeed)
 end
 
 function onSpeedChange(localPlayer, speed)
-	print('game_skills: on speed change')
 
 	walkSpeedValueLabel:setText(speed)
 	walkSpeedValueLabel:setWidth(walkSpeedValueLabel:getTextSize().width)
@@ -1934,19 +1714,13 @@ function onSpeedChange(localPlayer, speed)
 end
 
 function onAttackSpeedChange(localPlayer, attackSpeed)
-	print('game_skills: on attack speed change')
 
-	local value = ((2000 - attackSpeed) / 10) + 100
-	local valueDecimalTxt = '' .. value % 1
-	
-	if valueDecimalTxt == '0.3' or valueDecimalTxt == '0.8' then
-		value = value - 0.05
-	end
+	local attackSpeedInPercent = ((initial.attackSpeed + (2 * (initial.attackSpeed - attackSpeed))) / initial.attackSpeed) * 100
 
-	attackSpeedValueLabel:setText(value .. '%')
+	attackSpeedValueLabel:setText(attackSpeedInPercent .. '%')
 	attackSpeedValueLabel:setWidth(attackSpeedValueLabel:getTextSize().width)
 	
-	if attackSpeed == 1000 then
+	if attackSpeed == dualWieldingAttackSpeed then
 		attackSpeedValueLabel:setColor('#008b00') -- green
 		attackSpeedButton:setTooltip('Dual wielding')
 	else
@@ -1956,7 +1730,6 @@ function onAttackSpeedChange(localPlayer, attackSpeed)
 end
 
 function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
-	print('game_skills: on base magic level change')
 	
 	magicValueLabel:setText(baseMagicLevel)
 	magicValueLabel:setWidth(magicValueLabel:getTextSize().width)
@@ -1965,7 +1738,6 @@ function onBaseMagicLevelChange(localPlayer, baseMagicLevel)
 end
 
 function onMagicLevelChange(localPlayer, magicLevel)
-	print('game_skills: on magic level change')
 	local baseMagic = localPlayer:getBaseMagicLevel()
 	
 	if baseMagic <= 0 or magicLevel < 0 then
@@ -1990,12 +1762,10 @@ function onMagicLevelChange(localPlayer, magicLevel)
 end
 
 function onNewBaseMagicLevelChange(localPlayer, newBaseMagicLevel)
-	print('game_skills: on new base magic level change')
 	setSkillNewValue('magiclevel', newBaseMagicLevel, localPlayer:getBaseMagicLevel())
 end
 
 function onBaseSkillChange(localPlayer, id, baseLevel)
-	print('game_skills: on base skill change')
 	setSkillBase('skillId'..id, localPlayer:getSkillLevel(id), baseLevel)
 	setSkillsTooltips()
 	
@@ -2022,8 +1792,6 @@ function onBaseSkillChange(localPlayer, id, baseLevel)
 end
 
 function onSkillChange(localPlayer, id, level)
-
-	print('game_skills: on skill change')
 	
 	if id > 0 and id < Skill.CriticalChance then
 		setSkillValue('skillId' .. id, level)
@@ -2235,6 +2003,5 @@ function onSkillChange(localPlayer, id, level)
 end
 
 function onNewBaseSkillChange(localPlayer, id, level)
-	print('game_skills: on new base skill change')
 	setSkillNewValue('skillId' .. id, level, localPlayer:getBaseSkillLevel(id))
 end
