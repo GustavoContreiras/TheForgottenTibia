@@ -1,6 +1,7 @@
 -- @docconsts @{
 
-clientVersionToPlay = 0
+clientVersionToPlay = 20191108
+clientDownloadLink = "start http://189.122.73.38:8080/download.php?nama=/home/gustavocontreiras/TheForgottenTibia/Client/TheForgottenTibia-"..clientVersionToPlay..".zip"
 
 FloorHigher = 0
 FloorLower = 15
