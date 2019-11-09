@@ -205,6 +205,16 @@ EnterGameWindow
     margin-top: 4
     @onClick: EnterGame.doLogin()
 
+  
+  Button
+    id: buttonTesteBuilds
+    !text: tr('Test Builds')
+    width: 128
+    anchors.right: prev.left
+    anchors.bottom: parent.bottom
+    margin-right: 10
+    @onClick: EnterGame.doLoginToTest()
+
   Label
     id: serverInfoLabel
     font: verdana-11px-rounded
