@@ -108,7 +108,7 @@ walkSpeedDexterityFactor = 1.0
 shieldDefenceFactor = 100
 shieldDexterityFactor = 0
 
--- ONDE HANDED DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
+-- ONE HANDED DISTANCE WEAPONS (default: 100 dexterity, 0 strenght)
 -- Formula: 	attackSkill = 	(STRENGHT * spearStrenghtFactor / 100) 	+ (DEXTERITY * spearDexterityFactor / 100); 
 spearDexterityFactor = 100
 spearStrenghtFactor = 0

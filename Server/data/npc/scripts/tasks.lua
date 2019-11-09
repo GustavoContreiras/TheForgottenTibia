@@ -24,7 +24,7 @@ for k, v in pairs(KILLTASKS_MONSTERS) do
   keyset[v.order] = k
 end
 
-for i = 1, table.getn(keyset), 1 do
+for i = 1, #keyset, 1 do
   tasksString = tasksString .. "{" .. keyset[i] .. "}, "
 end
 
@@ -163,7 +163,7 @@ function creatureSayCallback(cid, type, msg)
     elseif msgcontains(msg, "tasks") or msgcontains(msg, "task") or msgcontains(msg, "list") or msgcontains(msg, "monsters") then
         local text = ""
 		local read = ""
-		for i = 1, table.getn(keyset), 1 do
+		for i = 1, #keyset, 1 do
 			if player:getStorageValue(monsters[keyset[i]].countstorage) < monsters[keyset[i]].amount then
 					text = text .. string.gsub(" " .. keyset[i], "%W%l", string.upper):sub(2) .. " [" .. (player:getStorageValue(monsters[keyset[i]].countstorage) + 1) .. "/" .. monsters[keyset[i]].amount .. "]:\n  "
 					text = text .. getItemsFromTable(monsters[keyset[i]].items) .. "\n  "

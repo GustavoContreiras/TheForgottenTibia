@@ -1,0 +1,17 @@
+----- 07/11/2019 02:18:09 - Maestroo (177.226.206.179) -----
+Debug Assertion 10.98 Control.cpp 1520
+Sat Nov 02 12:08:30 2019
+Graphic Engine: DirectX9 (2)
+Operating System: Windows 7 Ultimate Edition 64 Bit in ESP
+Processor: Intel Core i7 -7700 @ 3
+Video Card: NVIDIA GeForce GTX 1050
+Last Packet Types: 000 100 015 010 023 031 100 040 020 000
+Last Packet: 023 031 000 000 016 050 000 003 015 021 013 128 003 169 252 003
+Player Position: [33033,31315,9]
+Player Name: Maestroo (The Forgotten Tibia)
+Player Action: 048 046 048 046 048 046 048 058 055 049 055 050
+Player.cpp 344: exception occurred, reason:
+Network.cpp 855: exception occurred, reason:
+Control.cpp 1525: exception occurred (Type = 0) (MainWindow = 035626A0), reason:
+Control.cpp 1520: unknown packet type during game (Type = 0)
+Comment: 
