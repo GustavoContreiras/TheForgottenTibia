@@ -17,6 +17,7 @@
 	<talkaction words="/m" separator=" " script="place_monster.lua" />
 	<talkaction words="/s" separator=" " script="place_npc.lua" />
 	<talkaction words="/summon" separator=" " script="place_summon.lua" />
+	<talkaction words="/resetlevel" separator=" " script="resetlevel.lua" />
 	
 	<!-- Gamemasters -->
 	<talkaction words="/save" script="save.lua" />
