@@ -40,7 +40,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		avengerPoi = 1076,
 		arbalestPoi = 1077,
 
-		demonArmorAnnihi = 1078, 	demonArmorId = 2494
+		demonArmorAnnihi = 1078, 	demonArmorId = 2494,
 		sovAnnihi = 1079, 			sovId = 2400,
 		scaAnnihi = 1080, 			scaId = 2431,
 		presentBoxAnnihi = 1081, 	thunderHammerId = 2421,
