@@ -19,7 +19,7 @@ function onSay(player, words, param)
 		return false
 	end
 
-	player:addResetsCount(split[2]) 
+	target:addResetsCount(split[2]) 
 	
 	return false
 end
