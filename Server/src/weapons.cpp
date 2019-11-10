@@ -373,9 +373,17 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 	CombatDamage criticalDamage;
 	WeaponType_t weaponType = item->getWeaponType();
 	uint32_t chance = 0;
-	uint32_t amount = 0;
-	uint16_t minimumDamage = 0;
 	std::unordered_map<std::string, uint32_t> criticalInfo;
+	int32_t attackValue = item->getAttack();
+	int32_t attackSkill = 7;
+	Item* weapon;
+
+	if (item->getWeaponType() == WEAPON_AMMO) {
+		weapon = player->getWeapon(true);
+		if (weapon) {
+			attackValue += weapon->getAttack();
+		}
+	}
 
 	damage.primary.type = params.combatType;
 	damage.primary.value = (getWeaponDamage(player, target, item) * damageModifier) / 100;
@@ -385,62 +393,71 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 	if (weaponType == WEAPON_AMMO || weaponType == WEAPON_DISTANCE) {
 
 		damage.origin = ORIGIN_RANGED;
+		attackSkill = player->getSkillLevel(SKILL_DEXTERITY);
 
 		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
 
 			criticalDamage.origin = ORIGIN_RANGED;
-			minimumDamage = player->getSkillLevel(SKILL_DEXTERITY) / 2;
 
 			switch (weaponType) {
-				case WEAPON_AMMO: criticalInfo = g_game.getCriticalInfo(CRITICAL_TWO_HANDED_DISTANCE); break;
-				case WEAPON_DISTANCE: criticalInfo = g_game.getCriticalInfo(CRITICAL_ONE_HANDED_DISTANCE); break;
+			case WEAPON_AMMO: 
+				criticalInfo = g_game.getCriticalInfo(CRITICAL_TWO_HANDED_DISTANCE); 
+				weapon = player->getWeapon(true);
+				attackValue += weapon->getAttack(); 
+				break;
+			case WEAPON_DISTANCE: 
+				criticalInfo = g_game.getCriticalInfo(CRITICAL_ONE_HANDED_DISTANCE);
+				break;
 			}
-
-			chance = criticalInfo["chance"];
-			amount = criticalInfo["amount"];
 		}
 	}
 
 	else { // WEAPON_SWORD || WEAPON_AXE || WEAPON_CLUB || WEAPON_WAND
 
 		damage.origin = ORIGIN_MELEE;
-			
+		
+
 		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_ALL_WEAPONS)) {
 
+			attackSkill = player->getSkillLevel(SKILL_STRENGHT);
 			criticalDamage.origin = ORIGIN_MELEE;
-			minimumDamage = player->getSkillLevel(SKILL_STRENGHT) / 2;
 
 			switch (weaponType) {
-				case WEAPON_SWORD: criticalInfo = g_game.getCriticalInfo(CRITICAL_SWORD); break;
-				case WEAPON_AXE: criticalInfo = g_game.getCriticalInfo(CRITICAL_AXE); break;
-				case WEAPON_CLUB: criticalInfo = g_game.getCriticalInfo(CRITICAL_CLUB); break;
-				case WEAPON_WAND: criticalInfo = g_game.getCriticalInfo(CRITICAL_WAND); break;
+			case WEAPON_SWORD: criticalInfo = g_game.getCriticalInfo(CRITICAL_SWORD); break;
+			case WEAPON_AXE: criticalInfo = g_game.getCriticalInfo(CRITICAL_AXE); break;
+			case WEAPON_CLUB: criticalInfo = g_game.getCriticalInfo(CRITICAL_CLUB); break;
+			case WEAPON_WAND: criticalInfo = g_game.getCriticalInfo(CRITICAL_WAND); break;
 			}
+		}
 
-			chance = criticalInfo["chance"];
-			amount = criticalInfo["amount"];
-
-			if (player->isDualWielding()) {
-				chance /= 2;
-				amount /= 2;
+		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_WANDS_AND_RODS)) {
+			if (weaponType == WEAPON_WAND) {
+				attackSkill = player->getSkillLevel(SKILL_MAGLEVEL);
+				criticalDamage.origin = ORIGIN_MELEE;
+				criticalInfo = g_game.getCriticalInfo(CRITICAL_WAND);
 			}
 		}
 	}
 
-	if (amount != 0) {
-		if (damage.primary.value < -minimumDamage) {
-			if ((uint32_t)uniform_random(1, 100) <= chance) {
+	chance = criticalInfo["chance"] / 10.0;
 
-				criticalDamage.isCritical = true;
-				criticalDamage.primary.type = params.combatType;
-				criticalDamage.primary.value = std::round(damage.primary.value * (amount / 100.));
-				criticalDamage.secondary.type = getElementType();
-				criticalDamage.secondary.value = std::round(getElementDamage(player, target, item) * (amount / 100.));
-
-				Combat::doCombatHealth(player, target, criticalDamage, params);
-			}
-		}	
+	if (player->isDualWielding()) {
+		chance /= 2;
 	}
+
+	if ((uint32_t)uniform_random(1, 100) <= chance) {
+
+		float attackFactor = player->getAttackFactor();
+		int32_t maxDamage = Weapons::getMaxWeaponDamage(player->getLevel(), attackSkill, attackValue, attackFactor);
+
+		criticalDamage.isCritical = true;
+		criticalDamage.primary.type = params.combatType;
+		criticalDamage.primary.value = -maxDamage * 0.5;
+		criticalDamage.secondary.type = getElementType();
+		criticalDamage.secondary.value = weaponType == WEAPON_WAND ? (-maxDamage * 0.5) : 0;
+
+		Combat::doCombatHealth(player, target, criticalDamage, params);
+	}	
 
 	if (scripted) {
 		var.type = VARIANT_NUMBER;

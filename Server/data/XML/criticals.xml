@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<criticals>
+<criticals>  <!-- chance == 175 == 17.5% -->
 	<config enabled="1" />
-	<critical name="Sword" id="0" chance="20" amount="40"/> <!-- sword -->
-	<critical name="Axe" id="1" chance="17" amount="45"/> <!-- axe -->
-	<critical name="Club" id="2" chance="14" amount="50"/> <!-- club -->
-	<critical name="One Handed Distance" id="3" chance="10" amount="30"/> <!-- one handed dist -->
-	<critical name="Two Handed Distance" id="4" chance="5" amount="20"/> <!-- two handed dist -->
-	<critical name="Wands and Rods" id="5" chance="0" amount="0"/> <!-- wand and rod -->
+	<critical name="Sword" id="0" chance="200"/>
+	<critical name="Axe" id="1" chance="170"/>
+	<critical name="Club" id="2" chance="140"/>
+	<critical name="One Handed Distance" id="3" chance="100"/>
+	<critical name="Two Handed Distance" id="4" chance="50"/>
+	<critical name="Wands and Rods" id="5" chance="0" amount="0"/> <!--ned fix c++-->
 </criticals>
