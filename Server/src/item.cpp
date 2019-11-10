@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,6 +181,11 @@ Item* Item::clone() const
 	Item* item = Item::CreateItem(id, count);
 	if (attributes) {
 		item->attributes.reset(new ItemAttributes(*attributes));
+		if (item->getDuration() > 0) {
+			item->incrementReferenceCounter();
+			item->setDecaying(DECAYING_TRUE);
+			g_game.toDecayItems.push_front(item);
+		}
 	}
 	return item;
 }
@@ -569,6 +574,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_DECAYTO: {
+			int32_t decayTo;
+			if (!propStream.read<int32_t>(decayTo)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_DECAYTO, decayTo);
+			break;
+		}
+
 		//these should be handled through derived classes
 		//If these are called then something has changed in the items.xml since the map was saved
 		//just read the values
@@ -774,6 +789,11 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_SHOOTRANGE));
 	}
 
+	if (hasAttribute(ITEM_ATTRIBUTE_DECAYTO)) {
+		propWriteStream.write<uint8_t>(ATTR_DECAYTO);
+		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_DECAYTO));
+	}
+
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
 		const ItemAttributes::CustomAttributeMap* customAttrMap = attributes->getCustomAttributeMap();
 		propWriteStream.write<uint8_t>(ATTR_CUSTOM_ATTRIBUTES);
@@ -836,7 +856,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				if (item) {
 					tmpSubType = item->getSubType();
 				}
-				s << ".\n" << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by ";
+				s << ". " << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by ";
 
 				const VocSpellMap& vocMap = rune->getVocMap();
 				std::vector<Vocation*> showVocMap;
@@ -868,22 +888,18 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				s << " with";
 
 				if (it.runeLevel > 0) {
-					s << " level" << it.runeLevel;
+					s << " level " << it.runeLevel;
 				}
 
 				if (it.runeMagLevel > 0) {
+					if (it.runeLevel > 0) {
+						s << " and";
+					}
+
 					s << " magic level " << it.runeMagLevel;
 				}
 
-				if (it.runeIntLevel > 0) {
-					s << ", intelligence " << it.runeIntLevel;
-				}
-
-				if (it.runeFaithLevel > 0) {
-					s << " and faith " << it.runeFaithLevel;
-				}
-
-				//s << " or higher";
+				s << " or higher";
 			}
 		}
 	} else if (it.weaponType != WEAPON_NONE) {
@@ -1274,7 +1290,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 		if (!found) {
 			if (it.isKey()) {
-				s << " (Key:" << (item ? item->getActionId() : 0) << ')';
+				s << " (Key:" << std::setfill('0') << std::setw(4) << (item ? item->getActionId() : 0) << ')';
 			} else if (it.isFluidContainer()) {
 				if (subType > 0) {
 					const std::string& itemName = items[subType].name;
@@ -1544,7 +1560,7 @@ bool Item::canDecay() const
 	}
 
 	const ItemType& it = Item::items[id];
-	if (it.decayTo < 0 || it.decayTime == 0) {
+	if (getDecayTo() < 0 || it.decayTime == 0) {
 		return false;
 	}
 

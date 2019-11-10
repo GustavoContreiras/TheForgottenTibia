@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@
 #include "spells.h"
 #include "talkaction.h"
 #include "weapons.h"
+#include "script.h"
 
 extern ConfigManager g_config;
 extern Actions* g_actions;
@@ -50,18 +51,18 @@ extern Vocations g_vocations;
 extern GlobalEvents* g_globalEvents;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
-extern CreatureEvents* g_creatureEvents;
 extern Monsters g_monsters;
 extern MoveEvents* g_moveEvents;
 extern Weapons* g_weapons;
+extern Scripts* g_scripts;
 
 Game::Game()
 {
-	//offlineTrainingWindow.choices.emplace_back("Sword Fighting and Shielding", SKILL_FAITH);
-	//offlineTrainingWindow.choices.emplace_back("Axe Fighting and Shielding", SKILL_INTELLIGENCE);
-	//offlineTrainingWindow.choices.emplace_back("Club Fighting and Shielding", SKILL_STRENGHT);
-	//offlineTrainingWindow.choices.emplace_back("Distance Fighting and Shielding", SKILL_DEXTERITY);
-	//offlineTrainingWindow.choices.emplace_back("Magic Level and Shielding", SKILL_MAGLEVEL);
+	offlineTrainingWindow.choices.emplace_back("Sword Fighting and Shielding", SKILL_SWORD);
+	offlineTrainingWindow.choices.emplace_back("Axe Fighting and Shielding", SKILL_AXE);
+	offlineTrainingWindow.choices.emplace_back("Club Fighting and Shielding", SKILL_CLUB);
+	offlineTrainingWindow.choices.emplace_back("Distance Fighting and Shielding", SKILL_DISTANCE);
+	offlineTrainingWindow.choices.emplace_back("Magic Level and Shielding", SKILL_MAGLEVEL);
 	offlineTrainingWindow.buttons.emplace_back("Okay", 1);
 	offlineTrainingWindow.buttons.emplace_back("Cancel", 0);
 	offlineTrainingWindow.defaultEnterButton = 1;
@@ -108,9 +109,7 @@ void Game::setGameState(GameState_t newState)
 	gameState = newState;
 	switch (newState) {
 		case GAME_STATE_INIT: {
-			loadStagesXml();
-			loadSkillsXml();
-			loadCriticalsXml();
+			loadExperienceStages();
 
 			groups.load();
 			g_chat->load();
@@ -542,7 +541,7 @@ bool Game::placeCreature(Creature* creature, const Position& pos, bool extendedP
 		return false;
 	}
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true);
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
@@ -571,7 +570,7 @@ bool Game::removeCreature(Creature* creature, bool isLogout/* = true*/)
 
 	std::vector<int32_t> oldStackPosVector;
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, tile->getPosition(), true);
 	for (Creature* spectator : spectators) {
 		if (Player* player = spectator->getPlayer()) {
@@ -1213,6 +1212,14 @@ ReturnValue Game::internalMoveItem(Cylinder* fromCylinder, Cylinder* toCylinder,
 		return retMaxCount;
 	}
 
+	if (moveItem && moveItem->getDuration() > 0) {
+		if (moveItem->getDecaying() != DECAYING_TRUE) {
+			moveItem->incrementReferenceCounter();
+			moveItem->setDecaying(DECAYING_TRUE);
+			g_game.toDecayItems.push_front(moveItem);
+		}
+	}
+
 	return ret;
 }
 
@@ -1297,6 +1304,12 @@ ReturnValue Game::internalAddItem(Cylinder* toCylinder, Item* item, int32_t inde
 		}
 	}
 
+	if (item->getDuration() > 0) {
+		item->incrementReferenceCounter();
+		item->setDecaying(DECAYING_TRUE);
+		g_game.toDecayItems.push_front(item);
+	}
+
 	return RETURNVALUE_NOERROR;
 }
 
@@ -1336,13 +1349,16 @@ ReturnValue Game::internalRemoveItem(Item* item, int32_t count /*= -1*/, bool te
 		cylinder->removeThing(item, count);
 
 		if (item->isRemoved()) {
+			item->onRemoved();
+			if (item->canDecay()) {
+				decayItems->remove(item);
+			}
 			ReleaseItem(item);
 		}
 
 		cylinder->postRemoveNotification(item, nullptr, index);
 	}
 
-	item->onRemoved();
 	return RETURNVALUE_NOERROR;
 }
 
@@ -1600,7 +1616,7 @@ Item* Game::transformItem(Item* item, uint16_t newId, int32_t newCount /*= -1*/)
 			} else {
 				int32_t newItemId = newId;
 				if (curType.id == newType.id) {
-					newItemId = curType.decayTo;
+					newItemId = item->getDecayTo();
 				}
 
 				if (newItemId < 0) {
@@ -1665,6 +1681,14 @@ Item* Game::transformItem(Item* item, uint16_t newId, int32_t newCount /*= -1*/)
 	item->setParent(nullptr);
 	cylinder->postRemoveNotification(item, cylinder, itemIndex);
 	ReleaseItem(item);
+
+	if (newItem->getDuration() > 0) {
+		if (newItem->getDecaying() != DECAYING_TRUE) {
+			newItem->incrementReferenceCounter();
+			newItem->setDecaying(DECAYING_TRUE);
+			g_game.toDecayItems.push_front(newItem);
+		}
+	}
 
 	return newItem;
 }
@@ -1926,7 +1950,7 @@ void Game::playerCloseNpcChannel(uint32_t playerId)
 		return;
 	}
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, player->getPosition());
 	for (Creature* spectator : spectators) {
 		if (Npc* npc = spectator->getNpc()) {
@@ -2455,91 +2479,6 @@ void Game::playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_
 	player->sendContainer(containerId, container, container->hasParent(), index);
 }
 
-void Game::playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay) 
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	if (versionToPlay < g_config.getNumber(ConfigManager::CLIENT_VERSION_TO_PLAY)) {
-		std::cout << "Player " << player->getName() << " is using an old client!" << std::endl;
-		player->sendTextMessage(MESSAGE_STATUS_WARNING, g_config.getString(ConfigManager::CLIENT_VERSION_TO_PLAY_TEXT));
-	}
-		
-}
-
-void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
-							  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return;
-	}
-
-	if (magic < player->magLevel)
-		magic = player->magLevel;
-	if (vitality < player->skills[SKILL_VITALITY].level)
-		vitality = player->skills[SKILL_VITALITY].level;
-	if (strenght < player->skills[SKILL_STRENGHT].level)
-		strenght = player->skills[SKILL_STRENGHT].level;
-	if (defence < player->skills[SKILL_DEFENCE].level)
-		defence = player->skills[SKILL_DEFENCE].level;
-	if (dexterity < player->skills[SKILL_DEXTERITY].level)
-		dexterity = player->skills[SKILL_DEXTERITY].level;
-	if (intelligence < player->skills[SKILL_INTELLIGENCE].level)
-		intelligence = player->skills[SKILL_INTELLIGENCE].level;
-	if (faith < player->skills[SKILL_FAITH].level)
-		faith = player->skills[SKILL_FAITH].level;
-	if (endurance < player->skills[SKILL_ENDURANCE].level)
-		endurance = player->skills[SKILL_ENDURANCE].level;
-
-	uint8_t pointsNeeded = (magic - player->magLevel) * 3 +
-							vitality - player->skills[SKILL_VITALITY].level + 
-							strenght - player->skills[SKILL_STRENGHT].level + 
-							defence - player->skills[SKILL_DEFENCE].level + 
-							dexterity - player->skills[SKILL_DEXTERITY].level + 
-							intelligence - player->skills[SKILL_INTELLIGENCE].level + 
-							faith - player->skills[SKILL_FAITH].level + 
-							endurance - player->skills[SKILL_ENDURANCE].level;
-
-	//uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
-	bool checks = true;
-
-	if (player->skillPoints < pointsNeeded) {
-		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " " << "(" << player->getSkillPoints() << "points) tried to apply skills without having enough points (" << pointsNeeded << " needed)." << std::endl;		
-		checks = false;
-	}
-
-	/*if (player->totalSkillPoints < totalPointsNeeded) {
-		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " " << "(" << player->totalSkillPoints << " points) tried to apply skills without having enough total points (" << totalPointsNeeded << " needed)." << std::endl;
-		checks = false;
-	}*/
-
-	if (player->isSetingSkills) {
-		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " tried to apply skills but he is already setting skills" << std::endl;
-		checks = false;
-	}
-
-	if (checks) {
-		player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
-	}
-}
-
-uint32_t Game::calculateTotalSkillPoints(uint32_t playerId) 
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return 0;
-	}
-
-	uint32_t total = 10;
-	for (uint32_t i = 1; i < player->maxLevelReached; ++i) {
-		total += points[i];
-	}
-	return total;
-}
-
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
 {
 	Player* player = getPlayerByID(playerId);
@@ -2724,10 +2663,10 @@ void Game::playerAcceptTrade(uint32_t playerId)
 	player->setTradeState(TRADE_ACCEPT);
 
 	if (tradePartner->getTradeState() == TRADE_ACCEPT) {
-		Item* tradeItem1 = player->tradeItem;
-		Item* tradeItem2 = tradePartner->tradeItem;
+		Item* playerTradeItem = player->tradeItem;
+		Item* partnerTradeItem = tradePartner->tradeItem;
 
-		if (!g_events->eventPlayerOnTradeAccept(player, tradePartner, tradeItem1, tradeItem2)) {
+		if (!g_events->eventPlayerOnTradeAccept(player, tradePartner, playerTradeItem, partnerTradeItem)) {
 			internalCloseTrade(player);
 			return;
 		}
@@ -2735,13 +2674,13 @@ void Game::playerAcceptTrade(uint32_t playerId)
 		player->setTradeState(TRADE_TRANSFER);
 		tradePartner->setTradeState(TRADE_TRANSFER);
 
-		auto it = tradeItems.find(tradeItem1);
+		auto it = tradeItems.find(playerTradeItem);
 		if (it != tradeItems.end()) {
 			ReleaseItem(it->first);
 			tradeItems.erase(it);
 		}
 
-		it = tradeItems.find(tradeItem2);
+		it = tradeItems.find(partnerTradeItem);
 		if (it != tradeItems.end()) {
 			ReleaseItem(it->first);
 			tradeItems.erase(it);
@@ -2749,25 +2688,17 @@ void Game::playerAcceptTrade(uint32_t playerId)
 
 		bool isSuccess = false;
 
-		ReturnValue ret1 = internalAddItem(tradePartner, tradeItem1, INDEX_WHEREEVER, 0, true);
-		ReturnValue ret2 = internalAddItem(player, tradeItem2, INDEX_WHEREEVER, 0, true);
-		if (ret1 == RETURNVALUE_NOERROR && ret2 == RETURNVALUE_NOERROR) {
-			ret1 = internalRemoveItem(tradeItem1, tradeItem1->getItemCount(), true);
-			ret2 = internalRemoveItem(tradeItem2, tradeItem2->getItemCount(), true);
-			if (ret1 == RETURNVALUE_NOERROR && ret2 == RETURNVALUE_NOERROR) {
-				Cylinder* cylinder1 = tradeItem1->getParent();
-				Cylinder* cylinder2 = tradeItem2->getParent();
-
-				uint32_t count1 = tradeItem1->getItemCount();
-				uint32_t count2 = tradeItem2->getItemCount();
-
-				ret1 = internalMoveItem(cylinder1, tradePartner, INDEX_WHEREEVER, tradeItem1, count1, nullptr, FLAG_IGNOREAUTOSTACK, nullptr, tradeItem2);
-				if (ret1 == RETURNVALUE_NOERROR) {
-					internalMoveItem(cylinder2, player, INDEX_WHEREEVER, tradeItem2, count2, nullptr, FLAG_IGNOREAUTOSTACK);
-
-					tradeItem1->onTradeEvent(ON_TRADE_TRANSFER, tradePartner);
-					tradeItem2->onTradeEvent(ON_TRADE_TRANSFER, player);
-
+		ReturnValue tradePartnerRet = internalAddItem(tradePartner, playerTradeItem, INDEX_WHEREEVER, 0, true);
+		ReturnValue playerRet = internalAddItem(player, partnerTradeItem, INDEX_WHEREEVER, 0, true);
+		if (tradePartnerRet == RETURNVALUE_NOERROR && playerRet == RETURNVALUE_NOERROR) {
+			playerRet = internalRemoveItem(playerTradeItem, playerTradeItem->getItemCount(), true);
+			tradePartnerRet = internalRemoveItem(partnerTradeItem, partnerTradeItem->getItemCount(), true);
+			if (tradePartnerRet == RETURNVALUE_NOERROR && playerRet == RETURNVALUE_NOERROR) {
+				tradePartnerRet = internalMoveItem(playerTradeItem->getParent(), tradePartner, INDEX_WHEREEVER, playerTradeItem, playerTradeItem->getItemCount(), nullptr, FLAG_IGNOREAUTOSTACK, nullptr, partnerTradeItem);
+				if (tradePartnerRet == RETURNVALUE_NOERROR) {
+					internalMoveItem(partnerTradeItem->getParent(), player, INDEX_WHEREEVER, partnerTradeItem, partnerTradeItem->getItemCount(), nullptr, FLAG_IGNOREAUTOSTACK);
+					playerTradeItem->onTradeEvent(ON_TRADE_TRANSFER, tradePartner);
+					partnerTradeItem->onTradeEvent(ON_TRADE_TRANSFER, player);
 					isSuccess = true;
 				}
 			}
@@ -2777,13 +2708,13 @@ void Game::playerAcceptTrade(uint32_t playerId)
 			std::string errorDescription;
 
 			if (tradePartner->tradeItem) {
-				errorDescription = getTradeErrorDescription(ret1, tradeItem1);
+				errorDescription = getTradeErrorDescription(tradePartnerRet, playerTradeItem);
 				tradePartner->sendTextMessage(MESSAGE_EVENT_ADVANCE, errorDescription);
 				tradePartner->tradeItem->onTradeEvent(ON_TRADE_CANCEL, tradePartner);
 			}
 
 			if (player->tradeItem) {
-				errorDescription = getTradeErrorDescription(ret2, tradeItem2);
+				errorDescription = getTradeErrorDescription(playerRet, partnerTradeItem);
 				player->sendTextMessage(MESSAGE_EVENT_ADVANCE, errorDescription);
 				player->tradeItem->onTradeEvent(ON_TRADE_CANCEL, player);
 			}
@@ -3469,7 +3400,7 @@ bool Game::playerSaySpell(Player* player, SpeakClasses type, const std::string& 
 
 void Game::playerWhisper(Player* player, const std::string& text)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, player->getPosition(), false, false,
 	              Map::maxClientViewportX, Map::maxClientViewportX,
 	              Map::maxClientViewportY, Map::maxClientViewportY);
@@ -3542,7 +3473,7 @@ bool Game::playerSpeakTo(Player* player, SpeakClasses type, const std::string& r
 
 void Game::playerSpeakToNpc(Player* player, const std::string& text)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, player->getPosition());
 	for (Creature* spectator : spectators) {
 		if (spectator->getNpc()) {
@@ -3572,7 +3503,7 @@ bool Game::internalCreatureTurn(Creature* creature, Direction dir)
 	creature->setDirection(dir);
 
 	//send to client
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureTurn(creature);
@@ -3581,7 +3512,7 @@ bool Game::internalCreatureTurn(Creature* creature, Direction dir)
 }
 
 bool Game::internalCreatureSay(Creature* creature, SpeakClasses type, const std::string& text,
-                               bool ghostMode, SpectatorHashSet* spectatorsPtr/* = nullptr*/, const Position* pos/* = nullptr*/)
+                               bool ghostMode, SpectatorVec* spectatorsPtr/* = nullptr*/, const Position* pos/* = nullptr*/)
 {
 	if (text.empty()) {
 		return false;
@@ -3591,10 +3522,10 @@ bool Game::internalCreatureSay(Creature* creature, SpeakClasses type, const std:
 		pos = &creature->getPosition();
 	}
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 
 	if (!spectatorsPtr || spectatorsPtr->empty()) {
-		// This somewhat complex construct ensures that the cached SpectatorHashSet
+		// This somewhat complex construct ensures that the cached SpectatorVec
 		// is used if available and if it can be used, else a local vector is
 		// used (hopefully the compiler will optimize away the construction of
 		// the temporary when it's not used).
@@ -3698,15 +3629,15 @@ void Game::checkCreatures(size_t index)
 	cleanup();
 }
 
-void Game::changeSpeed(Creature* creature, double varSpeedDelta)
+void Game::changeSpeed(Creature* creature, int32_t varSpeedDelta)
 {
-	double varSpeed = creature->getSpeed() - creature->getBaseSpeed();
+	int32_t varSpeed = creature->getSpeed() - creature->getBaseSpeed();
 	varSpeed += varSpeedDelta;
 
 	creature->setSpeed(varSpeed);
 
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), false, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendChangeSpeed(creature, creature->getStepSpeed());
@@ -3726,7 +3657,7 @@ void Game::internalCreatureChangeOutfit(Creature* creature, const Outfit_t& outf
 	}
 
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureChangeOutfit(creature, outfit);
@@ -3736,7 +3667,7 @@ void Game::internalCreatureChangeOutfit(Creature* creature, const Outfit_t& outf
 void Game::internalCreatureChangeVisible(Creature* creature, bool visible)
 {
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureChangeVisible(creature, visible);
@@ -3746,7 +3677,7 @@ void Game::internalCreatureChangeVisible(Creature* creature, bool visible)
 void Game::changeLight(const Creature* creature)
 {
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureLight(creature);
@@ -3835,7 +3766,7 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 				case RACE_VENOM:
 					color = TEXTCOLOR_LIGHTGREEN;
 					effect = CONST_ME_HITBYPOISON;
-					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_SLIME);
 					break;
 				case RACE_BLOOD:
 					color = TEXTCOLOR_RED;
@@ -3970,7 +3901,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			message.primary.value = realHealthChange;
 			message.primary.color = TEXTCOLOR_PASTELRED;
 
-			SpectatorHashSet spectators;
+			SpectatorVec spectators;
 			map.getSpectators(spectators, targetPos, false, true);
 			for (Creature* spectator : spectators) {
 				Player* tmpPlayer = spectator->getPlayer();
@@ -4041,10 +3972,32 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			return true;
 		}
 
+		if (attackerPlayer) {
+			uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_LIFELEECHCHANCE);
+			if (chance != 0 && uniform_random(1, 100) <= chance) {
+				CombatDamage lifeLeech;
+				lifeLeech.primary.value = std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_LIFELEECHAMOUNT) / 100.));
+				g_game.combatChangeHealth(nullptr, attackerPlayer, lifeLeech);
+			}
+
+			chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_MANALEECHCHANCE);
+			if (chance != 0 && uniform_random(1, 100) <= chance) {
+				CombatDamage manaLeech;
+				manaLeech.primary.value = std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_MANALEECHAMOUNT) / 100.));
+				g_game.combatChangeMana(nullptr, attackerPlayer, manaLeech);
+			}
+
+			chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
+			if (chance != 0 && uniform_random(1, 100) <= chance) {
+				healthChange += std::round(healthChange * (attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT) / 100.));
+				g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+			}
+		}
+
 		TextMessage message;
 		message.position = targetPos;
 
-		SpectatorHashSet spectators;
+		SpectatorVec spectators;
 		if (targetPlayer && target->hasCondition(CONDITION_MANASHIELD) && damage.primary.type != COMBAT_UNDEFINEDDAMAGE) {
 			int32_t manaDamage = std::min<int32_t>(targetPlayer->getMana(), healthChange);
 			if (manaDamage != 0) {
@@ -4105,7 +4058,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 							if (attacker) {
 								ss << " due to ";
 								if (attacker == target) {
-									ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "her own attack" : "his own attack") : "its own attack");
+									ss << (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "her own attack" : "his own attack");
 								} else {
 									ss << "an attack by " << attacker->getNameDescription();
 								}
@@ -4345,7 +4298,7 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 		message.primary.value = manaLoss;
 		message.primary.color = TEXTCOLOR_BLUE;
 
-		SpectatorHashSet spectators;
+		SpectatorVec spectators;
 		map.getSpectators(spectators, targetPos, false, true);
 		for (Creature* spectator : spectators) {
 			Player* tmpPlayer = spectator->getPlayer();
@@ -4373,7 +4326,7 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 					if (attacker) {
 						ss << " due to ";
 						if (attacker == target) {
-							ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "her own attack" : "his own attack") : "its own attack");
+							ss << (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "her own attack" : "his own attack");
 						} else {
 							ss << "an attack by " << attacker->getNameDescription();
 						}
@@ -4393,12 +4346,12 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 
 void Game::addCreatureHealth(const Creature* target)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, target->getPosition(), true, true);
 	addCreatureHealth(spectators, target);
 }
 
-void Game::addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target)
+void Game::addCreatureHealth(const SpectatorVec& spectators, const Creature* target)
 {
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
@@ -4409,12 +4362,12 @@ void Game::addCreatureHealth(const SpectatorHashSet& spectators, const Creature*
 
 void Game::addMagicEffect(const Position& pos, uint8_t effect)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, pos, true, true);
 	addMagicEffect(spectators, pos, effect);
 }
 
-void Game::addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint8_t effect)
+void Game::addMagicEffect(const SpectatorVec& spectators, const Position& pos, uint8_t effect)
 {
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
@@ -4425,13 +4378,15 @@ void Game::addMagicEffect(const SpectatorHashSet& spectators, const Position& po
 
 void Game::addDistanceEffect(const Position& fromPos, const Position& toPos, uint8_t effect)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators, toPosSpectators;
 	map.getSpectators(spectators, fromPos, false, true);
-	map.getSpectators(spectators, toPos, false, true);
+	map.getSpectators(toPosSpectators, toPos, false, true);
+	spectators.addSpectators(toPosSpectators);
+
 	addDistanceEffect(spectators, fromPos, toPos, effect);
 }
 
-void Game::addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint8_t effect)
+void Game::addDistanceEffect(const SpectatorVec& spectators, const Position& fromPos, const Position& toPos, uint8_t effect)
 {
 	for (Creature* spectator : spectators) {
 		if (Player* tmpPlayer = spectator->getPlayer()) {
@@ -4464,7 +4419,7 @@ void Game::internalDecayItem(Item* item)
 {
 	const ItemType& it = Item::items[item->getID()];
 	if (it.decayTo != 0) {
-		Item* newItem = transformItem(item, it.decayTo);
+		Item* newItem = transformItem(item, item->getDecayTo());
 		startDecay(newItem);
 	} else {
 		ReturnValue ret = internalRemoveItem(item);
@@ -4642,7 +4597,7 @@ void Game::broadcastMessage(const std::string& text, MessageClasses type) const
 void Game::updateCreatureWalkthrough(const Creature* creature)
 {
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		Player* tmpPlayer = spectator->getPlayer();
@@ -4656,7 +4611,7 @@ void Game::updateCreatureSkull(const Creature* creature)
 		return;
 	}
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureSkull(creature);
@@ -4665,7 +4620,7 @@ void Game::updateCreatureSkull(const Creature* creature)
 
 void Game::updatePlayerShield(Player* player)
 {
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, player->getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureShield(player);
@@ -4677,7 +4632,7 @@ void Game::updatePlayerHelpers(const Player& player)
 	uint32_t creatureId = player.getID();
 	uint16_t helpers = player.getHelpers();
 
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, player.getPosition(), true, true);
 	for (Creature* spectator : spectators) {
 		spectator->getPlayer()->sendCreatureHelpers(creatureId, helpers);
@@ -4701,7 +4656,7 @@ void Game::updateCreatureType(Creature* creature)
 	}
 
 	//send to clients
-	SpectatorHashSet spectators;
+	SpectatorVec spectators;
 	map.getSpectators(spectators, creature->getPosition(), true, true);
 
 	if (creatureType == CREATURETYPE_SUMMON_OTHERS) {
@@ -4837,59 +4792,12 @@ uint64_t Game::getExperienceStage(uint32_t level)
 	return stages[level];
 }
 
-uint64_t Game::getPointsPerLevel(uint32_t level)
-{
-	if (!stagesEnabled) {
-		return g_config.getNumber(ConfigManager::SKILLPOINTS_PERLEVEL);
-	}
-
-	if (useLastStageLevel && level >= lastStageLevel) {
-		return points[lastStageLevel];
-	}
-
-	return points[level];
-}
-
-std::unordered_map<std::string, uint32_t> Game::getSkillInfo(uint32_t id)
-{
-	switch (id) {
-	case SKILL_VITALITY: return skillVitalityInfo;
-	case SKILL_STRENGHT: return skillStrenghtInfo;
-	case SKILL_DEFENCE: return skillDefenceInfo;
-	case SKILL_DEXTERITY: return skillDexterityInfo;
-	case SKILL_INTELLIGENCE: return skillIntelligenceInfo;
-	case SKILL_FAITH: return skillFaithInfo;
-	case SKILL_ENDURANCE: return skillEnduranceInfo;
-	case SKILL_MAGLEVEL: return skillMagicInfo;
-	}
-
-	std::unordered_map<std::string, uint32_t> nullMap;
-
-	return nullMap;
-}
-
-std::unordered_map<std::string, uint32_t> Game::getCriticalInfo(uint32_t id)
-{
-	switch (id) {
-	case CRITICAL_SWORD: return criticalSwordInfo;
-	case CRITICAL_AXE: return criticalAxeInfo;
-	case CRITICAL_CLUB: return criticalClubInfo;
-	case CRITICAL_ONE_HANDED_DISTANCE: return criticalOneHandedDistanceInfo;
-	case CRITICAL_TWO_HANDED_DISTANCE: return criticalTwoHandedDistanceInfo;
-	case CRITICAL_WAND: return criticalWandInfo;
-	}
-
-	std::unordered_map<std::string, uint32_t> nullMap;
-
-	return nullMap;
-}
-
-bool Game::loadStagesXml()
+bool Game::loadExperienceStages()
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/XML/stages.xml");
 	if (!result) {
-		printXMLError("Error - Game::loadStagesXml", "data/XML/stages.xml", result);
+		printXMLError("Error - Game::loadExperienceStages", "data/XML/stages.xml", result);
 		return false;
 	}
 
@@ -4897,16 +4805,16 @@ bool Game::loadStagesXml()
 		if (strcasecmp(stageNode.name(), "config") == 0) {
 			stagesEnabled = stageNode.attribute("enabled").as_bool();
 		} else {
-			uint32_t minLevel, maxLevel, multiplier, pointsPerLevel;
+			uint32_t minLevel, maxLevel, multiplier;
 
-			pugi::xml_attribute minLevelAttribute = stageNode.attribute("minLevel");
+			pugi::xml_attribute minLevelAttribute = stageNode.attribute("minlevel");
 			if (minLevelAttribute) {
 				minLevel = pugi::cast<uint32_t>(minLevelAttribute.value());
 			} else {
 				minLevel = 1;
 			}
 
-			pugi::xml_attribute maxLevelAttribute = stageNode.attribute("maxLevel");
+			pugi::xml_attribute maxLevelAttribute = stageNode.attribute("maxlevel");
 			if (maxLevelAttribute) {
 				maxLevel = pugi::cast<uint32_t>(maxLevelAttribute.value());
 			} else {
@@ -4922,340 +4830,13 @@ bool Game::loadStagesXml()
 				multiplier = 1;
 			}
 
-			pugi::xml_attribute pointsPerLevelAttribute = stageNode.attribute("pointsPerLevel");
-			if (pointsPerLevelAttribute) {
-				pointsPerLevel = pugi::cast<uint32_t>(pointsPerLevelAttribute.value());
-			}
-			else {
-				pointsPerLevel = 1;
-			}
-
 			if (useLastStageLevel) {
 				stages[lastStageLevel] = multiplier;
-				points[lastStageLevel] = pointsPerLevel;
 			} else {
 				for (uint32_t i = minLevel; i <= maxLevel; ++i) {
 					stages[i] = multiplier;
-					points[i] = pointsPerLevel;
 				}
 			}
-		}
-	}
-	return true;
-}
-
-// NEW! CRITICAL SYSTEM
-bool Game::loadCriticalsXml()
-{
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("data/XML/criticals.xml");
-	if (!result) {
-		printXMLError("Error - Game::loadCriticalsXml", "data/XML/criticals.xml", result);
-		return false;
-	}
-
-	for (auto stageNode : doc.child("criticals").children()) {
-
-		int id;
-		uint32_t amount, chance;
-
-		pugi::xml_attribute idAttribute = stageNode.attribute("id");
-		if (idAttribute) {
-			id = pugi::cast<int>(idAttribute.value());
-		}
-		else {
-			id = -1;
-		}
-
-		pugi::xml_attribute amountAttribute = stageNode.attribute("amount");
-		if (amountAttribute) {
-			amount = pugi::cast<uint32_t>(amountAttribute.value());
-		}
-		else {
-			amount = 1;
-		}
-
-		pugi::xml_attribute chanceAttribute = stageNode.attribute("chance");
-		if (chanceAttribute) {
-			chance = pugi::cast<uint32_t>(chanceAttribute.value());
-		}
-		else {
-			chance = 0;
-		}
-
-		switch (id) {
-		case CRITICAL_SWORD:
-			criticalSwordInfo["amount"] = amount;
-			criticalSwordInfo["chance"] = chance;
-			break;
-
-		case CRITICAL_AXE:
-			criticalAxeInfo["amount"] = amount;
-			criticalAxeInfo["chance"] = chance;
-			break;
-
-		case CRITICAL_CLUB:
-			criticalClubInfo["amount"] = amount;
-			criticalClubInfo["chance"] = chance;
-			break;
-
-		case CRITICAL_ONE_HANDED_DISTANCE:
-			criticalOneHandedDistanceInfo["amount"] = amount;
-			criticalOneHandedDistanceInfo["chance"] = chance;
-			break;
-
-		case CRITICAL_TWO_HANDED_DISTANCE:
-			criticalTwoHandedDistanceInfo["amount"] = amount;
-			criticalTwoHandedDistanceInfo["chance"] = chance;
-			break;
-
-		case CRITICAL_WAND:
-			criticalWandInfo["amount"] = amount;
-			criticalWandInfo["chance"] = chance;
-			break;
-		}
-	}
-	return true;
-}
-
-// NEW! SKILL POINTS SYSTEM
-bool Game::loadSkillsXml()
-{
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("data/XML/skills.xml");
-	if (!result) {
-		printXMLError("Error - Game::loadSkillsXml", "data/XML/skills.xml", result);
-		return false;
-	}
-
-	for (auto stageNode : doc.child("skills").children()) {
-
-		int id;
-		uint32_t cost, initial, health, mana, soul, cap, attackSpeed, walkSpeed, 
-				 rodMaxDamage, wandMaxDamage, healthRegen, manaRegen;
-
-		pugi::xml_attribute idAttribute = stageNode.attribute("id");
-		if (idAttribute) {
-			id = pugi::cast<int>(idAttribute.value());
-		}
-		else {
-			id = -1;
-		}
-
-		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
-		if (costAttribute) {
-			cost = pugi::cast<uint32_t>(costAttribute.value());
-		}
-		else {
-			cost = 1;
-		}
-
-		pugi::xml_attribute initialAttribute = stageNode.attribute("initial");
-		if (initialAttribute) {
-			initial = pugi::cast<uint32_t>(initialAttribute.value());
-		}
-		else {
-			initial = 8;
-		}
-
-		pugi::xml_attribute healthAttribute = stageNode.attribute("health");
-		if (healthAttribute) {
-			health = pugi::cast<uint32_t>(healthAttribute.value());
-		} else {
-			health = 0;
-		}
-
-		pugi::xml_attribute manaAttribute = stageNode.attribute("mana");
-		if (manaAttribute) {
-			mana = pugi::cast<uint32_t>(manaAttribute.value());
-		} else {
-			mana = 0;
-		}
-
-		pugi::xml_attribute soulAttribute = stageNode.attribute("soul");
-		if (soulAttribute) {
-			soul = pugi::cast<uint32_t>(soulAttribute.value());
-		}
-		else {
-			soul = 0;
-		}
-
-		pugi::xml_attribute capAttribute = stageNode.attribute("cap");
-		if (capAttribute) {
-			cap = pugi::cast<uint32_t>(capAttribute.value());
-		}
-		else {
-			cap = 0;
-		}
-
-		pugi::xml_attribute attackSpeedAttribute = stageNode.attribute("attackSpeed");
-		if (attackSpeedAttribute) {
-			attackSpeed = pugi::cast<uint32_t>(attackSpeedAttribute.value());
-		}
-		else {
-			attackSpeed = 0;
-		}
-
-		pugi::xml_attribute walkSpeedAttribute = stageNode.attribute("walkSpeed");
-		if (walkSpeedAttribute) {
-			walkSpeed = pugi::cast<uint32_t>(walkSpeedAttribute.value());
-		}
-		else {
-			walkSpeed = 0;
-		}
-
-		pugi::xml_attribute wandMaxDamageAttribute = stageNode.attribute("wandMaxDamage");
-		if (wandMaxDamageAttribute) {
-			wandMaxDamage = pugi::cast<uint32_t>(wandMaxDamageAttribute.value());
-		}
-		else {
-			wandMaxDamage = 0;
-		}
-
-		pugi::xml_attribute rodMaxDamageAttribute = stageNode.attribute("rodMaxDamage");
-		if (rodMaxDamageAttribute) {
-			rodMaxDamage = pugi::cast<uint32_t>(rodMaxDamageAttribute.value());
-		}
-		else {
-			rodMaxDamage = 0;
-		}
-
-		pugi::xml_attribute healthRegenAttribute = stageNode.attribute("healthRegen");
-		if (healthRegenAttribute) {
-			healthRegen = pugi::cast<uint32_t>(healthRegenAttribute.value());
-		}
-		else {
-			healthRegen = 0;
-		}
-
-		pugi::xml_attribute manaRegenAttribute = stageNode.attribute("manaRegen");
-		if (manaRegenAttribute) {
-			manaRegen = pugi::cast<uint32_t>(manaRegenAttribute.value());
-		}
-		else {
-			manaRegen = 0;
-		}
-
-		switch (id) {
-			case SKILL_VITALITY:
-				skillVitalityInfo["cost"] = cost;
-				skillVitalityInfo["initial"] = initial;
-				skillVitalityInfo["health"] = health;
-				skillVitalityInfo["mana"] = mana;
-				skillVitalityInfo["soul"] = soul;
-				skillVitalityInfo["cap"] = cap;
-				skillVitalityInfo["walkSpeed"] = walkSpeed;
-				skillVitalityInfo["attackSpeed"] = attackSpeed;
-				skillVitalityInfo["wand"] = wandMaxDamage;
-				skillVitalityInfo["rod"] = rodMaxDamage;
-				skillVitalityInfo["healthRegen"] = healthRegen;
-				skillVitalityInfo["manaRegen"] = manaRegen;
-				break;
-
-			case SKILL_STRENGHT:
-				skillStrenghtInfo["cost"] = cost;
-				skillStrenghtInfo["initial"] = initial;
-				skillStrenghtInfo["health"] = health;
-				skillStrenghtInfo["mana"] = mana;
-				skillStrenghtInfo["soul"] = soul;
-				skillStrenghtInfo["cap"] = cap;
-				skillStrenghtInfo["walkSpeed"] = walkSpeed;
-				skillStrenghtInfo["attackSpeed"] = attackSpeed;
-				skillStrenghtInfo["wand"] = wandMaxDamage;
-				skillStrenghtInfo["rod"] = rodMaxDamage;
-				skillStrenghtInfo["healthRegen"] = healthRegen;
-				skillStrenghtInfo["manaRegen"] = manaRegen;
-				break;	
-
-			case SKILL_DEFENCE:
-				skillDefenceInfo["cost"] = cost;
-				skillDefenceInfo["initial"] = initial;
-				skillDefenceInfo["health"] = health;
-				skillDefenceInfo["mana"] = mana;
-				skillDefenceInfo["soul"] = soul;
-				skillDefenceInfo["cap"] = cap;
-				skillDefenceInfo["walkSpeed"] = walkSpeed;
-				skillDefenceInfo["attackSpeed"] = attackSpeed;
-				skillDefenceInfo["wand"] = wandMaxDamage;
-				skillDefenceInfo["rod"] = rodMaxDamage;
-				skillDefenceInfo["healthRegen"] = healthRegen;
-				skillDefenceInfo["manaRegen"] = manaRegen;
-				break;
-
-			case SKILL_DEXTERITY:
-				skillDexterityInfo["cost"] = cost;
-				skillDexterityInfo["initial"] = initial;
-				skillDexterityInfo["health"] = health;
-				skillDexterityInfo["mana"] = mana;
-				skillDexterityInfo["soul"] = soul;
-				skillDexterityInfo["cap"] = cap;
-				skillDexterityInfo["walkSpeed"] = walkSpeed;
-				skillDexterityInfo["attackSpeed"] = attackSpeed;
-				skillDexterityInfo["wand"] = wandMaxDamage;
-				skillDexterityInfo["rod"] = rodMaxDamage;
-				skillDexterityInfo["healthRegen"] = healthRegen;
-				skillDexterityInfo["manaRegen"] = manaRegen;
-				break;
-
-			case SKILL_INTELLIGENCE:
-				skillIntelligenceInfo["cost"] = cost;
-				skillIntelligenceInfo["initial"] = initial;
-				skillIntelligenceInfo["health"] = health;
-				skillIntelligenceInfo["mana"] = mana;
-				skillIntelligenceInfo["soul"] = soul;
-				skillIntelligenceInfo["cap"] = cap;
-				skillIntelligenceInfo["walkSpeed"] = walkSpeed;
-				skillIntelligenceInfo["attackSpeed"] = attackSpeed;
-				skillIntelligenceInfo["wand"] = wandMaxDamage;
-				skillIntelligenceInfo["rod"] = rodMaxDamage;
-				skillIntelligenceInfo["healthRegen"] = healthRegen;
-				skillIntelligenceInfo["manaRegen"] = manaRegen;
-				break;
-
-			case SKILL_FAITH:
-				skillFaithInfo["cost"] = cost;
-				skillFaithInfo["initial"] = initial;
-				skillFaithInfo["health"] = health;
-				skillFaithInfo["mana"] = mana;
-				skillFaithInfo["soul"] = soul;
-				skillFaithInfo["cap"] = cap;
-				skillFaithInfo["walkSpeed"] = walkSpeed;
-				skillFaithInfo["attackSpeed"] = attackSpeed;
-				skillFaithInfo["wand"] = wandMaxDamage;
-				skillFaithInfo["rod"] = rodMaxDamage;
-				skillVitalityInfo["healthRegen"] = healthRegen;
-				skillVitalityInfo["manaRegen"] = manaRegen;
-				break;
-
-			case SKILL_ENDURANCE:
-				skillEnduranceInfo["cost"] = cost;
-				skillEnduranceInfo["initial"] = initial;
-				skillEnduranceInfo["health"] = health;
-				skillEnduranceInfo["mana"] = mana;
-				skillEnduranceInfo["soul"] = soul;
-				skillEnduranceInfo["cap"] = cap;
-				skillEnduranceInfo["walkSpeed"] = walkSpeed;
-				skillEnduranceInfo["attackSpeed"] = attackSpeed;
-				skillEnduranceInfo["wand"] = wandMaxDamage;
-				skillEnduranceInfo["rod"] = rodMaxDamage;
-				skillEnduranceInfo["healthRegen"] = healthRegen;
-				skillEnduranceInfo["manaRegen"] = manaRegen;
-				break;
-
-			case 7:
-				skillMagicInfo["cost"] = cost;
-				skillMagicInfo["initial"] = initial;
-				skillMagicInfo["health"] = health;
-				skillMagicInfo["mana"] = mana;
-				skillMagicInfo["soul"] = soul;
-				skillMagicInfo["cap"] = cap;
-				skillMagicInfo["walkSpeed"] = walkSpeed;
-				skillMagicInfo["attackSpeed"] = attackSpeed;
-				skillMagicInfo["wand"] = wandMaxDamage;
-				skillMagicInfo["rod"] = rodMaxDamage;
-				skillMagicInfo["healthRegen"] = healthRegen;
-				skillMagicInfo["manaRegen"] = manaRegen;
-				break;
 		}
 	}
 	return true;
@@ -5954,11 +5535,15 @@ void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, ui
 	// offline training, hardcoded
 	if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
 		if (button == 1) {
-			BedItem* bedItem = player->getBedItem();
-			if (bedItem && bedItem->sleep(player)) {
-				//player->setOfflineTrainingSkill(choice);
-				return;
+			if (choice == SKILL_SWORD || choice == SKILL_AXE || choice == SKILL_CLUB || choice == SKILL_DISTANCE || choice == SKILL_MAGLEVEL) {
+				BedItem* bedItem = player->getBedItem();
+				if (bedItem && bedItem->sleep(player)) {
+					player->setOfflineTrainingSkill(choice);
+					return;
+				}
 			}
+		} else {
+			player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Offline training aborted.");
 		}
 
 		player->setBedItem(nullptr);
@@ -6144,6 +5729,30 @@ bool Game::reload(ReloadTypes_t reloadType)
 			return results;
 		}
 
+		case RELOAD_TYPE_SCRIPTS: {
+			// commented out stuff is TODO, once we approach further in revscriptsys
+			g_actions->clear(true);
+			g_creatureEvents->clear(true);
+			g_moveEvents->clear(true);
+			g_talkActions->clear(true);
+			g_globalEvents->clear(true);
+			g_weapons->clear(true);
+			g_weapons->loadDefaults();
+			g_spells->clear(true);
+			g_scripts->loadScripts("scripts", false, true);
+			/*
+			Npcs::reload();
+			raids.reload() && raids.startup();
+			Item::items.reload();
+			quests.reload();
+			mounts.reload();
+			g_config.reload();
+			g_events->load();
+			g_chat->load();
+			*/
+			return true;
+		}
+
 		default: {
 			if (!g_spells->reload()) {
 				std::cout << "[Error - Game::reload] Failed to reload spells." << std::endl;
@@ -6163,13 +5772,23 @@ bool Game::reload(ReloadTypes_t reloadType)
 			g_talkActions->reload();
 			Item::items.reload();
 			g_weapons->reload();
+			g_weapons->clear(true);
 			g_weapons->loadDefaults();
 			quests.reload();
 			mounts.reload();
 			g_globalEvents->reload();
 			g_events->load();
 			g_chat->load();
+			g_actions->clear(true);
+			g_creatureEvents->clear(true);
+			g_moveEvents->clear(true);
+			g_talkActions->clear(true);
+			g_globalEvents->clear(true);
+			g_spells->clear(true);
+			g_scripts->loadScripts("scripts", false, true);
 			return true;
 		}
 	}
+	return true;
 }
+

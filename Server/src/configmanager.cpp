@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,6 +139,7 @@ bool ConfigManager::load()
 	boolean[CONVERT_UNSAFE_SCRIPTS] = getGlobalBoolean(L, "convertUnsafeScripts", true);
 	boolean[CLASSIC_EQUIPMENT_SLOTS] = getGlobalBoolean(L, "classicEquipmentSlots", false);
 	boolean[CLASSIC_ATTACK_SPEED] = getGlobalBoolean(L, "classicAttackSpeed", false);
+	boolean[SCRIPTS_CONSOLE_LOGS] = getGlobalBoolean(L, "showScriptsLogInConsole", true);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
 	string[SERVER_NAME] = getGlobalString(L, "serverName", "");
@@ -149,42 +150,6 @@ bool ConfigManager::load()
 	string[MOTD] = getGlobalString(L, "motd", "");
 	string[WORLD_TYPE] = getGlobalString(L, "worldType", "pvp");
 
-	boolean[REFILL_HEALTHMANA_LEVELUP] = getGlobalBoolean(L, "refillHealthAndManaOnLevelUp", false);
-
-	integer[PARTY_EXP_SHARE_FACTOR] = getGlobalNumber(L, "partyExpShareFactor", 1); //default tibia
-
-	integer[CLIENT_VERSION_TO_PLAY] = getGlobalNumber(L, "clientVersionToPlay", 1); //default tibia
-	string[CLIENT_VERSION_TO_PLAY_TEXT] = getGlobalString(L, "clientVersionToPlayText", ""); //default tibia
-
-	integer[SHIELD_DEFENCEFACTOR] = getGlobalNumber(L, "shieldDefenceFactor", 100); //default tibia
-	integer[SHIELD_DEXTERITYFACTOR] = getGlobalNumber(L, "shieldDexterityFactor", 0); //default tibia
-
-	//integer[MELEE_DEXTERITYFACTOR] = getGlobalNumber(L, "meleeDexterityFactor", 0); //default tibia
-	//integer[MELEE_STRENGHTFACTOR] = getGlobalNumber(L, "meleeStrenghtFactor", 100); //default tibia
-
-	integer[SPEAR_DEXTERITYFACTOR] = getGlobalNumber(L, "spearDexterityFactor", 100); //default tibia
-	integer[SPEAR_STRENGHTFACTOR] = getGlobalNumber(L, "spearStrenghtFactor", 0); //default tibia
-
-	integer[BOW_DEXTERITYFACTOR] = getGlobalNumber(L, "bowDexterityFactor", 100); //default tibia
-	integer[BOW_STRENGHTFACTOR] = getGlobalNumber(L, "bowStrenghtFactor", 0); //default tibia
-
-	integer[ROD_FAITHFACTOR] = getGlobalNumber(L, "rodFaithFactor", 0); //default tibia
-	integer[WAND_INTELLIGENCEFACTOR] = getGlobalNumber(L, "wandIntelligenceFactor", 0); //default tibia
-	integer[MAGIC_WANDRODFACTOR] = getGlobalNumber(L, "magicWandRodFactor", 0); //default tibia
-
-	boolean[ALLOW_DUAL_WIELDING] = getGlobalBoolean(L, "allowDualWielding", false); //default tibia
-	integer[DUAL_WIELDING_DAMAGE_RATE] = getGlobalNumber(L, "dualWieldingDamageRate", 90);
-	integer[DUAL_WIELDING_ATTACK_SPEED] = getGlobalNumber(L, "dualWieldingAttackSpeed", 1000);
-
-	integer[ATTACKSPEED_DEXTERITY_FACTOR] = getGlobalNumber(L, "attackSpeedDexterityFactor", 2.5); 
-	integer[WALKSPEED_DEXTERITY_FACTOR] = getGlobalNumber(L, "walkSpeedDexterityFactor", 1.0);
-
-	boolean[CRITICAL_ON_ALL_WEAPONS] = getGlobalBoolean(L, "criticalOnAllWeapons", false); //default tibia
-	boolean[CRITICAL_ON_ALL_WEAPONS_DUAL_WIELDING] = getGlobalBoolean(L, "criticalOnAllWeaponsDualWielding", false); //default tibia
-	boolean[CRITICAL_ON_WANDS_AND_RODS] = getGlobalBoolean(L, "criticalOnWandsAndRods", false); //default tibia
-	boolean[CRITICAL_ON_TWO_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnTwoHandedDistWeapons", false); //default tibia
-	boolean[CRITICAL_ON_ONE_HANDED_DIST_WEAPONS] = getGlobalBoolean(L, "criticalOnOneHandedDistWeapons", false); //default tibia
-
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);
 	integer[DEFAULT_DESPAWNRANGE] = getGlobalNumber(L, "deSpawnRange", 2);
@@ -194,7 +159,6 @@ bool ConfigManager::load()
 	integer[RATE_LOOT] = getGlobalNumber(L, "rateLoot", 2);
 	integer[RATE_MAGIC] = getGlobalNumber(L, "rateMagic", 3);
 	integer[RATE_SPAWN] = getGlobalNumber(L, "rateSpawn", 1);
-	integer[SKILLPOINTS_PERLEVEL] = getGlobalNumber(L, "skillPointsPerLevel", 1);
 	integer[HOUSE_PRICE] = getGlobalNumber(L, "housePriceEachSQM", 1000);
 	integer[KILLS_TO_RED] = getGlobalNumber(L, "killsToRedSkull", 3);
 	integer[KILLS_TO_BLACK] = getGlobalNumber(L, "killsToBlackSkull", 6);
@@ -212,6 +176,12 @@ bool ConfigManager::load()
 	integer[CHECK_EXPIRED_MARKET_OFFERS_EACH_MINUTES] = getGlobalNumber(L, "checkExpiredMarketOffersEachMinutes", 60);
 	integer[MAX_MARKET_OFFERS_AT_A_TIME_PER_PLAYER] = getGlobalNumber(L, "maxMarketOffersAtATimePerPlayer", 100);
 	integer[MAX_PACKETS_PER_SECOND] = getGlobalNumber(L, "maxPacketsPerSecond", 25);
+
+	boolean[SERVER_SAVE_NOTIFY_MESSAGE] = getGlobalBoolean(L, "serverSaveNotifyMessage", true);
+	integer[SERVER_SAVE_NOTIFY_DURATION] = getGlobalNumber(L, "serverSaveNotifyDuration", 5);
+	boolean[SERVER_SAVE_CLEAN_MAP] = getGlobalBoolean(L, "serverSaveCleanMap", false);
+	boolean[SERVER_SAVE_CLOSE] = getGlobalBoolean(L, "serverSaveClose", false);
+	boolean[SERVER_SAVE_SHUTDOWN] = getGlobalBoolean(L, "serverSaveShutdown", true);
 
 	loaded = true;
 	lua_close(L);

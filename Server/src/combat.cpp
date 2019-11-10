@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -272,7 +272,6 @@ bool Combat::isInPvpZone(const Creature* attacker, const Creature* target)
 	return attacker->getZone() == ZONE_PVP && target->getZone() == ZONE_PVP;
 }
 
-//CHANGED! NO VOCATION ISNT PROTECTED
 bool Combat::isProtected(const Player* attacker, const Player* target)
 {
 	uint32_t protectionLevel = g_config.getNumber(ConfigManager::PROTECTION_LEVEL);
@@ -280,9 +279,9 @@ bool Combat::isProtected(const Player* attacker, const Player* target)
 		return true;
 	}
 
-/*	if (attacker->getVocationId() == VOCATION_NONE || target->getVocationId() == VOCATION_NONE) {
+	if (attacker->getVocationId() == VOCATION_NONE || target->getVocationId() == VOCATION_NONE) {
 		return true;
-	}*/
+	}
 
 	if (attacker->getSkull() == SKULL_BLACK && attacker->getSkullClient(target) == SKULL_NONE) {
 		return true;
@@ -485,51 +484,16 @@ CallBack* Combat::getCallback(CallBackParam_t key)
 	return nullptr;
 }
 
-//CHANGED! BUG FIX SPECIAL CRITICAL SPECIAL SKILLS && CRITICAL HIT
 void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data)
 {
 	assert(data);
 	CombatDamage damage = *data;
-
-	if (!damage.isCritical) {
-		if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
-			return;
-		}
-	} else {
-		g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
+	if (g_game.combatBlockHit(damage, caster, target, params.blockedByShield, params.blockedByArmor, params.itemId != 0)) {
+		return;
 	}
 
-	Player* attackerPlayer = caster ? caster->getPlayer() : nullptr;
-	Player* targetPlayer = target ? target->getPlayer() : nullptr;
-
-	if ((attackerPlayer && damage.primary.value < 0) || damage.secondary.value < 0) {
-		
-		uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHCHANCE);
-		uint16_t skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			CombatDamage lifeLeech;
-			lifeLeech.primary.value = std::round(damage.primary.value * (skill / 100.));
-			lifeLeech.primary.value += std::round(damage.secondary.value * (skill / 100.));
-			g_game.combatChangeHealth(nullptr, attackerPlayer, lifeLeech);
-		}
-
-		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_MANAPOINTSLEECHCHANCE);
-		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_MANAPOINTSLEECHAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			CombatDamage manaLeech;
-			manaLeech.primary.value = std::round(damage.primary.value * (skill / 100.));
-			manaLeech.primary.value += std::round(damage.secondary.value * (skill / 100.));
-			g_game.combatChangeMana(nullptr, attackerPlayer, manaLeech);
-		}
-
-		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
-		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			damage.primary.value += std::round(damage.primary.value * (skill / 100.));
-			damage.secondary.value += std::round(damage.secondary.value * (skill / 100.));
-			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-		}
-
+	if ((damage.primary.value < 0 || damage.secondary.value < 0) && caster) {
+		Player* targetPlayer = target->getPlayer();
 		if (targetPlayer && caster->getPlayer() && targetPlayer->getSkull() != SKULL_BLACK) {
 			damage.primary.value /= 2;
 			damage.secondary.value /= 2;
@@ -542,46 +506,12 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 	}
 }
 
-//CHANGED! BUG FIX SPECIAL MANA LEECH AND CRIT ON ALL WEAPONS
 void Combat::CombatManaFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* damage)
 {
 	assert(damage);
 	CombatDamage damageCopy = *damage;
-
-	Player* attackerPlayer = caster ? caster->getPlayer() : nullptr;
-	Player* targetPlayer = target ? target->getPlayer() : nullptr;
-
-	if ((attackerPlayer && damageCopy.primary.value < 0) || damageCopy.secondary.value < 0) {
-		uint16_t chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHCHANCE);
-		uint16_t skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_HITPOINTSLEECHAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			CombatDamage lifeLeech;
-			lifeLeech.primary.value = std::round(damageCopy.primary.value * (skill / 100.));
-			lifeLeech.primary.value += std::round(damageCopy.secondary.value * (skill / 100.));
-			g_game.combatChangeHealth(nullptr, attackerPlayer, lifeLeech);
-		}
-
-		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_MANAPOINTSLEECHCHANCE);
-		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_MANAPOINTSLEECHAMOUNT);
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			CombatDamage manaLeech;
-			manaLeech.primary.value = std::round(damageCopy.primary.value * (skill / 100.));
-			manaLeech.primary.value += std::round(damageCopy.secondary.value * (skill / 100.));
-			g_game.combatChangeMana(nullptr, attackerPlayer, manaLeech);
-		}
-
-		chance = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITCHANCE);
-		skill = attackerPlayer->getSpecialSkill(SPECIALSKILL_CRITICALHITAMOUNT);
-
-		if (chance != 0 && uniform_random(1, 100) <= chance) {
-			damageCopy.primary.value += std::round(damageCopy.primary.value * (skill / 100.));
-			damageCopy.secondary.value += std::round(damageCopy.secondary.value * (skill / 100.));
-			g_game.addMagicEffect(target->getPosition(), CONST_ME_CRITICAL_DAMAGE);
-		}
-	}
-
 	if (damageCopy.primary.value < 0) {
-		if (attackerPlayer && targetPlayer) {
+		if (caster && caster->getPlayer() && target->getPlayer()) {
 			damageCopy.primary.value /= 2;
 		}
 	}
@@ -622,7 +552,7 @@ void Combat::CombatNullFunc(Creature* caster, Creature* target, const CombatPara
 	CombatDispelFunc(caster, target, params, nullptr);
 }
 
-void Combat::combatTileEffects(const SpectatorHashSet& spectators, Creature* caster, Tile* tile, const CombatParams& params)
+void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster, Tile* tile, const CombatParams& params)
 {
 	if (params.itemId != 0) {
 		uint16_t itemId = params.itemId;
@@ -754,7 +684,6 @@ void Combat::CombatFunc(Creature* caster, const Position& pos, const AreaCombat*
 		getCombatArea(pos, pos, area, tileList);
 	}
 
-	SpectatorHashSet spectators;
 	uint32_t maxX = 0;
 	uint32_t maxY = 0;
 
@@ -775,6 +704,8 @@ void Combat::CombatFunc(Creature* caster, const Position& pos, const AreaCombat*
 
 	const int32_t rangeX = maxX + Map::maxViewportX;
 	const int32_t rangeY = maxY + Map::maxViewportY;
+
+	SpectatorVec spectators;
 	g_game.map.getSpectators(spectators, pos, true, true, rangeX, rangeX, rangeY, rangeY);
 
 	postCombatEffects(caster, pos, params);
@@ -857,7 +788,6 @@ void Combat::doCombatHealth(Creature* caster, Creature* target, CombatDamage& da
 		}
 
 		CombatHealthFunc(caster, target, params, &damage);
-
 		if (params.targetCallback) {
 			params.targetCallback->onTargetCombat(caster, target);
 		}
@@ -944,7 +874,7 @@ void Combat::doCombatDispel(Creature* caster, Creature* target, const CombatPara
 void Combat::doCombatDefault(Creature* caster, Creature* target, const CombatParams& params)
 {
 	if (!params.aggressive || (caster != target && Combat::canDoCombat(caster, target) == RETURNVALUE_NOERROR)) {
-		SpectatorHashSet spectators;
+		SpectatorVec spectators;
 		g_game.map.getSpectators(spectators, target->getPosition(), true, true);
 
 		CombatNullFunc(caster, target, params, nullptr);
@@ -1182,7 +1112,7 @@ void AreaCombat::getList(const Position& centerPos, const Position& targetPos, s
 	}
 }
 
-void AreaCombat::copyArea(const MatrixArea* input, MatrixArea* output, MatrixOperation_t op) const
+void AreaCombat::copyArea(const MatrixArea* input, MatrixArea* output, MatrixOperation_t op)
 {
 	uint32_t centerY, centerX;
 	input->getCenter(centerY, centerX);
@@ -1308,17 +1238,17 @@ void AreaCombat::setupArea(const std::list<uint32_t>& list, uint32_t rows)
 
 	//SOUTH
 	MatrixArea* southArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(area, southArea, MATRIXOPERATION_ROTATE180);
+	AreaCombat::copyArea(area, southArea, MATRIXOPERATION_ROTATE180);
 	areas[DIRECTION_SOUTH] = southArea;
 
 	//EAST
 	MatrixArea* eastArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(area, eastArea, MATRIXOPERATION_ROTATE90);
+	AreaCombat::copyArea(area, eastArea, MATRIXOPERATION_ROTATE90);
 	areas[DIRECTION_EAST] = eastArea;
 
 	//WEST
 	MatrixArea* westArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(area, westArea, MATRIXOPERATION_ROTATE270);
+	AreaCombat::copyArea(area, westArea, MATRIXOPERATION_ROTATE270);
 	areas[DIRECTION_WEST] = westArea;
 }
 
@@ -1408,17 +1338,17 @@ void AreaCombat::setupExtArea(const std::list<uint32_t>& list, uint32_t rows)
 
 	//NORTH-EAST
 	MatrixArea* neArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(area, neArea, MATRIXOPERATION_MIRROR);
+	AreaCombat::copyArea(area, neArea, MATRIXOPERATION_MIRROR);
 	areas[DIRECTION_NORTHEAST] = neArea;
 
 	//SOUTH-WEST
 	MatrixArea* swArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(area, swArea, MATRIXOPERATION_FLIP);
+	AreaCombat::copyArea(area, swArea, MATRIXOPERATION_FLIP);
 	areas[DIRECTION_SOUTHWEST] = swArea;
 
 	//SOUTH-EAST
 	MatrixArea* seArea = new MatrixArea(maxOutput, maxOutput);
-	copyArea(swArea, seArea, MATRIXOPERATION_MIRROR);
+	AreaCombat::copyArea(swArea, seArea, MATRIXOPERATION_MIRROR);
 	areas[DIRECTION_SOUTHEAST] = seArea;
 }
 

@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -195,14 +195,14 @@ class Creature : virtual public Thing
 		int64_t getEventStepTicks(bool onlyDelay = false) const;
 		int64_t getStepDuration(Direction dir) const;
 		int64_t getStepDuration() const;
-		virtual double getStepSpeed() const {
+		virtual int32_t getStepSpeed() const {
 			return getSpeed();
 		}
-		double getSpeed() const {
+		int32_t getSpeed() const {
 			return baseSpeed + varSpeed;
 		}
-		void setSpeed(double varSpeedDelta) {
-			double oldSpeed = getSpeed();
+		void setSpeed(int32_t varSpeedDelta) {
+			int32_t oldSpeed = getSpeed();
 			varSpeed = varSpeedDelta;
 
 			if (getSpeed() <= 0) {
@@ -213,10 +213,10 @@ class Creature : virtual public Thing
 			}
 		}
 
-		void setBaseSpeed(double newBaseSpeed) {
+		void setBaseSpeed(uint32_t newBaseSpeed) {
 			baseSpeed = newBaseSpeed;
 		}
-		double getBaseSpeed() const {
+		uint32_t getBaseSpeed() const {
 			return baseSpeed;
 		}
 
@@ -498,10 +498,8 @@ class Creature : virtual public Thing
 		uint32_t blockCount = 0;
 		uint32_t blockTicks = 0;
 		uint32_t lastStepCost = 1;
-		//uint32_t baseSpeed = 220;
-		//int32_t varSpeed = 0;
-		double baseSpeed = 220;
-		double varSpeed = 0;
+		uint32_t baseSpeed = 220;
+		int32_t varSpeed = 0;
 		int32_t health = 1000;
 		int32_t healthMax = 1000;
 

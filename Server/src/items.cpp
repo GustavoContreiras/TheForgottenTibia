@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,10 +95,10 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"magicpointspercent", ITEM_PARSE_MAGICPOINTSPERCENT},
 	{"criticalhitchance", ITEM_PARSE_CRITICALHITCHANCE},
 	{"criticalhitamount", ITEM_PARSE_CRITICALHITAMOUNT},
-	{"hitpointsleechchance", ITEM_PARSE_HITPOINTSLEECHCHANCE},
-	{"hitpointsleechamount", ITEM_PARSE_HITPOINTSLEECHAMOUNT},
-	{"manapointsleechchance", ITEM_PARSE_MANAPOINTSLEECHCHANCE},
-	{"manapointsleechamount", ITEM_PARSE_MANAPOINTSLEECHAMOUNT},
+	{"lifeleechchance", ITEM_PARSE_LIFELEECHCHANCE},
+	{"lifeleechamount", ITEM_PARSE_LIFELEECHAMOUNT},
+	{"manaleechchance", ITEM_PARSE_MANALEECHCHANCE},
+	{"manaleechamount", ITEM_PARSE_MANALEECHAMOUNT},
 	{"fieldabsorbpercentenergy", ITEM_PARSE_FIELDABSORBPERCENTENERGY},
 	{"fieldabsorbpercentfire", ITEM_PARSE_FIELDABSORBPERCENTFIRE},
 	{"fieldabsorbpercentpoison", ITEM_PARSE_FIELDABSORBPERCENTPOISON},
@@ -668,7 +668,7 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					tmpStrValue = asLowerCaseString(valueAttribute.as_string());
 					auto it2 = TileStatesMap.find(tmpStrValue);
 					if (it2 != TileStatesMap.end()) {
-						it.floorChange = it2->second;
+						it.floorChange |= it2->second;
 					} else {
 						std::cout << "[Warning - Items::parseItemNode] Unknown floorChange: " << valueAttribute.as_string() << std::endl;
 					}
@@ -894,37 +894,67 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				}
 
 				case ITEM_PARSE_SKILLSWORD: {
-					abilities.skills[SKILL_FAITH] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_SWORD] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLAXE: {
-					abilities.skills[SKILL_INTELLIGENCE] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_AXE] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLCLUB: {
-					abilities.skills[SKILL_STRENGHT] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_CLUB] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLDIST: {
-					abilities.skills[SKILL_DEXTERITY] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_DISTANCE] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLFISH: {
-					abilities.skills[SKILL_ENDURANCE] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_FISHING] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLSHIELD: {
-					abilities.skills[SKILL_DEFENCE] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_SHIELD] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
 				case ITEM_PARSE_SKILLFIST: {
-					abilities.skills[SKILL_VITALITY] = pugi::cast<int32_t>(valueAttribute.value());
+					abilities.skills[SKILL_FIST] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_CRITICALHITAMOUNT: {
+					abilities.specialSkills[SPECIALSKILL_CRITICALHITAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_CRITICALHITCHANCE: {
+					abilities.specialSkills[SPECIALSKILL_CRITICALHITCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_MANALEECHAMOUNT: {
+					abilities.specialSkills[SPECIALSKILL_MANALEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_MANALEECHCHANCE: {
+					abilities.specialSkills[SPECIALSKILL_MANALEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_LIFELEECHAMOUNT: {
+					abilities.specialSkills[SPECIALSKILL_LIFELEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
+					break;
+				}
+
+				case ITEM_PARSE_LIFELEECHCHANCE: {
+					abilities.specialSkills[SPECIALSKILL_LIFELEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 
@@ -1155,12 +1185,10 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 						it.combatType = combatType;
 						it.conditionDamage.reset(conditionDamage);
 
+						uint32_t ticks = 0;
+						int32_t start = 0;
+						int32_t count = 1;
 						for (auto subAttributeNode : attributeNode.children()) {
-							uint32_t ticks = 0;
-							int32_t damage = 0;
-							int32_t start = 0;
-							int32_t count = 1;
-
 							pugi::xml_attribute subKeyAttribute = subAttributeNode.attribute("key");
 							if (!subKeyAttribute) {
 								continue;
@@ -1179,8 +1207,7 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 							} else if (tmpStrValue == "start") {
 								start = std::max<int32_t>(0, pugi::cast<int32_t>(subValueAttribute.value()));
 							} else if (tmpStrValue == "damage") {
-								damage = -pugi::cast<int32_t>(subValueAttribute.value());
-
+								int32_t damage = -pugi::cast<int32_t>(subValueAttribute.value());
 								if (start > 0) {
 									std::list<int32_t> damageList;
 									ConditionDamage::generateDamageList(damage, start, damageList);
@@ -1294,36 +1321,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 
 				case ITEM_PARSE_ALLOWDISTREAD: {
 					it.allowDistRead = booleanString(valueAttribute.as_string());
-					break;
-				}
-
-				case ITEM_PARSE_CRITICALHITCHANCE: {
-					it.abilities->specialSkills[SPECIALSKILL_CRITICALHITCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-					break;
-				}
-
-				case ITEM_PARSE_CRITICALHITAMOUNT: {
-					it.abilities->specialSkills[SPECIALSKILL_CRITICALHITAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
-					break;
-				}
-
-				case ITEM_PARSE_HITPOINTSLEECHCHANCE: {
-					it.abilities->specialSkills[SPECIALSKILL_HITPOINTSLEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-					break;
-				}
-
-				case ITEM_PARSE_HITPOINTSLEECHAMOUNT: {
-					it.abilities->specialSkills[SPECIALSKILL_HITPOINTSLEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
-					break;
-				}
-
-				case ITEM_PARSE_MANAPOINTSLEECHCHANCE: {
-					it.abilities->specialSkills[SPECIALSKILL_MANAPOINTSLEECHCHANCE] = pugi::cast<int32_t>(valueAttribute.value());
-					break;
-				}
-
-				case ITEM_PARSE_MANAPOINTSLEECHAMOUNT: {
-					it.abilities->specialSkills[SPECIALSKILL_MANAPOINTSLEECHAMOUNT] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
 

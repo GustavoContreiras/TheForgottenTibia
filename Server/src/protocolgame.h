@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,9 +137,6 @@ class ProtocolGame final : public Protocol
 
 		void parseBrowseField(NetworkMessage& msg);
 		void parseSeekInContainer(NetworkMessage& msg);
-		void parseSetSkillsRequest(NetworkMessage& msg);
-
-		void parseVersionToPlay(NetworkMessage & msg);
 
 		//trade methods
 		void parseRequestTrade(NetworkMessage& msg);
@@ -192,7 +189,7 @@ class ProtocolGame final : public Protocol
 		void sendQuestLine(const Quest* quest);
 
 		void sendCancelWalk();
-		void sendChangeSpeed(const Creature* creature, double speed);
+		void sendChangeSpeed(const Creature* creature, uint32_t speed);
 		void sendCancelTarget();
 		void sendCreatureOutfit(const Creature* creature, const Outfit_t& outfit);
 		void sendStats();

@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 
 #ifndef FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
 #define FS_PLAYER_H_4083D3D3A05B4EDE891B31BB720CD06F
-
-#include <bitset>
 
 #include "creature.h"
 #include "container.h"
@@ -76,11 +74,6 @@ enum tradestate_t : uint8_t {
 	TRADE_TRANSFER,
 };
 
-enum attackHand_t : uint8_t {
-	HAND_LEFT,
-	HAND_RIGHT,
-};
-
 struct VIPEntry {
 	VIPEntry(uint32_t guid, std::string name, std::string description, uint32_t icon, bool notify) :
 		guid(guid), name(std::move(name)), description(std::move(description)), icon(icon), notify(notify) {}
@@ -105,7 +98,9 @@ struct OutfitEntry {
 };
 
 struct Skill {
-	uint16_t level = 8;
+	uint64_t tries = 0;
+	uint16_t level = 10;
+	uint8_t percent = 0;
 };
 
 using MuteCountMap = std::map<uint32_t, uint32_t>;
@@ -191,6 +186,25 @@ class Player final : public Creature, public Cylinder
 
 		uint16_t getStaminaMinutes() const {
 			return staminaMinutes;
+		}
+
+		bool addOfflineTrainingTries(skills_t skill, uint64_t tries);
+
+		void addOfflineTrainingTime(int32_t addTime) {
+			offlineTrainingTime = std::min<int32_t>(12 * 3600 * 1000, offlineTrainingTime + addTime);
+		}
+		void removeOfflineTrainingTime(int32_t removeTime) {
+			offlineTrainingTime = std::max<int32_t>(0, offlineTrainingTime - removeTime);
+		}
+		int32_t getOfflineTrainingTime() const {
+			return offlineTrainingTime;
+		}
+
+		int32_t getOfflineTrainingSkill() const {
+			return offlineTrainingSkill;
+		}
+		void setOfflineTrainingSkill(int32_t skill) {
+			offlineTrainingSkill = skill;
 		}
 
 		uint64_t getBankBalance() const {
@@ -280,6 +294,10 @@ class Player final : public Creature, public Cylinder
 
 		GuildEmblems_t getGuildEmblem(const Player* player) const;
 
+		uint64_t getSpentMana() const {
+			return manaSpent;
+		}
+
 		bool hasFlag(PlayerFlags value) const {
 			return (group->flags & value) != 0;
 		}
@@ -366,18 +384,6 @@ class Player final : public Creature, public Cylinder
 		uint32_t getLevel() const {
 			return level;
 		}
-		uint32_t getSkillPoints() const {
-			return skillPoints;
-		}
-		uint32_t getSkillPointsTotal() const {
-			return skillPointsTotal;
-		}
-		void setSkillPoints(uint32_t value) {
-			skillPoints = value;
-		}
-		void setSkillPointsTotal(uint32_t value) {
-			skillPointsTotal = value;
-		}
 		uint8_t getLevelPercent() const {
 			return levelPercent;
 		}
@@ -387,14 +393,9 @@ class Player final : public Creature, public Cylinder
 		uint32_t getBaseMagicLevel() const {
 			return magLevel;
 		}
-		
-		uint8_t getBlessingsCount() const {
-			return std::bitset<5>(blessings).count(); 
+		uint8_t getMagicLevelPercent() const {
+			return magLevelPercent;
 		}
-		uint8_t getResetsCount() const {
-			return resets;
-		}
-		void addResetsCount(int32_t value);
 		uint8_t getSoul() const {
 			return soul;
 		}
@@ -451,8 +452,8 @@ class Player final : public Creature, public Cylinder
 
 		bool removeItemOfType(uint16_t itemId, uint32_t amount, int32_t subType, bool ignoreEquipped = false) const;
 
-		uint32_t getCapacity() const{
-		if (hasFlag(PlayerFlag_CannotPickupItem)) {
+		uint32_t getCapacity() const {
+			if (hasFlag(PlayerFlag_CannotPickupItem)) {
 				return 0;
 			} else if (hasFlag(PlayerFlag_HasInfiniteCapacity)) {
 				return std::numeric_limits<uint32_t>::max();
@@ -614,47 +615,15 @@ class Player final : public Creature, public Cylinder
 		uint16_t getBaseSkill(uint8_t skill) const {
 			return skills[skill].level;
 		}
+		uint8_t getSkillPercent(uint8_t skill) const {
+			return skills[skill].percent;
+		}
 
 		bool getAddAttackSkill() const {
 			return addAttackSkillPoint;
 		}
 		BlockType_t getLastAttackBlockType() const {
 			return lastAttackBlockType;
-		}
-
-		//NEW! DUAL WIELD SYSTEM
-		void switchAttackHand() {
-			lastAttackHand = lastAttackHand == HAND_LEFT ? HAND_RIGHT : HAND_LEFT;
-			
-		}
-
-		//NEW! DUAL WIELD SYSTEM
-		slots_t getAttackHand() const {
-			return lastAttackHand == HAND_LEFT ? CONST_SLOT_LEFT : CONST_SLOT_RIGHT;
-			
-		}
-
-		//NEW! DUAL WIELD SYSTEM
-		void switchBlockSkillAdvance() {
-			blockSkillAdvance = !blockSkillAdvance;
-			
-		}
-		
-		//NEW! DUAL WIELD SYSTEM
-		bool getBlockSkillAdvance() {
-			return blockSkillAdvance;
-			
-		}
-
-		//NEW! DUAL WIELD SYSTEM
-		bool isDualWielding() const;
-
-		uint8_t getWandMaxDamageBonus() const {
-			return wandMaxDamageBonus;
-		}
-
-		uint8_t getRodMaxDamageBonus() const {
-			return rodMaxDamageBonus;
 		}
 
 		Item* getWeapon(slots_t slot, bool ignoreAmmo) const;
@@ -665,6 +634,8 @@ class Player final : public Creature, public Cylinder
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void drainMana(Creature* attacker, int32_t manaLoss);
+		void addManaSpent(uint64_t amount);
+		void addSkillAdvance(skills_t skill, uint64_t count);
 
 		int32_t getArmor() const override;
 		int32_t getDefense() const override;
@@ -711,7 +682,7 @@ class Player final : public Creature, public Cylinder
 				client->sendCreatureSkull(creature);
 			}
 		}
-		void checkSkullTicks(int32_t ticks);
+		void checkSkullTicks(int64_t ticks);
 
 		bool canWear(uint32_t lookType, uint8_t addons) const;
 		void addOutfit(uint16_t lookType, uint8_t addons);
@@ -930,7 +901,7 @@ class Player final : public Creature, public Cylinder
 				client->sendCancelWalk();
 			}
 		}
-		void sendChangeSpeed(const Creature* creature, double newSpeed) const {
+		void sendChangeSpeed(const Creature* creature, uint32_t newSpeed) const {
 			if (client) {
 				client->sendChangeSpeed(creature, newSpeed);
 			}
@@ -1170,27 +1141,8 @@ class Player final : public Creature, public Cylinder
 		void learnInstantSpell(const std::string& spellName);
 		void forgetInstantSpell(const std::string& spellName);
 		bool hasLearnedInstantSpell(const std::string& spellName) const;
-		bool autoLootGold = false; //NEW! AUTO LOOT GOLD
-		bool autoLootAddon = false; //NEW! AUTO LOOT ADDON
-		uint32_t title = 0; //NEW! TITLE
-
-		//psychonaut autoloot
-		void addAutoLootItem(uint16_t itemId);
-		void removeAutoLootItem(uint16_t itemId);
-		bool getAutoLootItem(uint16_t itemId);
-
-		bool addSkillPoints(uint16_t count);
-		bool addSkillPointsTotal(uint16_t count);
-		bool setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
-					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
-
-		void refreshStats();
-
-		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 
 	private:
-		bool setTitleDescription(PlayerTitle_t titleiD); //NEW! TITLE
-
 		std::forward_list<Condition*> getMuteConditions() const;
 
 		void checkTradeState(const Item* item);
@@ -1237,7 +1189,6 @@ class Player final : public Creature, public Cylinder
 		void internalAddThing(Thing* thing) override;
 		void internalAddThing(uint32_t index, Thing* thing) override;
 
-		std::set<uint32_t> autoLootList;
 		std::unordered_set<uint32_t> attackedSet;
 		std::unordered_set<uint32_t> VIPList;
 
@@ -1268,6 +1219,7 @@ class Player final : public Creature, public Cylinder
 		time_t lastLogout = 0;
 
 		uint64_t experience = 0;
+		uint64_t manaSpent = 0;
 		uint64_t lastAttack = 0;
 		uint64_t bankBalance = 0;
 		uint64_t lastQuestlogUpdate = 0;
@@ -1302,7 +1254,7 @@ class Player final : public Creature, public Cylinder
 		uint32_t conditionImmunities = 0;
 		uint32_t conditionSuppressions = 0;
 		uint32_t level = 1;
-		uint32_t maxLevelReached = 1;
+		uint32_t magLevel = 0;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
 		uint32_t walkTaskEvent = 0;
@@ -1323,11 +1275,10 @@ class Player final : public Creature, public Cylinder
 		int32_t premiumDays = 0;
 		int32_t bloodHitCount = 0;
 		int32_t shieldBlockCount = 0;
+		int32_t offlineTrainingSkill = -1;
+		int32_t offlineTrainingTime = 0;
 		int32_t idleTime = 0;
 
-		uint16_t skillPoints = 0;
-		uint16_t skillPointsTotal = 10;
-		uint16_t magLevel = 0;
 		uint16_t lastStatsTrainingTime = 0;
 		uint16_t staminaMinutes = 2520;
 		uint16_t maxWriteLen = 0;
@@ -1335,13 +1286,8 @@ class Player final : public Creature, public Cylinder
 
 		uint8_t soul = 0;
 		uint8_t blessings = 0;
-		uint8_t resets = 0;
 		uint8_t levelPercent = 0;
-		uint8_t wandMaxDamageBonus = 0;
-		uint8_t rodMaxDamageBonus = 0;
-		uint8_t walkSpeedBonus = 0;
-		uint8_t	attackSpeedBonus = 0;
-		bool isSetingSkills = false;
+		uint8_t magLevelPercent = 0;
 
 		PlayerSex_t sex = PLAYERSEX_FEMALE;
 		OperatingSystem_t operatingSystem = CLIENTOS_NONE;
@@ -1349,12 +1295,6 @@ class Player final : public Creature, public Cylinder
 		tradestate_t tradeState = TRADE_NONE;
 		fightMode_t fightMode = FIGHTMODE_ATTACK;
 		AccountType_t accountType = ACCOUNT_TYPE_NORMAL;
-
-		//NEW! DUAL WIELD SYSTEM
-		attackHand_t lastAttackHand;
-
-		//NEW! DUAL WIELD SYSTEM
-		bool blockSkillAdvance;
 
 		bool chaseMode = false;
 		bool secureMode = false;
@@ -1369,27 +1309,24 @@ class Player final : public Creature, public Cylinder
 		static uint32_t playerAutoID;
 
 		void updateItemsLight(bool internal = false);
-		double getStepSpeed() const override {
-			return std::max<double>(PLAYER_MIN_SPEED, std::min<double>(PLAYER_MAX_SPEED, getSpeed()));
+		int32_t getStepSpeed() const override {
+			return std::max<int32_t>(PLAYER_MIN_SPEED, std::min<int32_t>(PLAYER_MAX_SPEED, getSpeed()));
 		}
-
-		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY WALK SPEED
 		void updateBaseSpeed() {
 			if (!hasFlag(PlayerFlag_SetMaxSpeed)) {
-
-				//increase walk speed in 1 = increase baseSpeed in 2
-				baseSpeed = vocation->getBaseSpeed() + 2 * (level - 1) + (skills[SKILL_DEXTERITY].level - 8) / 2.0f;
-			}
-			else {
+				baseSpeed = vocation->getBaseSpeed() + (2 * (level - 1));
+			} else {
 				baseSpeed = PLAYER_MAX_SPEED;
 			}
 		}
 
 		bool isPromoted() const;
 
-		//CHANGED! SKILL POINTS SYSTEM - DEXTERITY AND DUAL WIELD ATTACK SPEED
-		uint32_t getAttackSpeed() const;
+		uint32_t getAttackSpeed() const {
+			return vocation->getAttackSpeed();
+		}
 
+		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 		double getLostPercent() const;
 		uint64_t getLostExperience() const override {
 			return skillLoss ? static_cast<uint64_t>(experience * getLostPercent()) : 0;

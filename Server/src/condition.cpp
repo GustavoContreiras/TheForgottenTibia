@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -427,7 +427,7 @@ void ConditionAttributes::updatePercentStats(Player* player)
 				break;
 
 			case STAT_MAGICPOINTS:
-				stats[i] = static_cast<int32_t>(player->getMagicLevel() * ((statsPercent[i] - 100) / 100.f));
+				stats[i] = static_cast<int32_t>(player->getBaseMagicLevel() * ((statsPercent[i] - 100) / 100.f));
 				break;
 		}
 	}
@@ -538,82 +538,86 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 
 	switch (param) {
 		case CONDITION_PARAM_SKILL_MELEE: {
-			skills[SKILL_STRENGHT] = value;
+			skills[SKILL_CLUB] = value;
+			skills[SKILL_AXE] = value;
+			skills[SKILL_SWORD] = value;
 			return true;
 		}
 
 		case CONDITION_PARAM_SKILL_MELEEPERCENT: {
-			skillsPercent[SKILL_STRENGHT] = value;
+			skillsPercent[SKILL_CLUB] = value;
+			skillsPercent[SKILL_AXE] = value;
+			skillsPercent[SKILL_SWORD] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_VITALITY: {
-			skills[SKILL_VITALITY] = value;
+		case CONDITION_PARAM_SKILL_FIST: {
+			skills[SKILL_FIST] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_VITALITYPERCENT: {
-			skillsPercent[SKILL_VITALITY] = value;
+		case CONDITION_PARAM_SKILL_FISTPERCENT: {
+			skillsPercent[SKILL_FIST] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_STRENGHT: {
-			skills[SKILL_STRENGHT] = value;
+		case CONDITION_PARAM_SKILL_CLUB: {
+			skills[SKILL_CLUB] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_STRENGHTPERCENT: {
-			skillsPercent[SKILL_STRENGHT] = value;
+		case CONDITION_PARAM_SKILL_CLUBPERCENT: {
+			skillsPercent[SKILL_CLUB] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_FAITH: {
-			skills[SKILL_FAITH] = value;
+		case CONDITION_PARAM_SKILL_SWORD: {
+			skills[SKILL_SWORD] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_FAITHPERCENT: {
-			skillsPercent[SKILL_FAITH] = value;
+		case CONDITION_PARAM_SKILL_SWORDPERCENT: {
+			skillsPercent[SKILL_SWORD] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_INTELLIGENCE: {
-			skills[SKILL_INTELLIGENCE] = value;
+		case CONDITION_PARAM_SKILL_AXE: {
+			skills[SKILL_AXE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_INTELLIGENCEPERCENT: {
-			skillsPercent[SKILL_INTELLIGENCE] = value;
+		case CONDITION_PARAM_SKILL_AXEPERCENT: {
+			skillsPercent[SKILL_AXE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_DEXTERITY: {
-			skills[SKILL_DEXTERITY] = value;
+		case CONDITION_PARAM_SKILL_DISTANCE: {
+			skills[SKILL_DISTANCE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_DEXTERITYPERCENT: {
-			skillsPercent[SKILL_DEXTERITY] = value;
+		case CONDITION_PARAM_SKILL_DISTANCEPERCENT: {
+			skillsPercent[SKILL_DISTANCE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_RESISTANCE: {
-			skills[SKILL_DEFENCE] = value;
+		case CONDITION_PARAM_SKILL_SHIELD: {
+			skills[SKILL_SHIELD] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_RESISTANCEPERCENT: {
-			skillsPercent[SKILL_DEFENCE] = value;
+		case CONDITION_PARAM_SKILL_SHIELDPERCENT: {
+			skillsPercent[SKILL_SHIELD] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_ENDURANCE: {
-			skills[SKILL_ENDURANCE] = value;
+		case CONDITION_PARAM_SKILL_FISHING: {
+			skills[SKILL_FISHING] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SKILL_ENDURANCEPERCENT: {
-			skillsPercent[SKILL_ENDURANCE] = value;
+		case CONDITION_PARAM_SKILL_FISHINGPERCENT: {
+			skillsPercent[SKILL_FISHING] = value;
 			return true;
 		}
 
@@ -662,23 +666,23 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		case CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHCHANCE: {
-			specialSkills[SPECIALSKILL_HITPOINTSLEECHCHANCE] = value;
+		case CONDITION_PARAM_SPECIALSKILL_LIFELEECHCHANCE: {
+			specialSkills[SPECIALSKILL_LIFELEECHCHANCE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHAMOUNT: {
-			specialSkills[SPECIALSKILL_HITPOINTSLEECHAMOUNT] = value;
+		case CONDITION_PARAM_SPECIALSKILL_LIFELEECHAMOUNT: {
+			specialSkills[SPECIALSKILL_LIFELEECHAMOUNT] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHCHANCE: {
-			specialSkills[SPECIALSKILL_MANAPOINTSLEECHCHANCE] = value;
+		case CONDITION_PARAM_SPECIALSKILL_MANALEECHCHANCE: {
+			specialSkills[SPECIALSKILL_MANALEECHCHANCE] = value;
 			return true;
 		}
 
-		case CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHAMOUNT: {
-			specialSkills[SPECIALSKILL_MANAPOINTSLEECHAMOUNT] = value;
+		case CONDITION_PARAM_SPECIALSKILL_MANALEECHAMOUNT: {
+			specialSkills[SPECIALSKILL_MANALEECHAMOUNT] = value;
 			return true;
 		}
 
@@ -760,7 +764,7 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 				message.primary.color = TEXTCOLOR_MAYABLUE;
 				player->sendTextMessage(message);
 
-				SpectatorHashSet spectators;
+				SpectatorVec spectators;
 				g_game.map.getSpectators(spectators, player->getPosition(), false, true);
 				spectators.erase(player);
 				if (!spectators.empty()) {
@@ -791,7 +795,7 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 				message.primary.color = TEXTCOLOR_MAYABLUE;
 				player->sendTextMessage(message);
 
-				SpectatorHashSet spectators;
+				SpectatorVec spectators;
 				g_game.map.getSpectators(spectators, player->getPosition(), false, true);
 				spectators.erase(player);
 				if (!spectators.empty()) {

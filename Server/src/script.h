@@ -17,43 +17,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_THREAD_HOLDER_H_BEB56FC46748E71D15A5BF0773ED2E67
-#define FS_THREAD_HOLDER_H_BEB56FC46748E71D15A5BF0773ED2E67
+#ifndef FS_SCRIPTS_H
+#define FS_SCRIPTS_H
 
-#include <thread>
-#include <atomic>
+#include "luascript.h"
 #include "enums.h"
 
-template <typename Derived>
-class ThreadHolder
+class Scripts
 {
 	public:
-		ThreadHolder() {}
-		void start() {
-			setState(THREAD_STATE_RUNNING);
-			thread = std::thread(&Derived::threadMain, static_cast<Derived*>(this));
-		}
+		Scripts();
+		~Scripts();
 
-		void stop() {
-			setState(THREAD_STATE_CLOSING);
-		}
-
-		void join() {
-			if (thread.joinable()) {
-				thread.join();
-			}
-		}
-	protected:
-		void setState(ThreadState newState) {
-			threadState.store(newState, std::memory_order_relaxed);
-		}
-
-		ThreadState getState() const {
-			return threadState.load(std::memory_order_relaxed);
+		bool loadScripts(std::string folderName, bool isLib, bool reload);
+		LuaScriptInterface& getScriptInterface() {
+			return scriptInterface;
 		}
 	private:
-		std::atomic<ThreadState> threadState{THREAD_STATE_TERMINATED};
-		std::thread thread;
+		LuaScriptInterface scriptInterface;
 };
 
 #endif

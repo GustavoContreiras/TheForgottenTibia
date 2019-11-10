@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -761,16 +761,16 @@ std::string getSpecialSkillName(uint8_t skillid)
 		case SPECIALSKILL_CRITICALHITAMOUNT:
 			return "critical extra damage";
 
-		case SPECIALSKILL_HITPOINTSLEECHCHANCE:
+		case SPECIALSKILL_LIFELEECHCHANCE:
 			return "hitpoints leech chance";
 
-		case SPECIALSKILL_HITPOINTSLEECHAMOUNT:
+		case SPECIALSKILL_LIFELEECHAMOUNT:
 			return "hitpoints leech amount";
 
-		case SPECIALSKILL_MANAPOINTSLEECHCHANCE:
+		case SPECIALSKILL_MANALEECHCHANCE:
 			return "manapoints leech chance";
 
-		case SPECIALSKILL_MANAPOINTSLEECHAMOUNT:
+		case SPECIALSKILL_MANALEECHAMOUNT:
 			return "mana points leech amount";
 
 		default:
@@ -781,26 +781,26 @@ std::string getSpecialSkillName(uint8_t skillid)
 std::string getSkillName(uint8_t skillid)
 {
 	switch (skillid) {
-		case SKILL_VITALITY:
-			return "vitality";
+		case SKILL_FIST:
+			return "fist fighting";
 
-		case SKILL_STRENGHT:
-			return "strenght";
+		case SKILL_CLUB:
+			return "club fighting";
 
-		case SKILL_FAITH:
-			return "faith";
+		case SKILL_SWORD:
+			return "sword fighting";
 
-		case SKILL_INTELLIGENCE:
-			return "intelligence";
+		case SKILL_AXE:
+			return "axe fighting";
 
-		case SKILL_DEXTERITY:
-			return "dexterity";
+		case SKILL_DISTANCE:
+			return "distance fighting";
 
-		case SKILL_DEFENCE:
-			return "defence";
+		case SKILL_SHIELD:
+			return "shielding";
 
-		case SKILL_ENDURANCE:
-			return "endurance";
+		case SKILL_FISHING:
+			return "fishing";
 
 		case SKILL_MAGLEVEL:
 			return "magic level";
@@ -1036,9 +1036,9 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_PUTTHISOBJECTINBOTHHANDS:
 			return "Put this object in both hands.";
 
-	/*	case RETURNVALUE_CANONLYUSEONEWEAPON:
+		case RETURNVALUE_CANONLYUSEONEWEAPON:
 			return "You may only use one weapon.";
-	*/
+
 		case RETURNVALUE_TOOFARAWAY:
 			return "Too far away.";
 
@@ -1108,18 +1108,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_NOTENOUGHMAGICLEVEL:
 			return "You do not have enough magic level.";
-
-		case RETURNVALUE_NOTENOUGHINTELLIGENCE:
-			return "You do not have enough intelligence.";
-
-		case RETURNVALUE_NOTENOUGHFAITH:
-			return "You do not have enough faith.";
-
-		case RETURNVALUE_NOTENOUGHSTRENGHT:
-			return "You do not have enough strenght.";
-
-		case RETURNVALUE_NOTENOUGHENDURANCE:
-			return "You do not have enough endurance.";
 
 		case RETURNVALUE_NOTENOUGHMANA:
 			return "You do not have enough mana.";
@@ -1234,4 +1222,20 @@ const char* getReturnMessage(ReturnValue value)
 int64_t OTSYS_TIME()
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
+
+SpellGroup_t stringToSpellGroup(std::string value)
+{
+	std::string tmpStr = asLowerCaseString(value);
+	if (tmpStr == "attack" || tmpStr == "1") {
+		return SPELLGROUP_ATTACK;
+	} else if (tmpStr == "healing" || tmpStr == "2") {
+		return SPELLGROUP_HEALING;
+	} else if (tmpStr == "support" || tmpStr == "3") {
+		return SPELLGROUP_SUPPORT;
+	} else if (tmpStr == "special" || tmpStr == "4") {
+		return SPELLGROUP_SPECIAL;
+	}
+
+	return SPELLGROUP_NONE;
 }
