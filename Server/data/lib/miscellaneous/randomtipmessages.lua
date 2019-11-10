@@ -8,6 +8,7 @@ TIP_MESSAGES = {
 	"You can buy magical rings near the depot of Rhyves!",
 	"The Guide on the Temple of Rhyves can reset your points!",
 	"Swords, axes, clubs and distance weapons have a chance to do critical hit and bleeding effect!",
-	"Weapon's def uses your Defence skill when you are withou a shield!",
-	"You need to do the Djinn Quest to sell rare items!"
+	"Weapon's def uses your Defence skill when you are without a shield!",
+	"You need to do the Djinn Quest to sell rare items!",
+	"The critical hit is half of the maximum damage you can give!"
 }
