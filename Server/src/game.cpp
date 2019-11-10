@@ -2470,7 +2470,7 @@ void Game::playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay)
 }
 
 void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
-							  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
+								  uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
 {
 	Player* player = getPlayerByID(playerId);
 	if (!player) {
@@ -2494,14 +2494,14 @@ void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vi
 	if (endurance < player->skills[SKILL_ENDURANCE].level)
 		endurance = player->skills[SKILL_ENDURANCE].level;
 
-	uint8_t pointsNeeded = (magic - player->magLevel) * getSkillInfo(SKILL_MAGLEVEL)['cost'] +
-						   (vitality - player->skills[SKILL_VITALITY].level) * getSkillInfo(SKILL_VITALITY)['cost']+ 
-						   (strenght - player->skills[SKILL_STRENGHT].level) * getSkillInfo(SKILL_STRENGHT)['cost']+ 
-						   (defence - player->skills[SKILL_DEFENCE].level) * getSkillInfo(SKILL_DEFENCE)['cost']+ 
-						   (dexterity - player->skills[SKILL_DEXTERITY].level) * getSkillInfo(SKILL_DEXTERITY)['cost']+ 
-						   (intelligence - player->skills[SKILL_INTELLIGENCE].level) * getSkillInfo(SKILL_INTELLIGENCE)['cost']+ 
-						   (faith - player->skills[SKILL_FAITH].level) * getSkillInfo(SKILL_FAITH)['cost']+ 
-						   (endurance - player->skills[SKILL_ENDURANCE].level) * getSkillInfo(SKILL_ENDURANCE)['cost'];
+	uint8_t pointsNeeded = (magic - player->magLevel) * getSkillInfo(SKILL_MAGLEVEL)["cost"] +
+						   (vitality - player->skills[SKILL_VITALITY].level) * getSkillInfo(SKILL_VITALITY)["cost"]+ 
+						   (strenght - player->skills[SKILL_STRENGHT].level) * getSkillInfo(SKILL_STRENGHT)["cost"]+ 
+						   (defence - player->skills[SKILL_DEFENCE].level) * getSkillInfo(SKILL_DEFENCE)["cost"]+ 
+						   (dexterity - player->skills[SKILL_DEXTERITY].level) * getSkillInfo(SKILL_DEXTERITY)["cost"]+ 
+						   (intelligence - player->skills[SKILL_INTELLIGENCE].level) * getSkillInfo(SKILL_INTELLIGENCE)["cost"]+ 
+						   (faith - player->skills[SKILL_FAITH].level) * getSkillInfo(SKILL_FAITH)["cost"]+ 
+						   (endurance - player->skills[SKILL_ENDURANCE].level) * getSkillInfo(SKILL_ENDURANCE)["cost"];
 
 	//uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
 	bool checks = true;
@@ -2524,20 +2524,6 @@ void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vi
 	if (checks) {
 		player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 	}
-}
-
-uint32_t Game::calculateTotalSkillPoints(uint32_t playerId) 
-{
-	Player* player = getPlayerByID(playerId);
-	if (!player) {
-		return 0;
-	}
-
-	uint32_t total = 10;
-	for (uint32_t i = 1; i < player->maxLevelReached; ++i) {
-		total += points[i];
-	}
-	return total;
 }
 
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
