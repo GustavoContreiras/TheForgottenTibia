@@ -40,10 +40,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		avengerPoi = 1076,
 		arbalestPoi = 1077,
 
-		demonArmorAnnihi = 1078,
-		sovAnnihi = 1079,
-		scaAnnihi = 1080,
-		presentBoxAnnihi = 1081,
+		demonArmorAnnihi = 1078, 	demonArmorId = 2494
+		sovAnnihi = 1079, 			sovId = 2400,
+		scaAnnihi = 1080, 			scaId = 2431,
+		presentBoxAnnihi = 1081, 	thunderHammerId = 2421,
 		annihiDoor = 1083,
 
 		parchmentRoomQuest = 1082,
@@ -509,7 +509,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		-- Sov Annihi
 		elseif item.uid == config.sovAnnihi then
 			if player:getStorageValue(config.demonArmorAnnihi) ~= 1 then
-				player:addItem(2494,1)
+				player:addItem(2400,1)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a magic sword.')
 				player:setStorageValue(config.demonArmorAnnihi, 1)
 			else
@@ -519,7 +519,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		-- Sca Annihi
 		elseif item.uid == config.scaAnnihi then
 			if player:getStorageValue(config.demonArmorAnnihi) ~= 1 then
-				player:addItem(2494,1)
+				player:addItem(2431,1)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a stonecutter axe.')
 				player:setStorageValue(config.demonArmorAnnihi, 1)
 			else
@@ -529,8 +529,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		-- Present Box Annihi
 		elseif item.uid == config.presentBoxAnnihi then
 			if player:getStorageValue(config.demonArmorAnnihi) ~= 1 then
-				player:addItem(2494,1)
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a present box.')
+				player:addItem(2421,1)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found a thunder hammer.')
 				player:setStorageValue(config.demonArmorAnnihi, 1)
 			else
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'It is empty.')
