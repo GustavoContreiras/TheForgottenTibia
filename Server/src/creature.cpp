@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -448,6 +448,7 @@ void Creature::onAttackedCreatureChangeZone(ZoneType_t zone)
 	}
 }
 
+//CHANGED! CREATURE FOLLOW ATK WALK SPEED BUG FIX
 void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
                               const Tile* oldTile, const Position& oldPos, bool teleport)
 {
@@ -584,7 +585,9 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 
 	if (creature == followCreature || (creature == this && followCreature)) {
 		if (hasFollowPath) {
-			isUpdatingPath = true;
+			//isUpdatingPath = true; //CHANGED! CREATURE FOLLOW ATK WALK SPEED BUG FIX
+			isUpdatingPath = false;
+			g_dispatcher.addTask(createTask(std::bind(&Game::updateCreatureWalk, &g_game, getID())));
 		}
 
 		if (newPos.z != oldPos.z || !canSee(followCreature->getPosition())) {
@@ -697,7 +700,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 		Item* splash;
 		switch (getRace()) {
 			case RACE_VENOM:
-				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_SLIME);
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREEN);
 				break;
 
 			case RACE_BLOOD:
@@ -1085,7 +1088,7 @@ void Creature::onGainExperience(uint64_t gainExp, Creature* target)
 	gainExp /= 2;
 	master->onGainExperience(gainExp, target);
 
-	SpectatorVec spectators;
+	SpectatorHashSet spectators;
 	g_game.map.getSpectators(spectators, position, false, true);
 	if (spectators.empty()) {
 		return;
@@ -1280,21 +1283,20 @@ Condition* Creature::getCondition(ConditionType_t type, ConditionId_t conditionI
 
 void Creature::executeConditions(uint32_t interval)
 {
-	ConditionList tempConditions{ conditions };
-	for (Condition* condition : tempConditions) {
-		auto it = std::find(conditions.begin(), conditions.end(), condition);
-		if (it == conditions.end()) {
-			continue;
-		}
-
+	auto it = conditions.begin(), end = conditions.end();
+	while (it != end) {
+		Condition* condition = *it;
 		if (!condition->executeCondition(this, interval)) {
-			it = std::find(conditions.begin(), conditions.end(), condition);
-			if (it != conditions.end()) {
-				conditions.erase(it);
-				condition->endCondition(this);
-				onEndCondition(condition->getType());
-				delete condition;
-			}
+			ConditionType_t type = condition->getType();
+
+			it = conditions.erase(it);
+
+			condition->endCondition(this);
+			delete condition;
+
+			onEndCondition(type);
+		} else {
+			++it;
 		}
 	}
 }
@@ -1311,7 +1313,7 @@ bool Creature::hasCondition(ConditionType_t type, uint32_t subId/* = 0*/) const
 			continue;
 		}
 
-		if (condition->getEndTime() >= timeNow || condition->getTicks() == -1) {
+		if (condition->getEndTime() >= timeNow) {
 			return true;
 		}
 	}
@@ -1475,10 +1477,6 @@ CreatureEventList Creature::getCreatureEvents(CreatureEventType_t type)
 	}
 
 	for (CreatureEvent* creatureEvent : eventsList) {
-		if (!creatureEvent->isLoaded()) {
-			continue;
-		}
-		
 		if (creatureEvent->getEventType() == type) {
 			tmpEventList.push_back(creatureEvent);
 		}

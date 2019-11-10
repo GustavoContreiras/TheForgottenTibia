@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,6 @@
 #include "databasemanager.h"
 #include "scheduler.h"
 #include "databasetasks.h"
-#include "script.h"
 #include <fstream>
 
 DatabaseTasks g_databaseTasks;
@@ -45,8 +44,12 @@ Game g_game;
 ConfigManager g_config;
 Monsters g_monsters;
 Vocations g_vocations;
-extern Scripts* g_scripts;
 RSA g_RSA;
+std::vector<std::string> g_allowedClones = {
+	"Knight Level 60", "Knight Level 120",
+	"Mage Level 60",	"Mage Level 120",
+	"Ranger Level 60", "Ranger Level 120",
+	"Empty Level 60", "Empty Level 120" };
 
 std::mutex g_loaderLock;
 std::condition_variable g_loaderSignal;
@@ -83,7 +86,7 @@ int main(int argc, char* argv[])
 	g_loaderSignal.wait(g_loaderUniqueLock);
 
 	if (serviceManager.is_running()) {
-		std::cout << ">> " << g_config.getString(ConfigManager::SERVER_NAME) << " Server Online!" << std::endl << std::endl;
+		std::cout << ">> " << g_config.getString(ConfigManager::SERVER_NAME) << " Server Online on " << g_config.getString(ConfigManager::IP) << std::endl << std::endl;
 		serviceManager.run();
 	} else {
 		std::cout << ">> No services running. The server is NOT online." << std::endl;
@@ -107,9 +110,10 @@ void mainLoader(int, char*[], ServiceManager* services)
 #ifdef _WIN32
 	SetConsoleTitle(STATUS_SERVER_NAME);
 #endif
-	std::cout << STATUS_SERVER_NAME << " - Version " << STATUS_SERVER_VERSION << std::endl;
-	std::cout << "Compiled with " << BOOST_COMPILER << std::endl;
-	std::cout << "Compiled on " << __DATE__ << ' ' << __TIME__ << " for platform ";
+	std::cout << STATUS_SERVER_NAME << " - Version " << STATUS_SERVER_VERSION << " (" << STATUS_SERVER_DEVELOPERS << ")" << std::endl;
+	std::cout << std::endl;
+	std::cout << "This is a fork of " << STATUS_ORIGINAL_SERVER_NAME << " " << STATUS_ORIGINAL_SERVER_VERSION << " (" << STATUS_ORIGINAL_SERVER_DEVELOPERS << ")" << std::endl;
+	std::cout << "Compiled with " << BOOST_COMPILER << " on " << __DATE__ << " (" << __TIME__ << ") for platform ";
 
 #if defined(__amd64__) || defined(_M_X64)
 	std::cout << "x64" << std::endl;
@@ -120,10 +124,6 @@ void mainLoader(int, char*[], ServiceManager* services)
 #else
 	std::cout << "unknown" << std::endl;
 #endif
-	std::cout << std::endl;
-
-	std::cout << "A server developed by " << STATUS_SERVER_DEVELOPERS << std::endl;
-	std::cout << "Visit our forum for updates, support, and resources: http://otland.net/." << std::endl;
 	std::cout << std::endl;
 
 	// check if config.lua or config.lua.dist exist
@@ -158,12 +158,9 @@ void mainLoader(int, char*[], ServiceManager* services)
 #endif
 
 	//set RSA key
-	try {
-		g_RSA.loadPEM("key.pem");
-	} catch(const std::exception& e) {
-		startupErrorMessage(e.what());
-		return;
-	}
+	const char* p("14299623962416399520070177382898895550795403345466153217470516082934737582776038882967213386204600674145392845853859217990626450972452084065728686565928113");
+	const char* q("7630979195970404721891201847792002125535401292779123937207447574596692788513647179235335529307251350570728407373705564708871762033017096809910315212884101");
+	g_RSA.setKey(p, q);
 
 	std::cout << ">> Establishing database connection..." << std::flush;
 
@@ -214,21 +211,9 @@ void mainLoader(int, char*[], ServiceManager* services)
 		return;
 	}
 
-	std::cout << ">> Loading lua scripts" << std::endl;
-	if (!g_scripts->loadScripts("scripts", false, false)) {
-		startupErrorMessage("Failed to load lua scripts");
-		return;
-	}
-
 	std::cout << ">> Loading monsters" << std::endl;
 	if (!g_monsters.loadFromXml()) {
 		startupErrorMessage("Unable to load monsters!");
-		return;
-	}
-
-	std::cout << ">> Loading lua monsters" << std::endl;
-	if (!g_scripts->loadScripts("monster", false, false)) {
-		startupErrorMessage("Failed to load lua monsters");
 		return;
 	}
 
@@ -266,14 +251,14 @@ void mainLoader(int, char*[], ServiceManager* services)
 	g_game.setGameState(GAME_STATE_INIT);
 
 	// Game client protocols
-	services->add<ProtocolGame>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::GAME_PORT)));
-	services->add<ProtocolLogin>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
+	services->add<ProtocolGame>(g_config.getNumber(ConfigManager::GAME_PORT));
+	services->add<ProtocolLogin>(g_config.getNumber(ConfigManager::LOGIN_PORT));
 
 	// OT protocols
-	services->add<ProtocolStatus>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::STATUS_PORT)));
+	services->add<ProtocolStatus>(g_config.getNumber(ConfigManager::STATUS_PORT));
 
 	// Legacy login protocol
-	services->add<ProtocolOld>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
+	services->add<ProtocolOld>(g_config.getNumber(ConfigManager::LOGIN_PORT));
 
 	RentPeriod_t rentPeriod;
 	std::string strRentPeriod = asLowerCaseString(g_config.getString(ConfigManager::HOUSE_RENT_PERIOD));

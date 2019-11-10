@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ Spells::Spells()
 
 Spells::~Spells()
 {
-	clear(false);
+	clear();
 }
 
 TalkActionResult_t Spells::playerSaySpell(Player* player, std::string& words)
@@ -97,30 +97,12 @@ TalkActionResult_t Spells::playerSaySpell(Player* player, std::string& words)
 	return TALKACTION_FAILED;
 }
 
-void Spells::clearMaps(bool fromLua)
+void Spells::clear()
 {
-	for (auto instant = instants.begin(); instant != instants.end(); ) {
-		if (fromLua == instant->second.fromLua) {
-			instant = instants.erase(instant);
-		} else {
-			++instant;
-		}
-	}
+	runes.clear();
+	instants.clear();
 
-	for (auto rune = runes.begin(); rune != runes.end(); ) {
-		if (fromLua == rune->second.fromLua) {
-			rune = runes.erase(rune);
-		} else {
-			++rune;
-		}
-	}
-}
-
-void Spells::clear(bool fromLua)
-{
-	clearMaps(fromLua);
-
-	reInitState(fromLua);
+	scriptInterface.reInitState();
 }
 
 LuaScriptInterface& Spells::getScriptInterface()
@@ -166,36 +148,6 @@ bool Spells::registerEvent(Event_ptr event, const pugi::xml_node&)
 	return false;
 }
 
-bool Spells::registerInstantLuaEvent(InstantSpell* event)
-{
-	InstantSpell_ptr instant { event };
-	if (instant) {
-		std::string words = instant->getWords();
-		auto result = instants.emplace(instant->getWords(), std::move(*instant));
-		if (!result.second) {
-			std::cout << "[Warning - Spells::registerInstantLuaEvent] Duplicate registered instant spell with words: " << words << std::endl;
-		}
-		return result.second;
-	}
-
-	return false;
-}
-
-bool Spells::registerRuneLuaEvent(RuneSpell* event)
-{
-	RuneSpell_ptr rune { event };
-	if (rune) {
-		uint16_t id = rune->getRuneItemId();
-		auto result = runes.emplace(rune->getRuneItemId(), std::move(*rune));
-		if (!result.second) {
-			std::cout << "[Warning - Spells::registerRuneLuaEvent] Duplicate registered rune with id: " << id << std::endl;
-		}
-		return result.second;
-	}
-
-	return false;
-}
-
 Spell* Spells::getSpellByName(const std::string& name)
 {
 	Spell* spell = getRuneSpellByName(name);
@@ -209,11 +161,6 @@ RuneSpell* Spells::getRuneSpell(uint32_t id)
 {
 	auto it = runes.find(id);
 	if (it == runes.end()) {
-		for (auto& rune : runes) {
-			if (rune.second.getId() == id) {
-				return &rune.second;
-			}
-		}
 		return nullptr;
 	}
 	return &it->second;
@@ -266,10 +213,9 @@ InstantSpell* Spells::getInstantSpell(const std::string& words)
 
 InstantSpell* Spells::getInstantSpellById(uint32_t spellId)
 {
-	for (auto& it : instants) {
-		if (it.second.getId() == spellId) {
-			return &it.second;
-		}
+	auto it = std::next(instants.begin(), std::min<uint32_t>(spellId, instants.size()));
+	if (it != instants.end()) {
+		return &it->second;
 	}
 	return nullptr;
 }
@@ -392,6 +338,7 @@ bool CombatSpell::executeCastSpell(Creature* creature, const LuaVariant& var)
 	return scriptInterface->callFunction(2);
 }
 
+//CHANGED! ADDED INT AND FAITH
 bool Spell::configureSpell(const pugi::xml_node& node)
 {
 	pugi::xml_attribute nameAttribute = node.attribute("name");
@@ -490,6 +437,18 @@ bool Spell::configureSpell(const pugi::xml_node& node)
 
 	if ((attr = node.attribute("magiclevel")) || (attr = node.attribute("maglv"))) {
 		magLevel = pugi::cast<uint32_t>(attr.value());
+	}
+
+	if ((attr = node.attribute("intelligence")) || (attr = node.attribute("intlv"))) {
+		intLevel = pugi::cast<uint32_t>(attr.value());
+	}
+
+	if ((attr = node.attribute("faith")) || (attr = node.attribute("faithlv"))) {
+		faithLevel = pugi::cast<uint32_t>(attr.value());
+	}
+
+	if ((attr = node.attribute("strenght")) || (attr = node.attribute("strenghtlv"))) {
+		strenghtLevel = pugi::cast<uint32_t>(attr.value());
 	}
 
 	if ((attr = node.attribute("mana"))) {
@@ -627,6 +586,30 @@ bool Spell::playerSpellCheck(Player* player) const
 
 	if (player->getMagicLevel() < magLevel) {
 		player->sendCancelMessage(RETURNVALUE_NOTENOUGHMAGICLEVEL);
+		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
+		return false;
+	}
+
+	if (player->getSkillLevel(SKILL_INTELLIGENCE) < intLevel) {
+		player->sendCancelMessage(RETURNVALUE_NOTENOUGHINTELLIGENCE);
+		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
+		return false;
+	}
+
+	if (player->getSkillLevel(SKILL_FAITH) < faithLevel) {
+		player->sendCancelMessage(RETURNVALUE_NOTENOUGHFAITH);
+		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
+		return false;
+	}
+
+	if (player->getSkillLevel(SKILL_STRENGHT) < strenghtLevel) {
+		player->sendCancelMessage(RETURNVALUE_NOTENOUGHSTRENGHT);
+		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
+		return false;
+	}
+
+	if (player->getSkillLevel(SKILL_ENDURANCE) < enduranceLevel) {
+		player->sendCancelMessage(RETURNVALUE_NOTENOUGHENDURANCE);
 		g_game.addMagicEffect(player->getPosition(), CONST_ME_POFF);
 		return false;
 	}
@@ -826,7 +809,6 @@ void Spell::postCastSpell(Player* player, bool finishedCast /*= true*/, bool pay
 void Spell::postCastSpell(Player* player, uint32_t manaCost, uint32_t soulCost)
 {
 	if (manaCost > 0) {
-		player->addManaSpent(manaCost);
 		player->changeMana(-static_cast<int32_t>(manaCost));
 	}
 
@@ -866,8 +848,6 @@ bool InstantSpell::configureEvent(const pugi::xml_node& node)
 	if (!TalkAction::configureEvent(node)) {
 		return false;
 	}
-
-	spellType = SPELL_INSTANT;
 
 	pugi::xml_attribute attr;
 	if ((attr = node.attribute("params"))) {
@@ -1146,8 +1126,6 @@ bool RuneSpell::configureEvent(const pugi::xml_node& node)
 		return false;
 	}
 
-	spellType = SPELL_RUNE;
-
 	pugi::xml_attribute attr;
 	if (!(attr = node.attribute("id"))) {
 		std::cout << "[Error - RuneSpell::configureSpell] Rune spell without id." << std::endl;
@@ -1155,6 +1133,7 @@ bool RuneSpell::configureEvent(const pugi::xml_node& node)
 	}
 	runeId = pugi::cast<uint16_t>(attr.value());
 
+	uint32_t charges;
 	if ((attr = node.attribute("charges"))) {
 		charges = pugi::cast<uint32_t>(attr.value());
 	} else {
@@ -1167,6 +1146,8 @@ bool RuneSpell::configureEvent(const pugi::xml_node& node)
 		ItemType& iType = Item::items.getItemType(runeId);
 		iType.runeMagLevel = magLevel;
 		iType.runeLevel = level;
+		iType.runeIntLevel = intLevel;
+		iType.runeFaithLevel = faithLevel;
 		iType.charges = charges;
 	}
 

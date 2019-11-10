@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -193,7 +193,7 @@ class AreaCombat
 		};
 
 		MatrixArea* createArea(const std::list<uint32_t>& list, uint32_t rows);
-		static void copyArea(const MatrixArea* input, MatrixArea* output, MatrixOperation_t op);
+		void copyArea(const MatrixArea* input, MatrixArea* output, MatrixOperation_t op) const;
 
 		MatrixArea* getArea(const Position& centerPos, const Position& targetPos) const {
 			int32_t dx = Position::getOffsetX(targetPos, centerPos);
@@ -284,9 +284,6 @@ class Combat
 		void addCondition(const Condition* condition) {
 			params.conditionList.emplace_front(condition);
 		}
-		void clearConditions() {
-			params.conditionList.clear();
-		}
 		void setPlayerCombatValues(formulaType_t formulaType, double mina, double minb, double maxa, double maxb);
 		void postCombatEffects(Creature* caster, const Position& pos) const {
 			postCombatEffects(caster, pos, params);
@@ -307,7 +304,7 @@ class Combat
 		static void CombatDispelFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
 		static void CombatNullFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
 
-		static void combatTileEffects(const SpectatorVec& spectators, Creature* caster, Tile* tile, const CombatParams& params);
+		static void combatTileEffects(const SpectatorHashSet& spectators, Creature* caster, Tile* tile, const CombatParams& params);
 		CombatDamage getCombatDamage(Creature* creature, Creature* target) const;
 
 		//configureable

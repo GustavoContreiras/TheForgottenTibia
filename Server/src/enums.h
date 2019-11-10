@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,117 @@
 
 #ifndef FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
 #define FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
+
+enum ClientOpcodes : uint8_t
+{
+	ClientEnterAccount = 1,
+	ClientPendingGame = 10,
+	ClientEnterGame = 15,
+	ClientLeaveGame = 20,
+	ClientPing = 29,
+	ClientPingBack = 30,
+
+	// all in game opcodes must be equal or greater than 50
+	ClientFirstGameOpcode = 50,
+
+	// otclient ONLY
+	ClientExtendedOpcode = 50,
+	ClientChangeMapAwareRange = 51,
+
+	// NOTE: add any custom opcodes in this range
+	// 51 - 99
+	ClientSendSetNewSkills = 52,
+	ClientSendVersionToPlay = 53,
+
+	// original tibia ONLY
+	ClientAutoWalk = 100,
+	ClientWalkNorth = 101,
+	ClientWalkEast = 102,
+	ClientWalkSouth = 103,
+	ClientWalkWest = 104,
+	ClientStop = 105,
+	ClientWalkNorthEast = 106,
+	ClientWalkSouthEast = 107,
+	ClientWalkSouthWest = 108,
+	ClientWalkNorthWest = 109,
+	ClientTurnNorth = 111,
+	ClientTurnEast = 112,
+	ClientTurnSouth = 113,
+	ClientTurnWest = 114,
+	ClientEquipItem = 119, // 910
+	ClientMove = 120,
+	ClientInspectNpcTrade = 121,
+	ClientBuyItem = 122,
+	ClientSellItem = 123,
+	ClientCloseNpcTrade = 124,
+	ClientRequestTrade = 125,
+	ClientInspectTrade = 126,
+	ClientAcceptTrade = 127,
+	ClientRejectTrade = 128,
+	//empty ? = 129
+	ClientUseItem = 130,
+	ClientUseItemWith = 131,
+	ClientUseOnCreature = 132,
+	ClientRotateItem = 133,
+	ClientCloseContainer = 135,
+	ClientUpContainer = 136,
+	ClientEditText = 137,
+	ClientEditList = 138,
+	ClientLook = 140,
+	ClientLookCreature = 141,
+	ClientTalk = 150,
+	ClientRequestChannels = 151,
+	ClientJoinChannel = 152,
+	ClientLeaveChannel = 153,
+	ClientOpenPrivateChannel = 154,
+	ClientOpenRuleViolation = 155,
+	ClientCloseRuleViolation = 156,
+	ClientCancelRuleViolation = 157,
+	ClientCloseNpcChannel = 158,
+	ClientChangeFightModes = 160,
+	ClientAttack = 161,
+	ClientFollow = 162,
+	ClientInviteToParty = 163,
+	ClientJoinParty = 164,
+	ClientRevokeInvitation = 165,
+	ClientPassLeadership = 166,
+	ClientLeaveParty = 167,
+	ClientShareExperience = 168,
+	ClientDisbandParty = 169,
+	ClientOpenOwnChannel = 170,
+	ClientInviteToOwnChannel = 171,
+	ClientExcludeFromOwnChannel = 172,
+	ClientCancelAttackAndFollow = 190,
+	ClientUpdateTile = 201,
+	ClientRefreshContainer = 202,
+	ClientBrowseField = 203,
+	ClientSeekInContainer = 204,
+	ClientRequestOutfit = 210,
+	ClientChangeOutfit = 211,
+	ClientMount = 212, // 870
+	ClientAddVip = 220,
+	ClientRemoveVip = 221,
+	ClientEditVip = 222,
+	ClientBugReport = 230,
+	ClientRuleViolation = 231,
+	ClientDebugReport = 232,
+	ClientTransferCoins = 239, // 1080
+	ClientRequestQuestLog = 240,
+	ClientRequestQuestLine = 241,
+	ClientNewRuleViolation = 242, // 910
+	ClientRequestItemInfo = 243, // 910
+	ClientMarketLeave = 244, // 944
+	ClientMarketBrowse = 245, // 944
+	ClientMarketCreate = 246, // 944
+	ClientMarketCancel = 247, // 944
+	ClientMarketAccept = 248, // 944
+	ClientAnswerModalDialog = 249, // 960
+	ClientOpenStore = 250, // 1080
+	ClientRequestStoreOffers = 251, // 1080
+	ClientBuyStoreOffer = 252, // 1080
+	ClientOpenTransactionHistory = 253, // 1080
+	ClientRequestTransactionHistory = 254  // 1080
+};
 
 enum RuleViolationType_t : uint8_t {
 	REPORT_TYPE_NAME = 0,
@@ -89,7 +200,6 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_CHARGES = 1 << 20,
 	ITEM_ATTRIBUTE_FLUIDTYPE = 1 << 21,
 	ITEM_ATTRIBUTE_DOORID = 1 << 22,
-	ITEM_ATTRIBUTE_DECAYTO = 1 << 23,
 
 	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
 };
@@ -152,12 +262,6 @@ enum SpellGroup_t : uint8_t {
 	SPELLGROUP_HEALING = 2,
 	SPELLGROUP_SUPPORT = 3,
 	SPELLGROUP_SPECIAL = 4,
-};
-
-enum SpellType_t : uint8_t {
-	SPELL_UNDEFINED = 0,
-	SPELL_INSTANT = 1,
-	SPELL_RUNE = 2,
 };
 
 enum AccountType_t : uint8_t {
@@ -236,13 +340,13 @@ enum ConditionParam_t {
 	CONDITION_PARAM_TICKINTERVAL = 17,
 	CONDITION_PARAM_FORCEUPDATE = 18,
 	CONDITION_PARAM_SKILL_MELEE = 19,
-	CONDITION_PARAM_SKILL_FIST = 20,
-	CONDITION_PARAM_SKILL_CLUB = 21,
-	CONDITION_PARAM_SKILL_SWORD = 22,
-	CONDITION_PARAM_SKILL_AXE = 23,
-	CONDITION_PARAM_SKILL_DISTANCE = 24,
-	CONDITION_PARAM_SKILL_SHIELD = 25,
-	CONDITION_PARAM_SKILL_FISHING = 26,
+	CONDITION_PARAM_SKILL_VITALITY = 20,
+	CONDITION_PARAM_SKILL_STRENGHT = 21,
+	CONDITION_PARAM_SKILL_FAITH = 22,
+	CONDITION_PARAM_SKILL_INTELLIGENCE = 23,
+	CONDITION_PARAM_SKILL_DEXTERITY = 24,
+	CONDITION_PARAM_SKILL_RESISTANCE = 25,
+	CONDITION_PARAM_SKILL_ENDURANCE = 26,
 	CONDITION_PARAM_STAT_MAXHITPOINTS = 27,
 	CONDITION_PARAM_STAT_MAXMANAPOINTS = 28,
 	// CONDITION_PARAM_STAT_SOULPOINTS = 29,
@@ -253,23 +357,23 @@ enum ConditionParam_t {
 	CONDITION_PARAM_STAT_MAGICPOINTSPERCENT = 34,
 	CONDITION_PARAM_PERIODICDAMAGE = 35,
 	CONDITION_PARAM_SKILL_MELEEPERCENT = 36,
-	CONDITION_PARAM_SKILL_FISTPERCENT = 37,
-	CONDITION_PARAM_SKILL_CLUBPERCENT = 38,
-	CONDITION_PARAM_SKILL_SWORDPERCENT = 39,
-	CONDITION_PARAM_SKILL_AXEPERCENT = 40,
-	CONDITION_PARAM_SKILL_DISTANCEPERCENT = 41,
-	CONDITION_PARAM_SKILL_SHIELDPERCENT = 42,
-	CONDITION_PARAM_SKILL_FISHINGPERCENT = 43,
+	CONDITION_PARAM_SKILL_VITALITYPERCENT = 37,
+	CONDITION_PARAM_SKILL_STRENGHTPERCENT = 38,
+	CONDITION_PARAM_SKILL_FAITHPERCENT = 39,
+	CONDITION_PARAM_SKILL_INTELLIGENCEPERCENT = 40,
+	CONDITION_PARAM_SKILL_DEXTERITYPERCENT = 41,
+	CONDITION_PARAM_SKILL_RESISTANCEPERCENT = 42,
+	CONDITION_PARAM_SKILL_ENDURANCEPERCENT = 43,
 	CONDITION_PARAM_BUFF_SPELL = 44,
 	CONDITION_PARAM_SUBID = 45,
 	CONDITION_PARAM_FIELD = 46,
 	CONDITION_PARAM_DISABLE_DEFENSE = 47,
 	CONDITION_PARAM_SPECIALSKILL_CRITICALHITCHANCE = 48,
 	CONDITION_PARAM_SPECIALSKILL_CRITICALHITAMOUNT = 49,
-	CONDITION_PARAM_SPECIALSKILL_LIFELEECHCHANCE = 50,
-	CONDITION_PARAM_SPECIALSKILL_LIFELEECHAMOUNT = 51,
-	CONDITION_PARAM_SPECIALSKILL_MANALEECHCHANCE = 52,
-	CONDITION_PARAM_SPECIALSKILL_MANALEECHAMOUNT = 53,
+	CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHCHANCE = 50,
+	CONDITION_PARAM_SPECIALSKILL_HITPOINTSLEECHAMOUNT = 51,
+	CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHCHANCE = 52,
+	CONDITION_PARAM_SPECIALSKILL_MANAPOINTSLEECHAMOUNT = 53,
 };
 
 enum BlockType_t : uint8_t {
@@ -280,19 +384,31 @@ enum BlockType_t : uint8_t {
 };
 
 enum skills_t : uint8_t {
-	SKILL_FIST = 0,
-	SKILL_CLUB = 1,
-	SKILL_SWORD = 2,
-	SKILL_AXE = 3,
-	SKILL_DISTANCE = 4,
-	SKILL_SHIELD = 5,
-	SKILL_FISHING = 6,
+	SKILL_VITALITY = 0,
+	SKILL_STRENGHT = 1,
+	SKILL_FAITH = 2,
+	SKILL_INTELLIGENCE = 3,
+	SKILL_DEXTERITY = 4,
+	SKILL_DEFENCE = 5,
+	SKILL_ENDURANCE = 6,
 
 	SKILL_MAGLEVEL = 7,
 	SKILL_LEVEL = 8,
 
-	SKILL_FIRST = SKILL_FIST,
-	SKILL_LAST = SKILL_FISHING
+	SKILL_FIRST = SKILL_VITALITY,
+	SKILL_LAST = SKILL_ENDURANCE
+};
+
+enum criticals_t : uint8_t {
+	CRITICAL_SWORD = 0,
+	CRITICAL_AXE = 1,
+	CRITICAL_CLUB = 2,
+	CRITICAL_ONE_HANDED_DISTANCE = 3,
+	CRITICAL_TWO_HANDED_DISTANCE = 4,
+	CRITICAL_WAND = 5,
+
+	CRITICAL_FIRST = CRITICAL_SWORD,
+	CRITICAL_LAST = CRITICAL_WAND
 };
 
 enum stats_t {
@@ -308,13 +424,13 @@ enum stats_t {
 enum SpecialSkills_t {
 	SPECIALSKILL_CRITICALHITCHANCE,
 	SPECIALSKILL_CRITICALHITAMOUNT,
-	SPECIALSKILL_LIFELEECHCHANCE,
-	SPECIALSKILL_LIFELEECHAMOUNT,
-	SPECIALSKILL_MANALEECHCHANCE,
-	SPECIALSKILL_MANALEECHAMOUNT,
+	SPECIALSKILL_HITPOINTSLEECHCHANCE,
+	SPECIALSKILL_HITPOINTSLEECHAMOUNT,
+	SPECIALSKILL_MANAPOINTSLEECHCHANCE,
+	SPECIALSKILL_MANAPOINTSLEECHAMOUNT,
 
 	SPECIALSKILL_FIRST = SPECIALSKILL_CRITICALHITCHANCE,
-	SPECIALSKILL_LAST = SPECIALSKILL_MANALEECHAMOUNT
+	SPECIALSKILL_LAST = SPECIALSKILL_MANAPOINTSLEECHAMOUNT
 };
 
 enum formulaType_t {
@@ -372,6 +488,17 @@ enum ConditionId_t : int8_t {
 	CONDITIONID_AMMO,
 };
 
+//NEW! TITLE
+enum PlayerTitle_t : uint8_t {
+	TITLE_NONE = 0,
+	TITLE_MAGE = 1,
+	TITLE_SUPPORT = 2,
+	TITLE_RANGER = 3,
+	TITLE_KNIGHT = 4,
+
+	TITLE_LAST = TITLE_KNIGHT
+};
+
 enum PlayerSex_t : uint8_t {
 	PLAYERSEX_FEMALE = 0,
 	PLAYERSEX_MALE = 1,
@@ -419,6 +546,10 @@ enum ReturnValue {
 	RETURNVALUE_DIRECTPLAYERSHOOT,
 	RETURNVALUE_NOTENOUGHLEVEL,
 	RETURNVALUE_NOTENOUGHMAGICLEVEL,
+	RETURNVALUE_NOTENOUGHINTELLIGENCE,
+	RETURNVALUE_NOTENOUGHFAITH,
+	RETURNVALUE_NOTENOUGHSTRENGHT,
+	RETURNVALUE_NOTENOUGHENDURANCE,
 	RETURNVALUE_NOTENOUGHMANA,
 	RETURNVALUE_NOTENOUGHSOUL,
 	RETURNVALUE_YOUAREEXHAUSTED,
@@ -602,10 +733,12 @@ struct CombatDamage
 		int32_t value;
 	} primary, secondary;
 
+	bool isCritical;
 	CombatOrigin origin;
 	CombatDamage()
 	{
 		origin = ORIGIN_NONE;
+		isCritical = false;
 		primary.type = secondary.type = COMBAT_NONE;
 		primary.value = secondary.value = 0;
 	}
@@ -614,14 +747,5 @@ struct CombatDamage
 using MarketOfferList = std::list<MarketOffer>;
 using HistoryMarketOfferList = std::list<HistoryMarketOffer>;
 using ShopInfoList = std::list<ShopInfo>;
-
-enum MonstersEvent_t : uint8_t {
-	MONSTERS_EVENT_NONE = 0,
-	MONSTERS_EVENT_THINK = 1,
-	MONSTERS_EVENT_APPEAR = 2,
-	MONSTERS_EVENT_DISAPPEAR = 3,
-	MONSTERS_EVENT_MOVE = 4,
-	MONSTERS_EVENT_SAY = 5,
-};
 
 #endif

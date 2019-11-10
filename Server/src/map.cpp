@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -234,10 +234,9 @@ void Map::moveCreature(Creature& creature, Tile& newTile, bool forceTeleport/* =
 
 	bool teleport = forceTeleport || !newTile.getGround() || !Position::areInRange<1, 1, 0>(oldPos, newPos);
 
-	SpectatorVec spectators, newPosSpectators;
+	SpectatorHashSet spectators;
 	getSpectators(spectators, oldPos, true);
-	getSpectators(newPosSpectators, newPos, true);
-	spectators.addSpectators(newPosSpectators);
+	getSpectators(spectators, newPos, true);
 
 	std::vector<int32_t> oldStackPosVector;
 	for (Creature* spectator : spectators) {
@@ -300,7 +299,7 @@ void Map::moveCreature(Creature& creature, Tile& newTile, bool forceTeleport/* =
 	newTile.postAddNotification(&creature, &oldTile, 0);
 }
 
-void Map::getSpectatorsInternal(SpectatorVec& spectators, const Position& centerPos, int32_t minRangeX, int32_t maxRangeX, int32_t minRangeY, int32_t maxRangeY, int32_t minRangeZ, int32_t maxRangeZ, bool onlyPlayers) const
+void Map::getSpectatorsInternal(SpectatorHashSet& spectators, const Position& centerPos, int32_t minRangeX, int32_t maxRangeX, int32_t minRangeY, int32_t maxRangeY, int32_t minRangeZ, int32_t maxRangeZ, bool onlyPlayers) const
 {
 	int_fast16_t min_y = centerPos.y + minRangeY;
 	int_fast16_t min_x = centerPos.x + minRangeX;
@@ -340,7 +339,7 @@ void Map::getSpectatorsInternal(SpectatorVec& spectators, const Position& center
 						continue;
 					}
 
-					spectators.emplace_back(creature);
+					spectators.insert(creature);
 				}
 				leafE = leafE->leafE;
 			} else {
@@ -356,7 +355,7 @@ void Map::getSpectatorsInternal(SpectatorVec& spectators, const Position& center
 	}
 }
 
-void Map::getSpectators(SpectatorVec& spectators, const Position& centerPos, bool multifloor /*= false*/, bool onlyPlayers /*= false*/, int32_t minRangeX /*= 0*/, int32_t maxRangeX /*= 0*/, int32_t minRangeY /*= 0*/, int32_t maxRangeY /*= 0*/)
+void Map::getSpectators(SpectatorHashSet& spectators, const Position& centerPos, bool multifloor /*= false*/, bool onlyPlayers /*= false*/, int32_t minRangeX /*= 0*/, int32_t maxRangeX /*= 0*/, int32_t minRangeY /*= 0*/, int32_t maxRangeY /*= 0*/)
 {
 	if (centerPos.z >= MAP_MAX_LAYERS) {
 		return;
@@ -375,8 +374,8 @@ void Map::getSpectators(SpectatorVec& spectators, const Position& centerPos, boo
 			auto it = playersSpectatorCache.find(centerPos);
 			if (it != playersSpectatorCache.end()) {
 				if (!spectators.empty()) {
-					const SpectatorVec& cachedSpectators = it->second;
-					spectators.insert(spectators.end(), cachedSpectators.begin(), cachedSpectators.end());
+					const SpectatorHashSet& cachedSpectators = it->second;
+					spectators.insert(cachedSpectators.begin(), cachedSpectators.end());
 				} else {
 					spectators = it->second;
 				}
@@ -390,16 +389,16 @@ void Map::getSpectators(SpectatorVec& spectators, const Position& centerPos, boo
 			if (it != spectatorCache.end()) {
 				if (!onlyPlayers) {
 					if (!spectators.empty()) {
-						const SpectatorVec& cachedSpectators = it->second;
-						spectators.insert(spectators.end(), cachedSpectators.begin(), cachedSpectators.end());
+						const SpectatorHashSet& cachedSpectators = it->second;
+						spectators.insert(cachedSpectators.begin(), cachedSpectators.end());
 					} else {
 						spectators = it->second;
 					}
 				} else {
-					const SpectatorVec& cachedSpectators = it->second;
+					const SpectatorHashSet& cachedSpectators = it->second;
 					for (Creature* spectator : cachedSpectators) {
 						if (spectator->getPlayer()) {
-							spectators.emplace_back(spectator);
+							spectators.insert(spectator);
 						}
 					}
 				}
@@ -452,10 +451,6 @@ void Map::getSpectators(SpectatorVec& spectators, const Position& centerPos, boo
 void Map::clearSpectatorCache()
 {
 	spectatorCache.clear();
-}
-
-void Map::clearPlayersSpectatorCache()
-{
 	playersSpectatorCache.clear();
 }
 

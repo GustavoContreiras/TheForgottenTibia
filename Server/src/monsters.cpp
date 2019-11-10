@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,19 +41,357 @@ spellBlock_t::~spellBlock_t()
 	}
 }
 
-void MonsterType::loadLoot(MonsterType* monsterType, LootBlock lootBlock)
+uint32_t Monsters::getLootRandom()
 {
-	if (lootBlock.childLoot.empty()) {
-		bool isContainer = Item::items[lootBlock.id].isContainer();
-		if (isContainer) {
-			for (LootBlock child : lootBlock.childLoot) {
-				lootBlock.childLoot.push_back(child);
+	return uniform_random(0, MAX_LOOTCHANCE) / g_config.getNumber(ConfigManager::RATE_LOOT);
+}
+
+//CHANGED! AUTO LOOT BY ME (DEPRECATED)
+/*
+void MonsterType::createLoot(Container* corpse)
+{
+	if (g_config.getNumber(ConfigManager::RATE_LOOT) == 0) {
+		corpse->startDecaying();
+		return;
+	}
+
+	Player* owner = g_game.getPlayerByID(corpse->getCorpseOwner());
+
+	std::ostringstream ss;
+	ss << "Loot of " << nameDescription << ": ";
+
+	if (!owner || owner->getStaminaMinutes() > 840) {
+
+		int goldCoins = 0;
+		int platinumCoins = 0;
+
+		for (auto it = info.lootItems.rbegin(), end = info.lootItems.rend(); it != end; ++it) {
+			auto itemList = createLootItem(*it);
+			if (itemList.empty()) {
+				continue;
+			}
+
+			for (Item* item : itemList) {
+
+				//auto loot gold coin and platinum coin
+				if (owner->autoLootGold == true) {
+					if (item->getID() == 2148 || item->getID() == 2152) {
+						if (item->getID() == 2148) {
+							goldCoins = item->getItemCount();
+						}
+						if (item->getID() == 2152) {
+							platinumCoins = item->getItemCount();
+						}
+						g_game.internalPlayerAddItem(owner, item, true, CONST_SLOT_WHEREEVER);
+					}
+				}
+
+				//auto loot addon itens
+				if (owner->autoLootAddon == true) {
+					if (item->getID() == 5875 || item->getID() == 5876 || item->getID() == 5877 ||
+						item->getID() == 5878 || item->getID() == 5879 || item->getID() == 5880 ||
+						item->getID() == 5881 || item->getID() == 5882 || item->getID() == 5883 ||
+						item->getID() == 5884 || item->getID() == 5885 || item->getID() == 5886 ||
+						item->getID() == 5887 || item->getID() == 5888 || item->getID() == 5889 ||
+						item->getID() == 5890 || item->getID() == 5891 || item->getID() == 5892 ||
+						item->getID() == 5893 || item->getID() == 5894 || item->getID() == 5895 ||
+						item->getID() == 5896 || item->getID() == 5897 || item->getID() == 5898 ||
+						item->getID() == 5899 || item->getID() == 5900 || item->getID() == 5901 ||
+						item->getID() == 5902 || item->getID() == 5903 || item->getID() == 5904 ||
+						item->getID() == 5905 || item->getID() == 5906 || item->getID() == 5919 ||
+						item->getID() == 5902 || item->getID() == 5903 || item->getID() == 5904 ||
+						item->getID() == 5919 || item->getID() == 5920 || item->getID() == 5921 ||
+						item->getID() == 5922 || item->getID() == 5925 || item->getID() == 5930 ||
+						item->getID() == 6097 || item->getID() == 6098 || item->getID() == 6099 ||
+						item->getID() == 6100 || item->getID() == 6101 || item->getID() == 6102 ||
+						item->getID() == 3960 || item->getID() == 2335 || item->getID() == 2336 ||
+						item->getID() == 2337 || item->getID() == 2338 || item->getID() == 2339 ||
+						item->getID() == 2340 || item->getID() == 2341 || item->getID() == 4848 ||
+						item->getID() == 5909 || item->getID() == 5910 || item->getID() == 5911 ||
+						item->getID() == 5912 || item->getID() == 5913 || item->getID() == 5914 ||
+						item->getID() == 5943 || item->getID() == 5944 || item->getID() == 5945 ||
+						item->getID() == 5947 || item->getID() == 5948 || item->getID() == 5953 ||
+						item->getID() == 5954 || item->getID() == 5957 || item->getID() == 6103 ||
+						item->getID() == 6126 || item->getID() == 6500 || item->getID() == 4843 ||
+						item->getID() == 6546 || item->getID() == 5809 || item->getID() == 5810) {
+						g_game.internalPlayerAddItem(owner, item, true, CONST_SLOT_WHEREEVER);
+					}
+				}
+
+				//check containers
+				if (Container* container = item->getContainer()) {
+					if (!createLootContainer(container, *it)) {
+						delete container;
+						continue;
+					}
+				}
+
+				//auto looting just gold
+				if (owner->autoLootGold == true && owner->autoLootAddon == false) {
+					if (item->getID() != 2148 && item->getID() != 2152) {
+						if (g_game.internalAddItem(corpse, item) != RETURNVALUE_NOERROR) {
+							corpse->internalAddThing(item);
+						}
+					}
+				}
+
+				//auto looting just addons
+				else if (owner->autoLootAddon == true && owner->autoLootGold == false) {
+					if (item->getID() != 5875 && item->getID() != 5876 && item->getID() != 5877 &&
+						item->getID() != 5878 && item->getID() != 5879 && item->getID() != 5880 &&
+						item->getID() != 5881 && item->getID() != 5882 && item->getID() != 5883 &&
+						item->getID() != 5884 && item->getID() != 5885 && item->getID() != 5886 &&
+						item->getID() != 5887 && item->getID() != 5888 && item->getID() != 5889 &&
+						item->getID() != 5890 && item->getID() != 5891 && item->getID() != 5892 &&
+						item->getID() != 5893 && item->getID() != 5894 && item->getID() != 5895 &&
+						item->getID() != 5896 && item->getID() != 5897 && item->getID() != 5898 &&
+						item->getID() != 5899 && item->getID() != 5900 && item->getID() != 5901 &&
+						item->getID() != 5902 && item->getID() != 5903 && item->getID() != 5904 &&
+						item->getID() != 5905 && item->getID() != 5906 && item->getID() != 5919 &&
+						item->getID() != 5902 && item->getID() != 5903 && item->getID() != 5904 &&
+						item->getID() != 5919 && item->getID() != 5920 && item->getID() != 5921 &&
+						item->getID() != 5922 && item->getID() != 5925 && item->getID() != 5930 &&
+						item->getID() != 6097 && item->getID() != 6098 && item->getID() != 6099 &&
+						item->getID() != 6100 && item->getID() != 6101 && item->getID() != 6102 &&
+						item->getID() != 3960 && item->getID() != 2335 && item->getID() != 2336 &&
+						item->getID() != 2337 && item->getID() != 2338 && item->getID() != 2339 &&
+						item->getID() != 2340 && item->getID() != 2341 && item->getID() != 4848 &&
+						item->getID() != 5909 && item->getID() != 5910 && item->getID() != 5911 &&
+						item->getID() != 5912 && item->getID() != 5913 && item->getID() != 5914 &&
+						item->getID() != 5943 && item->getID() != 5944 && item->getID() != 5945 &&
+						item->getID() != 5947 && item->getID() != 5948 && item->getID() != 5953 &&
+						item->getID() != 5954 && item->getID() != 5957 && item->getID() != 6103 &&
+						item->getID() != 6126 && item->getID() != 6500 && item->getID() != 4843 &&
+						item->getID() != 6546 && item->getID() != 5809 && item->getID() != 5810) {
+						if (g_game.internalAddItem(corpse, item) != RETURNVALUE_NOERROR) {
+							corpse->internalAddThing(item);
+						}
+					}
+				}
+
+				//auto looting addons and gold
+				else if (owner->autoLootAddon == true && owner->autoLootGold == true) {
+					if (item->getID() != 5875 && item->getID() != 5876 && item->getID() != 5877 &&
+						item->getID() != 5878 && item->getID() != 5879 && item->getID() != 5880 &&
+						item->getID() != 5881 && item->getID() != 5882 && item->getID() != 5883 &&
+						item->getID() != 5884 && item->getID() != 5885 && item->getID() != 5886 &&
+						item->getID() != 5887 && item->getID() != 5888 && item->getID() != 5889 &&
+						item->getID() != 5890 && item->getID() != 5891 && item->getID() != 5892 &&
+						item->getID() != 5893 && item->getID() != 5894 && item->getID() != 5895 &&
+						item->getID() != 5896 && item->getID() != 5897 && item->getID() != 5898 &&
+						item->getID() != 5899 && item->getID() != 5900 && item->getID() != 5901 &&
+						item->getID() != 5902 && item->getID() != 5903 && item->getID() != 5904 &&
+						item->getID() != 5905 && item->getID() != 5906 && item->getID() != 5919 &&
+						item->getID() != 5902 && item->getID() != 5903 && item->getID() != 5904 &&
+						item->getID() != 5919 && item->getID() != 5920 && item->getID() != 5921 &&
+						item->getID() != 5922 && item->getID() != 5925 && item->getID() != 5930 &&
+						item->getID() != 6097 && item->getID() != 6098 && item->getID() != 6099 &&
+						item->getID() != 6100 && item->getID() != 6101 && item->getID() != 6102 &&
+						item->getID() != 3960 && item->getID() != 2335 && item->getID() != 2336 &&
+						item->getID() != 2337 && item->getID() != 2338 && item->getID() != 2339 &&
+						item->getID() != 2340 && item->getID() != 2341 && item->getID() != 4848 &&
+						item->getID() != 5909 && item->getID() != 5910 && item->getID() != 5911 &&
+						item->getID() != 5912 && item->getID() != 5913 && item->getID() != 5914 &&
+						item->getID() != 5943 && item->getID() != 5944 && item->getID() != 5945 &&
+						item->getID() != 5947 && item->getID() != 5948 && item->getID() != 5953 &&
+						item->getID() != 5954 && item->getID() != 5957 && item->getID() != 6103 &&
+						item->getID() != 6126 && item->getID() != 6500 && item->getID() != 4843 &&
+						item->getID() != 6546 && item->getID() != 5809 && item->getID() != 5810 &&
+						item->getID() != 2148 && item->getID() != 2152) {
+						if (g_game.internalAddItem(corpse, item) != RETURNVALUE_NOERROR) {
+							corpse->internalAddThing(item);
+						}
+					}
+				}
+
+				//auto looting nothing
+				else {
+					if (g_game.internalAddItem(corpse, item) != RETURNVALUE_NOERROR) {
+						corpse->internalAddThing(item);
+					}
+				}
 			}
 		}
-		monsterType->info.lootItems.push_back(lootBlock);
+
+		if (owner) {
+
+			if (owner->autoLootGold == true) {
+
+				if (goldCoins > 0) {
+					if (goldCoins == 1) {
+						ss << goldCoins << " gold coin, ";
+					}
+					else if (goldCoins > 1) {
+						ss << goldCoins << " gold coins, ";
+					}
+				}
+
+				if (platinumCoins > 0) {
+					if (platinumCoins == 1) {
+						ss << platinumCoins << " platinum coin, ";
+					}
+					else if (platinumCoins > 1) {
+						ss << platinumCoins << " platinum coins, ";
+					}
+				}
+			}
+
+			ss << corpse->getContentDescription();
+
+			if (owner->getParty()) {
+				owner->getParty()->broadcastPartyLoot(ss.str());
+			} else {
+				owner->sendTextMessage(MESSAGE_LOOT, ss.str());
+			}
+		}
 	} else {
-		monsterType->info.lootItems.push_back(lootBlock);
+		ss << "nothing (due to low stamina)";
+
+		if (owner->getParty()) {
+			owner->getParty()->broadcastPartyLoot(ss.str());
+		} else {
+			owner->sendTextMessage(MESSAGE_LOOT, ss.str());
+		}
 	}
+
+	corpse->startDecaying();
+}
+*/
+//CHANGED! AUTO LOOT PSYCHONAUT
+void MonsterType::createLoot(Container* corpse)
+{
+	if (g_config.getNumber(ConfigManager::RATE_LOOT) == 0) {
+		corpse->startDecaying();
+		return;
+	}
+
+	Player* owner = g_game.getPlayerByID(corpse->getCorpseOwner());
+	std::string autolooted = "";
+
+	if (!owner || owner->getStaminaMinutes() > 840) {
+		for (auto it = info.lootItems.rbegin(), end = info.lootItems.rend(); it != end; ++it) {
+			auto itemList = createLootItem(*it);
+			if (itemList.empty()) {
+				continue;
+			}
+
+			for (Item* item : itemList) {
+
+				//check containers
+				if (Container* container = item->getContainer()) {
+					if (!createLootContainer(container, *it)) {
+						delete container;
+						continue;
+					}
+				}
+
+				if (owner && owner->getAutoLootItem(item->getID())) {
+					g_game.internalPlayerAddItem(owner, item, true, CONST_SLOT_WHEREEVER);
+					autolooted = autolooted + ", " + item->getNameDescription();
+				}
+				else if (g_game.internalAddItem(corpse, item) != RETURNVALUE_NOERROR) {
+					corpse->internalAddThing(item);
+				}
+			}
+		}
+
+		if (owner) {
+			std::ostringstream ss;
+			std::string lootMsg = corpse->getContentDescription();
+			if (autolooted != "" && corpse->getContentDescription() == "nothing") {
+				lootMsg = autolooted.erase(0, 2) + " that was auto looted";
+			}
+			else if (autolooted != "") {
+				lootMsg = corpse->getContentDescription() + " and " + autolooted.erase(0, 2) + " that was auto looted.";
+			}
+
+			ss << "Loot of " << nameDescription << ": " << lootMsg;
+
+			if (owner->getParty()) {
+				owner->getParty()->broadcastPartyLoot(ss.str());
+			}
+			else {
+				owner->sendTextMessage(MESSAGE_LOOT, ss.str());
+			}
+		}
+	}
+	else {
+		std::ostringstream ss;
+		ss << "Loot of " << nameDescription << ": nothing (due to low stamina)";
+
+		if (owner->getParty()) {
+			owner->getParty()->broadcastPartyLoot(ss.str());
+		}
+		else {
+			owner->sendTextMessage(MESSAGE_LOOT, ss.str());
+		}
+	}
+
+	corpse->startDecaying();
+}
+
+std::vector<Item*> MonsterType::createLootItem(const LootBlock& lootBlock)
+{
+	int32_t itemCount = 0;
+
+	uint32_t randvalue = Monsters::getLootRandom();
+	if (randvalue < lootBlock.chance) {
+		if (Item::items[lootBlock.id].stackable) {
+			itemCount = randvalue % lootBlock.countmax + 1;
+		} else {
+			itemCount = 1;
+		}
+	}
+
+	std::vector<Item*> itemList;
+	while (itemCount > 0) {
+		uint16_t n = static_cast<uint16_t>(std::min<int32_t>(itemCount, 100));
+		Item* tmpItem = Item::CreateItem(lootBlock.id, n);
+		if (!tmpItem) {
+			break;
+		}
+
+		itemCount -= n;
+
+		if (lootBlock.subType != -1) {
+			tmpItem->setSubType(lootBlock.subType);
+		}
+
+		if (lootBlock.actionId != -1) {
+			tmpItem->setActionId(lootBlock.actionId);
+		}
+
+		if (!lootBlock.text.empty()) {
+			tmpItem->setText(lootBlock.text);
+		}
+
+		itemList.push_back(tmpItem);
+	}
+	return itemList;
+}
+
+bool MonsterType::createLootContainer(Container* parent, const LootBlock& lootblock)
+{
+	auto it = lootblock.childLoot.begin(), end = lootblock.childLoot.end();
+	if (it == end) {
+		return true;
+	}
+
+	for (; it != end && parent->size() < parent->capacity(); ++it) {
+		auto itemList = createLootItem(*it);
+		for (Item* tmpItem : itemList) {
+			if (Container* container = tmpItem->getContainer()) {
+				if (!createLootContainer(container, *it)) {
+					delete container;
+				} else {
+					parent->internalAddThing(container);
+				}
+			} else {
+				parent->internalAddThing(tmpItem);
+			}
+		}
+	}
+	return !parent->empty();
 }
 
 bool Monsters::loadFromXml(bool reloading /*= false*/)
@@ -493,237 +831,6 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 				}
 			}
 		}
-	}
-
-	sb.spell = combatSpell;
-	if (combatSpell) {
-		sb.combatSpell = true;
-	}
-	return true;
-}
-
-bool Monsters::deserializeSpell(MonsterSpell* spell, spellBlock_t& sb, const std::string& description)
-{
-	if (!spell->scriptName.empty()) {
-		spell->isScripted = true;
-	} else if (!spell->name.empty()) {
-		spell->isScripted = false;
-	} else {
-		return false;
-	}
-
-	sb.speed = spell->interval;
-
-	if (spell->chance > 100) {
-		sb.chance = 100;
-	} else {
-		sb.chance = spell->chance;
-	}
-
-	if (spell->range > (Map::maxViewportX * 2)) {
-		spell->range = Map::maxViewportX * 2;
-	}
-	sb.range = spell->range;
-
-	sb.minCombatValue = spell->minCombatValue;
-	sb.maxCombatValue = spell->maxCombatValue;
-	if (std::abs(sb.minCombatValue) > std::abs(sb.maxCombatValue)) {
-		int32_t value = sb.maxCombatValue;
-		sb.maxCombatValue = sb.minCombatValue;
-		sb.minCombatValue = value;
-	}
-
-	sb.spell = g_spells->getSpellByName(spell->name);
-	if (sb.spell) {
-		return true;
-	}
-
-	CombatSpell* combatSpell = nullptr;
-
-	if (spell->isScripted) {
-		std::unique_ptr<CombatSpell> combatSpellPtr(new CombatSpell(nullptr, spell->needTarget, spell->needDirection));
-		if (!combatSpellPtr->loadScript("data/" + g_spells->getScriptBaseName() + "/scripts/" + spell->scriptName)) {
-			std::cout << "cannot find file" << std::endl;
-			return false;
-		}
-
-		if (!combatSpellPtr->loadScriptCombat()) {
-			return false;
-		}
-
-		combatSpell = combatSpellPtr.release();
-		combatSpell->getCombat()->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
-	} else {
-		std::unique_ptr<Combat> combat{ new Combat };
-		sb.combatSpell = true;
-
-		if (spell->length > 0) {
-			spell->spread = std::max<int32_t>(0, spell->spread);
-
-			AreaCombat* area = new AreaCombat();
-			area->setupArea(spell->length, spell->spread);
-			combat->setArea(area);
-
-			spell->needDirection = true;
-		}
-
-		if (spell->radius > 0) {
-			AreaCombat* area = new AreaCombat();
-			area->setupArea(spell->radius);
-			combat->setArea(area);
-		}
-
-		std::string tmpName = asLowerCaseString(spell->name);
-
-		if (tmpName == "melee") {
-			sb.isMelee = true;
-
-			if (spell->attack > 0 && spell->skill > 0) {
-				sb.minCombatValue = 0;
-				sb.maxCombatValue = -Weapons::getMaxMeleeDamage(spell->skill, spell->attack);
-			}
-
-			ConditionType_t conditionType = CONDITION_NONE;
-			int32_t minDamage = 0;
-			int32_t maxDamage = 0;
-			uint32_t tickInterval = 2000;
-
-			if (spell->conditionType != CONDITION_NONE) {
-				conditionType = spell->conditionType;
-
-				minDamage = spell->conditionMinDamage;
-				maxDamage = minDamage;
-				if (spell->tickInterval != 0) {
-					tickInterval = spell->tickInterval;
-				}
-
-				Condition* condition = getDamageCondition(conditionType, maxDamage, minDamage, spell->conditionStartDamage, tickInterval);
-				combat->addCondition(condition);
-			}
-
-			sb.range = 1;
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE);
-			combat->setParam(COMBAT_PARAM_BLOCKARMOR, 1);
-			combat->setParam(COMBAT_PARAM_BLOCKSHIELD, 1);
-			combat->setOrigin(ORIGIN_MELEE);
-		} else if (tmpName == "combat") {
-			if (spell->combatType == COMBAT_PHYSICALDAMAGE) {
-				combat->setParam(COMBAT_PARAM_BLOCKARMOR, 1);
-				combat->setOrigin(ORIGIN_RANGED);
-			} else if (spell->combatType == COMBAT_HEALING) {
-				combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			}
-			combat->setParam(COMBAT_PARAM_TYPE, spell->combatType);
-		} else if (tmpName == "speed") {
-			int32_t speedChange = 0;
-			int32_t duration = 10000;
-
-			if (spell->duration != 0) {
-				duration = spell->duration;
-			}
-
-			if (spell->speedChange != 0) {
-				speedChange = spell->speedChange;
-				if (speedChange < -1000) {
-					//cant be slower than 100%
-					speedChange = -1000;
-				}
-			}
-
-			ConditionType_t conditionType;
-			if (speedChange > 0) {
-				conditionType = CONDITION_HASTE;
-				combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			} else {
-				conditionType = CONDITION_PARALYZE;
-			}
-
-			ConditionSpeed* condition = static_cast<ConditionSpeed*>(Condition::createCondition(CONDITIONID_COMBAT, conditionType, duration, 0));
-			condition->setFormulaVars(speedChange / 1000.0, 0, speedChange / 1000.0, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "outfit") {
-			int32_t duration = 10000;
-
-			if (spell->duration != 0) {
-				duration = spell->duration;
-			}
-
-			ConditionOutfit* condition = static_cast<ConditionOutfit*>(Condition::createCondition(CONDITIONID_COMBAT, CONDITION_OUTFIT, duration, 0));
-			condition->setOutfit(spell->outfit);
-			combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "invisible") {
-			int32_t duration = 10000;
-
-			if (spell->duration != 0) {
-				duration = spell->duration;
-			}
-
-			Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_INVISIBLE, duration, 0);
-			combat->setParam(COMBAT_PARAM_AGGRESSIVE, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "drunk") {
-			int32_t duration = 10000;
-
-			if (spell->duration != 0) {
-				duration = spell->duration;
-			}
-
-			Condition* condition = Condition::createCondition(CONDITIONID_COMBAT, CONDITION_DRUNK, duration, 0);
-			combat->addCondition(condition);
-		} else if (tmpName == "firefield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_FIREFIELD_PVP_FULL);
-		} else if (tmpName == "poisonfield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_POISONFIELD_PVP);
-		} else if (tmpName == "energyfield") {
-			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_ENERGYFIELD_PVP);
-		} else if (tmpName == "condition") {
-			uint32_t tickInterval = 2000;
-
-			if (spell->conditionType == CONDITION_NONE) {
-				std::cout << "[Error - Monsters::deserializeSpell] - " << description << " - Condition is not set for: " << spell->name << std::endl;
-			}
-
-			if (spell->tickInterval != 0) {
-				int32_t value = spell->tickInterval;
-				if (value > 0) {
-					tickInterval = value;
-				}
-			}
-
-			int32_t minDamage = std::abs(spell->conditionMinDamage);
-			int32_t maxDamage = std::abs(spell->conditionMaxDamage);
-			int32_t startDamage = 0;
-
-			if (spell->conditionStartDamage != 0) {
-				int32_t value = std::abs(spell->conditionStartDamage);
-				if (value <= minDamage) {
-					startDamage = value;
-				}
-			}
-
-			Condition* condition = getDamageCondition(spell->conditionType, maxDamage, minDamage, startDamage, tickInterval);
-			combat->addCondition(condition);
-		} else if (tmpName == "strength") {
-			//
-		} else if (tmpName == "effect") {
-			//
-		} else {
-			std::cout << "[Error - Monsters::deserializeSpell] - " << description << " - Unknown spell name: " << spell->name << std::endl;
-		}
-
-		if (spell->needTarget) {
-			if (spell->shoot != CONST_ANI_NONE) {
-				combat->setParam(COMBAT_PARAM_DISTANCEEFFECT, spell->shoot);
-			}
-		}
-
-		if (spell->effect != CONST_ME_NONE) {
-			combat->setParam(COMBAT_PARAM_EFFECT, spell->effect);
-		}
-
-		combat->setPlayerCombatValues(COMBAT_FORMULA_DAMAGE, sb.minCombatValue, 0, sb.maxCombatValue, 0);
-		combatSpell = new CombatSpell(combat.release(), spell->needTarget, spell->needDirection);
 	}
 
 	sb.spell = combatSpell;
@@ -1322,34 +1429,4 @@ MonsterType* Monsters::getMonsterType(const std::string& name)
 		return loadMonster(it2->second, name);
 	}
 	return &it->second;
-}
-
-void Monsters::addMonsterType(const std::string& name, MonsterType* mType)
-{
-	mType = &monsters[asLowerCaseString(name)];
-}
-
-bool Monsters::loadCallback(LuaScriptInterface* scriptInterface, MonsterType* mType)
-{
-	if (!scriptInterface) {
-		std::cout << "Failure: [Monsters::loadCallback] scriptInterface == nullptr." << std::endl;
-		return false;
-	}
-
-	int32_t id = scriptInterface->getEvent();
-
-	if (mType->info.eventType == MONSTERS_EVENT_THINK) {
-		mType->info.thinkEvent = id;
-	} else if (mType->info.eventType == MONSTERS_EVENT_APPEAR) {
-		mType->info.creatureAppearEvent = id;
-	} else if (mType->info.eventType == MONSTERS_EVENT_DISAPPEAR) {
-		mType->info.creatureDisappearEvent = id;
-	} else if (mType->info.eventType == MONSTERS_EVENT_MOVE) {
-		mType->info.creatureMoveEvent = id;
-	} else if (mType->info.eventType == MONSTERS_EVENT_SAY) {
-		mType->info.creatureSayEvent = id;
-	}
-
-	scriptInterface->getScriptEnv()->setScriptId(id, scriptInterface);
-	return true;
 }

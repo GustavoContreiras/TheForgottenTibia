@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,25 +85,11 @@ void House::setOwner(uint32_t guid, bool updateDatabase/* = true*/, Player* play
 		for (Door* door : doorSet) {
 			door->setAccessList("");
 		}
-	} else {
-		std::string strRentPeriod = asLowerCaseString(g_config.getString(ConfigManager::HOUSE_RENT_PERIOD));
-		time_t currentTime = time(nullptr);
-		if (strRentPeriod == "yearly") {
-		    currentTime += 24 * 60 * 60 * 365;
-		} else if (strRentPeriod == "monthly") {
-		    currentTime += 24 * 60 * 60 * 30;
-		} else if (strRentPeriod == "weekly") {
-		    currentTime += 24 * 60 * 60 * 7;
-		} else if (strRentPeriod == "daily") {
-		    currentTime += 24 * 60 * 60;
-		} else {
-		    currentTime = 0;
-		}
 
-		paidUntil = currentTime;
+		//reset paid date
+		paidUntil = 0;
+		rentWarnings = 0;
 	}
-
-	rentWarnings = 0;
 
 	if (guid != 0) {
 		std::string name = IOLoginData::getNameByGuid(guid);
@@ -120,13 +106,13 @@ void House::updateDoorDescription() const
 {
 	std::ostringstream ss;
 	if (owner != 0) {
-		ss << "It belongs to house '" << houseName << "'. " << ownerName << " owns this house.";
+		ss << "House '" << houseName << "'.\nIt belongs to " << ownerName << ".";
 	} else {
-		ss << "It belongs to house '" << houseName << "'. Nobody owns this house.";
+		ss << "House '" << houseName << "'.\nNobody owns this house.";
 
 		const int32_t housePrice = g_config.getNumber(ConfigManager::HOUSE_PRICE);
 		if (housePrice != -1) {
-			ss << " It costs " << (houseTiles.size() * housePrice) << " gold coins.";
+			ss << "\nIt costs " << (houseTiles.size() * housePrice) << " gold coins.";
 		}
 	}
 

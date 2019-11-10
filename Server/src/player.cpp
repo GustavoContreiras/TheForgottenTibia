@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #include "otpch.h"
 
 #include <bitset>
+#include <string>
+#include <iomanip>
 
 #include "bed.h"
 #include "chat.h"
@@ -33,6 +35,8 @@
 #include "movement.h"
 #include "scheduler.h"
 #include "weapons.h"
+
+using namespace std;
 
 extern ConfigManager g_config;
 extern Game g_game;
@@ -50,6 +54,7 @@ uint32_t Player::playerAutoID = 0x10000000;
 Player::Player(ProtocolGame_ptr p) :
 	Creature(), lastPing(OTSYS_TIME()), lastPong(lastPing), inbox(new Inbox(ITEM_INBOX)), client(std::move(p))
 {
+	lastAttackHand = HAND_LEFT;
 	inbox->incrementReferenceCounter();
 }
 
@@ -106,32 +111,41 @@ std::string Player::getDescription(int32_t lookDistance) const
 	if (lookDistance == -1) {
 		s << "yourself.";
 
-		if (group->access) {
-			s << " You are " << group->name << '.';
-		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " You are " << vocation->getVocDescription() << '.';
-		} else {
-			s << " You have no vocation.";
+		if (title == TITLE_MAGE) {
+			s << " You were nominated as a mage.";
+		}
+		else if (title == TITLE_SUPPORT) {
+			s << " You were nominated as a supporter.";
+		}
+		else if (title == TITLE_RANGER) {
+			s << " You were nominated as a ranger.";
+		}
+		else if (title == TITLE_KNIGHT) {
+			s << " You were nominated as a knight.";
 		}
 	} else {
 		s << name;
 		if (!group->access) {
 			s << " (Level " << level << ')';
+			if (title == TITLE_MAGE) {
+				s << " (Mage)";
+			}
+			else if (title == TITLE_SUPPORT) {
+				s << " (Supporter)";
+			}
+			else if (title == TITLE_RANGER) {
+				s << " (Ranger)";
+			}
+			else if (title == TITLE_KNIGHT) {
+				s << " (Knight)";
+			}
 		}
 		s << '.';
 
 		if (sex == PLAYERSEX_FEMALE) {
-			s << " She";
+			//s << " She";
 		} else {
-			s << " He";
-		}
-
-		if (group->access) {
-			s << " is " << group->name << '.';
-		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " is " << vocation->getVocDescription() << '.';
-		} else {
-			s << " has no vocation.";
+			//s << " He";
 		}
 	}
 
@@ -203,6 +217,25 @@ void Player::removeConditionSuppressions(uint32_t conditions)
 	conditionSuppressions &= ~conditions;
 }
 
+//NEW! PSYCHONAUT AUTO LOOT SYSTEM
+void Player::addAutoLootItem(uint16_t itemId)
+{
+	autoLootList.insert(itemId);
+}
+
+//NEW! PSYCHONAUT AUTO LOOT SYSTEM
+void Player::removeAutoLootItem(uint16_t itemId)
+{
+	autoLootList.erase(itemId);
+}
+
+//NEW! PSYCHONAUT AUTO LOOT SYSTEM
+bool Player::getAutoLootItem(const uint16_t itemId)
+{
+	return autoLootList.find(itemId) != autoLootList.end();
+}
+
+//NEW! QUIVER SYSTEM
 Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 {
 	Item* item = inventory[slot];
@@ -219,17 +252,44 @@ Item* Player::getWeapon(slots_t slot, bool ignoreAmmo) const
 		const ItemType& it = Item::items[item->getID()];
 		if (it.ammoType != AMMO_NONE) {
 			Item* ammoItem = inventory[CONST_SLOT_AMMO];
+
+			// NEW!
+			if (!ammoItem) {
+				return nullptr;
+			}
+
+			if (Container* container = ammoItem->getContainer()) {
+				for (ContainerIterator iter = container->iterator(); iter.hasNext(); iter.advance()) {
+					const ItemType& itr = Item::items[(*iter)->getID()];
+					if (itr.ammoType == it.ammoType) {
+						item = (*iter);
+						return item;
+					}
+				}
+			}
+			// end new
+
 			if (!ammoItem || ammoItem->getAmmoType() != it.ammoType) {
 				return nullptr;
 			}
 			item = ammoItem;
 		}
 	}
+	
 	return item;
 }
 
+//NEW! DUAL WIELD SYSTEM
 Item* Player::getWeapon(bool ignoreAmmo/* = false*/) const
 {
+	// NEW! if player is dual wielding, we already assured he has weapons in both hands
+	if (isDualWielding()) {
+		Item* item = getWeapon(getAttackHand(), ignoreAmmo);
+		if (item) {
+			return item; //NEW!
+		}
+	}
+
 	Item* item = getWeapon(CONST_SLOT_LEFT, ignoreAmmo);
 	if (item) {
 		return item;
@@ -251,33 +311,34 @@ WeaponType_t Player::getWeaponType() const
 	return item->getWeaponType();
 }
 
+//CHANGED! SKILL POINTS SYSTEM
 int32_t Player::getWeaponSkill(const Item* item) const
 {
-	if (!item) {
-		return getSkillLevel(SKILL_FIST);
+	if (!item) { //STRENGHT
+		return getSkillLevel(SKILL_STRENGHT);
 	}
 
 	int32_t attackSkill;
 
 	WeaponType_t weaponType = item->getWeaponType();
 	switch (weaponType) {
-		case WEAPON_SWORD: {
-			attackSkill = getSkillLevel(SKILL_SWORD);
+		case WEAPON_SWORD: { //STRENGHT
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
-		case WEAPON_CLUB: {
-			attackSkill = getSkillLevel(SKILL_CLUB);
+		case WEAPON_CLUB: { //STRENGHT
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
-		case WEAPON_AXE: {
-			attackSkill = getSkillLevel(SKILL_AXE);
+		case WEAPON_AXE: { //STRENGHT
+			attackSkill = getSkillLevel(SKILL_STRENGHT);
 			break;
 		}
 
-		case WEAPON_DISTANCE: {
-			attackSkill = getSkillLevel(SKILL_DISTANCE);
+		case WEAPON_DISTANCE: { //DEXTERITY
+			attackSkill = getSkillLevel(SKILL_DEXTERITY);
 			break;
 		}
 
@@ -303,39 +364,87 @@ int32_t Player::getArmor() const
 	return static_cast<int32_t>(armor * vocation->armorMultiplier);
 }
 
+//NEW! DUAL WIELD SYSTEM
 void Player::getShieldAndWeapon(const Item*& shield, const Item*& weapon) const
 {
 	shield = nullptr;
 	weapon = nullptr;
 
-	for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
+/*	for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
 		Item* item = inventory[slot];
 		if (!item) {
 			continue;
+		}*/
+
+	if (isDualWielding()) {
+		if (lastAttackHand == HAND_LEFT) {
+			shield = inventory[CONST_SLOT_RIGHT];
+			weapon = inventory[CONST_SLOT_LEFT];
 		}
-
-		switch (item->getWeaponType()) {
-			case WEAPON_NONE:
-				break;
-
-			case WEAPON_SHIELD: {
-				if (!shield || item->getDefense() > shield->getDefense()) {
-					shield = item;
-				}
-				break;
+		else {
+			shield = inventory[CONST_SLOT_LEFT];
+			weapon = inventory[CONST_SLOT_RIGHT];
+		}
+	}
+	else {
+		for (uint32_t slot = CONST_SLOT_RIGHT; slot <= CONST_SLOT_LEFT; slot++) {
+			Item * item = inventory[slot];
+			if (!item) {
+				continue;
 			}
 
-			default: { // weapons that are not shields
-				weapon = item;
-				break;
+			switch (item->getWeaponType()) {
+				case WEAPON_NONE:
+					break;
+
+				case WEAPON_SHIELD: {
+					if (!shield || item->getDefense() > shield->getDefense()) {
+						shield = item;
+					}
+					break;
+				}
+
+				default: { // weapons that are not shields
+					weapon = item;
+					break;
+				}
 			}
 		}
 	}
 }
 
+//NEW! DUAL WIELD SYSTEM
+bool Player::isDualWielding() const
+{
+	/* Not checking dual wield because the player can't wear two weapons worn without it */
+	if (this->getWeapon(CONST_SLOT_LEFT, true) && this->getWeapon(CONST_SLOT_RIGHT, true)) {
+		return true;
+	}
+	return false;
+}
+
+uint32_t Player::getAttackSpeed() const
+{
+	if (isDualWielding()) {
+		return g_config.getNumber(ConfigManager::DUAL_WIELDING_ATTACK_SPEED);
+	}
+	else {
+		//return 2000 - (skills[SKILL_DEXTERITY].level - 8) * 2.5;
+		return 2000 - (skills[SKILL_DEXTERITY].level - g_game.getSkillInfo(SKILL_DEXTERITY)["initial"]) * g_config.getNumber(ConfigManager::ATTACKSPEED_DEXTERITY_FACTOR);
+	}
+}
+
+//NEW! TITLE
+bool Player::setTitleDescription(PlayerTitle_t titleId)
+{
+	title = titleId;
+	return true;
+}
+
+//CHANGED TO MAKE DEFENCE SKILL WORK WITH WEAPON
 int32_t Player::getDefense() const
 {
-	int32_t defenseSkill = getSkillLevel(SKILL_FIST);
+	int32_t defenseSkill = 0;
 	int32_t defenseValue = 7;
 	const Item* weapon;
 	const Item* shield;
@@ -343,12 +452,12 @@ int32_t Player::getDefense() const
 
 	if (weapon) {
 		defenseValue = weapon->getDefense() + weapon->getExtraDefense();
-		defenseSkill = getWeaponSkill(weapon);
+		defenseSkill = getSkillLevel(SKILL_DEFENCE); // original: getWeaponSkill(weapon);
 	}
 
 	if (shield) {
 		defenseValue = weapon != nullptr ? shield->getDefense() + weapon->getExtraDefense() : shield->getDefense();
-		defenseSkill = getSkillLevel(SKILL_SHIELD);
+		defenseSkill = (getSkillLevel(SKILL_DEFENCE) * g_config.getNumber(ConfigManager::SHIELD_DEFENCEFACTOR) / 100) + (getSkillLevel(SKILL_DEXTERITY) * g_config.getNumber(ConfigManager::SHIELD_DEXTERITYFACTOR) / 100);
 	}
 
 	if (defenseSkill == 0) {
@@ -434,59 +543,376 @@ void Player::updateInventoryWeight()
 	}
 }
 
-void Player::addSkillAdvance(skills_t skill, uint64_t count)
+//CHANGED! SKILL POINTS SYSTEM - STATS GAIN
+bool Player::addSkillPoints(uint16_t count)
 {
-	uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
-	uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-	if (currReqTries >= nextReqTries) {
-		//player has reached max skill
-		return;
+	skillPoints += count;
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
+			break;
+		}
+	}
+	return true;
+}
+
+//CHANGED! SKILL POINTS SYSTEM - STATS GAIN
+bool Player::addSkillPointsTotal(uint16_t count)
+{
+	skillPointsTotal += count;
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
+			break;
+		}
+	}
+	return true;
+}
+
+//CHANGED! SKILL POINTS SYSTEM - STATS GAIN
+bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence, 
+					   uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance)
+{
+	if (isSetingSkills) {
+		return false;
 	}
 
-	g_events->eventPlayerOnGainSkillTries(this, skill, count);
-	if (count == 0) {
-		return;
+	isSetingSkills = true;
+
+	std::unordered_map<std::string, uint32_t> magicInfo = g_game.getSkillInfo(SKILL_MAGLEVEL);	
+	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
+	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);
+	std::unordered_map<std::string, uint32_t> defenceInfo = g_game.getSkillInfo(SKILL_DEFENCE);
+	std::unordered_map<std::string, uint32_t> intelligenceInfo = g_game.getSkillInfo(SKILL_INTELLIGENCE);
+	std::unordered_map<std::string, uint32_t> dexterityInfo = g_game.getSkillInfo(SKILL_DEXTERITY);
+	std::unordered_map<std::string, uint32_t> faithInfo = g_game.getSkillInfo(SKILL_FAITH);
+	std::unordered_map<std::string, uint32_t> enduranceInfo = g_game.getSkillInfo(SKILL_ENDURANCE);
+
+	double maxMagic 		= 10;
+	double maxVitality 		= ceil( std::max( this->level * 0.8 + 3.2 + 8, this->level * 1.0) );
+	double maxStrenght 		= maxVitality;
+	double maxIntelligence 	= maxVitality;
+	double maxFaith 		= maxVitality;
+	double maxDexterity 	= maxVitality;
+	double maxDefence 		= maxVitality;
+	double maxEndurance 	= maxVitality;
+
+	if (this->level >= 9) {
+		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
+		maxVitality 	= ceil( std::max( this->level * 1.6 - 3.2 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
 	}
 
-	bool sendUpdateSkills = false;
-	while ((skills[skill].tries + count) >= nextReqTries) {
-		count -= nextReqTries - skills[skill].tries;
-		skills[skill].level++;
-		skills[skill].tries = 0;
-		skills[skill].percent = 0;
+	if (this->level >= 41) {
+		maxMagic 		= ceil( std::max( this->level * std::max( 2.5 - (0.02 * (this->level - 8)), 1.0 ) * 0.5, this->level * 1.0 ) );
+		maxVitality 	= ceil( std::max( this->level * 1.2 + 12.8 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
+	}
 
-		std::ostringstream ss;
-		ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+	if (this->level >= 61) {
+        maxMagic 		= ceil(60 + (this->level - 60) / 2);
+		maxVitality 	= ceil( std::max( this->level * 0.8 + 36.8 + 8, this->level * 1.0) );
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
+	}
 
-		g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
+	if (this->level >= 81) {
+        maxMagic 		= ceil(70 + (this->level - 80) / 2);
+		maxVitality 	= ceil(this->level * 0.4 + 68.8 + 8);
+		maxStrenght 	= maxVitality;
+		maxIntelligence = maxVitality;
+		maxFaith 		= maxVitality;
+		maxDexterity 	= maxVitality;
+		maxDefence 		= maxVitality;
+		maxEndurance 	= maxVitality;
+	}
 
-		sendUpdateSkills = true;
-		currReqTries = nextReqTries;
-		nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-		if (currReqTries >= nextReqTries) {
-			count = 0;
+	bool checks = true;
+
+	if (magic > maxMagic) {
+		std::string message = "The maximum magic at your level is " + std::to_string((uint32_t) maxMagic) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	}
+	
+	if (vitality > maxVitality) {
+		std::string message = "The maximum vitality at your level is " + std::to_string((uint32_t) maxVitality) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	} 
+	
+	if (strenght > maxStrenght) {
+		std::string message = "The maximum strenght at your level is " + std::to_string((uint32_t) maxStrenght) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	} 
+
+	if (defence > maxDefence) {
+		std::string message = "The maximum defence at your level is " + std::to_string((uint32_t) maxDefence) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	} 
+	
+	if (intelligence > maxIntelligence) {
+		std::string message = "The maximum intelligence at your level is " + std::to_string((uint32_t) maxIntelligence) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	}
+	
+	if (faith > maxFaith) {
+		std::string message = "The maximum faith at your level is " + std::to_string((uint32_t) maxFaith) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	}
+	
+	if (dexterity > maxDexterity) {
+		std::string message = "The maximum dexterity at your level is " + std::to_string((uint32_t) maxDexterity) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	}
+	
+	if (endurance > maxEndurance) {
+		std::string message = "The maximum endurance at your level is " + std::to_string((uint32_t) maxEndurance) + ".";
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, message);
+		checks = false;
+	}
+
+	if (!checks) {
+		isSetingSkills = false;
+		return false;
+	}
+
+	uint16_t oldMagic = magLevel;
+	uint16_t oldVitality = skills[SKILL_VITALITY].level;
+	uint16_t oldStrenght = skills[SKILL_STRENGHT].level;
+	uint16_t oldDefence = skills[SKILL_DEFENCE].level;
+	uint16_t oldDexterity = skills[SKILL_DEXTERITY].level;
+	uint16_t oldIntelligence = skills[SKILL_INTELLIGENCE].level;
+	uint16_t oldFaith = skills[SKILL_FAITH].level;
+	uint16_t oldEndurance = skills[SKILL_ENDURANCE].level;
+
+	//uint16_t magicDiff = magic - magLevel;
+	//uint16_t vitalityDiff = vitality - skills[SKILL_VITALITY].level;
+	//uint16_t strenghtDiff = strenght - skills[SKILL_STRENGHT].level;
+	//uint16_t defenceDiff = defence - skills[SKILL_DEFENCE].level;
+	//uint16_t dexterityDiff = dexterity - skills[SKILL_DEXTERITY].level;
+	//uint16_t intelligenceDiff = intelligence - skills[SKILL_INTELLIGENCE].level;
+	//uint16_t faithDiff = faith - skills[SKILL_FAITH].level;
+	//uint16_t enduranceDiff = endurance - skills[SKILL_ENDURANCE].level;
+
+	skillPoints = skillPointsTotal;
+	skillPoints -= (magicInfo["cost"] * magic) - 0;
+	skillPoints -= (vitalityInfo["cost"] * vitality) - 8;
+	skillPoints -= (strenghtInfo["cost"] * strenght) - 8;
+	skillPoints -= (defenceInfo["cost"] * defence) - 8;
+	skillPoints -= (intelligenceInfo["cost"] * intelligence) - 8;
+	skillPoints -= (faithInfo["cost"] * faith) - 8;
+	skillPoints -= (dexterityInfo["cost"] * dexterity) - 8;
+	skillPoints -= (enduranceInfo["cost"] * endurance) - 8;
+
+	magLevel = magic;
+	skills[SKILL_VITALITY].level = vitality;
+	skills[SKILL_STRENGHT].level = strenght;
+	skills[SKILL_DEFENCE].level = defence;
+	skills[SKILL_DEXTERITY].level = dexterity;
+	skills[SKILL_INTELLIGENCE].level = intelligence;
+	skills[SKILL_FAITH].level = faith;
+	skills[SKILL_ENDURANCE].level = endurance;	
+
+	if (mana < 0 || mana > manaMax) {
+		mana = 0;
+	}
+
+	if (health < 0 || health > healthMax) {
+		health = 60;
+	}	
+
+	if (skillPoints < 0 || skillPoints > skillPointsTotal) {
+		skillPoints = 0;
+	}
+
+	if (magLevel < 0 || magLevel > std::numeric_limits<uint8_t>::max()) {
+		magLevel = 0;
+	}
+
+	if (skills[SKILL_VITALITY].level < 8) {
+		skills[SKILL_VITALITY].level = 8;
+	}
+
+	if (skills[SKILL_STRENGHT].level < 8) {
+		skills[SKILL_STRENGHT].level = 8;
+	}
+
+	if (skills[SKILL_DEFENCE].level < 8) {
+		skills[SKILL_DEFENCE].level = 8;
+	}
+
+	if (skills[SKILL_DEXTERITY].level < 8) {
+		skills[SKILL_DEXTERITY].level = 8;
+	}
+
+	if (skills[SKILL_INTELLIGENCE].level < 8) {
+		skills[SKILL_INTELLIGENCE].level = 8;
+	}
+
+	if (skills[SKILL_FAITH].level < 8) {
+		skills[SKILL_FAITH].level = 8;
+	}
+
+	if (skills[SKILL_ENDURANCE].level < 8) {
+		skills[SKILL_ENDURANCE].level = 8;
+	}
+
+	refreshStats();
+
+	g_creatureEvents->playerAdvance(this, SKILL_VITALITY, oldVitality, vitality);
+	g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, oldMagic, magic);
+	g_creatureEvents->playerAdvance(this, SKILL_STRENGHT, oldStrenght, strenght);
+	g_creatureEvents->playerAdvance(this, SKILL_DEFENCE, oldDefence, defence);
+	g_creatureEvents->playerAdvance(this, SKILL_DEXTERITY, oldDexterity, dexterity);
+	g_creatureEvents->playerAdvance(this, SKILL_INTELLIGENCE, oldIntelligence, intelligence);
+	g_creatureEvents->playerAdvance(this, SKILL_FAITH, oldFaith, faith);
+	g_creatureEvents->playerAdvance(this, SKILL_ENDURANCE, oldEndurance, endurance);
+
+	for (uint32_t tries = 0; tries < 3; ++tries) {
+		if (IOLoginData::savePlayer(this)) {
 			break;
 		}
 	}
 
-	skills[skill].tries += count;
+	sendStats();
+	sendSkills();
 
-	uint32_t newPercent;
-	if (nextReqTries > currReqTries) {
-		newPercent = Player::getPercentLevel(skills[skill].tries, nextReqTries);
-	} else {
-		newPercent = 0;
+	isSetingSkills = false;
+
+	return true;
+}
+
+void Player::refreshStats() {
+
+	std::unordered_map<std::string, uint32_t> magicInfo = g_game.getSkillInfo(SKILL_MAGLEVEL);
+	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
+	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);
+	std::unordered_map<std::string, uint32_t> defenceInfo = g_game.getSkillInfo(SKILL_DEFENCE);
+	std::unordered_map<std::string, uint32_t> dexterityInfo = g_game.getSkillInfo(SKILL_DEXTERITY);
+	std::unordered_map<std::string, uint32_t> intelligenceInfo = g_game.getSkillInfo(SKILL_INTELLIGENCE);
+	std::unordered_map<std::string, uint32_t> faithInfo = g_game.getSkillInfo(SKILL_FAITH);
+	std::unordered_map<std::string, uint32_t> enduranceInfo = g_game.getSkillInfo(SKILL_ENDURANCE);
+
+	healthMax = 120 +
+		(level - 1) 							* vocation->getHPGain() +
+		(magLevel) 								* magicInfo["health"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["health"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["health"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["health"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["health"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["health"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["health"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["health"];
+
+	manaMax = 10 +
+		(level - 1) 							* vocation->getManaGain() +
+		(magLevel) 								* magicInfo["mana"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["mana"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["mana"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["mana"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["mana"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["mana"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["mana"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["mana"];
+
+	if (mana < 0 || mana > manaMax) {
+		mana = 0;
 	}
 
-	if (skills[skill].percent != newPercent) {
-		skills[skill].percent = newPercent;
-		sendUpdateSkills = true;
+	if (health < 0 || health > healthMax) {
+		health = 60;
+	}	
+
+	if (skillPoints < 0 || skillPoints > skillPointsTotal) {
+		skillPoints = 0;
 	}
 
-	if (sendUpdateSkills) {
-		sendSkills();
-	}
+	soul = vocation->getSoulMax() +
+		(magLevel) 								* magicInfo["soul"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["soul"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["soul"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["soul"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["soul"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["soul"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["soul"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["soul"];
+
+	capacity = 36500 +
+		(level - 1) 							* vocation->getCapGain() +
+		(magLevel) 								* magicInfo["cap"] * 100 +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["cap"] * 100 +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["cap"] * 100 +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["cap"] * 100 +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["cap"] * 100 +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["cap"] * 100 +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["cap"] * 100 +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["cap"] * 100;
+
+	wandMaxDamageBonus = (magLevel) 			* magicInfo["wand"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["wand"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["wand"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["wand"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["wand"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["wand"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["wand"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["wand"];
+
+	rodMaxDamageBonus = (magLevel) 				* magicInfo["rod"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["rod"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["rod"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["rod"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["rod"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["rod"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["rod"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["rod"];
+
+	walkSpeedBonus = (magLevel) 				* magicInfo["walkSpeed"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["walkSpeed"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["walkSpeed"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["walkSpeed"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["walkSpeed"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["walkSpeed"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["walkSpeed"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["walkSpeed"];
+
+	attackSpeedBonus = (magLevel) 				* magicInfo["attackSpeed"] +
+		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["attackSpeed"] +
+		(skills[SKILL_STRENGHT].level - 8) 		* strenghtInfo["attackSpeed"] +
+		(skills[SKILL_DEFENCE].level - 8) 		* defenceInfo["attackSpeed"] +
+		(skills[SKILL_DEXTERITY].level - 8) 	* dexterityInfo["attackSpeed"] +
+		(skills[SKILL_INTELLIGENCE].level - 8) 	* intelligenceInfo["attackSpeed"] +
+		(skills[SKILL_FAITH].level - 8) 		* faithInfo["attackSpeed"] +
+		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["attackSpeed"];
+
+	//to increase walk speed (clients interface) in 1 you have to increase baseSpeed in 2
+	baseSpeed = 2 * (level - 1) + 
+		vocation->getBaseSpeed() +
+		//(skills[SKILL_DEXTERITY].level - 8) / 2.0f; //increases 0.25 
+		(skills[SKILL_DEXTERITY].level - g_game.getSkillInfo(SKILL_DEXTERITY)["initial"]) / g_config.getNumber(ConfigManager::WALKSPEED_DEXTERITY_FACTOR); //increases 0.5 if divided by 1
+	
+	if (hasFlag(PlayerFlag_SetMaxSpeed)) { baseSpeed = PLAYER_MAX_SPEED; }
+
+	setBaseSpeed(getBaseSpeed());
+	g_game.addCreatureHealth(this);
+	g_game.changeSpeed(this, 0);
 }
 
 void Player::setVarStats(stats_t stat, int32_t modifier)
@@ -812,7 +1238,6 @@ void Player::sendStats()
 {
 	if (client) {
 		client->sendStats();
-		lastStatsTrainingTime = getOfflineTrainingTime() / 60 / 1000;
 	}
 }
 
@@ -1167,8 +1592,8 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 
 		bool saved = false;
 		for (uint32_t tries = 0; tries < 3; ++tries) {
-			if (IOLoginData::savePlayer(this)) {
-				saved = true;
+			saved = IOLoginData::savePlayer(this);
+			if (saved) {
 				break;
 			}
 		}
@@ -1176,6 +1601,8 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 		if (!saved) {
 			std::cout << "Error while saving player: " << getName() << std::endl;
 		}
+
+		std::cout << "Saved player: " << saved << " " << getName() << std::endl;
 	}
 }
 
@@ -1444,12 +1871,7 @@ void Player::onThink(uint32_t interval)
 	}
 
 	if (g_game.getWorldType() != WORLD_TYPE_PVP_ENFORCED) {
-		checkSkullTicks(interval / 1000);
-	}
-
-	addOfflineTrainingTime(interval);
-	if (lastStatsTrainingTime != getOfflineTrainingTime() / 60 / 1000) {
-		sendStats();
+		checkSkullTicks(interval);
 	}
 }
 
@@ -1520,63 +1942,6 @@ void Player::drainMana(Creature* attacker, int32_t manaLoss)
 	sendStats();
 }
 
-void Player::addManaSpent(uint64_t amount)
-{
-	if (hasFlag(PlayerFlag_NotGainMana)) {
-		return;
-	}
-
-	uint64_t currReqMana = vocation->getReqMana(magLevel);
-	uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-	if (currReqMana >= nextReqMana) {
-		//player has reached max magic level
-		return;
-	}
-
-	g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, amount);
-	if (amount == 0) {
-		return;
-	}
-
-	bool sendUpdateStats = false;
-	while ((manaSpent + amount) >= nextReqMana) {
-		amount -= nextReqMana - manaSpent;
-
-		magLevel++;
-		manaSpent = 0;
-
-		std::ostringstream ss;
-		ss << "You advanced to magic level " << magLevel << '.';
-		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-
-		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-		sendUpdateStats = true;
-		currReqMana = nextReqMana;
-		nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (currReqMana >= nextReqMana) {
-			return;
-		}
-	}
-
-	manaSpent += amount;
-
-	uint8_t oldPercent = magLevelPercent;
-	if (nextReqMana > currReqMana) {
-		magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-	} else {
-		magLevelPercent = 0;
-	}
-
-	if (oldPercent != magLevelPercent) {
-		sendUpdateStats = true;
-	}
-
-	if (sendUpdateStats) {
-		sendStats();
-	}
-}
-
 void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = false*/)
 {
 	uint64_t currLevelExp = Player::getExpForLevel(level);
@@ -1605,7 +1970,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		message.primary.color = TEXTCOLOR_WHITE_EXP;
 		sendTextMessage(message);
 
-		SpectatorVec spectators;
+		SpectatorHashSet spectators;
 		g_game.map.getSpectators(spectators, position, false, true);
 		spectators.erase(this);
 		if (!spectators.empty()) {
@@ -1619,25 +1984,36 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 
 	uint32_t prevLevel = level;
 	while (experience >= nextLevelExp) {
+			
 		++level;
+
+		if (level > maxLevelReached) {
+			skillPoints += g_game.getPointsPerLevel(level-1);
+			skillPointsTotal += g_game.getPointsPerLevel(level-1);
+			maxLevelReached = level;	
+		}
+
 		healthMax += vocation->getHPGain();
 		health += vocation->getHPGain();
 		manaMax += vocation->getManaGain();
 		mana += vocation->getManaGain();
 		capacity += vocation->getCapGain();
-
+		
 		currLevelExp = nextLevelExp;
 		nextLevelExp = Player::getExpForLevel(level + 1);
 		if (currLevelExp >= nextLevelExp) {
-			//player has reached max level
+			//player has reached max exp of this level
 			break;
 		}
 	}
 
 	if (prevLevel != level) {
-		health = healthMax;
-		mana = manaMax;
 
+		if (g_config.getBoolean(ConfigManager::REFILL_HEALTHMANA_LEVELUP)) {
+			health = healthMax;
+			mana = manaMax;
+		}
+		
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
 
@@ -1688,7 +2064,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 		message.primary.color = TEXTCOLOR_RED;
 		sendTextMessage(message);
 
-		SpectatorVec spectators;
+		SpectatorHashSet spectators;
 		g_game.map.getSpectators(spectators, position, false, true);
 		spectators.erase(this);
 		if (!spectators.empty()) {
@@ -1756,10 +2132,6 @@ void Player::onBlockHit()
 {
 	if (shieldBlockCount > 0) {
 		--shieldBlockCount;
-
-		if (hasShield()) {
-			addSkillAdvance(SKILL_SHIELD, 1);
-		}
 	}
 }
 
@@ -1912,63 +2284,7 @@ void Player::death(Creature* lastHitCreature)
 			}
 		}
 
-		//Magic level loss
-		uint64_t sumMana = 0;
-		uint64_t lostMana = 0;
-
-		//sum up all the mana
-		for (uint32_t i = 1; i <= magLevel; ++i) {
-			sumMana += vocation->getReqMana(i);
-		}
-
-		sumMana += manaSpent;
-
 		double deathLossPercent = getLostPercent() * (unfairFightReduction / 100.);
-
-		lostMana = static_cast<uint64_t>(sumMana * deathLossPercent);
-
-		while (lostMana > manaSpent && magLevel > 0) {
-			lostMana -= manaSpent;
-			manaSpent = vocation->getReqMana(magLevel);
-			magLevel--;
-		}
-
-		manaSpent -= lostMana;
-
-		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-		if (nextReqMana > vocation->getReqMana(magLevel)) {
-			magLevelPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-		} else {
-			magLevelPercent = 0;
-		}
-
-		//Skill loss
-		for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) { //for each skill
-			uint64_t sumSkillTries = 0;
-			for (uint16_t c = 11; c <= skills[i].level; ++c) { //sum up all required tries for all skill levels
-				sumSkillTries += vocation->getReqSkillTries(i, c);
-			}
-
-			sumSkillTries += skills[i].tries;
-
-			uint32_t lostSkillTries = static_cast<uint32_t>(sumSkillTries * deathLossPercent);
-			while (lostSkillTries > skills[i].tries) {
-				lostSkillTries -= skills[i].tries;
-
-				if (skills[i].level <= 10) {
-					skills[i].level = 10;
-					skills[i].tries = 0;
-					lostSkillTries = 0;
-					break;
-				}
-
-				skills[i].tries = vocation->getReqSkillTries(i, skills[i].level);
-				skills[i].level--;
-			}
-
-			skills[i].tries = std::max<int32_t>(0, skills[i].tries - lostSkillTries);
-			skills[i].percent = Player::getPercentLevel(skills[i].tries, vocation->getReqSkillTries(i, skills[i].level));
-		}
 
 		//Level loss
 		uint64_t expLoss = static_cast<uint64_t>(experience * deathLossPercent);
@@ -1991,7 +2307,7 @@ void Player::death(Creature* lastHitCreature)
 			if (oldLevel != level) {
 				std::ostringstream ss;
 				ss << "You were downgraded from Level " << oldLevel << " to Level " << level << '.';
-				sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+				//sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 			}
 
 			uint64_t currLevelExp = Player::getExpForLevel(level);
@@ -2017,7 +2333,7 @@ void Player::death(Creature* lastHitCreature)
 
 		sendStats();
 		sendSkills();
-		sendReLoginWindow(unfairFightReduction);
+		//sendReLoginWindow(unfairFightReduction);
 
 		if (getSkull() == SKULL_BLACK) {
 			health = 40;
@@ -2245,9 +2561,11 @@ bool Player::hasCapacity(const Item* item, uint32_t count) const
 	return itemWeight <= getFreeCapacity();
 }
 
+//CHANGED!
 ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, uint32_t flags, Creature*) const
 {
 	const Item* item = thing.getItem();
+
 	if (item == nullptr) {
 		return RETURNVALUE_NOTPOSSIBLE;
 	}
@@ -2350,6 +2668,10 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 					           leftType == WEAPON_SHIELD || leftType == WEAPON_AMMO
 					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
 						ret = RETURNVALUE_NOERROR;
+					} else if (type != WEAPON_DISTANCE && type != WEAPON_WAND &&
+						g_config.getBoolean(ConfigManager::ALLOW_DUAL_WIELDING) &&
+						vocation->canDualWield()) {
+						ret = RETURNVALUE_NOERROR;
 					} else {
 						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
 					}
@@ -2390,6 +2712,10 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 					} else if (rightType == WEAPON_NONE || type == WEAPON_NONE ||
 					           rightType == WEAPON_SHIELD || rightType == WEAPON_AMMO
 					           || type == WEAPON_SHIELD || type == WEAPON_AMMO) {
+						ret = RETURNVALUE_NOERROR;
+					} else if (type != WEAPON_DISTANCE && type != WEAPON_WAND &&
+						g_config.getBoolean(ConfigManager::ALLOW_DUAL_WIELDING) &&
+						vocation->canDualWield()) {
 						ret = RETURNVALUE_NOERROR;
 					} else {
 						ret = RETURNVALUE_CANONLYUSEONEWEAPON;
@@ -2458,6 +2784,7 @@ ReturnValue Player::queryAdd(int32_t index, const Thing& thing, uint32_t count, 
 	if (!g_moveEvents->onPlayerEquip(const_cast<Player*>(this), const_cast<Item*>(item), static_cast<slots_t>(index), true)) {
 		return RETURNVALUE_CANNOTBEDRESSED;
 	}
+
 	return ret;
 }
 
@@ -3600,6 +3927,12 @@ void Player::changeMana(int32_t manaChange)
 	sendStats();
 }
 
+void Player::addResetsCount(int32_t value)
+{
+	resets += value;
+	sendStats();
+}
+
 void Player::changeSoul(int32_t soulChange)
 {
 	if (soulChange > 0) {
@@ -3823,16 +4156,16 @@ void Player::addUnjustifiedDead(const Player* attacked)
 	}
 }
 
-void Player::checkSkullTicks(int64_t ticks)
+void Player::checkSkullTicks(int32_t ticks)
 {
-	int64_t newTicks = skullTicks - ticks;
+	int32_t newTicks = skullTicks - ticks;
 	if (newTicks < 0) {
 		skullTicks = 0;
 	} else {
 		skullTicks = newTicks;
 	}
 
-	if ((skull == SKULL_RED || skull == SKULL_BLACK) && skullTicks < 1 && !hasCondition(CONDITION_INFIGHT)) {
+	if ((skull == SKULL_RED || skull == SKULL_BLACK) && skullTicks < 1000 && !hasCondition(CONDITION_INFIGHT)) {
 		setSkull(SKULL_NONE);
 	}
 }
@@ -3865,12 +4198,11 @@ double Player::getLostPercent() const
 		lossPercent = 10;
 	}
 
-	double percentReduction = 0;
 	if (isPromoted()) {
-		percentReduction += 30;
+		lossPercent *= 0.7;
 	}
-	percentReduction += blessingCount * 8;
-	return lossPercent * (1 - (percentReduction / 100.)) / 100.;
+
+	return lossPercent * pow(0.92, blessingCount) / 100;
 }
 
 void Player::learnInstantSpell(const std::string& spellName)
@@ -3897,6 +4229,7 @@ bool Player::hasLearnedInstantSpell(const std::string& spellName) const
 
 	for (const auto& learnedSpellName : learnedInstantSpellList) {
 		if (strcasecmp(learnedSpellName.c_str(), spellName.c_str()) == 0) {
+			//player->sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "New spell available!!");
 			return true;
 		}
 	}
@@ -4230,138 +4563,6 @@ void Player::dismount()
 	}
 
 	defaultOutfit.lookMount = 0;
-}
-
-bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
-{
-	if (tries == 0 || skill == SKILL_LEVEL) {
-		return false;
-	}
-
-	bool sendUpdate = false;
-	uint32_t oldSkillValue, newSkillValue;
-	long double oldPercentToNextLevel, newPercentToNextLevel;
-
-	if (skill == SKILL_MAGLEVEL) {
-		uint64_t currReqMana = vocation->getReqMana(magLevel);
-		uint64_t nextReqMana = vocation->getReqMana(magLevel + 1);
-
-		if (currReqMana >= nextReqMana) {
-			return false;
-		}
-
-		oldSkillValue = magLevel;
-		oldPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
-
-		g_events->eventPlayerOnGainSkillTries(this, SKILL_MAGLEVEL, tries);
-		uint32_t currMagLevel = magLevel;
-
-		while ((manaSpent + tries) >= nextReqMana) {
-			tries -= nextReqMana - manaSpent;
-
-			magLevel++;
-			manaSpent = 0;
-
-			g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
-
-			sendUpdate = true;
-			currReqMana = nextReqMana;
-			nextReqMana = vocation->getReqMana(magLevel + 1);
-
-			if (currReqMana >= nextReqMana) {
-				tries = 0;
-				break;
-			}
-		}
-
-		manaSpent += tries;
-
-		if (magLevel != currMagLevel) {
-			std::ostringstream ss;
-			ss << "You advanced to magic level " << magLevel << '.';
-			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		}
-
-		uint8_t newPercent;
-		if (nextReqMana > currReqMana) {
-			newPercent = Player::getPercentLevel(manaSpent, nextReqMana);
-			newPercentToNextLevel = static_cast<long double>(manaSpent * 100) / nextReqMana;
-		} else {
-			newPercent = 0;
-			newPercentToNextLevel = 0;
-		}
-
-		if (newPercent != magLevelPercent) {
-			magLevelPercent = newPercent;
-			sendUpdate = true;
-		}
-
-		newSkillValue = magLevel;
-	} else {
-		uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
-		uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-		if (currReqTries >= nextReqTries) {
-			return false;
-		}
-
-		oldSkillValue = skills[skill].level;
-		oldPercentToNextLevel = static_cast<long double>(skills[skill].tries * 100) / nextReqTries;
-
-		g_events->eventPlayerOnGainSkillTries(this, skill, tries);
-		uint32_t currSkillLevel = skills[skill].level;
-
-		while ((skills[skill].tries + tries) >= nextReqTries) {
-			tries -= nextReqTries - skills[skill].tries;
-
-			skills[skill].level++;
-			skills[skill].tries = 0;
-			skills[skill].percent = 0;
-
-			g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
-
-			sendUpdate = true;
-			currReqTries = nextReqTries;
-			nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-
-			if (currReqTries >= nextReqTries) {
-				tries = 0;
-				break;
-			}
-		}
-
-		skills[skill].tries += tries;
-
-		if (currSkillLevel != skills[skill].level) {
-			std::ostringstream ss;
-			ss << "You advanced to " << getSkillName(skill) << " level " << skills[skill].level << '.';
-			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-		}
-
-		uint8_t newPercent;
-		if (nextReqTries > currReqTries) {
-			newPercent = Player::getPercentLevel(skills[skill].tries, nextReqTries);
-			newPercentToNextLevel = static_cast<long double>(skills[skill].tries * 100) / nextReqTries;
-		} else {
-			newPercent = 0;
-			newPercentToNextLevel = 0;
-		}
-
-		if (skills[skill].percent != newPercent) {
-			skills[skill].percent = newPercent;
-			sendUpdate = true;
-		}
-
-		newSkillValue = skills[skill].level;
-	}
-
-	if (sendUpdate) {
-		sendSkills();
-	}
-
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(2) << "Your " << ucwords(getSkillName(skill)) << " skill changed from level " << oldSkillValue << " (with " << oldPercentToNextLevel << "% progress towards level " << (oldSkillValue + 1) << ") to level " << newSkillValue << " (with " << newPercentToNextLevel << "% progress towards level " << (newSkillValue + 1) << ')';
-	sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
-	return sendUpdate;
 }
 
 bool Player::hasModalWindowOpen(uint32_t modalWindowId) const

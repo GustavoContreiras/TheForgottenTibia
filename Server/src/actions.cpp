@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,27 +40,21 @@ Actions::Actions() :
 
 Actions::~Actions()
 {
-	clear(false);
+	clear();
 }
 
-void Actions::clearMap(ActionUseMap& map, bool fromLua)
+void Actions::clearMap(ActionUseMap& map)
 {
-	for (auto it = map.begin(); it != map.end(); ) {
-		if (fromLua == it->second.fromLua) {
-			it = map.erase(it);
-		} else {
-			++it;
-		}
-	}
+	map.clear();
 }
 
-void Actions::clear(bool fromLua)
+void Actions::clear()
 {
-	clearMap(useItemMap, fromLua);
-	clearMap(uniqueItemMap, fromLua);
-	clearMap(actionItemMap, fromLua);
+	clearMap(useItemMap);
+	clearMap(uniqueItemMap);
+	clearMap(actionItemMap);
 
-	reInitState(fromLua);
+	scriptInterface.reInitState();
 }
 
 LuaScriptInterface& Actions::getScriptInterface()
@@ -192,69 +186,6 @@ bool Actions::registerEvent(Event_ptr event, const pugi::xml_node& node)
 	return false;
 }
 
-bool Actions::registerLuaEvent(Action* event)
-{
-	Action_ptr action{ event };
-	if (action->getItemIdRange().size() > 0) {
-		if (action->getItemIdRange().size() == 1) {
-			auto result = useItemMap.emplace(action->getItemIdRange().at(0), std::move(*action));
-			if (!result.second) {
-				std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with id: " << action->getItemIdRange().at(0) << std::endl;
-			}
-			return result.second;
-		} else {
-			auto v = action->getItemIdRange();
-			for (auto i = v.begin(); i != v.end(); i++) {
-				auto result = useItemMap.emplace(*i, std::move(*action));
-				if (!result.second) {
-					std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with id: " << *i << " in range from id: " << v.at(0) << ", to id: " << v.at(v.size() - 1) << std::endl;
-					continue;
-				}
-			}
-			return true;
-		}
-	} else if (action->getUniqueIdRange().size() > 0) {
-		if (action->getUniqueIdRange().size() == 1) {
-			auto result = uniqueItemMap.emplace(action->getUniqueIdRange().at(0), std::move(*action));
-			if (!result.second) {
-				std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with uid: " << action->getUniqueIdRange().at(0) << std::endl;
-			}
-			return result.second;
-		} else {
-			auto v = action->getUniqueIdRange();
-			for (auto i = v.begin(); i != v.end(); i++) {
-				auto result = uniqueItemMap.emplace(*i, std::move(*action));
-				if (!result.second) {
-					std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with uid: " << *i << " in range from uid: " << v.at(0) << ", to uid: " << v.at(v.size() - 1) << std::endl;
-					continue;
-				}
-			}
-			return true;
-		}
-	} else if (action->getActionIdRange().size() > 0) {
-		if (action->getActionIdRange().size() == 1) {
-			auto result = actionItemMap.emplace(action->getActionIdRange().at(0), std::move(*action));
-			if (!result.second) {
-				std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with aid: " << action->getActionIdRange().at(0) << std::endl;
-			}
-			return result.second;
-		} else {
-			auto v = action->getActionIdRange();
-			for (auto i = v.begin(); i != v.end(); i++) {
-				auto result = actionItemMap.emplace(*i, std::move(*action));
-				if (!result.second) {
-					std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with aid: " << *i << " in range from aid: " << v.at(0) << ", to aid: " << v.at(v.size() - 1) << std::endl;
-					continue;
-				}
-			}
-			return true;
-		}
-	} else {
-		std::cout << "[Warning - Actions::registerLuaEvent] There is no id / aid / uid set for this event" << std::endl;
-		return false;
-	}
-}
-
 ReturnValue Actions::canUse(const Player* player, const Position& pos)
 {
 	if (pos.x != 0xFFFF) {
@@ -326,6 +257,7 @@ Action* Actions::getAction(const Item* item)
 	return g_spells->getRuneSpell(item->getID());
 }
 
+//CHANGED! BED SYSTEM
 ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_t index, Item* item, bool isHotkey)
 {
 	if (Door* door = item->getDoor()) {
@@ -417,7 +349,7 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 	player->stopWalk();
 
 	if (isHotkey) {
-		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), item->getSubType()));
+		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
 	}
 
 	ReturnValue ret = internalUseItem(player, pos, index, item, isHotkey);
@@ -447,7 +379,7 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 	}
 
 	if (isHotkey) {
-		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), item->getSubType()));
+		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
 	}
 
 	if (!action->executeUse(player, item, fromPos, action->getTarget(player, creature, toPos, toStackPos), toPos, isHotkey)) {
@@ -511,21 +443,17 @@ bool enterMarket(Player* player, Item*, const Position&, Thing*, const Position&
 
 }
 
-bool Action::loadFunction(const pugi::xml_attribute& attr, bool isScripted)
+bool Action::loadFunction(const pugi::xml_attribute& attr)
 {
 	const char* functionName = attr.as_string();
 	if (strcasecmp(functionName, "market") == 0) {
 		function = enterMarket;
 	} else {
-		if (!isScripted) {
-			std::cout << "[Warning - Action::loadFunction] Function \"" << functionName << "\" does not exist." << std::endl;
-			return false;
-		}
+		std::cout << "[Warning - Action::loadFunction] Function \"" << functionName << "\" does not exist." << std::endl;
+		return false;
 	}
 
-	if (!isScripted) {
-		scripted = false;
-	}
+	scripted = false;
 	return true;
 }
 

@@ -1,6 +1,6 @@
 /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2018  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -307,7 +307,7 @@ class Game
 		  * \param text The text to say
 		  */
 		bool internalCreatureSay(Creature* creature, SpeakClasses type, const std::string& text,
-		                         bool ghostMode, SpectatorVec* spectatorsPtr = nullptr, const Position* pos = nullptr);
+		                         bool ghostMode, SpectatorHashSet* spectatorsPtr = nullptr, const Position* pos = nullptr);
 
 		void loadPlayersRecord();
 		void checkPlayersRecord();
@@ -357,6 +357,10 @@ class Game
 		void playerWriteItem(uint32_t playerId, uint32_t windowTextId, const std::string& text);
 		void playerBrowseField(uint32_t playerId, const Position& pos);
 		void playerSeekInContainer(uint32_t playerId, uint8_t containerId, uint16_t index);
+		void playerVersionToPlay(uint32_t playerId, uint16_t versionToPlay);
+		void playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vitality, uint16_t strenght, uint16_t defence,
+								uint16_t dexterity, uint16_t intelligence, uint16_t faith, uint16_t endurance);
+		uint32_t calculateTotalSkillPoints(uint32_t playerId);
 		void playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text);
 		void playerRequestTrade(uint32_t playerId, const Position& pos, uint8_t stackPos,
 		                        uint32_t tradePlayerId, uint16_t spriteId);
@@ -415,7 +419,7 @@ class Game
 		                      int32_t rangex = Map::maxClientViewportX, int32_t rangey = Map::maxClientViewportY) const;
 		bool isSightClear(const Position& fromPos, const Position& toPos, bool floorCheck) const;
 
-		void changeSpeed(Creature* creature, int32_t varSpeedDelta);
+		void changeSpeed(Creature* creature, double varSpeedDelta);
 		void internalCreatureChangeOutfit(Creature* creature, const Outfit_t& outfit);
 		void internalCreatureChangeVisible(Creature* creature, bool visible);
 		void changeLight(const Creature* creature);
@@ -445,19 +449,25 @@ class Game
 
 		//animation help functions
 		void addCreatureHealth(const Creature* target);
-		static void addCreatureHealth(const SpectatorVec& spectators, const Creature* target);
+		static void addCreatureHealth(const SpectatorHashSet& spectators, const Creature* target);
 		void addMagicEffect(const Position& pos, uint8_t effect);
-		static void addMagicEffect(const SpectatorVec& spectators, const Position& pos, uint8_t effect);
+		static void addMagicEffect(const SpectatorHashSet& spectators, const Position& pos, uint8_t effect);
 		void addDistanceEffect(const Position& fromPos, const Position& toPos, uint8_t effect);
-		static void addDistanceEffect(const SpectatorVec& spectators, const Position& fromPos, const Position& toPos, uint8_t effect);
+		static void addDistanceEffect(const SpectatorHashSet& spectators, const Position& fromPos, const Position& toPos, uint8_t effect);
 
 		void startDecay(Item* item);
 		int32_t getLightHour() const {
 			return lightHour;
 		}
 
-		bool loadExperienceStages();
+		bool loadStagesXml();
+		bool loadCriticalsXml();
 		uint64_t getExperienceStage(uint32_t level);
+		uint64_t getPointsPerLevel(uint32_t level);
+		bool loadSkillsXml();
+		std::unordered_map<std::string, uint32_t> getSkillInfo(uint32_t id);
+
+		std::unordered_map<std::string, uint32_t> getCriticalInfo(uint32_t id);
 
 		void loadMotdNum();
 		void saveMotdNum() const;
@@ -504,8 +514,6 @@ class Game
 		Raids raids;
 		Quests quests;
 
-		std::forward_list<Item*> toDecayItems;
-
 	private:
 		bool playerSaySpell(Player* player, SpeakClasses type, const std::string& text);
 		void playerWhisper(Player* player, const std::string& text);
@@ -520,10 +528,30 @@ class Game
 		std::unordered_map<std::string, Player*> mappedPlayerNames;
 		std::unordered_map<uint32_t, Guild*> guilds;
 		std::unordered_map<uint16_t, Item*> uniqueItems;
+
 		std::map<uint32_t, uint32_t> stages;
+		std::map<uint32_t, uint32_t> points;
+
+		std::unordered_map<std::string, uint32_t> skillVitalityInfo;
+		std::unordered_map<std::string, uint32_t> skillStrenghtInfo;
+		std::unordered_map<std::string, uint32_t> skillDefenceInfo;
+		std::unordered_map<std::string, uint32_t> skillDexterityInfo;
+		std::unordered_map<std::string, uint32_t> skillIntelligenceInfo;
+		std::unordered_map<std::string, uint32_t> skillFaithInfo;
+		std::unordered_map<std::string, uint32_t> skillEnduranceInfo;
+		std::unordered_map<std::string, uint32_t> skillMagicInfo;
+
+		std::unordered_map<std::string, uint32_t> criticalSwordInfo;
+		std::unordered_map<std::string, uint32_t> criticalAxeInfo;
+		std::unordered_map<std::string, uint32_t> criticalClubInfo;
+		std::unordered_map<std::string, uint32_t> criticalOneHandedDistanceInfo;
+		std::unordered_map<std::string, uint32_t> criticalTwoHandedDistanceInfo;
+		std::unordered_map<std::string, uint32_t> criticalWandInfo;
 
 		std::list<Item*> decayItems[EVENT_DECAY_BUCKETS];
 		std::list<Creature*> checkCreatureLists[EVENT_CREATURECOUNT];
+
+		std::forward_list<Item*> toDecayItems;
 
 		std::vector<Creature*> ToReleaseCreatures;
 		std::vector<Item*> ToReleaseItems;
@@ -540,7 +568,7 @@ class Game
 
 		std::map<uint32_t, BedItem*> bedSleepersMap;
 
-		ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:" };
+		ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Going to sleep", "Are you sure?" };
 
 		static constexpr int32_t LIGHT_LEVEL_DAY = 250;
 		static constexpr int32_t LIGHT_LEVEL_NIGHT = 40;
