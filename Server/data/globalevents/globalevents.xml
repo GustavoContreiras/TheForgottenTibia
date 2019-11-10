@@ -5,6 +5,54 @@
 	<globalevent name="DailyServerSave" time="08:40:00" script="dailyserversave.lua" />
 	<globalevent name="CTF" interval="10000" script="ctf.lua" />
 	<globalevent name="RaidSystem" interval="10000" script="raids.lua"/>
+	<globalevent name="TipMessage1"  time="00:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage2"  time="00:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage3"  time="01:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage4"  time="01:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage5"  time="02:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage6"  time="02:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage7"  time="03:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage8"  time="03:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage9"  time="04:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage10" time="04:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage11" time="05:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage12" time="05:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage13" time="06:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage14" time="06:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage15" time="07:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage16" time="07:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage17" time="08:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage18" time="08:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage19" time="09:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage20" time="09:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage21" time="10:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage22" time="10:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage23" time="11:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage24" time="11:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage25" time="12:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage26" time="12:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage27" time="13:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage28" time="13:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage29" time="14:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage30" time="14:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage31" time="15:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage32" time="15:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage33" time="16:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage34" time="16:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage35" time="17:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage36" time="17:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage37" time="18:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage38" time="18:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage39" time="19:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage40" time="19:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage41" time="20:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage42" time="20:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage43" time="21:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage44" time="21:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage45" time="22:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage46" time="22:30:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage47" time="23:00:00" script="randomtipmessage.lua" />
+	<globalevent name="TipMessage48" time="23:30:00" script="randomtipmessage.lua" />
 
 	<!--
 	<globalevent name="timer_example" time="12:00:00" script="my_script.lua" />
