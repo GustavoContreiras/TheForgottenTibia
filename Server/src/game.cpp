@@ -2494,14 +2494,14 @@ void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vi
 	if (endurance < player->skills[SKILL_ENDURANCE].level)
 		endurance = player->skills[SKILL_ENDURANCE].level;
 
-	uint8_t pointsNeeded = (magic - player->magLevel) * 3 +
-							vitality - player->skills[SKILL_VITALITY].level + 
-							strenght - player->skills[SKILL_STRENGHT].level + 
-							defence - player->skills[SKILL_DEFENCE].level + 
-							dexterity - player->skills[SKILL_DEXTERITY].level + 
-							intelligence - player->skills[SKILL_INTELLIGENCE].level + 
-							faith - player->skills[SKILL_FAITH].level + 
-							endurance - player->skills[SKILL_ENDURANCE].level;
+	uint8_t pointsNeeded = (magic - player->magLevel) * getSkillInfo(SKILL_MAGLEVEL)['cost'] +
+						   (vitality - player->skills[SKILL_VITALITY].level) * getSkillInfo(SKILL_VITALITY)['cost']+ 
+						   (strenght - player->skills[SKILL_STRENGHT].level) * getSkillInfo(SKILL_STRENGHT)['cost']+ 
+						   (defence - player->skills[SKILL_DEFENCE].level) * getSkillInfo(SKILL_DEFENCE)['cost']+ 
+						   (dexterity - player->skills[SKILL_DEXTERITY].level) * getSkillInfo(SKILL_DEXTERITY)['cost']+ 
+						   (intelligence - player->skills[SKILL_INTELLIGENCE].level) * getSkillInfo(SKILL_INTELLIGENCE)['cost']+ 
+						   (faith - player->skills[SKILL_FAITH].level) * getSkillInfo(SKILL_FAITH)['cost']+ 
+						   (endurance - player->skills[SKILL_ENDURANCE].level) * getSkillInfo(SKILL_ENDURANCE)['cost'];
 
 	//uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
 	bool checks = true;
