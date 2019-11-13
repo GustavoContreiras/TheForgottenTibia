@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skills> <!--initial attribute is not implemented yet-->
+<skills>
 
 	<skill id="0" name="Vitality" cost="1" initial="8"
 		health="15" 
@@ -10,8 +10,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="1" name="Strenght" cost="1" initial="8"
 		health="0"
@@ -22,8 +23,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="2" name="Faith" cost="1" initial="8"
 		health="0" 
@@ -34,8 +36,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="2"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>	
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>	
 		
 	<skill id="3" name="Intelligence" cost="1" initial="8"
 		health="0" 
@@ -46,8 +49,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="1"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>
 
 	<skill id="4" name="Dexterity" cost="1" initial="8"
 		health="0" 
@@ -58,8 +62,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="5" name="Defence" cost="1" initial="8"
 		health="0" 
@@ -70,8 +75,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="130"
+		healthRegen="0"
+		manaRegen="0"/>
 				
 	<skill id="6" name="Endurance" cost="1" initial="8"
 		health="5" 
@@ -82,8 +88,9 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="5"
-		manaRegen="5"-->/>
+		max="130"
+		healthRegen="5"
+		manaRegen="5"/>
 		
 	<skill id="7" name="Magic" cost="2" initial="0"
 		health="0" 
@@ -94,20 +101,21 @@
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
-		<!--healthRegen="0"
-		manaRegen="0"-->/>
+		max="110"
+		healthRegen="0"
+		manaRegen="0"/>
 		
 	<skill id="8" name="Level"
 		health="0" 
 		mana="15" 
-		<!--cap="0" 
+		cap="0" 
 		soul="0"
 		walkSpeed="0" 
 		attackSpeed="0"  
 		wandMaxDamage="0"
 		rodMaxDamage="0"
 		healthRegen="0"
-		manaRegen="0"-->/>
+		manaRegen="0"/>
 		
 	<skill id="9" name="Initial"
 		points="10"
@@ -117,11 +125,11 @@
 		soul="0"
 		walkSpeed="100" 
 		attackSpeed="2000"  
-		<!--wandMaxDamage="100"
+		wandMaxDamage="100"
 		rodMaxDamage="100"
 		healthRegen="5"
 		healthTicks="3"
 		manaRegen="5"
-		manaTicks="3"-->/>
+		manaTicks="3"/>
 
 </skills>

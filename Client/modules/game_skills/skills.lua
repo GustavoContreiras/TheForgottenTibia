@@ -475,13 +475,16 @@ function onClickApply()
 		maxDefence 		= maxVitality
 		maxEndurance 	= maxVitality
 	end
+	
+	if (playerLevel >= 33) then
+		maxFaith = faithInfo['max']
+	end
 
 	if (playerLevel >= 41) then
         maxMagic 		= math.ceil( math.max( playerLevel * math.max( 2.5 - (0.02 * (playerLevel - 8)), 1.0 ) * 0.5, playerLevel * 1.0 ) )
 		maxVitality 	= math.ceil( math.max(playerLevel * 1.2 + 12.8 + 8, playerLevel))
 		maxStrenght 	= maxVitality
 		maxIntelligence = maxVitality
-		maxFaith 		= maxVitality
 		maxDexterity 	= maxVitality
 		maxDefence 		= maxVitality
 		maxEndurance 	= maxVitality
@@ -492,18 +495,19 @@ function onClickApply()
 		maxVitality 	= math.ceil( math.max(playerLevel * 0.8 + 36.8 + 8, playerLevel))
 		maxStrenght 	= maxVitality
 		maxIntelligence = maxVitality
-		maxFaith 		= maxVitality
 		maxDexterity 	= maxVitality
 		maxDefence 		= maxVitality
 		maxEndurance 	= maxVitality
+	end
+	
+	if (playerLevel >= 80) then
+		maxIntelligence = intelligenceInfo['max']
 	end
 
 	if (playerLevel > 81) then
         maxMagic 		= math.ceil( 70 + (playerLevel - 80) / 2 )
 		maxVitality 	= math.ceil(playerLevel * 0.4 + 68.8 + 8)
 		maxStrenght 	= maxVitality
-		maxIntelligence = maxVitality
-		maxFaith 		= maxVitality
 		maxDexterity 	= maxVitality
 		maxDefence 		= maxVitality
 		maxEndurance 	= maxVitality
@@ -519,17 +523,16 @@ function onClickApply()
 	if maxEndurance > enduranceInfo['max'] then maxEndurance = enduranceInfo['max'] end	   
 	   
 	local checks = true
-	local message = "The maximum magic at your level is "
 
-	if (newMagic > maxMagic) then modules.game_textmessage.displayBroadcastMessage(message..maxMagic..".") checks = false; end
-	if (newVitality > maxVitality) then dules.game_textmessage.displayBroadcastMessage(message..maxVitality..".") checks = false;	end 
-	if (newStrenght > maxStrenght) then modules.game_textmessage.displayBroadcastMessage(message..maxStrenght..".") checks = false; end
-	if (newDefence > maxDefence) then modules.game_textmessage.displayBroadcastMessage(message..maxDefence..".")checks = false; end
-	if (newIntelligence > maxIntelligence) then modules.game_textmessage.displayBroadcastMessage(message..maxIntelligence..".")checks = false; end
-	if (newFaith > maxFaith) then modules.game_textmessage.displayBroadcastMessage(message..maxFaith..".")checks = false; end
-	if (newDexterity > maxDexterity) then modules.game_textmessage.displayBroadcastMessage(message..maxDexterity..".")checks = false; end
-	if (newEndurance > maxEndurance) then modules.game_textmessage.displayBroadcastMessage(message..maxEndurance..".")checks = false; end
-	if (checks == false) then return false; end
+	if (newMagic > maxMagic) then modules.game_textmessage.displayBroadcastMessage("The maximum magic at you level is "..maxMagic..".") checks = false end
+	if (newVitality > maxVitality) then dules.game_textmessage.displayBroadcastMessage("The maximum vitality at you level is "..maxVitality..".") checks = false end 
+	if (newStrenght > maxStrenght) then modules.game_textmessage.displayBroadcastMessage("The maximum strenght at you level is "..maxStrenght..".") checks = false end
+	if (newDefence > maxDefence) then modules.game_textmessage.displayBroadcastMessage("The maximum defence at you level is "..maxDefence..".") checks = false end
+	if (newIntelligence > maxIntelligence) then modules.game_textmessage.displayBroadcastMessage("The maximum intelligence at you level is "..maxIntelligence..".") checks = false end
+	if (newFaith > maxFaith) then modules.game_textmessage.displayBroadcastMessage("The maximum faith at you level is "..maxFaith..".") checks = false end
+	if (newDexterity > maxDexterity) then modules.game_textmessage.displayBroadcastMessage("The maximum dexterity at you level is "..maxDexterity..".") checks = false end
+	if (newEndurance > maxEndurance) then modules.game_textmessage.displayBroadcastMessage("The maximum endurance at you level is "..maxEndurance..".") checks = false end
+	if (checks == false) then return false end
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
 		

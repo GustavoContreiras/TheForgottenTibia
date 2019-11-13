@@ -54,8 +54,8 @@ initial = {
 	mana = 10,
 	health = 120,
 	cap = 36500,
-  soul = 200,
-  attackSpeed = 2000,
+	soul = 200,
+	attackSpeed = 2000,
 }
 
 levelGain = {
@@ -68,34 +68,34 @@ levelGain = {
 magicInfo = {
   ['cost'] = 2,
   ['initial'] = 0,
-  ['max'] = 120,
+  ['max'] = 110,
   ['mana'] = 15
 }
 
 vitalityInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 130,
   ['health'] = 15
 }
 
 strenghtInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 130,
   ['cap'] = 5
 }
 
 defenceInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150
+  ['max'] = 130
 }
 
 dexterityInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 130,
   ['attackSpeed'] = 10, --ms per level
   ['walkSpeed'] = 0.5,
 }
@@ -103,21 +103,21 @@ dexterityInfo = {
 faithInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 58,
   ['mana'] = 10
 }
 
 intelligenceInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 108,
   ['mana'] = 10
 }
 
 enduranceInfo = {
   ['cost'] = 1,
   ['initial'] = 8,
-  ['max'] = 150,
+  ['max'] = 130,
   ['health'] = 5,
   ['cap'] = 15
 }

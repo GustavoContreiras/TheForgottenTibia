@@ -613,7 +613,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 	// set maximum value for faith
 	if (this->level >= 33)
-		maxFaith = faithInfo['max'];
+		maxFaith = faithInfo["max"];
 
 	// set maximum values for level 41 to 60
 	if (this->level >= 41) {
@@ -639,7 +639,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 	// set maximum value for intelligence
 	if (this->level >= 80)
-		maxIntelligence = intelligenceInfo['max']; 
+		maxIntelligence = intelligenceInfo["max"]; 
 
 	// set maximum value for level 81 or more
 	if (this->level >= 81) {
@@ -652,22 +652,22 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	}
 
 	// just to make sure
-	if (maxMagic > magicInfo['max'])
-		maxMagic = magicInfo['max'];
-	if (maxVitality > vitalityInfo['max']) 
-		maxVitality = vitalityInfo['max'];
-	if (maxStrenght > strenghtInfo['max'])
-		maxStrenght = strenghtInfo['max'];
-	if (maxIntelligence > intelligenceInfo['max']) 
-		maxIntelligence = intelligenceInfo['max'];
-	if (maxFaith > faithInfo['max'])
-		maxFaith = faithInfo['max'];
-	if (maxDexterity > dexterityInfo['max'])
-		maxDexterity = dexterityInfo['max'];
-	if (maxDefence > defenceInfo['max'])
-		maxDefence = defenceInfo['max'];
-	if (maxEndurance > enduranceInfo['max']) 
-		maxEndurance = enduranceInfo['max'];	   
+	if (maxMagic > magicInfo["max"])
+		maxMagic = magicInfo["max"];
+	if (maxVitality > vitalityInfo["max"]) 
+		maxVitality = vitalityInfo["max"];
+	if (maxStrenght > strenghtInfo["max"])
+		maxStrenght = strenghtInfo["max"];
+	if (maxIntelligence > intelligenceInfo["max"]) 
+		maxIntelligence = intelligenceInfo["max"];
+	if (maxFaith > faithInfo["max"])
+		maxFaith = faithInfo["max"];
+	if (maxDexterity > dexterityInfo["max"])
+		maxDexterity = dexterityInfo["max"];
+	if (maxDefence > defenceInfo["max"])
+		maxDefence = defenceInfo["max"];
+	if (maxEndurance > enduranceInfo["max"]) 
+		maxEndurance = enduranceInfo["max"];	   
 
 	bool checks = true;
 
@@ -842,6 +842,8 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 
 void Player::refreshStats() {
 
+	std::unordered_map<std::string, uint32_t> initialInfo = g_game.getSkillInfo(SKILL_INITIAL);
+	std::unordered_map<std::string, uint32_t> levelInfo = g_game.getSkillInfo(SKILL_LEVEL);
 	std::unordered_map<std::string, uint32_t> magicInfo = g_game.getSkillInfo(SKILL_MAGLEVEL);
 	std::unordered_map<std::string, uint32_t> vitalityInfo = g_game.getSkillInfo(SKILL_VITALITY);
 	std::unordered_map<std::string, uint32_t> strenghtInfo = g_game.getSkillInfo(SKILL_STRENGHT);

@@ -5020,7 +5020,7 @@ bool Game::loadSkillsXml()
 
 		int id;
 		uint32_t cost, initial, health, mana, soul, cap, attackSpeed, walkSpeed, 
-				 rodMaxDamage, wandMaxDamage, healthRegen, manaRegen;
+				 rodMaxDamage, wandMaxDamage, healthRegen, manaRegen, points, max;
 
 		pugi::xml_attribute idAttribute = stageNode.attribute("id");
 		if (idAttribute) {
@@ -5030,12 +5030,20 @@ bool Game::loadSkillsXml()
 			id = -1;
 		}
 
-		pugi::xml_attribute pointsAttribute = stageNode.attribute("points");
-		if (pointsAttribute) {
-			pointsAttribute = pugi::cast<uint32_t>(costAttribute.value());
+		pugi::xml_attribute maxAttribute = stageNode.attribute("max");
+		if (maxAttribute) {
+			maxAttribute = pugi::cast<uint32_t>(maxAttribute.value());
 		}
 		else {
-			pointsAttribute = 10;
+			max = 0;
+		}
+
+		pugi::xml_attribute pointsAttribute = stageNode.attribute("points");
+		if (pointsAttribute) {
+			pointsAttribute = pugi::cast<uint32_t>(pointsAttribute.value());
+		}
+		else {
+			points = 10;
 		}
 
 		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
@@ -5132,8 +5140,9 @@ bool Game::loadSkillsXml()
 			manaRegen = 0;
 		}
 
-		switch (id) {
-			case SKILL_VITALITY:
+		switch (id) 
+		{
+			case SKILL_INITIAL:
 				skillInitialInfo["points"] = points;
 				skillInitialInfo["health"] = health;
 				skillInitialInfo["mana"] = mana;
@@ -5143,19 +5152,19 @@ bool Game::loadSkillsXml()
 				skillInitialInfo["attackSpeed"] = attackSpeed;
 				break;
 			
-			case SKILL_VITALITY:
-				skillVitalityInfo["cost"] = cost;
-				skillVitalityInfo["initial"] = initial;
-				skillVitalityInfo["health"] = health;
-				skillVitalityInfo["mana"] = mana;
-				skillVitalityInfo["soul"] = soul;
-				skillVitalityInfo["cap"] = cap;
-				skillVitalityInfo["walkSpeed"] = walkSpeed;
-				skillVitalityInfo["attackSpeed"] = attackSpeed;
-				skillVitalityInfo["wand"] = wandMaxDamage;
-				skillVitalityInfo["rod"] = rodMaxDamage;
-				skillVitalityInfo["healthRegen"] = healthRegen;
-				skillVitalityInfo["manaRegen"] = manaRegen;
+			case SKILL_LEVEL:
+				skillLevelInfo["cost"] = cost;
+				skillLevelInfo["initial"] = initial;
+				skillLevelInfo["health"] = health;
+				skillLevelInfo["mana"] = mana;
+				skillLevelInfo["soul"] = soul;
+				skillLevelInfo["cap"] = cap;
+				skillLevelInfo["walkSpeed"] = walkSpeed;
+				skillLevelInfo["attackSpeed"] = attackSpeed;
+				skillLevelInfo["wand"] = wandMaxDamage;
+				skillLevelInfo["rod"] = rodMaxDamage;
+				skillLevelInfo["healthRegen"] = healthRegen;
+				skillLevelInfo["manaRegen"] = manaRegen;
 				break;
 
 			case SKILL_VITALITY:
@@ -5171,6 +5180,7 @@ bool Game::loadSkillsXml()
 				skillVitalityInfo["rod"] = rodMaxDamage;
 				skillVitalityInfo["healthRegen"] = healthRegen;
 				skillVitalityInfo["manaRegen"] = manaRegen;
+				skillVitalityInfo["max"] = max;
 				break;
 
 			case SKILL_STRENGHT:
@@ -5186,6 +5196,7 @@ bool Game::loadSkillsXml()
 				skillStrenghtInfo["rod"] = rodMaxDamage;
 				skillStrenghtInfo["healthRegen"] = healthRegen;
 				skillStrenghtInfo["manaRegen"] = manaRegen;
+				skillStrenghtInfo["max"] = max;
 				break;	
 
 			case SKILL_DEFENCE:
@@ -5201,6 +5212,7 @@ bool Game::loadSkillsXml()
 				skillDefenceInfo["rod"] = rodMaxDamage;
 				skillDefenceInfo["healthRegen"] = healthRegen;
 				skillDefenceInfo["manaRegen"] = manaRegen;
+				skillDefenceInfo["max"] = max;
 				break;
 
 			case SKILL_DEXTERITY:
@@ -5216,6 +5228,7 @@ bool Game::loadSkillsXml()
 				skillDexterityInfo["rod"] = rodMaxDamage;
 				skillDexterityInfo["healthRegen"] = healthRegen;
 				skillDexterityInfo["manaRegen"] = manaRegen;
+				skillDexterityInfo["max"] = max;
 				break;
 
 			case SKILL_INTELLIGENCE:
@@ -5231,6 +5244,7 @@ bool Game::loadSkillsXml()
 				skillIntelligenceInfo["rod"] = rodMaxDamage;
 				skillIntelligenceInfo["healthRegen"] = healthRegen;
 				skillIntelligenceInfo["manaRegen"] = manaRegen;
+				skillIntelligenceInfo["max"] = max;
 				break;
 
 			case SKILL_FAITH:
@@ -5244,8 +5258,9 @@ bool Game::loadSkillsXml()
 				skillFaithInfo["attackSpeed"] = attackSpeed;
 				skillFaithInfo["wand"] = wandMaxDamage;
 				skillFaithInfo["rod"] = rodMaxDamage;
-				skillVitalityInfo["healthRegen"] = healthRegen;
-				skillVitalityInfo["manaRegen"] = manaRegen;
+				skillFaithInfo["healthRegen"] = healthRegen;
+				skillFaithInfo["manaRegen"] = manaRegen;
+				skillFaithInfo["max"] = max;
 				break;
 
 			case SKILL_ENDURANCE:
@@ -5261,9 +5276,10 @@ bool Game::loadSkillsXml()
 				skillEnduranceInfo["rod"] = rodMaxDamage;
 				skillEnduranceInfo["healthRegen"] = healthRegen;
 				skillEnduranceInfo["manaRegen"] = manaRegen;
+				skillEnduranceInfo["max"] = max;
 				break;
 
-			case 7:
+			case SKILL_MAGLEVEL:
 				skillMagicInfo["cost"] = cost;
 				skillMagicInfo["initial"] = initial;
 				skillMagicInfo["health"] = health;
@@ -5276,6 +5292,7 @@ bool Game::loadSkillsXml()
 				skillMagicInfo["rod"] = rodMaxDamage;
 				skillMagicInfo["healthRegen"] = healthRegen;
 				skillMagicInfo["manaRegen"] = manaRegen;
+				skillMagicInfo["max"] = max;
 				break;
 		}
 	}
