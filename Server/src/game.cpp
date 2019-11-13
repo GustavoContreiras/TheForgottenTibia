@@ -5032,7 +5032,7 @@ bool Game::loadSkillsXml()
 
 		pugi::xml_attribute maxAttribute = stageNode.attribute("max");
 		if (maxAttribute) {
-			maxAttribute = pugi::cast<uint32_t>(maxAttribute.value());
+			max = pugi::cast<uint32_t>(maxAttribute.value());
 		}
 		else {
 			max = 0;
@@ -5040,7 +5040,7 @@ bool Game::loadSkillsXml()
 
 		pugi::xml_attribute pointsAttribute = stageNode.attribute("points");
 		if (pointsAttribute) {
-			pointsAttribute = pugi::cast<uint32_t>(pointsAttribute.value());
+			points = pugi::cast<uint32_t>(pointsAttribute.value());
 		}
 		else {
 			points = 10;
