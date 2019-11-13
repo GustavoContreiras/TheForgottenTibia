@@ -531,6 +531,8 @@ class Game
 		std::map<uint32_t, uint32_t> stages;
 		std::map<uint32_t, uint32_t> points;
 
+		std::unordered_map<std::string, uint32_t> skillInitialInfo;
+		std::unordered_map<std::string, uint32_t> skillLevelInfo;
 		std::unordered_map<std::string, uint32_t> skillVitalityInfo;
 		std::unordered_map<std::string, uint32_t> skillStrenghtInfo;
 		std::unordered_map<std::string, uint32_t> skillDefenceInfo;

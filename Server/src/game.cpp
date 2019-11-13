@@ -4839,6 +4839,8 @@ uint64_t Game::getPointsPerLevel(uint32_t level)
 std::unordered_map<std::string, uint32_t> Game::getSkillInfo(uint32_t id)
 {
 	switch (id) {
+	case SKILL_INITIAL: return skillInitialInfo;
+	case SKILL_LEVEL: return skillLevelInfo;
 	case SKILL_VITALITY: return skillVitalityInfo;
 	case SKILL_STRENGHT: return skillStrenghtInfo;
 	case SKILL_DEFENCE: return skillDefenceInfo;
@@ -5028,6 +5030,14 @@ bool Game::loadSkillsXml()
 			id = -1;
 		}
 
+		pugi::xml_attribute pointsAttribute = stageNode.attribute("points");
+		if (pointsAttribute) {
+			pointsAttribute = pugi::cast<uint32_t>(costAttribute.value());
+		}
+		else {
+			pointsAttribute = 10;
+		}
+
 		pugi::xml_attribute costAttribute = stageNode.attribute("cost");
 		if (costAttribute) {
 			cost = pugi::cast<uint32_t>(costAttribute.value());
@@ -5123,6 +5133,31 @@ bool Game::loadSkillsXml()
 		}
 
 		switch (id) {
+			case SKILL_VITALITY:
+				skillInitialInfo["points"] = points;
+				skillInitialInfo["health"] = health;
+				skillInitialInfo["mana"] = mana;
+				skillInitialInfo["soul"] = soul;
+				skillInitialInfo["cap"] = cap;
+				skillInitialInfo["walkSpeed"] = walkSpeed;
+				skillInitialInfo["attackSpeed"] = attackSpeed;
+				break;
+			
+			case SKILL_VITALITY:
+				skillVitalityInfo["cost"] = cost;
+				skillVitalityInfo["initial"] = initial;
+				skillVitalityInfo["health"] = health;
+				skillVitalityInfo["mana"] = mana;
+				skillVitalityInfo["soul"] = soul;
+				skillVitalityInfo["cap"] = cap;
+				skillVitalityInfo["walkSpeed"] = walkSpeed;
+				skillVitalityInfo["attackSpeed"] = attackSpeed;
+				skillVitalityInfo["wand"] = wandMaxDamage;
+				skillVitalityInfo["rod"] = rodMaxDamage;
+				skillVitalityInfo["healthRegen"] = healthRegen;
+				skillVitalityInfo["manaRegen"] = manaRegen;
+				break;
+
 			case SKILL_VITALITY:
 				skillVitalityInfo["cost"] = cost;
 				skillVitalityInfo["initial"] = initial;

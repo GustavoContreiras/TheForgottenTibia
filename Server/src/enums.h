@@ -396,7 +396,9 @@ enum skills_t : uint8_t {
 	SKILL_LEVEL = 8,
 
 	SKILL_FIRST = SKILL_VITALITY,
-	SKILL_LAST = SKILL_ENDURANCE
+	SKILL_LAST = SKILL_ENDURANCE,
+
+	SKILL INITIAL = 9 // not used as skill
 };
 
 enum criticals_t : uint8_t {
