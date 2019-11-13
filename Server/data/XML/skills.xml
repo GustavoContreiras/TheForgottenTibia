@@ -106,14 +106,14 @@
 		manaRegen="0"/>
 		
 	<skill id="8" name="Level"
-		health="0" 
-		mana="15" 
-		cap="0" 
-		soul="0"
-		walkSpeed="0" 
-		attackSpeed="0"  
-		wandMaxDamage="0"
-		rodMaxDamage="0"
+		health="5" 
+		mana="5" 
+		cap="10" 
+		soul="5"
+		walkSpeed="1" 
+		attackSpeed="5"  
+		wandMaxDamage="1"
+		rodMaxDamage="2"
 		healthRegen="0"
 		manaRegen="0"/>
 		

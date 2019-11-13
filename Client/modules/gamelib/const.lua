@@ -1,6 +1,6 @@
 -- @docconsts @{
 
-clientVersionToPlay = 2
+clientVersionToPlay = 3
 clientDownloadLink = "http://189.122.73.38:8080/download.php?file=/TheForgottenTibia.zip"
 
 dualWieldingAttackSpeed = 1500
