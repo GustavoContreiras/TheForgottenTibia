@@ -432,7 +432,7 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 
 		if (g_config.getBoolean(ConfigManager::CRITICAL_ON_WANDS_AND_RODS)) {
 			if (weaponType == WEAPON_WAND) {
-				attackSkill = player->getSkillLevel(SKILL_MAGLEVEL);
+				attackSkill = player->getMagicLevel();
 				criticalDamage.origin = ORIGIN_MELEE;
 				criticalInfo = g_game.getCriticalInfo(CRITICAL_WAND);
 			}

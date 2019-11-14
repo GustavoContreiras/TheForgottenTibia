@@ -760,6 +760,9 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	skills[SKILL_ENDURANCE].level = endurance;	
 
 	// just to make sure
+	if (magLevel < magicInfo["initial"])
+		magLevel = magicInfo["initial"];
+
 	if (skills[SKILL_VITALITY].level < vitalityInfo["initial"]) 
 		skills[SKILL_VITALITY].level = vitalityInfo["initial"];
 	
@@ -784,7 +787,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	// calculate new mana
 	mana = initialInfo["mana"] +
 		   levelInfo["mana"] * (this->level - 1) +
-		   magicInfo["mana"] * (skills[SKILL_MAGLEVEL].level - magicInfo["initial"]) +
+		   magicInfo["mana"] * (magLevel - magicInfo["initial"]) + //NEVER USE skills[SKILL_MAGLEVEL].level!!! fckng annoying bug
 		   vitalityInfo["mana"] * (skills[SKILL_VITALITY].level - vitalityInfo["initial"]) +
 		   strenghtInfo["mana"] * (skills[SKILL_STRENGHT].level - strenghtInfo["initial"]) +
 		   defenceInfo["mana"] * (skills[SKILL_DEFENCE].level - defenceInfo["initial"]) +
@@ -796,7 +799,7 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	// calculate new health
 	health = initialInfo["health"] +
 			 levelInfo["health"] * (this->level - 1) +
-			 magicInfo["health"] * (skills[SKILL_MAGLEVEL].level - magicInfo["initial"]) +
+			 magicInfo["health"] * (magLevel - magicInfo["initial"]) +
 		   	 vitalityInfo["health"] * (skills[SKILL_VITALITY].level - vitalityInfo["initial"]) +
 		   	 strenghtInfo["health"] * (skills[SKILL_STRENGHT].level - strenghtInfo["initial"]) +
 		   	 defenceInfo["health"] * (skills[SKILL_DEFENCE].level - defenceInfo["initial"]) +
@@ -876,11 +879,13 @@ void Player::refreshStats() {
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["mana"];
 
 	if (mana < 0 || mana > manaMax) {
-		mana = 0;
+		mana = manaMax;
+		std::cout << "Player " << this->name << " had negative mana or more then manaMax while refreshing stats!" << std::endl;
 	}
 
 	if (health < 0 || health > healthMax) {
-		health = 60;
+		health = initialInfo["health"];
+		std::cout << "Player " << this->name << " had negative health or more then healthMax while refreshing stats!" << std::endl;
 	}
 
 	soul = vocation->getSoulMax() +
@@ -893,7 +898,7 @@ void Player::refreshStats() {
 		(skills[SKILL_FAITH].level - 8) 		* faithInfo["soul"] +
 		(skills[SKILL_ENDURANCE].level - 8) 	* enduranceInfo["soul"];
 
-	capacity = 36500 +
+	capacity = initialInfo["cap"] * 100 +
 		(level - 1) 							* vocation->getCapGain() +
 		(magLevel) 								* magicInfo["cap"] * 100 +
 		(skills[SKILL_VITALITY].level - 8) 		* vitalityInfo["cap"] * 100 +

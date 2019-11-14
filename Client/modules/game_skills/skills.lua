@@ -524,28 +524,24 @@ function onClickApply()
 	   
 	local checks = true
 
-	if (newMagic > maxMagic) then modules.game_textmessage.displayBroadcastMessage("The maximum magic at you level is "..maxMagic..".") checks = false end
-	if (newVitality > maxVitality) then dules.game_textmessage.displayBroadcastMessage("The maximum vitality at you level is "..maxVitality..".") checks = false end 
-	if (newStrenght > maxStrenght) then modules.game_textmessage.displayBroadcastMessage("The maximum strenght at you level is "..maxStrenght..".") checks = false end
-	if (newDefence > maxDefence) then modules.game_textmessage.displayBroadcastMessage("The maximum defence at you level is "..maxDefence..".") checks = false end
-	if (newIntelligence > maxIntelligence) then modules.game_textmessage.displayBroadcastMessage("The maximum intelligence at you level is "..maxIntelligence..".") checks = false end
-	if (newFaith > maxFaith) then modules.game_textmessage.displayBroadcastMessage("The maximum faith at you level is "..maxFaith..".") checks = false end
-	if (newDexterity > maxDexterity) then modules.game_textmessage.displayBroadcastMessage("The maximum dexterity at you level is "..maxDexterity..".") checks = false end
-	if (newEndurance > maxEndurance) then modules.game_textmessage.displayBroadcastMessage("The maximum endurance at you level is "..maxEndurance..".") checks = false end
+	if (newMagic > maxMagic) then modules.game_textmessage.displayBroadcastMessage("The maximum magic at your level is "..maxMagic..".") checks = false end
+	if (newVitality > maxVitality) then dules.game_textmessage.displayBroadcastMessage("The maximum vitality at your level is "..maxVitality..".") checks = false end 
+	if (newStrenght > maxStrenght) then modules.game_textmessage.displayBroadcastMessage("The maximum strenght at your level is "..maxStrenght..".") checks = false end
+	if (newDefence > maxDefence) then modules.game_textmessage.displayBroadcastMessage("The maximum defence at your level is "..maxDefence..".") checks = false end
+	if (newIntelligence > maxIntelligence) then modules.game_textmessage.displayBroadcastMessage("The maximum intelligence at your level is "..maxIntelligence..".") checks = false end
+	if (newFaith > maxFaith) then modules.game_textmessage.displayBroadcastMessage("The maximum faith at your level is "..maxFaith..".") checks = false end
+	if (newDexterity > maxDexterity) then modules.game_textmessage.displayBroadcastMessage("The maximum dexterity at your level is "..maxDexterity..".") checks = false end
+	if (newEndurance > maxEndurance) then modules.game_textmessage.displayBroadcastMessage("The maximum endurance at your level is "..maxEndurance..".") checks = false end
 	if (checks == false) then return false end
 	
 	g_game.applyNewSkills(newMagic, newVitality, newStrenght, newDefence, newDexterity, newIntelligence, newFaith, newEndurance)
-		
-	newMagic = player:getBaseMagicLevel()
-	newVitality = player:getBaseSkillLevel(Skill.Vitality)
-	newStrenght = player:getBaseSkillLevel(Skill.Strenght)
-	newDefence = player:getBaseSkillLevel(Skill.Defence)
-	newDexterity = player:getBaseSkillLevel(Skill.Dexterity)
-	newIntelligence = player:getBaseSkillLevel(Skill.Intelligence)
-	newFaith = player:getBaseSkillLevel(Skill.Faith)
-	newEndurance = player:getBaseSkillLevel(Skill.Endurance)
 	
 	setExtraLabelsInvisible()
+
+	resetChanges()
+
+	toggle() 
+	toggle()
 end
 
 function setSkillPointsValueAndVisibility(arrowLabel, valueLabel, value, currentValue)
@@ -655,6 +651,9 @@ function onClickAddMagic()
 		newSkillPoints = newSkillPoints - magicInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
 
+		local currentMagic = player:getBaseMagicLevel()
+		if newMagic < currentMagic then newMagic = currentMagic end
+
 		newMagic = newMagic + 1
 		setValueAndVisibility(newMagicArrowLabel, newMagicValueLabel, newMagic, player:getBaseMagicLevel())
 		magicMinusButton:setVisible(true)
@@ -673,6 +672,9 @@ function onClickAddVitality()
 		applyButton:setVisible(true)
 		newSkillPoints = newSkillPoints - vitalityInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		local currentVitality = player:getBaseSkillLevel(Skill.Vitality)
+		if newVitality < currentVitality then newVitality = currentVitality end
 
 		newVitality = newVitality + 1
 		setValueAndVisibility(newVitalityArrowLabel, newVitalityValueLabel, newVitality, player:getBaseSkillLevel(Skill.Vitality))
@@ -693,6 +695,9 @@ function onClickAddStrenght()
 		newSkillPoints = newSkillPoints - strenghtInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
 
+		local currentStrenght = player:getBaseSkillLevel(Skill.Strenght)
+		if newStrenght < currentStrenght then newStrenght = currentStrenght end
+
 		newStrenght = newStrenght + 1
 		setValueAndVisibility(newStrenghtArrowLabel, newStrenghtValueLabel, newStrenght, player:getBaseSkillLevel(Skill.Strenght))
 		strenghtMinusButton:setVisible(true)
@@ -711,6 +716,9 @@ function onClickAddDefence()
 		newSkillPoints = newSkillPoints - defenceInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
 
+		local currentDefence = player:getBaseSkillLevel(Skill.Defence)
+		if newDefence < currentDefence then newDefence = currentDefence end
+
 		newDefence = newDefence + 1
 		setValueAndVisibility(newDefenceArrowLabel, newDefenceValueLabel, newDefence, player:getBaseSkillLevel(Skill.Defence))
 		defenceMinusButton:setVisible(true)
@@ -727,6 +735,9 @@ function onClickAddDexterity()
 		applyButton:setVisible(true)
 		newSkillPoints = newSkillPoints - dexterityInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		local currentDexterity = player:getBaseSkillLevel(Skill.Dexterity)
+		if newDexterity < currentDexterity then newDexterity = currentDexterity end
 
 		newDexterity = newDexterity + 1
 		setValueAndVisibility(newDexterityArrowLabel, newDexterityValueLabel, newDexterity, player:getBaseSkillLevel(Skill.Dexterity))
@@ -755,6 +766,9 @@ function onClickAddIntelligence()
 		newSkillPoints = newSkillPoints - intelligenceInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
 
+		local currentIntelligence = player:getBaseSkillLevel(Skill.Intelligence)
+		if newIntelligence < currentIntelligence then newIntelligence = currentIntelligence end
+
 		newIntelligence = newIntelligence + 1
 		setValueAndVisibility(newIntelligenceArrowLabel, newIntelligenceValueLabel, newIntelligence, player:getBaseSkillLevel(Skill.Intelligence))
 		intelligenceMinusButton:setVisible(true)
@@ -774,6 +788,9 @@ function onClickAddFaith()
 		newSkillPoints = newSkillPoints - faithInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
 
+		local currentFaith = player:getBaseSkillLevel(Skill.Faith)
+		if newFaith < currentFaith then newFaith = currentFaith end
+
 		newFaith = newFaith + 1
 		setValueAndVisibility(newFaithArrowLabel, newFaithValueLabel, newFaith, player:getBaseSkillLevel(Skill.Faith))
 		faithMinusButton:setVisible(true)
@@ -792,6 +809,9 @@ function onClickAddEndurance()
 		applyButton:setVisible(true)
 		newSkillPoints = newSkillPoints - enduranceInfo['cost']
 		setSkillPointsValueAndVisibility(newSkillPointsArrowLabel, newSkillPointsValueLabel, newSkillPoints, player:getSkillPoints())
+
+		local currentEndurance = player:getBaseSkillLevel(Skill.Endurance)
+		if newEndurance < currentEndurance then newEndurance = currentEndurance end
 
 		newEndurance = newEndurance + 1
 		setValueAndVisibility(newEnduranceArrowLabel, newEnduranceValueLabel, newEndurance, player:getBaseSkillLevel(Skill.Endurance))
