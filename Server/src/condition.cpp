@@ -359,7 +359,7 @@ void ConditionAttributes::addCondition(Creature* creature, const Condition* cond
 		disableDefense = conditionAttrs.disableDefense;
 
 		if (Player* player = creature->getPlayer()) {
-			updatePercentSkills(player);
+			//updatePercentSkills(player);
 			updateSkills(player);
 			updatePercentStats(player);
 			updateStats(player);
