@@ -784,6 +784,36 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 	if (skills[SKILL_ENDURANCE].level < enduranceInfo["initial"])
 		skills[SKILL_ENDURANCE].level = enduranceInfo["initial"];
 
+	if (skillPoints < 0 || skillPoints > skillPointsTotal) 
+	{
+		skillPoints = skillPointsTotal;
+		magLevel = magicInfo["initial"];
+		skills[SKILL_VITALITY].level = vitalityInfo["initial"];
+		skills[SKILL_STRENGHT].level = strenghtInfo["initial"];
+		skills[SKILL_DEFENCE].level = defenceInfo["initial"];
+		skills[SKILL_DEXTERITY].level = dexterityInfo["initial"];
+		skills[SKILL_INTELLIGENCE].level = intelligenceInfo["initial"];
+		skills[SKILL_FAITH].level = faithInfo["initial"];
+		skills[SKILL_ENDURANCE].level = enduranceInfo["initial"];
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, "Something wrong happened. Please set your skills.");
+		std::cout << "Player " << this->name << " had negative skillpoints or more then his total while setting skills!" << std::endl;
+	}
+
+	if (magLevel < 0 || magLevel > std::numeric_limits<uint8_t>::max())
+	{
+		skillPoints = skillPointsTotal;
+		magLevel = magicInfo["initial"];
+		skills[SKILL_VITALITY].level = vitalityInfo["initial"];
+		skills[SKILL_STRENGHT].level = strenghtInfo["initial"];
+		skills[SKILL_DEFENCE].level = defenceInfo["initial"];
+		skills[SKILL_DEXTERITY].level = dexterityInfo["initial"];
+		skills[SKILL_INTELLIGENCE].level = intelligenceInfo["initial"];
+		skills[SKILL_FAITH].level = faithInfo["initial"];
+		skills[SKILL_ENDURANCE].level = enduranceInfo["initial"];
+		this->sendTextMessage(MESSAGE_STATUS_WARNING, "Something wrong happened. Please set your skills.");
+		std::cout << "Player " << this->name << " had negative magLevel or more then uint8_t maximum while setting skills!" << std::endl;
+	}
+
 	// calculate new mana
 	mana = initialInfo["mana"] +
 		   levelInfo["mana"] * (this->level - 1) +
@@ -807,16 +837,6 @@ bool Player::setSkills(uint16_t magic, uint16_t vitality, uint16_t strenght, uin
 		   	 intelligenceInfo["health"] * (skills[SKILL_INTELLIGENCE].level - intelligenceInfo["initial"]) +
 		   	 faithInfo["health"] * (skills[SKILL_FAITH].level - faithInfo["initial"]) +
 		   	 enduranceInfo["health"] * (skills[SKILL_ENDURANCE].level - enduranceInfo["initial"]);
-
-	if (skillPoints < 0 || skillPoints > skillPointsTotal) {
-		skillPoints = 0;
-		std::cout << "Player " << this->name << " had negative skillpoints or more then his total while setting skills!" << std::endl;
-	}
-
-	if (magLevel < 0 || magLevel > std::numeric_limits<uint8_t>::max()) {
-		std::cout << "Player " << this->name << " had negative magLevel or more then uint8_t maximum while setting skills!" << std::endl;
-		magLevel = 0;
-	}
 
 	refreshStats();
 
@@ -884,7 +904,7 @@ void Player::refreshStats() {
 	}
 
 	if (health < 0 || health > healthMax) {
-		health = initialInfo["health"];
+		health = healthMax;
 		std::cout << "Player " << this->name << " had negative health or more then healthMax while refreshing stats!" << std::endl;
 	}
 

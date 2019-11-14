@@ -2495,35 +2495,61 @@ void Game::playerSetSkillsRequest(uint32_t playerId, uint16_t magic, uint16_t vi
 		endurance = player->skills[SKILL_ENDURANCE].level;
 
 	uint8_t pointsNeeded = (magic - player->magLevel) * getSkillInfo(SKILL_MAGLEVEL)["cost"] +
-						   (vitality - player->skills[SKILL_VITALITY].level) * getSkillInfo(SKILL_VITALITY)["cost"]+ 
-						   (strenght - player->skills[SKILL_STRENGHT].level) * getSkillInfo(SKILL_STRENGHT)["cost"]+ 
-						   (defence - player->skills[SKILL_DEFENCE].level) * getSkillInfo(SKILL_DEFENCE)["cost"]+ 
-						   (dexterity - player->skills[SKILL_DEXTERITY].level) * getSkillInfo(SKILL_DEXTERITY)["cost"]+ 
-						   (intelligence - player->skills[SKILL_INTELLIGENCE].level) * getSkillInfo(SKILL_INTELLIGENCE)["cost"]+ 
-						   (faith - player->skills[SKILL_FAITH].level) * getSkillInfo(SKILL_FAITH)["cost"]+ 
+						   (vitality - player->skills[SKILL_VITALITY].level) * getSkillInfo(SKILL_VITALITY)["cost"] + 
+						   (strenght - player->skills[SKILL_STRENGHT].level) * getSkillInfo(SKILL_STRENGHT)["cost"] + 
+						   (defence - player->skills[SKILL_DEFENCE].level) * getSkillInfo(SKILL_DEFENCE)["cost"] + 
+						   (dexterity - player->skills[SKILL_DEXTERITY].level) * getSkillInfo(SKILL_DEXTERITY)["cost"] + 
+						   (intelligence - player->skills[SKILL_INTELLIGENCE].level) * getSkillInfo(SKILL_INTELLIGENCE)["cost"] + 
+						   (faith - player->skills[SKILL_FAITH].level) * getSkillInfo(SKILL_FAITH)["cost"] + 
 						   (endurance - player->skills[SKILL_ENDURANCE].level) * getSkillInfo(SKILL_ENDURANCE)["cost"];
 
-	//uint8_t totalPointsNeeded = magic * 3 + vitality - 8 + strenght- 8  + defence- 8  + dexterity- 8  + intelligence- 8  + faith- 8  + endurance- 8 ;
-	bool checks = true;
+	uint8_t totalPointsNeeded = (magic * getSkillInfo(SKILL_MAGLEVEL)["cost"]) - getSkillInfo(SKILL_MAGLEVEL)["initial"] +
+								(vitality * getSkillInfo(SKILL_VITALITY)["cost"]) - getSkillInfo(SKILL_VITALITY)["initial"] +
+								(strenght * getSkillInfo(SKILL_STRENGHT)["cost"]) - getSkillInfo(SKILL_STRENGHT)["initial"] +
+								(defence * getSkillInfo(SKILL_DEFENCE)["cost"]) - getSkillInfo(SKILL_DEFENCE)["initial"] +
+								(dexterity * getSkillInfo(SKILL_DEXTERITY)["cost"]) - getSkillInfo(SKILL_DEXTERITY)["initial"] +
+								(intelligence * getSkillInfo(SKILL_INTELLIGENCE)["cost"]) - getSkillInfo(SKILL_INTELLIGENCE)["initial"] +
+								(faith * getSkillInfo(SKILL_FAITH)["cost"]) - getSkillInfo(SKILL_FAITH)["initial"] +
+								(endurance * getSkillInfo(SKILL_ENDURANCE)["cost"]) - getSkillInfo(SKILL_ENDURANCE)["initial"];
 
 	if (player->skillPoints < pointsNeeded) {
 		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " " << "(" << player->getSkillPoints() << "points) tried to apply skills without having enough points (" << pointsNeeded << " needed)." << std::endl;		
-		checks = false;
+		player->sendTextMessage(MESSAGE_STATUS_WARNING, "Something wrong happened. Please set your skills.");
+		player->setSkills(
+			getSkillInfo(SKILL_MAGLEVEL)["initial"],
+			getSkillInfo(SKILL_VITALITY)["initial"],
+			getSkillInfo(SKILL_STRENGHT)["initial"],
+			getSkillInfo(SKILL_DEFENCE)["initial"],
+			getSkillInfo(SKILL_DEXTERITY)["initial"],
+			getSkillInfo(SKILL_INTELLIGENCE)["initial"],
+			getSkillInfo(SKILL_FAITH)["initial"],
+			getSkillInfo(SKILL_ENDURANCE)["initial"]);
+		player->setSkillPoints(player->getSkillPointsTotal());
+		return;
 	}
 
-	/*if (player->totalSkillPoints < totalPointsNeeded) {
-		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " " << "(" << player->totalSkillPoints << " points) tried to apply skills without having enough total points (" << totalPointsNeeded << " needed)." << std::endl;
-		checks = false;
-	}*/
+	if (player->skillPointsTotal < totalPointsNeeded) {
+		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " " << "(" << player->getSkillPointsTotal() << " points) tried to apply skills without having enough total points (" << totalPointsNeeded << " needed)." << std::endl;
+		player->sendTextMessage(MESSAGE_STATUS_WARNING, "Something wrong happened. Please set your skills.");
+		player->setSkills(
+			getSkillInfo(SKILL_MAGLEVEL)["initial"],
+			getSkillInfo(SKILL_VITALITY)["initial"],
+			getSkillInfo(SKILL_STRENGHT)["initial"],
+			getSkillInfo(SKILL_DEFENCE)["initial"],
+			getSkillInfo(SKILL_DEXTERITY)["initial"],
+			getSkillInfo(SKILL_INTELLIGENCE)["initial"],
+			getSkillInfo(SKILL_FAITH)["initial"],
+			getSkillInfo(SKILL_ENDURANCE)["initial"]);
+		player->setSkillPoints(player->getSkillPointsTotal());
+		return;
+	}
 
 	if (player->isSetingSkills) {
 		std::cout << "[Error - Game::playerSetSkillsRequest] Player " << player->getName() << " tried to apply skills but he is already setting skills" << std::endl;
-		checks = false;
+		return;
 	}
 
-	if (checks) {
-		player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
-	}
+	player->setSkills(magic, vitality, strenght, defence, dexterity, intelligence, faith, endurance);
 }
 
 void Game::playerUpdateHouseWindow(uint32_t playerId, uint8_t listId, uint32_t windowTextId, const std::string& text)
