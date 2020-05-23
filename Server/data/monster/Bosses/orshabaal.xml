@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Orshabaal" nameDescription="Orshabaal" race="fire" experience="10000" speed="380">
-	<health now="20500" max="20500" />
+<monster name="Orshabaal" nameDescription="Orshabaal" race="fire" experience="9999" speed="380" manacost="0">
+	<health now="22500" max="22500"/>
+	<level min="1" max="10" />
 	<look type="201" corpse="2916" />
-	<targetchange interval="2000" chance="10" />
+	<targetchange interval="1000" chance="10"/>
+	<targetstrategies nearest="70" health="10" damage="10" random="10"/>
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -16,7 +18,7 @@
 		<flag runonhealth="2500" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-1990" />
+		<attack name="melee" skill="190" attack="199"/>
 		<attack name="manadrain" interval="1000" chance="13" range="7" min="-300" max="-600" />
 		<attack name="manadrain" interval="1000" chance="6" radius="5" target="0" min="-150" max="-350">
 			<attribute key="areaEffect" value="poison" />
@@ -24,7 +26,7 @@
 		<attack name="effect" interval="1000" chance="6" radius="5" target="0">
 			<attribute key="areaEffect" value="blackspark" />
 		</attack>
-		<attack name="fire" interval="1000" chance="34" range="7" radius="7" target="1" min="-310" max="-600">
+		<attack name="fire" interval="1000" chance="34" range="7" radius="7" target="1" min="-310" max="-610">
 			<attribute key="shootEffect" value="fire" />
 			<attribute key="areaEffect" value="firearea" />
 		</attack>

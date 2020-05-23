@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Fernfang" nameDescription="Fernfang" race="blood" experience="600" speed="240">
+<monster name="Fernfang" nameDescription="Fernfang" race="blood" experience="400" speed="240" manacost="0">
 	<health now="400" max="400" />
+	<level min="1" max="10" />
 	<look type="206" corpse="20566" />
-	<targetchange interval="5000" chance="8" />
+	<targetchange interval="1000" chance="7"/>
+	<targetstrategies nearest="70" health="10" damage="20" random="0"/>
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -13,24 +15,24 @@
 		<flag canpushitems="1" />
 		<flag canpushcreatures="1" />
 		<flag targetdistance="4" />
-		<flag staticattack="90" />
+		<flag staticattack="80"/>
 		<flag runonhealth="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-120" />
-		<attack name="manadrain" interval="1000" chance="25" range="7" min="-25" max="-45">
+		<attack name="melee" skill="50" attack="50"/>
+		<attack name="manadrain" chance="25" range="7" min="-477" max="-547">
 			<attribute key="areaEffect" value="redshimmer" />
 		</attack>
-		<attack name="energy" interval="1000" chance="13" range="7" min="-70" max="-90">
+		<attack name="energy" chance="13" range="7" min="-70" max="-90">
 			<attribute key="shootEffect" value="energy" />
 			<attribute key="areaEffect" value="energy" />
 		</attack>
-		<attack name="physical" interval="1000" chance="10" range="7" min="-140" max="-180">
+		<attack name="physical" chance="10" checkdefense="1" range="7" min="-140" max="-180">
 			<attribute key="shootEffect" value="suddendeath" />
 		</attack>
 	</attacks>
 	<defenses armor="15" defense="10">
-		<defense name="healing" interval="1000" chance="15" min="90" max="120">
+		<defense name="healing" chance="15" min="90" max="120">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 		<defense name="speed" interval="1000" chance="7" speedchange="310" duration="10000">

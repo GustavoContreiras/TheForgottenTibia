@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Crab" namedescription="a crab" race="undead" experience="30" speed="140" manacost="305">
+<monster name="crab" nameDescription="a crab" race="blood" experience="30" speed="200" manacost="305">
 	<health now="55" max="55" />
+	<level min="1" max="10" />
 	<look type="112" corpse="6039" />
 	<targetchange interval="4000" chance="0" />
+	<targetstrategies nearest="100" health="0" damage="0" random="0"/>
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />
@@ -19,9 +21,10 @@
 		<flag canwalkonfire="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-20" />
+		<attack name="melee" skill="25" attack="15"/>
 	</attacks>
-	<defenses armor="10" defense="10" />
+	<defenses armor="28" defense="30">
+	</defenses>
 	<elements>
 		<element icePercent="1" />
 		<element firePercent="-10" />

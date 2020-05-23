@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dharalion" nameDescription="Dharalion" race="blood" experience="570" speed="240">
-	<health now="380" max="380" />
+<monster name="Dharalion" nameDescription="Dharalion" race="blood" experience="380" speed="240" manacost="0">
+	<health now="390" max="390"/>
+	<level min="1" max="5" />
 	<look type="203" corpse="6011" />
-	<targetchange interval="5000" chance="8" />
+	<targetchange interval="1000" chance="7"/>
+	<targetstrategies nearest="10" health="10" damage="20" random="60"/>
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -13,17 +15,17 @@
 		<flag canpushitems="1" />
 		<flag canpushcreatures="1" />
 		<flag targetdistance="4" />
-		<flag staticattack="90" />
+		<flag staticattack="80"/>
 		<flag runonhealth="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-56" />
-		<attack name="manadrain" interval="1000" chance="15" range="7" min="-30" max="-60" />
-		<attack name="energy" interval="1000" chance="13" range="7" min="-70" max="-90">
+		<attack name="melee" skill="30" attack="28"/>
+		<attack name="manadrain" chance="15" range="7" min="-467" max="-557"/>
+		<attack name="energy" chance="13" range="7" min="-70" max="-90">
 			<attribute key="shootEffect" value="energy" />
 			<attribute key="areaEffect" value="energy" />
 		</attack>
-		<attack name="physical" interval="1000" chance="10" range="7" min="-80" max="-151">
+		<attack name="physical" chance="10" range="7" min="-130" max="-150">
 			<attribute key="shootEffect" value="suddendeath" />
 		</attack>
 		<attack name="effect" interval="1000" chance="13" range="7">
@@ -31,8 +33,8 @@
 			<attribute key="areaEffect" value="poison" />
 		</attack>
 	</attacks>
-	<defenses armor="15" defense="25">
-		<defense name="healing" interval="1000" chance="20" min="90" max="120">
+	<defenses armor="15" defense="39">
+		<defense name="healing" chance="20" min="90" max="120">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 		<defense name="speed" interval="1000" chance="7" speedchange="300" duration="10000">
@@ -50,10 +52,11 @@
 	<summons maxSummons="2">
 		<summon name="demon skeleton" interval="1000" chance="6" max="2" />
 	</summons>
-	<voices interval="5000" chance="10">
-		<voice sentence="Feel my wrath!" />
-		<voice sentence="Noone will stop my ascension!" />
-		<voice sentence="My powers are divine!" />
+<voices interval="5000" chance="10">
+		<voice sentence="You desecrated this temple!"/>
+		<voice sentence="Noone will stop my ascension!"/>
+		<voice sentence="My powers are divine!"/>
+		<voice sentence="Muahahaha!"/>
 	</voices>
 	<loot>
 		<item id="1949" chance="10000" /><!-- scroll -->

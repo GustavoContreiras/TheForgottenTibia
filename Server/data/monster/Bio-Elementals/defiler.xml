@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <monster name="Defiler" nameDescription="a defiler" race="venom" experience="3700" speed="230">
 	<health now="3650" max="3650" />
+	<level min="1" max="40" />
 	<look type="238" corpse="6532" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
@@ -19,7 +20,7 @@
 		<flag canwalkonfire="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-240" poison="150" />
+		<attack name="melee" interval="2000" skill="50" attack="80" poison="150"/>
 		<attack name="earth" interval="2000" chance="20" range="7" min="-160" max="-270">
 			<attribute key="shootEffect" value="poison" />
 		</attack>

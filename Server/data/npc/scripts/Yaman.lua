@@ -1,4 +1,4 @@
- local keywordHandler = KeywordHandler:new()
+local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
@@ -14,19 +14,19 @@ local function creatureSayCallback(cid, type, msg)
 
 	local player = Player(cid)
 
-	if isInArray({"enchanted chicken wing", "boots of haste", "Enchanted Chicken Wing", "Boots of Haste"}, msg) then
+	if isInArray({"enchanted chicken wing", "boots of haste"}, msg) then
 		npcHandler:say('Do you want to trade Boots of haste for Enchanted Chicken Wing?', cid)
 		npcHandler.topic[cid] = 1
-	elseif isInArray({"warrior sweat", "warrior helmet", "Warrior Sweat", "Warrior Helmet"}, msg) then
+	elseif isInArray({"warrior Sweat", "warrior helmet"}, msg) then
 		npcHandler:say('Do you want to trade 4 Warrior Helmet for Warrior Sweat?', cid)
 		npcHandler.topic[cid] = 2
-	elseif isInArray({"fighting spirit", "royal helmet", "Fighting Spirit", "Royal Helmet"}, msg) then
+	elseif isInArray({"fighting Spirit", "royal helmet"}, msg) then
 		npcHandler:say('Do you want to trade 2 Royal Helmet for Fighting Spirit', cid)
 		npcHandler.topic[cid] = 3
-	elseif isInArray({"magic sulphur", "fire sword", "Magic Sulphur", "Fire Sword"}, msg) then
+	elseif isInArray({"magic sulphur", "fire sword"}, msg) then
 		npcHandler:say('Do you want to trade 3 Fire Sword for Magic Sulphur', cid)
 		npcHandler.topic[cid] = 4
-	elseif isInArray({"job", "items", "Items", "Job"}, msg) then
+	elseif isInArray({"job", "items"}, msg) then
 		npcHandler:say('I trade Enchanted Chicken Wing for Boots of Haste, Warrior Sweat for 4 Warrior Helmets, Fighting Spirit for 2 Royal Helmet Magic Sulphur for 3 Fire Swords', cid)
 		npcHandler.topic[cid] = 0
 	elseif msgcontains(msg, 'cookie') then
@@ -81,10 +81,10 @@ local function creatureSayCallback(cid, type, msg)
 end
 
 local function onTradeRequest(cid)
-	--if Player(cid):getStorageValue(Storage.DjinnWar.EfreetFaction.Mission03) ~= 3 then
-		--npcHandler:say('I\'m sorry, but you don\'t have Malor\'s permission to trade with me.', cid)
-		--return false
-	--end
+	if Player(cid):getStorageValue(Storage.DjinnWar.EfreetFaction.Mission03) ~= 3 then
+		npcHandler:say('I\'m sorry, but you don\'t have Malor\'s permission to trade with me.', cid)
+		return false
+	end
 
 	return true
 end
@@ -98,4 +98,7 @@ npcHandler:setCallback(CALLBACK_ONTRADEREQUEST, onTradeRequest)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 
 local focusModule = FocusModule:new()
+focusModule:addGreetMessage('hi')
+focusModule:addGreetMessage('hello')
+focusModule:addGreetMessage('djanni\'hah')
 npcHandler:addModule(focusModule)

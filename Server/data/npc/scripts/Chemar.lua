@@ -2,45 +2,37 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-local destination = {}
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()		npcHandler:onThink()		end
 
-function onCreatureAppear(cid)              npcHandler:onCreatureAppear(cid)            end
-function onCreatureDisappear(cid)           npcHandler:onCreatureDisappear(cid)         end
-function onCreatureSay(cid, type, msg)      npcHandler:onCreatureSay(cid, type, msg)    end
-function onThink()                          npcHandler:onThink()                        end
+local voices = {
+	{ text = 'Ask me if you need letters or parcels. I\'ll deliver them via airmail, of course!' },
+	{ text = 'Feel the wind in your hair during one of my carpet rides!' }
+}
 
-local function greetCallback(cid)
-	return true
-end
+npcHandler:addModule(VoiceModule:new(voices))
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
-		return false
+-- Travel
+local function addTravelKeyword(keyword, cost, destination)
+	if keyword == 'farmine' then
+		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'Never heard about a place like this.'}, function(player) return player:getStorageValue(Storage.TheNewFrontier.Mission10) ~= 1 end)
 	end
 
-	if msgcontains(msg, "fly") or msgcontains(msg, "venorian") or msgcontains(msg, "swamp") and npcHandler.topic[cid] == 0 then
-		destination[cid] = Position(33086, 31493, 6)
-		local player = Player(cid)
-		local destination = destination[cid]
-		npcHandler:releaseFocus(cid)
-		player:teleportTo(destination)
-		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-		destination:sendMagicEffect(CONST_ME_TELEPORT)
-	end
-	return true
+	local travelKeyword = keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'Do you seek a ride to ' .. keyword:titleCase() .. ' for |TRAVELCOST|?', cost = cost, discount = 'postman'})
+		travelKeyword:addChildKeyword({'yes'}, StdModule.travel, {npcHandler = npcHandler, premium = true, text = 'Hold on!', cost = cost, discount = 'postman', destination = destination})
+		travelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, text = 'You shouldn\'t miss the experience.', reset = true})
 end
 
-local function onAddFocus(cid)
-	destination[cid] = 0
-end
+addTravelKeyword('farmine', 60, Position(32983, 31539, 1))
+addTravelKeyword('edron', 40, Position(33193, 31784, 3))
+addTravelKeyword('svargrond', 60, Position(32253, 31097, 4))
+addTravelKeyword('femor hills', 60, Position(32536, 31837, 4))
+addTravelKeyword('kazordoon', 80, Position(32588, 31941, 0))
 
-local function onReleaseFocus(cid)
-	destination[cid] = nil
-end
+npcHandler:setMessage(MESSAGE_GREET, 'Daraman\'s blessings, traveller |PLAYERNAME|.')
+npcHandler:setMessage(MESSAGE_FAREWELL, 'It was a pleasure to help you, |PLAYERNAME|.')
+npcHandler:setMessage(MESSAGE_WALKAWAY, 'It was a pleasure to help you, |PLAYERNAME|.')
 
-npcHandler:setCallback(CALLBACK_ONADDFOCUS, onAddFocus)
-npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, onReleaseFocus)
-
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
-npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new())

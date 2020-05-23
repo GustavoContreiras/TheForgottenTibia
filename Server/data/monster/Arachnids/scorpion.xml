@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Scorpion" nameDescription="a scorpion" race="venom" experience="45" speed="155" manacost="310">
+<monster name="scorpion" nameDescription="a scorpion" race="venom" experience="45" speed="150" manacost="310">
 	<health now="45" max="45" />
+	<level min="1" max="5" />
 	<look type="43" corpse="5988" />
-	<targetchange interval="4000" chance="10" />
+	<targetchange interval="1000" chance="10"/>
+	<targetstrategies nearest="60" health="0" damage="0" random="40"/>
 	<flags>
 		<flag summonable="1" />
 		<flag attackable="1" />
@@ -13,15 +15,15 @@
 		<flag canpushitems="0" />
 		<flag canpushcreatures="0" />
 		<flag targetdistance="1" />
-		<flag staticattack="90" />
+		<flag staticattack="80" />
 		<flag runonhealth="5" />
 		<flag canwalkonenergy="0" />
 		<flag canwalkonfire="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-50" poison="340" />
+		<attack name="melee" skill="35" attack="21" poison="350"/>
 	</attacks>
-	<defenses armor="5" defense="5" />
+	<defenses armor="14" defense="5" />
 	<elements>
 		<element energyPercent="20" />
 		<element firePercent="-10" />

@@ -2,70 +2,31 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-local vocation = {}
-local town = {}
-local destination = {}
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()		npcHandler:onThink()		end
 
-function onCreatureAppear(cid)              npcHandler:onCreatureAppear(cid)            end
-function onCreatureDisappear(cid)           npcHandler:onCreatureDisappear(cid)         end
-function onCreatureSay(cid, type, msg)      npcHandler:onCreatureSay(cid, type, msg)    end
-function onThink()                          npcHandler:onThink()                        end
+-- Greeting and Farewell
+keywordHandler:addKeyword({'hi'}, StdModule.say, {npcHandler = npcHandler, onlyUnfocus = true, text = 'CHILD! COME BACK WHEN YOU HAVE GROWN UP!'}, function(player) return player:getLevel() < 8 end)
 
-local function greetCallback(cid)
-	local player = Player(cid)
-	local level = player:getLevel()
-	if level < 8 then
-		npcHandler:say("CHILD! COME BACK WHEN YOU HAVE GROWN UP!", cid)
-		return false
-	end
-	return true
-end
+keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = '|PLAYERNAME|, I CAN\'T LET YOU LEAVE - YOU ARE TOO STRONG ALREADY! YOU CAN ONLY LEAVE WITH LEVEL 8 OR 9.'}, function(player) return player:getLevel() >= 10 end)
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
-		return false
-	end
+local hiKeyword = keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = '|PLAYERNAME|, ARE YOU PREPARED TO FACE YOUR DESTINY?'})
+	local yesKeyword = hiKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'I WILL BRING YOU TO THE ISLAND OF DESTINY AND YOU WILL BE UNABLE TO RETURN HERE! ARE YOU SURE?'})
+		yesKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'SO BE IT!', ungreet = true}, nil,
+			function(player)
+				local islandOfDestiny = Town('Island Of Destiny')
+				player:teleportTo(islandOfDestiny:getTemplePosition())
+				player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+				player:setTown(islandOfDestiny:getId())
+			end
+		)
+	hiKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'COME BACK WHEN YOU ARE PREPARED TO FACE YOUR DESTINY!', ungreet = true})
+keywordHandler:addAliasKeyword({'hello'})
 
-	if msgcontains(msg, "yes") and npcHandler.topic[cid] == 0 then
-		npcHandler:say("YOUR SKILL POINTS WILL BE RESET AND YOU WILL REBORN IN MAINLAND, ARE YOU READY?", cid)
-		npcHandler.topic[cid] = 1
-	elseif npcHandler.topic[cid] == 1 then
-		if msgcontains(msg, "yes") or msgcontains(msg, "reset") then
-			town[cid] = 15
-			destination[cid] = Position(33025, 31309, 6)
-			local player = Player(cid)
-			player:setTown(Town(town[cid]))
-			local destination = destination[cid]
-			npcHandler:releaseFocus(cid)
-			player:teleportTo(destination)
-			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-			destination:sendMagicEffect(CONST_ME_TELEPORT)
-			player:setSkills(0, 8, 8, 8, 8, 8, 8, 8)
-		elseif msgcontains(msg, "no") then
-			npcHandler:say("COME BACK WHEN YOU ARE!", cid)
-			npcHandler:releaseFocus(cid)
-		else
-			npcHandler:say("ARE YOU READY?", cid)
-		end
-	end
-	return true
-end
+keywordHandler:addFarewellKeyword({'bye'}, {npcHandler = npcHandler, text = 'COME BACK WHEN YOU ARE PREPARED TO FACE YOUR DESTINY!'})
 
-local function onAddFocus(cid)
-	town[cid] = 0
-	vocation[cid] = 0
-	destination[cid] = 0
-end
+npcHandler:setMessage(MESSAGE_WALKAWAY, 'COME BACK WHEN YOU ARE PREPARED TO FACE YOUR DESTINY!')
 
-local function onReleaseFocus(cid)
-	town[cid] = nil
-	vocation[cid] = nil
-	destination[cid] = nil
-end
-
-npcHandler:setCallback(CALLBACK_ONADDFOCUS, onAddFocus)
-npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, onReleaseFocus)
-
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
-npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new())

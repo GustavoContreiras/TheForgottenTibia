@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Addoner" script="Addon.lua" walkinterval="2000" floorchange="0">
+   <health now="100" max="100"/>
+   <look type="130" head="78" body="88" legs="0" feet="88" addons="2" mount="628"/>
+        <parameters>
+        <parameter key="message_greet" value="Hello |PLAYERNAME|, I can make {addon} for you." />
+ 	</parameters>
+</npc>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Cornell" script="Cornell.lua" walkinterval="2000" speechbubble="1" floorchange="0">
+  <health now="100" max="100" />
+  <look type="129" head="77" body="113" legs="105" feet="86" addons="1" />
+  <parameters>
+		<parameter key="module_travel" value="1"/>
+		<parameter key="message_greet" value="Hello |PLAYERNAME|. If you want to sail say {Grimvale} or {Edron}."/>
+  </parameters>
+</npc>

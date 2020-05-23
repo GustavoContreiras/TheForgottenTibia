@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <monster name="Destroyer" nameDescription="a destroyer" race="undead" experience="2500" speed="270">
 	<health now="3700" max="3700" />
+	<level min="1" max="10" />
 	<look type="236" corpse="6320" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
@@ -19,7 +20,7 @@
 		<flag canwalkonpoison="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-500" />
+		<attack name="melee" interval="2000" skill="90" attack="100"/>
 		<attack name="physical" interval="2000" chance="15" range="7" min="0" max="-200">
 			<attribute key="shootEffect" value="largerock" />
 		</attack>

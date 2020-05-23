@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Yeti" nameDescription="Yeti" race="blood" experience="460" speed="270">
+<monster name="yeti" nameDescription="a yeti" race="blood" experience="460" speed="250" manacost="0">
 	<health now="950" max="950" />
+	<level min="1" max="25" />
 	<look type="110" corpse="6038" />
-	<targetchange interval="5000" chance="8" />
+	<targetchange interval="1000" chance="5"/>
+	<targetstrategies nearest="70" health="0" damage="30" random="0"/>
 	<flags>
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -17,32 +19,34 @@
 		<flag runonhealth="0" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-200" />
-		<attack name="physical" interval="1000" chance="15" range="7" min="0" max="-180">
+		<attack name="melee" skill="79" attack="53"/>
+		<attack name="physical" checkdefense="1" chance="15" range="7" min="-170" max="-200">
 			<attribute key="shootEffect" value="snowball" />
 			<attribute key="areaEffect" value="poff" />
 		</attack>
-		<attack name="energy" interval="1000" chance="12" length="3" spread="3" min="0" max="-175">
+		<attack name="energy" chance="12" length="3" spread="3" min="-120" max="-210">
 			<attribute key="areaEffect" value="poff" />
 		</attack>
 	</attacks>
-	<defenses armor="28" defense="33" />
+	<defenses armor="28" defense="43">
+</defenses>
 	<elements>
 		<element icePercent="-1" />
 	</elements>
 	<immunities>
 		<immunity invisible="1" />
 	</immunities>
-	<voices interval="5000" chance="10">
+	<voices interval="1000" chance="5">
 		<voice sentence="Yooodelaaahooohooo!" />
 		<voice sentence="Yooodelaaaheeeheee!" />
 	</voices>
 	<loot>
-		<item name="snowball" countmax="22" chance="10000" />
-		<item name="gold coin" countmax="60" chance="100000" />
-		<item name="gold coin" countmax="40" chance="100000" />
-		<item name="bunnyslippers" chance="1333" />
-		<item name="meat" countmax="4" chance="33333" />
-		<item name="ham" countmax="5" chance="10000" />
+		<item id="2671" chance="35000" countmax="6"/><!-- 6 35% ham -->
+		<item id="2666" chance="75000" countmax="4"/><!-- 4 75% meat -->
+		<item id="2148" chance="60000" countmax="10"/><!-- 10 60% gold coin -->
+		<item id="2148" chance="30000" countmax="20"/><!-- 20 30% gold coin -->
+		<item id="2111" chance="50000" countmax="22"/><!-- 22 50% snowball -->
+		<item id="2129" chance="500"/><!-- 0.5% wolf tooth chain -->
+		<item id="2644" chance="100"/><!-- 0.1% bunnyslippers -->
 	</loot>
 </monster>

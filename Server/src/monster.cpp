@@ -22,9 +22,11 @@
 #include "monster.h"
 #include "game.h"
 #include "spells.h"
+#include "configmanager.h"
 
 extern Game g_game;
 extern Monsters g_monsters;
+extern ConfigManager g_config;
 
 int32_t Monster::despawnRange;
 int32_t Monster::despawnRadius;
@@ -48,11 +50,24 @@ Monster::Monster(MonsterType* mType) :
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
 	skull = mType->info.skull;
+	level = biased_random(mType->info.minLevel, mType->info.maxLevel);
 	health = mType->info.health;
 	healthMax = mType->info.healthMax;
 	baseSpeed = mType->info.baseSpeed;
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
+
+	if (level > 0) {
+		float bonusHp = g_config.getFloat(ConfigManager::MLVL_BONUSHP) * level;
+		if (bonusHp != 0.0) {
+			healthMax += healthMax * bonusHp;
+			health += health * bonusHp;
+		}
+		float bonusSpeed = g_config.getFloat(ConfigManager::MLVL_BONUSSPEED) * level;
+		if (bonusSpeed != 0.0) {
+			baseSpeed += baseSpeed * bonusSpeed;
+		}
+	}
 
 	// register creature events
 	for (const std::string& scriptName : mType->info.scripts) {

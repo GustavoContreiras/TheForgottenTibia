@@ -3953,6 +3953,15 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		if (attackerPlayer && targetPlayer && attackerPlayer->getSkull() == SKULL_BLACK && attackerPlayer->getSkullClient(targetPlayer) == SKULL_NONE) {
 			return false;
 		}
+		Monster* monster = attacker ? attacker->getMonster() : nullptr;
+		if (monster && monster->getLevel() > 0) {
+			float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+			if (bonusDmg != 0.0) {
+				damage.primary.value += std::round(damage.primary.value * bonusDmg);
+				damage.secondary.value += std::round(damage.secondary.value * bonusDmg);
+			}
+		}
+
 
 		if (damage.origin != ORIGIN_NONE) {
 			const auto& events = target->getCreatureEvents(CREATURE_EVENT_HEALTHCHANGE);
@@ -4277,6 +4286,19 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 			const Player* attackerPlayer = attacker->getPlayer();
 			if (attackerPlayer && attackerPlayer->getSkull() == SKULL_BLACK && attackerPlayer->getSkullClient(target) == SKULL_NONE) {
 				return false;
+			}
+		}
+		
+		Monster* monster = attacker ? attacker->getMonster() : nullptr;
+		if (monster && monster->getLevel() > 0) {
+			float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+			if (bonusDmg != 0.0) {
+				if (damage.primary.value < 0) {
+					damage.primary.value += std::round(damage.primary.value * bonusDmg);
+				}
+				if (damage.secondary.value < 0) {
+					damage.secondary.value += std::round(damage.secondary.value * bonusDmg);
+				}
 			}
 		}
 

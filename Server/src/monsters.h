@@ -135,6 +135,9 @@ class MonsterType
 		int32_t defense = 0;
 		int32_t armor = 0;
 
+		int32_t minLevel = 0;
+		int32_t maxLevel = 0;
+
 		bool canPushItems = false;
 		bool canPushCreatures = false;
 		bool pushable = true;

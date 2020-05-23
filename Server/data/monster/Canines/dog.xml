@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Dog" nameDescription="a dog" race="blood" experience="0" speed="140" manacost="220">
 	<health now="20" max="20" />
+	<level min="1" max="100" />
 	<look type="32" corpse="5971" />
 	<targetchange interval="4000" chance="0" />
 	<flags>

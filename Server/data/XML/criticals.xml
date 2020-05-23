@@ -3,7 +3,7 @@
 	<config enabled="1" />
 	<critical name="Sword" id="0" chance="175"/>
 	<critical name="Axe" id="1" chance="150"/>
-	<critical name="Club" id="2" chance="125"/>
+	<critical name="Club" id="2" chance="200"/>
 	<critical name="One Handed Distance" id="3" chance="50"/>
 	<critical name="Two Handed Distance" id="4" chance="25"/>
 	<critical name="Wands and Rods" id="5" chance="0" amount="0"/> <!--ned fix c++-->
