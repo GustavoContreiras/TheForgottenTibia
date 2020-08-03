@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Victor" script="Victor.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="134" head="40" body="78" legs="57" feet="95" addons="0" />
+	<parameters>
+                <parameter key="message_greet" value="Hello, say {trade} to buy tickets." />
+		<parameter key="module_shop" value="1" />
+                <parameter key="shop_buyable" value="
+		ticket 1vs1, 25376, 2000;
+		ticket 5vs5, 25378, 5000 " />
+	</parameters>
+</npc>

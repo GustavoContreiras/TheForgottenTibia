@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Dallas" script="Dallas.lua" walkinterval="0" floorchange="0">
+<health now="100" max="100"/>
+<look type="132" head="114" body="0" legs="0" feet="114" addons="3"/>
+	<parameters>
+		<parameter key="message_greet" value="Hello, |PLAYERNAME|. You can bet speaking {H} or {L}, the minimum wager is 5K and the maximum wager is 300K." />
+	</parameters>
+</npc>

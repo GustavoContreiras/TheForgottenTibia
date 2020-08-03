@@ -1,4 +1,4 @@
---[[function onModalWindow(player, modalWindowId, buttonId, choiceId)
+function onModalWindow(player, modalWindowId, buttonId, choiceId)
 
     if modalWindowId == 4869 then
         player:skillWindowChoice(modalWindowId, buttonId, choiceId)
@@ -56,11 +56,11 @@
      elseif modalWindowId == 4877 then
         player:unregisterEvent("skillPoints_tutorialNotes")
         if buttonId == 1 then
-            --player:sendSkillPointsWindow()
+            player:sendSkillPointsWindow()
         end
         return true
     end
-end]]
+end
  
 function onAdvance(player, skill, oldLevel, newLevel)
     if skill == SKILL_LEVEL then
@@ -82,6 +82,6 @@ end
  
 function onLogin(player)
     player:registerEvent("skillPoints_advance")
-    --player:registerEvent("skillPoints_modal")
+    player:registerEvent("skillPoints_modal")
     return true
 end

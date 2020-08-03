@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
-<npc name="Grizzly Adams" script="tasks.lua" access="3" walkinterval="2000" lookdir="2">
-    <mana now="800" max="800"/>
-    <health now="200" max="200"/>
-<look type="144" head="97" body="97" legs="94" feet="97" addons="3"/>
+<npc name="Grizzly Adams" script="Grizzly Adams.lua" walkinterval="2000" floorchange="0">
+	<health now="100" max="100" />
+	<look type="144" head="116" body="78" legs="94" feet="78" addons="3" />
 </npc>

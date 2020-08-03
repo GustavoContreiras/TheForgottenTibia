@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <stages>
 	<config enabled="1" />
-	<stage minLevel="1" maxLevel="7" multiplier="15" pointsPerLevel="2"/>
-	<stage minLevel="8" maxLevel="39" multiplier="13" pointsPerLevel="3"/>
-	<stage minLevel="40" maxLevel="59" multiplier="11" pointsPerLevel="3"/>
-	<stage minLevel="60" maxLevel="79" multiplier="9" pointsPerLevel="2"/>
-	<stage minLevel="80" maxLevel="99" multiplier="7" pointsPerLevel="1"/>
-	<stage minLevel="100" multiplier="5" pointsPerLevel="1"/>
+	<stage minLevel="1" maxLevel="7" multiplier="25" pointsPerLevel="3"/>
+	<stage minLevel="8" maxLevel="39" multiplier="15" pointsPerLevel="3"/>
+	<stage minLevel="40" maxLevel="59" multiplier="10" pointsPerLevel="3"/>
+	<stage minLevel="60" maxLevel="79" multiplier="5" pointsPerLevel="3"/>
+	<stage minLevel="80" maxLevel="99" multiplier="2" pointsPerLevel="2"/>
+	<stage minLevel="100" multiplier="1" pointsPerLevel="1"/>
 </stages>

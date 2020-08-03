@@ -513,6 +513,7 @@ class Creature : virtual public Thing
 
 		Direction direction = DIRECTION_SOUTH;
 		Skulls_t skull = SKULL_NONE;
+		int32_t level = 0;
 
 		bool localMapCache[mapWalkHeight][mapWalkWidth] = {{ false }};
 		bool isInternalRemoved = false;

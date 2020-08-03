@@ -312,6 +312,31 @@ int32_t uniform_random(int32_t minNumber, int32_t maxNumber)
 	return uniformRand(getRandomGenerator(), std::uniform_int_distribution<int32_t>::param_type(minNumber, maxNumber));
 }
 
+int32_t biased_random(int32_t minNumber, int32_t maxNumber)
+{
+	static std::exponential_distribution<float> biasRand(7.0f);
+	if (minNumber == maxNumber) {
+		return minNumber;
+	}
+	else if (minNumber > maxNumber) {
+		std::swap(minNumber, maxNumber);
+	}
+
+	int32_t increment;
+	const int32_t diff = maxNumber - minNumber;
+	const float v = biasRand(getRandomGenerator());
+	if (v < 0.0) {
+		increment = diff / 2;
+	}
+	else if (v > 1.0) {
+		increment = (diff + 1) / 2;
+	}
+	else {
+		increment = round(v * diff);
+	}
+	return minNumber + increment;
+}
+
 int32_t normal_random(int32_t minNumber, int32_t maxNumber)
 {
 	static std::normal_distribution<float> normalRand(0.5f, 0.25f);

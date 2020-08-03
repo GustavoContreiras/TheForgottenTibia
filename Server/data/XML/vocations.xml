@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vocations>
-	<vocation id="0" clientid="0" name="None" description="none" gaincap="10" gainhp="5" gainmana="5" gainhpticks="2" gainhpamount="5" gainmanaticks="2" gainmanaamount="5" manamultiplier="1.5" attackspeed="2000" basespeed="200" soulmax="200" gainsoulticks="120" fromvoc="0">
+	<vocation id="0" clientid="0" name="None" description="none" gaincap="10" gainhp="5" gainmana="5" gainhpticks="1" gainhpamount="5" gainmanaticks="1" gainmanaamount="5" manamultiplier="1.5" attackspeed="2000" basespeed="200" soulmax="200" gainsoulticks="120" fromvoc="0">
 		<formula meleeDamage="1.0" distDamage="1.0" defense="1.0" armor="1.0" />
 		<skill id="0" multiplier="1.1" />
 		<skill id="1" multiplier="1.1" />

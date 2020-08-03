@@ -2,59 +2,26 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-local destination = {}
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
 
-function onCreatureAppear(cid)              npcHandler:onCreatureAppear(cid)            end
-function onCreatureDisappear(cid)           npcHandler:onCreatureDisappear(cid)         end
-function onCreatureSay(cid, type, msg)      npcHandler:onCreatureSay(cid, type, msg)    end
-function onThink()                          npcHandler:onThink()                        end
-
-local function greetCallback(cid)
-	local player = Player(cid)
-	local level = player:getLevel()
-	if level < 8 then
-		npcHandler:say("You are just a child! Come back when you have grown up!", cid)
-		return false
-	end
-	return true
+-- Travel
+local function addTravelKeyword(keyword, text, cost, destination, condition)
+	local travelKeyword = keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = text, cost = cost, discount = 'postman'}, condition)
+		travelKeyword:addChildKeyword({'yes'}, StdModule.travel, {npcHandler = npcHandler, premium = true, cost = cost, discount = 'postman', destination = destination})
+		travelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, text = 'We would like to serve you some time.', reset = true})
 end
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
-		return false
-	end
+addTravelKeyword('peg leg', 'Ohhhh. So... <lowers his voice> \'you know who\' sent you so I sail you to \'you know where\'. <wink> <wink> It will cost |TRAVELCOST| to cover my expenses. Is it that what you wish?', 50, Position(32348, 32625, 7), function(player) return player:getStorageValue(Storage.TheShatteredIsles.AccessToMeriana) == 1 end)
+addTravelKeyword('treasure island', 'Do you seek a passage to Treasure Island for |TRAVELCOST|?', 150, Position(32132, 32913, 7))
 
-	if msgcontains(msg, "yalahar") and npcHandler.topic[cid] == 0 then
-		destination[cid] = Position(32594, 31442, 6)
-		local player = Player(cid)
-		local destination = destination[cid]
-		npcHandler:releaseFocus(cid)
-		player:teleportTo(destination)
-		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-		destination:sendMagicEffect(CONST_ME_TELEPORT)	
-	elseif msgcontains(msg, "svargrond") and npcHandler.topic[cid] == 0 then
-		destination[cid] = Position(32888, 31222, 6)
-		local player = Player(cid)
-		local destination = destination[cid]
-		npcHandler:releaseFocus(cid)
-		player:teleportTo(destination)
-		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-		destination:sendMagicEffect(CONST_ME_TELEPORT)	
-	end
-	return true
-end
+keywordHandler:addKeyword({'passage'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Treasure Island}?'})
+keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I am the captain of this ship.'})
+keywordHandler:addKeyword({'captain'}, StdModule.say, {npcHandler = npcHandler, text = 'I am the captain of this ship.'})
 
-local function onAddFocus(cid)
-	destination[cid] = 0
-end
-
-local function onReleaseFocus(cid)
-	destination[cid] = nil
-end
-
-npcHandler:setCallback(CALLBACK_ONADDFOCUS, onAddFocus)
-npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, onReleaseFocus)
-
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
-npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+npcHandler:setMessage(MESSAGE_GREET, "Greetings, daring adventurer. If you need a {passage}, let me know.")
+npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye.")
+npcHandler:setMessage(MESSAGE_WALKAWAY, "Oh well.")
 npcHandler:addModule(FocusModule:new())

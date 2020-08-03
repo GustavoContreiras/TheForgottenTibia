@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<monster name="The Old Widow" nameDescription="an Old Widow" race="venom" experience="2800" speed="240" manacost="0">
+	<health now="3550" max="3550"/>
+	<look type="38" corpse="2857"/>
+	<targetchange interval="1000" chance="10"/>
+	<targetstrategies nearest="70" health="20" damage="0" random="10"/>
+	<flags>
+		<flag attackable="1"/>
+		<flag hostile="1"/>
+		<flag summonable="0"/>
+		<flag convinceable="0"/>
+		<flag illusionable="0"/>
+		<flag pushable="0"/>
+		<flag canpushitems="1"/>
+		<flag canpushcreatures="1"/>
+		<flag targetdistance="1"/>
+		<flag staticattack="80"/>
+		<flag runonhealth="0"/>
+	</flags>
+	<attacks>
+		<attack name="melee" skill="99" attack="95"/>
+		<attack name="earth" interval="1000" chance="15" range="7" min="-0" max="-400">
+			<attribute key="shootEffect" value="poison" />
+			<attribute key="areaEffect" value="poison" />
+		</attack>
+		
+		<attack name="poisonfield" chance="17" range="7" radius="4" target="1">
+			<attribute key="shootEffect" value="poison"/>
+		</attack>
+		<attack name="speed" interval="1000" chance="20" range="7" speedchange="-850" duration="25000">
+			<attribute key="shootEffect" value="poison" />
+			<attribute key="areaEffect" value="poison" />
+		</attack>
+		
+	</attacks>
+	<defenses armor="45" defense="60">
+		<defense name="speed" interval="1000" chance="8" speedchange="345" duration="6000">
+			<attribute key="areaEffect" value="redshimmer" />
+		</defense>
+		<defense name="healing" chance="17" min="225" max="275">
+			<attribute key="areaEffect" value="blueshimmer"/>
+		</defense>
+	</defenses>
+	<summons maxSummons="2">
+		<summon name="giant spider" chance="38" max="2"/>
+	</summons>
+	<elements>
+		<element firePercent="100"/>
+		<element earthPercent="100"/>
+	</elements>
+	<immunities>
+		<immunity fire="1" />
+		<immunity earth="1" />
+		<immunity lifedrain="1" />
+		<immunity outfit="1" />
+		<immunity drunk="1" />
+		<immunity invisible="1" />
+	</immunities>
+	<voices interval="1000" chance="5">
+	</voices>
+	<loot>
+		<item id="5879" chance="100000"/><!-- spider silk -->
+		<item id="5886" chance="25000"/><!-- spool of yarn -->
+		<item id="2148" chance="33300" countmax="77"/><!-- 77 33.3% gold coin -->
+		<item id="2148" chance="99900" countmax="66"/><!-- 66 99.9% gold coin -->
+		<item id="2148" chance="66600" countmax="22"/><!-- 22 66.6% gold coin -->
+		<item id="7416" chance="3225"/>
+		<item id="7419" chance="1639"/>
+		<item id="2457" chance="5000"/>
+		<item id="2477" chance="25000"/>
+		<item id="2476" chance="50000"/>
+		<item id="2171" chance="25000"/>
+		<item id="1987" chance="100000"><!-- bag -->
+				<item id="2169" chance="700"/><!-- 0.7% time ring -->
+		</item>
+	</loot>
+</monster>
