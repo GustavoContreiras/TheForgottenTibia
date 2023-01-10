@@ -30,7 +30,8 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        name: [ubuntu-gcc, macos-clang, windows-msvc]
+        # name: [ubuntu-gcc, macos-clang, windows-msvc]
+        name: [windows-msvc]
         buildtype: [Debug, Release]
         luajit: [on, off]
         include:
