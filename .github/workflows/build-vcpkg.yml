@@ -11,16 +11,16 @@ on:
 
     paths:
       - .github/workflows/**
-      - cmake/**
-      - src/**
-      - CMakeLists.txt
+      - Client/cmake/**
+      - Client/src/**
+      - Client/CMakeLists.txt
 
   pull_request:
     paths:
       - .github/workflows/**
-      - cmake/**
-      - src/**
-      - CMakeLists.txt
+      - Client/cmake/**
+      - Client/src/**
+      - Client/CMakeLists.txt
 
 jobs:
   job:
