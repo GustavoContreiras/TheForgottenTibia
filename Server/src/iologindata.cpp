@@ -382,7 +382,7 @@ bool IOLoginData::loadPlayer(Player* player, DBResult_ptr result)
 	player->staminaMinutes = result->getNumber<uint16_t>("stamina");
 
 	player->skillPoints = result->getNumber<uint16_t>("skill_points");
-	player->skillPointsTotal = result->getNumber<uint16_t>("skill_points_total") != NULL ? result->getNumber<uint16_t>("skill_points_total") : 10;
+	player->skillPointsTotal = result->getNumber<uint16_t>("skill_points_total") >= 0 ? result->getNumber<uint16_t>("skill_points_total") : 10;
 
 	static const std::string skillNames[] = {"skill_fist", "skill_club", "skill_sword", "skill_axe", "skill_dist", "skill_shielding", "skill_fishing"};
 	static constexpr size_t size = sizeof(skillNames) / sizeof(std::string);

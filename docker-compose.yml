@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  server:
+    build: ./Server/
+    ports:
+      - "7171:7171"
+      - "7172:7172"
+  client:
+    build: ./Client/

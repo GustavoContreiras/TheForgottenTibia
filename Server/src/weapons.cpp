@@ -408,6 +408,12 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			case WEAPON_DISTANCE: 
 				criticalInfo = g_game.getCriticalInfo(CRITICAL_ONE_HANDED_DISTANCE);
 				break;
+			case WEAPON_NONE: break;
+			case WEAPON_SWORD: break;
+			case WEAPON_CLUB: break;
+			case WEAPON_AXE: break;
+			case WEAPON_SHIELD: break;
+			case WEAPON_WAND: break;
 			}
 		}
 	}
@@ -427,6 +433,10 @@ void Weapon::internalUseWeapon(Player* player, Item* item, Creature* target, int
 			case WEAPON_AXE: criticalInfo = g_game.getCriticalInfo(CRITICAL_AXE); break;
 			case WEAPON_CLUB: criticalInfo = g_game.getCriticalInfo(CRITICAL_CLUB); break;
 			case WEAPON_WAND: criticalInfo = g_game.getCriticalInfo(CRITICAL_WAND); break;
+			case WEAPON_NONE: break;
+			case WEAPON_DISTANCE: break;
+			case WEAPON_AMMO: break;
+			case WEAPON_SHIELD: break;
 			}
 		}
 
