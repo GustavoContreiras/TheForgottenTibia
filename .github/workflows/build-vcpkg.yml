@@ -44,24 +44,24 @@ jobs:
             packages: >
               boost-iostreams boost-asio boost-system boost-variant boost-lockfree boost-filesystem boost-uuid
               glew luajit libogg libvorbis openal-soft opengl openssl physfs zlib
-          - name: ubuntu-gcc
-            os: ubuntu
-            os-version: 20.04
-            cxx: g++
-            cc: gcc
-            triplet: x64-linux
-            packages: >
-              boost-iostreams boost-asio boost-system boost-variant boost-lockfree glew
-              boost-filesystem boost-uuid physfs openal-soft libogg libvorbis zlib opengl
-          - name: macos-clang
-            os: macos
-            os-version: latest
-            cxx: clang++
-            cc: clang
-            triplet: x64-osx
-            packages: >
-              boost-iostreams boost-asio boost-system boost-variant boost-lockfree glew
-              boost-filesystem boost-uuid libogg libvorbis zlib opengl
+          # - name: ubuntu-gcc
+          #   os: ubuntu
+          #   os-version: 20.04
+          #   cxx: g++
+          #   cc: gcc
+          #   triplet: x64-linux
+          #   packages: >
+          #     boost-iostreams boost-asio boost-system boost-variant boost-lockfree glew
+          #     boost-filesystem boost-uuid physfs openal-soft libogg libvorbis zlib opengl
+          # - name: macos-clang
+          #   os: macos
+          #   os-version: latest
+          #   cxx: clang++
+          #   cc: clang
+          #   triplet: x64-osx
+          #   packages: >
+          #     boost-iostreams boost-asio boost-system boost-variant boost-lockfree glew
+          #     boost-filesystem boost-uuid libogg libvorbis zlib opengl
         exclude:
           - name: windows-msvc
             luajit: off
