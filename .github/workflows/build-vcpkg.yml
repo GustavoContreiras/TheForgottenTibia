@@ -32,7 +32,8 @@ jobs:
       matrix:
         # name: [ubuntu-gcc, macos-clang, windows-msvc]
         name: [windows-msvc]
-        buildtype: [Debug, Release]
+        # buildtype: [Debug, Release]
+        buildtype: [Release]
         luajit: [on, off]
         include:
           - name: windows-msvc
@@ -103,6 +104,7 @@ jobs:
       - name: Build with CMake
         uses: lukka/run-cmake@v3
         with:
+          cmakeListsTxtPath: ${{ runner.workspace }}/Client/CMakeLists.txt
           buildDirectory: ${{ runner.workspace }}/Client/build
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeAppendedArgs: '-G Ninja -DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" -DLUAJIT="${{ matrix.luajit }}"'
