@@ -97,15 +97,15 @@ jobs:
         uses: lukka/run-vcpkg@v7
         with:
           vcpkgArguments: ${{ matrix.packages }}
-          vcpkgDirectory: ${{ runner.workspace }}/Client/vcpkg/
+          vcpkgDirectory: ${{ runner.workspace }}/TheForgottenTibia/Client/vcpkg/
           vcpkgTriplet: ${{ matrix.triplet }}
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2
 
       - name: Build with CMake
         uses: lukka/run-cmake@v3
         with:
-          cmakeListsTxtPath: ${{ runner.workspace }}/Client/CMakeLists.txt
-          buildDirectory: ${{ runner.workspace }}/Client/build
+          cmakeListsTxtPath: ${{ runner.workspace }}/TheForgottenTibia/Client/CMakeLists.txt
+          buildDirectory: ${{ runner.workspace }}/TheForgottenTibia/Client/build
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeAppendedArgs: '-G Ninja -DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" -DLUAJIT="${{ matrix.luajit }}"'
           useVcpkgToolchainFile: true
@@ -118,19 +118,19 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/Client/build/otclient
+          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/otclient
         if: "! contains( matrix.os, 'windows')"
 
       - name: Upload artifact binary (exe)
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/Client/build/otclient.exe
+          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/otclient.exe
         if: contains( matrix.os, 'windows')
 
       - name: Upload artifact binary (dlls)
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/Client/build/*.dll
+          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/*.dll
         if: contains( matrix.os, 'windows')
