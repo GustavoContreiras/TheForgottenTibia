@@ -94,15 +94,15 @@ jobs:
           echo "CC=${{ matrix.cc }}" >> $GITHUB_ENV
 
       - name: Run vcpkg
-        uses: lukka/run-vcpkg@v7
+        uses: lukka/run-vcpkg@v10
         with:
           vcpkgArguments: ${{ matrix.packages }}
-          vcpkgDirectory: ${{ runner.workspace }}/TheForgottenTibia/Client/vcpkg/
+          vcpkgDirectory: ${{ runner.workspace }}/vcpkg/
           vcpkgTriplet: ${{ matrix.triplet }}
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2
 
       - name: Build with CMake
-        uses: lukka/run-cmake@v3
+        uses: lukka/run-cmake@v10
         with:
           cmakeListsTxtPath: ${{ runner.workspace }}/TheForgottenTibia/Client/CMakeLists.txt
           buildDirectory: ${{ runner.workspace }}/TheForgottenTibia/Client/build
