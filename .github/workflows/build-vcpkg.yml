@@ -96,20 +96,53 @@ jobs:
       - name: Run vcpkg
         uses: lukka/run-vcpkg@v10
         with:
-          vcpkgArguments: ${{ matrix.packages }}
           vcpkgDirectory: ${{ runner.workspace }}/vcpkg/
-          vcpkgTriplet: ${{ matrix.triplet }}
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2
+
+          # This is the glob expression used to locate the vpkg.json and add its
+          # hash to the cache key. Change it to match a single manifest file you want
+          # to use.
+          vcpkgJsonGlob: '${{ runner.workspace }}/Client/vcpkg.json'
+
+          # This is needed to run `vcpkg install` command (after vcpkg is built) in
+          # the directory where vcpkg.json has been located. Default is false,
+          # It is highly suggested to let `run-cmake` to run vcpkg (i.e. `false`)
+          # (i.e. let CMake run `vcpkg install`) using the vcpkg.cmake toolchain.
+          # runVcpkgInstall: true
 
       - name: Build with CMake
         uses: lukka/run-cmake@v10
         with:
+          # This is the default path to the CMakeLists.txt along side the
+          # CMakePresets.json. Change if you need have CMakeLists.txt and CMakePresets.json
+          # located elsewhere.
           cmakeListsTxtPath: ${{ runner.workspace }}/TheForgottenTibia/Client/CMakeLists.txt
-          buildDirectory: ${{ runner.workspace }}/TheForgottenTibia/Client/build
-          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-          cmakeAppendedArgs: '-G Ninja -DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" -DLUAJIT="${{ matrix.luajit }}"'
-          useVcpkgToolchainFile: true
 
+          # This is the name of the CMakePresets.json's configuration to use to generate
+          # the project files. This configuration leverages the vcpkg.cmake toolchain file to
+          # run vcpkg and install all dependencies specified in vcpkg.json.
+          configurePreset: 'ninja-multi-vcpkg'
+
+          # Additional arguments can be appended to the cmake command.
+          # This is useful to reduce the number of CMake's Presets since you can reuse
+          # an existing preset with different variables.
+          configurePresetAdditionalArgs: ['-DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" -DLUAJIT="${{ matrix.luajit }}"']
+
+          # This is the name of the CMakePresets.json's configuration to build the project.
+          buildPreset: 'ninja-multi-vcpkg'
+
+          # Additional arguments can be appended when building, for example to specify the
+          # configuration to build.
+          # This is useful to reduce the number of CMake's Presets you need in CMakePresets.json.
+          buildPresetAdditionalArgs: ['--config Release']
+    
+          # This is the name of the CMakePresets.json's configuration to test the project with.
+          testPreset: 'ninja-multi-vcpkg'
+
+          # Additional arguments can be appended when testing, for example to specify the config
+          # to test.
+          # This is useful to reduce the number of CMake's Presets you need in CMakePresets.json.
+          testPresetAdditionalArgs: ['--config Release']
       - name: dir
         run: find $RUNNER_WORKSPACE
         shell: bash
@@ -134,3 +167,8 @@ jobs:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
           path: ${{ runner.workspace }}/Client/build/*.dll
         if: contains( matrix.os, 'windows')
+    env:
+      # [OPTIONAL] Define the vcpkg's triplet you want to enforce, 
+      # otherwise the default one for the hosting system will be 
+      # automatically choosen (x64 is the default on all platforms, e.g. x64-osx).
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }} 
