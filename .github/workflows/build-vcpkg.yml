@@ -126,7 +126,10 @@ jobs:
           # Additional arguments can be appended to the cmake command.
           # This is useful to reduce the number of CMake's Presets since you can reuse
           # an existing preset with different variables.
-          configurePresetAdditionalArgs: ['-DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}" -DLUAJIT="${{ matrix.luajit }}"']
+          configurePresetAdditionalArgs: [
+            '-DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}"',
+            '-DLUAJIT="${{ matrix.luajit }}"'
+            ]
 
           # This is the name of the CMakePresets.json's configuration to build the project.
           buildPreset: 'ninja-multi-vcpkg'
