@@ -127,8 +127,8 @@ jobs:
           # This is useful to reduce the number of CMake's Presets since you can reuse
           # an existing preset with different variables.
           configurePresetAdditionalArgs:
-            - '-DCMAKE_BUILD_TYPE="Release"'
-            - '-DLUAJIT="on"'
+            - '-DCMAKE_BUILD_TYPE=Release'
+            - '-DLUAJIT=on'
 
           # This is the name of the CMakePresets.json's configuration to build the project.
           buildPreset: 'ninja-multi-vcpkg'
@@ -144,7 +144,7 @@ jobs:
           # Additional arguments can be appended when testing, for example to specify the config
           # to test.
           # This is useful to reduce the number of CMake's Presets you need in CMakePresets.json.
-          testPresetAdditionalArgs: ['--config Release']
+          testPresetAdditionalArgs: '--config Release'
       - name: dir
         run: find $RUNNER_WORKSPACE
         shell: bash
