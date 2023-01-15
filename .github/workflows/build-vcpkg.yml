@@ -118,19 +118,19 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/otclient
+          path: ${{ runner.workspace }}/Client/build/otclient
         if: "! contains( matrix.os, 'windows')"
 
       - name: Upload artifact binary (exe)
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/otclient.exe
+          path: ${{ runner.workspace }}/Client/build/otclient.exe
         if: contains( matrix.os, 'windows')
 
       - name: Upload artifact binary (dlls)
         uses: actions/upload-artifact@v3
         with:
           name: otclient-${{ matrix.name }}-${{ matrix.buildtype }}-luajit=${{ matrix.luajit }}-${{ github.sha }}
-          path: ${{ runner.workspace }}/TheForgottenTibia/Client/build/*.dll
+          path: ${{ runner.workspace }}/Client/build/*.dll
         if: contains( matrix.os, 'windows')
