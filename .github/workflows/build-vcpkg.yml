@@ -129,7 +129,7 @@ jobs:
           configurePresetAdditionalArgs: [
             '-DCMAKE_BUILD_TYPE="${{ matrix.buildtype }}"',
             '-DLUAJIT="${{ matrix.luajit }}"'
-            ]
+          ]
 
           # This is the name of the CMakePresets.json's configuration to build the project.
           buildPreset: 'ninja-multi-vcpkg'
